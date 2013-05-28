@@ -84,11 +84,14 @@ vimproc is distributed at: http://github.com/Shougo/vimproc
 
 To use vimproc, you must compile it.  Refer to the vimproc documentation.
 
-Note: Snippets feature (snippets_complete source), which was originally
-      built-in, left since neocomplete ver.7.
-      If you were using it, please install neosnippet source manually.
+Note: To use snippets feature (neosnippet source), you must install
+neosnippet.
 
 https://github.com/Shougo/neosnippet
+
+Note: To enable context filetype feature, you must install
+context_filetype.vim.
+https://github.com/Shougo/context_filetype.vim
 
 ==============================================================================
 INTERFACE					*neocomplete-interface*
@@ -449,32 +452,6 @@ g:neocomplete_same_filetype_lists
 		Note: To disable neocomplete initialization, you must use
 		|neocomplete#disable_default_dictionary()|.
 
-				*g:neocomplete_context_filetype_lists*
-g:neocomplete_context_filetype_lists
-		It is a dictionary to define context filetypes.
-		The item is a list of dictionaries.
-				*g:neocomplete_filetype_include_lists*
-		Note: g:neocomplete_filetype_include_lists is deprecated
-		name.
-
-		The keys and values are below.
-		"filetype" : includes filetype name.
-		"start" : filetype start pattern.
-		"end" : filetype end pattern.  You can use \1 to refer start's
-			matched pattern.
->
-		" Examples:
-		if !exists('g:neocomplete_context_filetype_lists')
-		let g:neocomplete_context_filetype_lists = {}
-		endif
-		let g:neocomplete_context_filetype_lists.perl6 =
-		\ [{'filetype' : 'pir', 'start' : 'Q:PIR\s*{', 'end' : '}'}]
-		let g:neocomplete_context_filetype_lists.vim =
-		\ [{'filetype' : 'python', 'start' : '^\s*python <<\s*\(\h\w*\)', 'end' : '^\1'}]
-<
-		Because it is complicated, refer to
-		neocomplete#init#_variables() in
-		autoload/neocomplete/init.vim for the initial value.
 
 					*g:neocomplete_text_mode_filetypes*
 g:neocomplete_text_mode_filetypes
@@ -873,6 +850,9 @@ neocomplete#custom_source({source-name}, {option-name}, {value})
 neocomplete#get_context_filetype()
 		Get current context filetype of the cursor.  This is smarter
 		than |&filetype| about handling nested filetypes.
+		Note: To enable context filetype feature, you must install
+		context_filetype.vim.
+		https://github.com/Shougo/context_filetype.vim
 
 		For example html filetype has javascript inside.  Say, you have
 		a buffer which content is below with filetype is html.
@@ -1179,7 +1159,7 @@ Default sorters: ['sorter_rank'].
 
 					*neocomplete-filter-converter_default*
 Default converters: ['converter_remove_next_keyword',
-        \      'converter_delimiter', 'converter_case', 'converter_abbr'].
+        \      'converter_delimiter', 'converter_abbr'].
 
 					*neocomplete-filter-matcher_head*
 matcher_head	Head matching matcher.
@@ -1789,6 +1769,7 @@ CHANGELOG					*neocomplete-changelog*
 - Renamed initial version.
 - Removed obsolete interfaces.
 - Improved for make cache.
+- Supported context_filetype.vim.
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

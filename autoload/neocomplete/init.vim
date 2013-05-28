@@ -188,8 +188,6 @@ endfunction"}}}
 function! neocomplete#init#_others() "{{{
   call neocomplete#init#_variables()
 
-  call neocomplete#context_filetype#initialize()
-
   call neocomplete#commands#_initialize()
 
   " Save options.
