@@ -48,7 +48,7 @@ function! s:source.hooks.on_init(context) "{{{
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  delcommand NeoCompleteCachingTags
+  silent! delcommand NeoCompleteCachingTags
 endfunction"}}}
 
 function! neocomplete#sources#tags_complete#define() "{{{

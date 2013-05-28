@@ -69,7 +69,7 @@ function! s:source.hooks.on_init(context) "{{{
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  delcommand NeoCompleteCachingDictionary
+  silent! delcommand NeoCompleteCachingDictionary
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{

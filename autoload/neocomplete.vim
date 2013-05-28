@@ -334,9 +334,6 @@ endfunction"}}}
 function! neocomplete#complete_check() "{{{
   return neocomplete#helper#complete_check()
 endfunction"}}}
-function! neocomplete#check_invalid_omnifunc(omnifunc) "{{{
-  return a:omnifunc == '' || (a:omnifunc !~ '#' && !exists('*' . a:omnifunc))
-endfunction"}}}
 
 function! neocomplete#set_dictionary_helper(variable, keys, value) "{{{
   return neocomplete#util#set_dictionary_helper(

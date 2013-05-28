@@ -19,9 +19,6 @@ command! -nargs=? -complete=buffer -bar
       \ NeoCompletePrintSource
       \ call neocomplete#sources#buffer_complete#print_source(<q-args>)
 command! -nargs=? -complete=buffer -bar
-      \ NeoCompleteOutputKeyword
-      \ call neocomplete#sources#buffer_complete#output_keyword(<q-args>)
-command! -nargs=? -complete=buffer -bar
       \ NeoCompleteDisableCaching
       \ call neocomplete#sources#buffer_complete#disable_caching(<q-args>)
 command! -nargs=? -complete=buffer -bar

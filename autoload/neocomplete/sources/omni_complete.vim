@@ -142,7 +142,7 @@ function! s:get_omni_funcs(filetype) "{{{
     endif
 
     for omnifunc in omnifuncs
-      if neocomplete#check_invalid_omnifunc(omnifunc)
+      if neocomplete#helper#check_invalid_omnifunc(omnifunc)
         " omnifunc is irregal.
         continue
       endif

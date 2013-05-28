@@ -73,7 +73,7 @@ function! neocomplete#helper#is_omni_complete(cur_text) "{{{
   let omnifunc = get(g:neocomplete_omni_functions,
         \ filetype, &l:omnifunc)
 
-  if neocomplete#check_invalid_omnifunc(omnifunc)
+  if neocomplete#helper#check_invalid_omnifunc(omnifunc)
     return 0
   endif
 
@@ -374,6 +374,10 @@ do
 end
 EOF
   return a:candidates
+endfunction"}}}
+
+function! neocomplete#helper#check_invalid_omnifunc(omnifunc) "{{{
+  return a:omnifunc == '' || (a:omnifunc !~ '#' && !exists('*' . a:omnifunc))
 endfunction"}}}
 
 let &cpo = s:save_cpo

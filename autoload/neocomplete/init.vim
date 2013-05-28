@@ -140,7 +140,7 @@ function! neocomplete#init#disable() "{{{
     autocmd!
   augroup END
 
-  delcommand NeoCompleteDisable
+  silent! delcommand NeoCompleteDisable
 
   call neocomplete#helper#call_hook(filter(values(
         \ neocomplete#variables#get_sources()), 'v:val.loaded'),

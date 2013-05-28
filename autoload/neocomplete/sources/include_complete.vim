@@ -59,7 +59,7 @@ function! s:source.hooks.on_init(context) "{{{
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  delcommand NeoCompleteCachingInclude
+  silent! delcommand NeoCompleteCachingInclude
 
   if neocomplete#exists_echodoc()
     call echodoc#unregister('include_complete')

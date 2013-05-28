@@ -58,7 +58,7 @@ function! s:source.hooks.on_init(context) "{{{
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  delcommand NeoCompleteCachingVim
+  silent! delcommand NeoCompleteCachingVim
 
   if neocomplete#exists_echodoc()
     call echodoc#unregister('vim_complete')

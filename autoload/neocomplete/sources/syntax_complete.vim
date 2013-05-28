@@ -52,7 +52,7 @@ function! s:source.hooks.on_init(context) "{{{
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  delcommand NeoCompleteCachingSyntax
+  silent! delcommand NeoCompleteCachingSyntax
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{

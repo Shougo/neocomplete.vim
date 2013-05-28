@@ -74,11 +74,10 @@ endfunction
 "}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  delcommand NeoCompleteCachingBuffer
-  delcommand NeoCompletePrintSource
-  delcommand NeoCompleteOutputKeyword
-  delcommand NeoCompleteDisableCaching
-  delcommand NeoCompleteEnableCaching
+  silent! delcommand NeoCompleteCachingBuffer
+  silent! delcommand NeoCompletePrintSource
+  silent! delcommand NeoCompleteDisableCaching
+  silent! delcommand NeoCompleteEnableCaching
 
   let s:buffer_sources = {}
 endfunction"}}}
