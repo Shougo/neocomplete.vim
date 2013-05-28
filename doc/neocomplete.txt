@@ -1198,11 +1198,6 @@ sorter_length	Candidates length order sorter.
 converter_abbr
 		The converter which abbreviates a candidate's abbr.
 
-					*neocomplete-filter-converter_case*
-converter_case
-		The converter which converts a candidate's word in text mode.
-		(cf: |g:neocomplete_text_mode_filetypes|)
-
 				*neocomplete-filter-converter_delimiter*
 converter_delimiter
 		The converter which abbreviates a candidate's delimiter.
