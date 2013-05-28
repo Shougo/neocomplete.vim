@@ -83,7 +83,6 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
     if len(a:base) < g:neocomplete_auto_completion_start_length
           \   || !empty(filter(copy(neocomplete.candidates),
           \          "get(v:val, 'neocomplete__refresh', 0)"))
-          \   || len(neocomplete.candidates) >= g:neocomplete_max_list
       " Note: If Vim is less than 7.3.561, it have broken register "." problem.
       let dict.refresh = 'always'
     endif
