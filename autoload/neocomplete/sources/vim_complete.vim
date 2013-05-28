@@ -115,9 +115,8 @@ function! s:source.gather_candidates(context) "{{{
   if cur_text =~ '\h\w*\.\%(\h\w*\)\?$'
     " Dictionary.
     let complete_str = matchstr(cur_text, '.\%(\h\w*\)\?$')
-    let list = neocomplete#sources#vim_complete#helper#var_dictionary(
+    return neocomplete#sources#vim_complete#helper#var_dictionary(
           \ cur_text, complete_str)
-    return neocomplete#keyword_filter(list, complete_str)
   elseif a:context.complete_str =~# '^&\%([gl]:\)\?'
     " Options.
     let prefix = matchstr(a:context.complete_str, '&\%([gl]:\)\?')

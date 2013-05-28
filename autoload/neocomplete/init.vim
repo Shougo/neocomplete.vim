@@ -31,6 +31,70 @@ if !exists('s:is_enabled')
   let s:is_enabled = 0
 endif
 
+" Global options definition. "{{{
+let g:neocomplete_max_list =
+      \ get(g:, 'neocomplete_max_list', 100)
+let g:neocomplete_max_keyword_width =
+      \ get(g:, 'neocomplete_max_keyword_width', 80)
+let g:neocomplete_auto_completion_start_length =
+      \ get(g:, 'neocomplete_auto_completion_start_length', 2)
+let g:neocomplete_manual_completion_start_length =
+      \ get(g:, 'neocomplete_manual_completion_start_length', 0)
+let g:neocomplete_min_keyword_length =
+      \ get(g:, 'neocomplete_min_keyword_length', 4)
+let g:neocomplete_enable_ignore_case =
+      \ get(g:, 'neocomplete_enable_ignore_case', &ignorecase)
+let g:neocomplete_enable_smart_case =
+      \ get(g:, 'neocomplete_enable_smart_case', &infercase)
+let g:neocomplete_disable_auto_complete =
+      \ get(g:, 'neocomplete_disable_auto_complete', 0)
+let g:neocomplete_enable_fuzzy_completion =
+      \ get(g:, 'neocomplete_enable_fuzzy_completion', 1)
+let g:neocomplete_enable_insert_char_pre =
+      \ get(g:, 'neocomplete_enable_insert_char_pre', 0)
+let g:neocomplete_enable_cursor_hold_i =
+      \ get(g:, 'neocomplete_enable_cursor_hold_i', 0)
+let g:neocomplete_cursor_hold_i_time =
+      \ get(g:, 'neocomplete_cursor_hold_i_time', 300)
+let g:neocomplete_enable_auto_select =
+      \ get(g:, 'neocomplete_enable_auto_select', 0)
+let g:neocomplete_enable_auto_delimiter =
+      \ get(g:, 'neocomplete_enable_auto_delimiter', 0)
+let g:neocomplete_caching_limit_file_size =
+      \ get(g:, 'neocomplete_caching_limit_file_size', 500000)
+let g:neocomplete_disable_caching_file_path_pattern =
+      \ get(g:, 'neocomplete_disable_caching_file_path_pattern', '')
+let g:neocomplete_lock_buffer_name_pattern =
+      \ get(g:, 'neocomplete_lock_buffer_name_pattern', '')
+let g:neocomplete_ctags_program =
+      \ get(g:, 'neocomplete_ctags_program', 'ctags')
+let g:neocomplete_force_overwrite_completefunc =
+      \ get(g:, 'neocomplete_force_overwrite_completefunc', 0)
+let g:neocomplete_enable_prefetch =
+      \ get(g:, 'neocomplete_enable_prefetch',
+      \  has('gui_running') && has('xim'))
+let g:neocomplete_lock_iminsert =
+      \ get(g:, 'neocomplete_lock_iminsert', 0)
+let g:neocomplete_release_cache_time =
+      \ get(g:, 'neocomplete_release_cache_time', 900)
+let g:neocomplete_wildcard_characters =
+      \ get(g:, 'neocomplete_wildcard_characters', {
+      \ '_' : '*' })
+let g:neocomplete_skip_auto_completion_time =
+      \ get(g:, 'neocomplete_skip_auto_completion_time', '0.3')
+let g:neocomplete_enable_auto_close_preview =
+      \ get(g:, 'neocomplete_enable_auto_close_preview', 1)
+
+let g:neocomplete_sources_list =
+      \ get(g:, 'neocomplete_sources_list', {})
+let g:neocomplete_disabled_sources_list =
+      \ get(g:, 'neocomplete_disabled_sources_list', {})
+if exists('g:neocomplete_source_disable')
+  let g:neocomplete_disabled_sources_list._ =
+        \ keys(filter(copy(g:neocomplete_source_disable), 'v:val'))
+endif
+"}}}
+
 function! neocomplete#init#lazy() "{{{
   if !exists('s:lazy_progress')
     let s:lazy_progress = 0
@@ -624,9 +688,6 @@ function! neocomplete#init#_variables() "{{{
     let g:neocomplete_omni_functions = {}
   endif
   "}}}
-
-  " Set custom.
-  call s:set_default_custom()
 endfunction"}}}
 
 function! neocomplete#init#_current_neocomplete() "{{{
@@ -839,28 +900,6 @@ function! neocomplete#init#_context(context) "{{{
         \ 'complete_str' : '',
         \ 'candidates' : []
         \ })
-endfunction"}}}
-
-function! s:set_default_custom() "{{{
-  let custom = neocomplete#variables#get_custom().sources
-
-  " Initialize completion length.
-  for [source_name, length] in items(
-        \ g:neocomplete_source_completion_length)
-    if !has_key(custom, source_name)
-      let custom[source_name] = {}
-    endif
-    let custom[source_name].min_pattern_length = length
-  endfor
-
-  " Initialize rank.
-  for [source_name, rank] in items(
-        \ g:neocomplete_source_rank)
-    if !has_key(custom, source_name)
-      let custom[source_name] = {}
-    endif
-    let custom[source_name].rank = rank
-  endfor
 endfunction"}}}
 
 let &cpo = s:save_cpo

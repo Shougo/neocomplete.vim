@@ -69,25 +69,22 @@ function! neocomplete#cache#load_from_cache(cache_dir, filename, ...) "{{{
   let is_string = get(a:000, 0, 0)
 
   try
-    let list = eval(get(neocomplete#cache#readfile(
-          \ a:cache_dir, a:filename), 0, '[]'))
-
     " Note: For neocomplete.
-"     let path = neocomplete#cache#encode_name(a:cache_dir, a:filename)
-"     let list = []
-"     lua << EOF
-" do
-"   local ret = vim.eval('list')
-"   local list = {}
-"   for line in io.lines(vim.eval('path')) do
-"     list = loadstring('return ' .. line)()
-"   end
-"
-"   for i = 1, #list do
-"     ret:add(list[i])
-"   end
-" end
-" EOF
+    let path = neocomplete#cache#encode_name(a:cache_dir, a:filename)
+    let list = []
+    lua << EOF
+do
+  local ret = vim.eval('list')
+  local list = {}
+  for line in io.lines(vim.eval('path')) do
+    list = loadstring('return ' .. line)()
+  end
+
+  for i = 1, #list do
+    ret:add(list[i])
+  end
+end
+EOF
 "     echomsg string(list)
     if !empty(list) && is_string && type(list[0]) != type('')
       " Type check.
@@ -205,33 +202,33 @@ endfunction"}}}
 
 " Cache helper.
 function! neocomplete#cache#getfilename(cache_dir, filename) "{{{
-  let cache_dir = neocomplete#get_temporary_directory() . '/' . a:cache_dir
+  let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.getfilename(cache_dir, a:filename)
 endfunction"}}}
 function! neocomplete#cache#filereadable(cache_dir, filename) "{{{
-  let cache_dir = neocomplete#get_temporary_directory() . '/' . a:cache_dir
+  let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.filereadable(cache_dir, a:filename)
 endfunction"}}}
 function! neocomplete#cache#readfile(cache_dir, filename) "{{{
-  let cache_dir = neocomplete#get_temporary_directory() . '/' . a:cache_dir
+  let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.readfile(cache_dir, a:filename)
 endfunction"}}}
 function! neocomplete#cache#writefile(cache_dir, filename, list) "{{{
-  let cache_dir = neocomplete#get_temporary_directory() . '/' . a:cache_dir
+  let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.writefile(cache_dir, a:filename, a:list)
 endfunction"}}}
 function! neocomplete#cache#encode_name(cache_dir, filename)
   " Check cache directory.
-  let cache_dir = neocomplete#get_temporary_directory() . '/' . a:cache_dir
+  let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.getfilename(cache_dir, a:filename)
 endfunction
 function! neocomplete#cache#check_old_cache(cache_dir, filename) "{{{
-  let cache_dir = neocomplete#get_temporary_directory() . '/' . a:cache_dir
+  let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return  s:Cache.check_old_cache(cache_dir, a:filename)
 endfunction"}}}
 function! neocomplete#cache#make_directory(directory) "{{{
   let directory =
-        \ neocomplete#get_temporary_directory() .'/'.a:directory
+        \ neocomplete#get_data_directory() .'/'.a:directory
   if !isdirectory(directory)
     call mkdir(directory, 'p')
   endif
@@ -263,8 +260,7 @@ function! neocomplete#cache#test_async() "{{{
         \ &fileencoding == '' ? &encoding : &fileencoding
   let argv = [
         \  'load_from_file', cache_name, filename, pattern_file_name, '[B]',
-        \  g:neocomplete_min_keyword_length,
-        \  g:neocomplete_max_menu_width, fileencoding
+        \  g:neocomplete_min_keyword_length, fileencoding
         \ ]
   return s:async_load(argv, 'test_cache', filename)
 endfunction"}}}
@@ -289,8 +285,7 @@ function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, m
         \ &fileencoding == '' ? &encoding : &fileencoding
   let argv = [
         \  'load_from_file', cache_name, a:filename, pattern_file_name, a:mark,
-        \  g:neocomplete_min_keyword_length,
-        \  g:neocomplete_max_menu_width, fileencoding
+        \  g:neocomplete_min_keyword_length, fileencoding
         \ ]
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
@@ -343,13 +338,12 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
         \ [neocomplete#get_keyword_pattern(),
         \  tags_file_name, filter_pattern, a:filetype])
 
-  " args: funcname, outputname, filename pattern mark
-  "       minlen maxlen encoding
+  " args: funcname, outputname, filename
+  "       pattern mark minlen encoding
   let fileencoding = &fileencoding == '' ? &encoding : &fileencoding
   let argv = [
         \  'load_from_tags', cache_name, a:filename, pattern_file_name, a:mark,
-        \  g:neocomplete_min_keyword_length,
-        \  g:neocomplete_max_menu_width, fileencoding
+        \  g:neocomplete_min_keyword_length, fileencoding
         \ ]
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}

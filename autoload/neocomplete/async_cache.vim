@@ -28,16 +28,16 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! s:main(argv) "{{{
-  " args: funcname, outputname filename pattern_file_name mark minlen maxfilename
-  let [funcname, outputname, filename, pattern_file_name, mark, minlen, maxfilename, fileencoding]
+  " args: funcname, outputname filename pattern_file_name mark minlen fileencoding
+  let [funcname, outputname, filename, pattern_file_name, mark, minlen, fileencoding]
         \ = a:argv
 
   if funcname ==# 'load_from_file'
     let keyword_list = s:load_from_file(
-          \ filename, pattern_file_name, mark, minlen, maxfilename, fileencoding, 1)
+          \ filename, pattern_file_name, mark, minlen, fileencoding, 1)
   else
     let keyword_list = s:load_from_tags(
-          \ filename, pattern_file_name, mark, minlen, maxfilename, fileencoding)
+          \ filename, pattern_file_name, mark, minlen, fileencoding)
   endif
 
   if empty(keyword_list)
@@ -46,13 +46,12 @@ function! s:main(argv) "{{{
 
   " For neocomplete.
   " Output cache.
-  " let string = substitute(substitute(
-  "       \ string(keyword_list), '^[', '{', ''), ']$', '}', '')
-  " call writefile([string], outputname)
-  call writefile([string(keyword_list)], outputname)
+  let string = substitute(substitute(
+        \ string(keyword_list), '^[', '{', ''), ']$', '}', '')
+  call writefile([string], outputname)
 endfunction"}}}
 
-function! s:load_from_file(filename, pattern_file_name, mark, minlen, maxfilename, fileencoding, is_string) "{{{
+function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencoding, is_string) "{{{
   if !filereadable(a:filename)
     " File not found.
     return []
@@ -91,7 +90,7 @@ function! s:load_from_file(filename, pattern_file_name, mark, minlen, maxfilenam
   return keyword_list
 endfunction"}}}
 
-function! s:load_from_tags(filename, pattern_file_name, mark, minlen, maxfilename, fileencoding) "{{{
+function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencoding) "{{{
   let keyword_lists = []
   let dup_check = {}
 
@@ -126,7 +125,7 @@ function! s:load_from_tags(filename, pattern_file_name, mark, minlen, maxfilenam
   if empty(tags_list)
     " File caching.
     return s:load_from_file(a:filename, a:pattern_file_name,
-          \ a:mark, a:minlen, a:maxfilename, a:fileencoding, 0)
+          \ a:mark, a:minlen, a:fileencoding, 0)
   endif
 
   for line in tags_list "{{{
@@ -246,58 +245,15 @@ function! s:iconv(expr, from, to)
   return result != '' ? result : a:expr
 endfunction
 
-if v:version >= 703
-  " Use builtin function.
-  function! s:wcswidth(str) "{{{
-    return strdisplaywidth(a:str)
-  endfunction"}}}
-  function! s:wcwidth(str) "{{{
-    return strwidth(a:str)
-  endfunction"}}}
-else
-  function! s:wcswidth(str) "{{{
-    if a:str =~# '^[\x00-\x7f]*$'
-      return strlen(a:str)
-    end
+" Use builtin function.
+function! s:wcswidth(str) "{{{
+  return strdisplaywidth(a:str)
+endfunction"}}}
+function! s:wcwidth(str) "{{{
+  return strwidth(a:str)
+endfunction"}}}
 
-    let mx_first = '^\(.\)'
-    let str = a:str
-    let width = 0
-    while 1
-      let ucs = char2nr(substitute(str, mx_first, '\1', ''))
-      if ucs == 0
-        break
-      endif
-      let width += s:wcwidth(ucs)
-      let str = substitute(str, mx_first, '', '')
-    endwhile
-    return width
-  endfunction"}}}
-
-  " UTF-8 only.
-  function! s:wcwidth(ucs) "{{{
-    let ucs = a:ucs
-    if (ucs >= 0x1100
-          \  && (ucs <= 0x115f
-          \  || ucs == 0x2329
-          \  || ucs == 0x232a
-          \  || (ucs >= 0x2e80 && ucs <= 0xa4cf
-          \      && ucs != 0x303f)
-          \  || (ucs >= 0xac00 && ucs <= 0xd7a3)
-          \  || (ucs >= 0xf900 && ucs <= 0xfaff)
-          \  || (ucs >= 0xfe30 && ucs <= 0xfe6f)
-          \  || (ucs >= 0xff00 && ucs <= 0xff60)
-          \  || (ucs >= 0xffe0 && ucs <= 0xffe6)
-          \  || (ucs >= 0x20000 && ucs <= 0x2fffd)
-          \  || (ucs >= 0x30000 && ucs <= 0x3fffd)
-          \  ))
-      return 2
-    endif
-    return 1
-  endfunction"}}}
-endif
-
-if argc() == 8 &&
+if argc() == 7 &&
       \ (argv(0) ==# 'load_from_file' || argv(0) ==# 'load_from_tags')
   try
     call s:main(argv())

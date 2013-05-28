@@ -87,25 +87,8 @@ function! neocomplete#is_disabled_source(source_name) "{{{
         \   get(g:neocomplete_disabled_sources_list, '_', []))
   return index(disabled_sources, a:source_name) >= 0
 endfunction"}}}
-function! neocomplete#keyword_escape(complete_str) "{{{
-  return neocomplete#helper#keyword_escape(a:complete_str)
-endfunction"}}}
-function! neocomplete#keyword_filter(list, complete_str) "{{{
-  return neocomplete#filters#keyword_filter(a:list, a:complete_str)
-endfunction"}}}
 function! neocomplete#dup_filter(list) "{{{
   return neocomplete#util#dup_filter(a:list)
-endfunction"}}}
-function! neocomplete#check_match_filter(complete_str) "{{{
-  return neocomplete#keyword_escape(a:complete_str) =~ '[^\\]\*\|\\+'
-endfunction"}}}
-function! neocomplete#check_completion_length_match(complete_str, completion_length) "{{{
-  return neocomplete#keyword_escape(
-        \ a:complete_str[: a:completion_length-1]) =~
-        \'[^\\]\*\|\\+\|\\%(\|\\|'
-endfunction"}}}
-function! neocomplete#dictionary_filter(dictionary, complete_str) "{{{
-  return neocomplete#filters#dictionary_filter(a:dictionary, a:complete_str)
 endfunction"}}}
 function! neocomplete#unpack_dictionary(dict) "{{{
   let ret = []
@@ -280,12 +263,6 @@ endfunction"}}}
 function! neocomplete#within_comment() "{{{
   return neocomplete#helper#get_syn_name(1) ==# 'Comment'
 endfunction"}}}
-function! neocomplete#print_caching(string) "{{{
-  if g:neocomplete_enable_caching_message
-    redraw
-    echon a:string
-  endif
-endfunction"}}}
 function! neocomplete#print_error(string) "{{{
   echohl Error | echomsg a:string | echohl None
 endfunction"}}}
@@ -345,9 +322,9 @@ function! neocomplete#print_debug(expr) "{{{
     echomsg string(a:expr)
   endif
 endfunction"}}}
-function! neocomplete#get_temporary_directory() "{{{
+function! neocomplete#get_data_directory() "{{{
   let directory = neocomplete#util#substitute_path_separator(
-        \ neocomplete#util#expand(g:neocomplete_temporary_dir))
+        \ neocomplete#util#expand(g:neocomplete_data_directory))
   if !isdirectory(directory)
     call mkdir(directory, 'p')
   endif

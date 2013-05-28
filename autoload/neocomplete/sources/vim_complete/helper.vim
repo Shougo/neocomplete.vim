@@ -536,9 +536,10 @@ function! s:get_local_variables() "{{{
 endfunction"}}}
 
 function! s:get_cached_script_candidates() "{{{
-  return has_key(s:script_candidates_list, bufnr('%')) && v:version > 700 ?
+  return has_key(s:script_candidates_list, bufnr('%')) ?
         \ s:script_candidates_list[bufnr('%')] : {
-        \   'functions' : {}, 'variables' : {}, 'function_prototypes' : {}, 'dictionary_variables' : {} }
+        \   'functions' : {}, 'variables' : {},
+        \   'function_prototypes' : {}, 'dictionary_variables' : {} }
 endfunction"}}}
 function! s:get_script_candidates(bufnumber) "{{{
   " Get script candidate list.

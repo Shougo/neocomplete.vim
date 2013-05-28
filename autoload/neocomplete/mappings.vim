@@ -111,34 +111,23 @@ function! neocomplete#mappings#complete_common_string() "{{{
     let &ignorecase = g:neocomplete_enable_ignore_case
   endif
 
-  let is_fuzzy = g:neocomplete_enable_fuzzy_completion
-
-  try
-    let g:neocomplete_enable_fuzzy_completion = 0
-    let neocomplete = neocomplete#get_current_neocomplete()
-    let candidates = neocomplete#keyword_filter(
-          \ copy(neocomplete.candidates), complete_str)
-  finally
-    let g:neocomplete_enable_fuzzy_completion = is_fuzzy
-  endtry
-
-  if empty(candidates)
-    let &ignorecase = ignorecase_save
-
-    return ''
-  endif
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let candidates = neocomplete.candidates
 
   let common_str = candidates[0].word
-  for keyword in candidates[1:]
-    while !neocomplete#head_match(keyword.word, common_str)
-      let common_str = common_str[: -2]
-    endwhile
-  endfor
-  if &ignorecase
-    let common_str = tolower(common_str)
-  endif
+  try
+    for keyword in candidates[1:]
+      while !neocomplete#head_match(keyword.word, common_str)
+        let common_str = common_str[: -2]
+      endwhile
+    endfor
 
-  let &ignorecase = ignorecase_save
+    if &ignorecase
+      let common_str = tolower(common_str)
+    endif
+  finally
+    let &ignorecase = ignorecase_save
+  endtry
 
   if common_str == ''
     return ''

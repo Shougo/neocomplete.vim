@@ -47,76 +47,11 @@ function! neocomplete#helper#get_cur_text() "{{{
   endif
 
   let filetype = neocomplete#get_context_filetype()
-  let wildcard = get(g:neocomplete_wildcard_characters, filetype,
-        \ get(g:neocomplete_wildcard_characters, '_', '*'))
-  if g:neocomplete_enable_wildcard &&
-        \ wildcard !=# '*' && len(wildcard) == 1
-    " Substitute wildcard character.
-    while 1
-      let index = stridx(complete_str, wildcard)
-      if index <= 0
-        break
-      endif
-
-      let complete_str = complete_str[: index-1]
-            \ . '*' . complete_str[index+1: ]
-    endwhile
-  endif
 
   let neocomplete.cur_text = cur_text . complete_str
 
   " Save cur_text.
   return neocomplete.cur_text
-endfunction"}}}
-
-function! neocomplete#helper#keyword_escape(complete_str) "{{{
-  " Fuzzy completion.
-  let keyword_len = len(a:complete_str)
-  let keyword_escape = s:keyword_escape(a:complete_str)
-  if g:neocomplete_enable_fuzzy_completion
-        \ && (g:neocomplete_fuzzy_completion_start_length
-        \          <= keyword_len && keyword_len < 20)
-    let pattern = keyword_len >= 8 ?
-          \ '\0\\w*' : '\\%(\0\\w*\\|\U\0\E\\l*\\)'
-
-    let start = g:neocomplete_fuzzy_completion_start_length
-    if start <= 1
-      let keyword_escape =
-            \ substitute(keyword_escape, '\w', pattern, 'g')
-    elseif keyword_len < 8
-      let keyword_escape = keyword_escape[: start - 2]
-            \ . substitute(keyword_escape[start-1 :], '\w', pattern, 'g')
-    else
-      let keyword_escape = keyword_escape[: 3] .
-            \ substitute(keyword_escape[4:12], '\w',
-            \   pattern, 'g') . keyword_escape[13:]
-    endif
-  else
-    " Underbar completion. "{{{
-    if g:neocomplete_enable_underbar_completion
-          \ && keyword_escape =~ '[^_]_\|^_'
-      let keyword_escape = substitute(keyword_escape,
-            \ '\%(^\|[^_]\)\zs_', '[^_]*_', 'g')
-    endif
-    if g:neocomplete_enable_underbar_completion
-          \ && '-' =~ '\k' && keyword_escape =~ '[^-]-'
-      let keyword_escape = substitute(keyword_escape,
-            \ '[^-]\zs-', '[^-]*-', 'g')
-    endif
-    "}}}
-    " Camel case completion. "{{{
-    if g:neocomplete_enable_camel_case_completion
-          \ && keyword_escape =~ '\u\?\U*'
-      let keyword_escape =
-            \ substitute(keyword_escape,
-            \ '\u\?\zs\U*',
-            \ '\\%(\0\\l*\\|\U\0\E\\u*_\\?\\)', 'g')
-    endif
-    "}}}
-  endif
-
-  call neocomplete#print_debug(keyword_escape)
-  return keyword_escape
 endfunction"}}}
 
 function! neocomplete#helper#is_omni_complete(cur_text) "{{{
@@ -249,8 +184,7 @@ function! neocomplete#helper#match_word(cur_text, ...) "{{{
   let pattern = a:0 >= 1 ? a:1 : neocomplete#get_keyword_pattern_end()
 
   " Check wildcard.
-  let complete_pos = s:match_wildcard(
-        \ a:cur_text, pattern, match(a:cur_text, pattern))
+  let complete_pos = match(a:cur_text, pattern)
 
   let complete_str = (complete_pos >=0) ?
         \ a:cur_text[complete_pos :] : ''
@@ -440,33 +374,6 @@ do
 end
 EOF
   return a:candidates
-endfunction"}}}
-
-function! s:match_wildcard(cur_text, pattern, complete_pos) "{{{
-  let complete_pos = a:complete_pos
-  while complete_pos > 1 && a:cur_text[complete_pos - 1] == '*'
-    let left_text = a:cur_text[: complete_pos - 2]
-    if left_text == '' || left_text !~ a:pattern
-      break
-    endif
-
-    let complete_pos = match(left_text, a:pattern)
-  endwhile
-
-  return complete_pos
-endfunction"}}}
-
-function! s:keyword_escape(complete_str) "{{{
-  let keyword_escape = escape(a:complete_str, '~" \.^$[]')
-  if g:neocomplete_enable_wildcard
-    let keyword_escape = substitute(
-          \ substitute(keyword_escape, '.\zs\*', '.*', 'g'),
-          \ '\%(^\|\*\)\zs\*', '\\*', 'g')
-  else
-    let keyword_escape = escape(keyword_escape, '*')
-  endif
-
-  return keyword_escape
 endfunction"}}}
 
 let &cpo = s:save_cpo

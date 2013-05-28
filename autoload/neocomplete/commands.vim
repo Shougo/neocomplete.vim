@@ -80,14 +80,14 @@ endfunction"}}}
 function! neocomplete#commands#_clean() "{{{
   " Delete cache files.
   for directory in filter(neocomplete#util#glob(
-        \ g:neocomplete_temporary_dir.'/*'), 'isdirectory(v:val)')
+        \ g:neocomplete_data_directory.'/*'), 'isdirectory(v:val)')
     for filename in filter(neocomplete#util#glob(directory.'/*'),
           \ '!isdirectory(v:val)')
       call delete(filename)
     endfor
   endfor
 
-  echo 'Cleaned cache files in: ' . g:neocomplete_temporary_dir
+  echo 'Cleaned cache files in: ' . g:neocomplete_data_directory
 endfunction"}}}
 
 function! neocomplete#commands#_set_file_type(filetype) "{{{

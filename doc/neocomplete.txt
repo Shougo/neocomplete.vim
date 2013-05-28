@@ -184,7 +184,7 @@ COMMANDS 					*neocomplete-commands*
 		|neocomplete#get_context_filetype()|
 
 :NeoCompleteClean 				*:NeoCompleteClean*
-		Clean cache files in |g:neocomplete_temporary_dir|.
+		Clean cache files in |g:neocomplete_data_directory|.
 
 ------------------------------------------------------------------------------
 VARIABLES 					*neocomplete-variables*
@@ -214,14 +214,6 @@ g:neocomplete_max_keyword_width
 		cut down properly.
 
 		Default value is 80.
-
-					*g:neocomplete_max_menu_width*
-g:neocomplete_max_menu_width
-		This variable controls the indication width of a menu
-		displayed in a pop-up menu.  The case beyond this value is cut
-		down.
-
-		Default value is 15.
 
 				*g:neocomplete_auto_completion_start_length*
 g:neocomplete_auto_completion_start_length
@@ -280,15 +272,6 @@ g:neocomplete_disable_auto_complete
 
 		Default value is 0.
 
-					*g:neocomplete_enable_wildcard*
-g:neocomplete_enable_wildcard
-		This variable controls whether neocomplete accept wild
-		card character '*' for input-saving.
-		Note: You can customize the wildcard character by
-		|g:neocomplete_wildcard_characters|.
-
-		Default value is 1.
-
 					*g:neocomplete_enable_cursor_hold_i*
 g:neocomplete_enable_cursor_hold_i
 		This variable controls whether neocomplete use |CursorHoldI|
@@ -333,52 +316,12 @@ g:neocomplete_enable_auto_delimiter
 
 		Default value is 0.
 
-				*g:neocomplete_enable_camel_case_completion*
-g:neocomplete_enable_camel_case_completion
-		When you input a capital letter, this variable controls
-		whether neocomplete takes an ambiguous searching as an end
-		of the words in it.  For example, neocomplete comes to match
-		it with "ArgumentsException" when you input it with "AE".
-
-		Note: This feature may be too slow.
-
-		Default value is 0.
-
-				*g:neocomplete_enable_underbar_completion*
-g:neocomplete_enable_underbar_completion
-		When you input _, this variable controls whether
-		neocomplete takes an ambiguous searching as an end of the
-		words in it.  For example, neocomplete come to match it
-		with "public_html" when you input it with "p_h".
-
-		Note: This feature may be too slow.
-
-		Default value is 0.
-
 				*g:neocomplete_enable_fuzzy_completion*
 g:neocomplete_enable_fuzzy_completion
 		When you input one character, this variable controls whether
 		neocomplete takes an ambiguous searching as an end of the
 		words in it.  For example, neocomplete comes to match it with
 		"public_html" or "PublicHtml" when you input it with "puh".
-
-		Default value is 1.
-
-			*g:neocomplete_fuzzy_completion_start_length*
-g:neocomplete_fuzzy_completion_start_length
-		It controls length of fuzzy completion start length.  For
-		example, if this variable is "3", third and after input
-		characters are fuzzy matched.  But first and second input
-		characters are not fuzzy matched.
-		Note: If this variable changed, completion speed may be too
-		slow.
-
-		Default value is 3.
-
-				*g:neocomplete_enable_caching_message*
-g:neocomplete_enable_caching_message
-		When make cache, this variable controls whether neocomplete
-		displays the message in Command-line.
 
 		Default value is 1.
 
@@ -426,7 +369,7 @@ g:neocomplete_lock_iminsert		*g:neocomplete_lock_iminsert*
 
 		Default value is 0.
 
-g:neocomplete_temporary_dir		*g:neocomplete_temporary_dir*
+g:neocomplete_data_directory		*g:neocomplete_data_directory*
 		This variable appoints the directory that neocomplete
 		begins to write a file at one time.  When there is not the
 		directory which appointed here, it is made.  For example,
@@ -636,36 +579,6 @@ g:neocomplete_disabled_sources_list
 					*g:neocomplete_source_disable*
 		Note: g:neocomplete_source_disable is deprecated variable.
 		Default value is {}.
-
-				*g:neocomplete_source_completion_length*
-g:neocomplete_source_completion_length
-		Note: This option is deprecated. You should use
-		|neocomplete#custom_source()| instead of it.
->
-		call neocomplete#custom_source(
-				\ 'buffer_complete', 'min_pattern_length', 3)
-<
-
-g:neocomplete_source_rank			*g:neocomplete_source_rank*
-		Note: This option is deprecated. You should use
-		|neocomplete#custom_source()| instead of it.
->
-		" Examples:
-		call neocomplete#custom_source(
-				\ 'buffer_complete', 'rank', 10)
-<
-		The default rank of each sources:
-		filename_complete : 3
-		dictionary_complete : 4
-		buffer_complete : 5
-		syntax_complete : 4
-		include_complete : 8
-		snippets_complete : 8
-		vim_complete : 100
-		omni_complete : 50
-		other keyword sources : 5
-		other manual sources : 10
-		other manual sources with filetype : 100
 
 				*g:neocomplete_force_overwrite_completefunc*
 g:neocomplete_force_overwrite_completefunc
@@ -1065,12 +978,6 @@ EXAMPLES					*neocomplete-examples*
 	let g:neocomplete_min_syntax_length = 3
 	let g:neocomplete_lock_buffer_name_pattern = '\*ku\*'
 
-	" Enable heavy features.
-	" Use camel case completion.
-	"let g:neocomplete_enable_camel_case_completion = 1
-	" Use underbar completion.
-	"let g:neocomplete_enable_underbar_completion = 1
-
 	" Define dictionary.
 	let g:neocomplete_dictionary_filetype_lists = {
 	    \ 'default' : '',
@@ -1381,8 +1288,6 @@ filetypes		Dictionary		(Optional)
 					*neocomplete-source-attribute-rank*
 rank			Number		(Optional)
 			Source priority.
-			Note: You can set source priority by
-			|g:neocomplete_source_rank|, but it is obsolete way.
 
 			If you omit it, it is set below value.
 			If kind attribute is "keyword" : 5
@@ -1456,8 +1361,6 @@ get_complete_position	Function	(Optional)
 			source is called(|neocomplete-notation-{context}|).
 			If you omit it, neocomplete will use the position
 			using |g:neocomplete_keyword_patterns|.
-			Note get_keyword_pos() is obsolete interface for
-			get complete position.
 
 			*neocomplete-source-attribute-gather_candidates*
 gather_candidates	Function	(Required)
@@ -1469,10 +1372,6 @@ gather_candidates	Function	(Required)
 			parameter and returns a list of {candidate}.
 			Here, {context} is the context information when the
 			source is called(|neocomplete-notation-{context}|).
-			Note: get_complete_words() and get_keyword_list() are
-			obsolete interface for gather candidates.
-			Note: You must call |neocomplete#keyword_filter()|
-			in gather_candidates().
 
 {context}				*neocomplete-notation-{context}*
 			A dictionary to give context information.
@@ -1915,6 +1814,7 @@ CHANGELOG					*neocomplete-changelog*
 
 2013-05-28
 - Renamed initial version.
+- Removed obsolete interfaces.
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

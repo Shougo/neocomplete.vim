@@ -118,9 +118,6 @@ function! neocomplete#sources#syntax_complete#recaching(filetype) "{{{
 endfunction"}}}
 
 function! s:caching_from_syn(filetype) "{{{
-  call neocomplete#print_caching(
-        \ 'Caching syntax "' . a:filetype . '"... please wait.')
-
   " Get current syntax list.
   redir => syntax_list
   silent! syntax list
@@ -192,8 +189,6 @@ function! s:caching_from_syn(filetype) "{{{
   " Save syntax cache.
   call neocomplete#cache#save_cache(
         \ 'syntax_cache', &filetype, keyword_list)
-
-  call neocomplete#print_caching('')
 
   return keyword_list
 endfunction"}}}
