@@ -30,41 +30,6 @@ set cpo&vim
 let s:Cache = vital#of('neocomplete').import('System.Cache')
 
 " Cache loader.
-function! neocomplete#cache#check_cache_list(cache_dir, key, async_cache_dictionary, index_keyword_list, ...) "{{{
-  if !has_key(a:async_cache_dictionary, a:key)
-    return
-  endif
-
-  let is_string = get(a:000, 0, 0)
-
-  let keyword_list = []
-  let cache_list = a:async_cache_dictionary[a:key]
-  for cache in cache_list
-    if filereadable(cache.cachename)
-      let keyword_list += neocomplete#cache#load_from_cache(
-            \ a:cache_dir, cache.filename, is_string)
-    endif
-  endfor
-
-  call neocomplete#cache#list2index(keyword_list, a:index_keyword_list, is_string)
-  call filter(cache_list, '!filereadable(v:val.cachename)')
-
-  if empty(cache_list)
-    " Delete from dictionary.
-    call remove(a:async_cache_dictionary, a:key)
-  endif
-endfunction"}}}
-function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, keyword_list_dictionary, ...) "{{{
-  let is_string = get(a:000, 0, 0)
-
-  " Caching.
-  if !has_key(a:keyword_list_dictionary, a:key)
-    let a:keyword_list_dictionary[a:key] = {}
-  endif
-  return neocomplete#cache#check_cache_list(
-        \ a:cache_dir, a:key, a:async_cache_dictionary,
-        \ a:keyword_list_dictionary[a:key], is_string)
-endfunction"}}}
 function! neocomplete#cache#load_from_cache(cache_dir, filename, ...) "{{{
   let is_string = get(a:000, 0, 0)
 
@@ -103,40 +68,9 @@ EOF
     return []
   endtry
 endfunction"}}}
-function! neocomplete#cache#index_load_from_cache(cache_dir, filename, ...) "{{{
-  let is_string = get(a:000, 0, 0)
-  let keyword_lists = {}
-
-  let completion_length = 2
-  for keyword in neocomplete#cache#load_from_cache(
-        \ a:cache_dir, a:filename, is_string)
-    let key = tolower(
-          \ (is_string ? keyword : keyword.word)[: completion_length-1])
-    if !has_key(keyword_lists, key)
-      let keyword_lists[key] = []
-    endif
-    call add(keyword_lists[key], keyword)
-  endfor
-
-  return keyword_lists
-endfunction"}}}
-function! neocomplete#cache#list2index(list, dictionary, is_string) "{{{
-  let completion_length = 2
-  for keyword in a:list
-    let word = a:is_string ? keyword : keyword.word
-
-    let key = tolower(word[: completion_length-1])
-    if !has_key(a:dictionary, key)
-      let a:dictionary[key] = {}
-    endif
-    let a:dictionary[key][word] = keyword
-  endfor
-
-  return a:dictionary
-endfunction"}}}
 
 " New cache loader.
-function! neocomplete#cache#check_cache_noindex(cache_dir, key, async_cache_dictionary, keywords, is_string) "{{{
+function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, keywords, is_string) "{{{
   if !has_key(a:async_cache_dictionary, a:key)
     return
   endif
@@ -174,30 +108,6 @@ endfunction"}}}
 function! neocomplete#cache#save_cache(cache_dir, filename, keyword_list) "{{{
   call neocomplete#cache#writefile(
         \ a:cache_dir, a:filename, [string(a:keyword_list)])
-endfunction"}}}
-function! neocomplete#cache#save_cache_old(cache_dir, filename, keyword_list) "{{{
-  " Create dictionary key.
-  for keyword in a:keyword_list
-    if !has_key(keyword, 'abbr')
-      let keyword.abbr = keyword.word
-    endif
-    if !has_key(keyword, 'kind')
-      let keyword.kind = ''
-    endif
-    if !has_key(keyword, 'menu')
-      let keyword.menu = ''
-    endif
-  endfor
-
-  " Output cache.
-  let word_list = []
-  for keyword in a:keyword_list
-    call add(word_list, printf('%s|||%s|||%s|||%s',
-          \keyword.word, keyword.abbr, keyword.menu, keyword.kind))
-  endfor
-
-  call neocomplete#cache#writefile(
-        \ a:cache_dir, a:filename, word_list)
 endfunction"}}}
 
 " Cache helper.

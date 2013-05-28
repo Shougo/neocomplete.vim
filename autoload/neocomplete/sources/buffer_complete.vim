@@ -87,7 +87,7 @@ function! s:source.gather_candidates(context) "{{{
 
   let keyword_list = []
   for [key, source] in s:get_sources_list()
-    call neocomplete#cache#check_cache_noindex('buffer_cache',
+    call neocomplete#cache#check_cache('buffer_cache',
           \ source.path, s:async_dictionary_list, source.keyword_cache, 1)
 
     let keyword_list += keys(source.keyword_cache)
@@ -268,7 +268,7 @@ function! s:check_source() "{{{
 
     if has_key(s:buffer_sources, bufnumber)
       let source = s:buffer_sources[bufnumber]
-      call neocomplete#cache#check_cache_noindex('buffer_cache',
+      call neocomplete#cache#check_cache('buffer_cache',
             \ source.path, s:async_dictionary_list, source.keyword_cache, 1)
     endif
   endfor

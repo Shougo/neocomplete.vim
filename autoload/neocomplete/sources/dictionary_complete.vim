@@ -83,7 +83,7 @@ function! s:source.gather_candidates(context) "{{{
   endif
 
   for ft in neocomplete#get_source_filetypes(filetype)
-    call neocomplete#cache#check_cache_noindex(
+    call neocomplete#cache#check_cache(
           \ 'dictionary_cache', ft,
           \ s:async_dictionary_list, s:dictionary_list, 1)
 

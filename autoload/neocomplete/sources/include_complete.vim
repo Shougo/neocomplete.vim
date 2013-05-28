@@ -80,7 +80,7 @@ function! s:source.gather_candidates(context) "{{{
 
   " Check caching.
   for include in s:include_info[bufnr('%')].include_files
-    call neocomplete#cache#check_cache_noindex(
+    call neocomplete#cache#check_cache(
           \ 'include_cache', include,
           \ s:async_include_cache, s:include_cache, 1)
     if has_key(s:include_cache, include)

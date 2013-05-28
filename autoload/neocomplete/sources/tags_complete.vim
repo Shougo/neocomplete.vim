@@ -65,7 +65,7 @@ function! s:source.gather_candidates(context) "{{{
     return []
   endif
 
-  call neocomplete#cache#check_cache_noindex(
+  call neocomplete#cache#check_cache(
         \ 'tags_cache', bufnr('%'), s:async_tags_list, s:tags_list, 0)
 
   return get(s:tags_list, bufnr('%'), [])
