@@ -230,8 +230,10 @@ function! neocomplete#helper#complete_check() "{{{
     let neocomplete = neocomplete#get_current_neocomplete()
     let neocomplete.skipped = 1
 
-    redraw
-    echo 'Skipped.'
+    if g:neocomplete_enable_debug
+      redraw
+      echomsg 'Skipped.'
+    endif
   endif
 
   return ret
