@@ -1,0 +1,251 @@
+"=============================================================================
+" FILE: member_complete.vim
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" Last Modified: 28 May 2013.
+" License: MIT license  {{{
+"     Permission is hereby granted, free of charge, to any person obtaining
+"     a copy of this software and associated documentation files (the
+"     "Software"), to deal in the Software without restriction, including
+"     without limitation the rights to use, copy, modify, merge, publish,
+"     distribute, sublicense, and/or sell copies of the Software, and to
+"     permit persons to whom the Software is furnished to do so, subject to
+"     the following conditions:
+"
+"     The above copyright notice and this permission notice shall be included
+"     in all copies or substantial portions of the Software.
+"
+"     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+"     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+"     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+"     IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+"     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+"     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+"     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+" }}}
+"=============================================================================
+
+let s:save_cpo = &cpo
+set cpo&vim
+
+" Important variables.
+if !exists('s:member_sources')
+  let s:member_sources = {}
+endif
+
+let s:source = {
+      \ 'name' : 'member_complete',
+      \ 'kind' : 'manual',
+      \ 'mark' : '[M]',
+      \ 'rank' : 5,
+      \ 'min_pattern_length' : 0,
+      \ 'hooks' : {},
+      \}
+
+function! s:source.hooks.on_init(context) "{{{
+  augroup neocomplete "{{{
+    " Caching events
+    autocmd CursorHold * call s:caching_current_buffer(
+          \ line('.')-10, line('.')+10)
+    autocmd InsertEnter,InsertLeave *
+          \ call neocomplete#sources#member_complete#caching_current_line()
+  augroup END"}}}
+
+  " Initialize member prefix patterns. "{{{
+  if !exists('g:neocomplete_member_prefix_patterns')
+    let g:neocomplete_member_prefix_patterns = {}
+  endif
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete_member_prefix_patterns',
+        \ 'c,cpp,objc,objcpp', '\.\|->')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete_member_prefix_patterns',
+        \ 'perl,php', '->')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete_member_prefix_patterns',
+        \ 'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb', '\.')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete_member_prefix_patterns',
+        \ 'lua', '\.\|:')
+  "}}}
+
+  " Initialize member patterns. "{{{
+  if !exists('g:neocomplete_member_patterns')
+    let g:neocomplete_member_patterns = {}
+  endif
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete_member_patterns',
+        \'default', '\h\w*\%(()\|\[\h\w*\]\)\?')
+  "}}}
+
+  " Initialize script variables. "{{{
+  let s:member_sources = {}
+  "}}}
+endfunction
+"}}}
+
+function! s:source.get_complete_position(context) "{{{
+  " Check member prefix pattern.
+  let filetype = neocomplete#get_context_filetype()
+  if !has_key(g:neocomplete_member_prefix_patterns, filetype)
+        \ || g:neocomplete_member_prefix_patterns[filetype] == ''
+    return -1
+  endif
+
+  let member = s:get_member_pattern(filetype)
+  let prefix = g:neocomplete_member_prefix_patterns[filetype]
+  let complete_pos = matchend(a:context.input,
+        \ '\%(' . member . '\%(' . prefix . '\m\)\)\+\ze\w*$')
+  return complete_pos
+endfunction"}}}
+
+function! s:source.gather_candidates(context) "{{{
+  " Check member prefix pattern.
+  let filetype = neocomplete#get_context_filetype()
+  if !has_key(g:neocomplete_member_prefix_patterns, filetype)
+        \ || g:neocomplete_member_prefix_patterns[filetype] == ''
+    return []
+  endif
+
+  let var_name = matchstr(a:context.input,
+        \ '\%(' . s:get_member_pattern(filetype) . '\%(' .
+        \ g:neocomplete_member_prefix_patterns[filetype] . '\m\)\)\+\ze\w*$')
+  if var_name == ''
+    return []
+  endif
+
+  return s:get_member_list(a:context.input, var_name)
+endfunction"}}}
+
+function! neocomplete#sources#member_complete#define() "{{{
+  return s:source
+endfunction"}}}
+
+function! neocomplete#sources#member_complete#caching_current_line() "{{{
+  " Current line caching.
+  return s:caching_current_buffer(line('.')-1, line('.')+1)
+endfunction"}}}
+function! neocomplete#sources#member_complete#caching_current_buffer() "{{{
+  " Current line caching.
+  return s:caching_current_buffer(1, line('$'))
+endfunction"}}}
+function! s:caching_current_buffer(start, end) "{{{
+  " Current line caching.
+
+  if !exists('g:neocomplete_member_prefix_patterns')
+    return
+  endif
+
+  if !has_key(s:member_sources, bufnr('%'))
+    call s:initialize_source(bufnr('%'))
+  endif
+
+  let filetype = neocomplete#get_context_filetype(1)
+  if !has_key(g:neocomplete_member_prefix_patterns, filetype)
+        \ || g:neocomplete_member_prefix_patterns[filetype] == ''
+    return
+  endif
+
+  let source = s:member_sources[bufnr('%')]
+  let keyword_pattern =
+        \ '\%(' . s:get_member_pattern(filetype) . '\%('
+        \ . g:neocomplete_member_prefix_patterns[filetype]
+        \ . '\m\)\)\+' . s:get_member_pattern(filetype)
+  let keyword_pattern2 = '^'.keyword_pattern
+  let member_pattern = s:get_member_pattern(filetype) . '$'
+
+  " Cache member pattern.
+  let [line_num, max_lines] = [a:start, a:end]
+  for line in getline(a:start, a:end)
+    let match = match(line, keyword_pattern)
+
+    while match >= 0 "{{{
+      let match_str = matchstr(line, keyword_pattern2, match)
+
+      " Next match.
+      let match = matchend(line, keyword_pattern, match + len(match_str))
+
+      while match_str != ''
+        let member_name = matchstr(match_str, member_pattern)
+        if member_name == ''
+          break
+        endif
+        let var_name = match_str[ : -len(member_name)-1]
+
+        if !has_key(source.member_cache, var_name)
+          let source.member_cache[var_name] = {}
+        endif
+        if !has_key(source.member_cache[var_name], member_name)
+          let source.member_cache[var_name][member_name] = member_name
+        endif
+
+        let match_str = matchstr(var_name, keyword_pattern2)
+      endwhile
+    endwhile"}}}
+  endfor
+endfunction"}}}
+
+function! s:get_member_list(cur_text, var_name) "{{{
+  let keyword_list = []
+  for [key, source] in filter(s:get_sources_list(),
+        \ 'has_key(v:val[1].member_cache, a:var_name)')
+    let keyword_list +=
+          \ values(source.member_cache[a:var_name])
+  endfor
+
+  return keyword_list
+endfunction"}}}
+
+function! s:get_sources_list() "{{{
+  let sources_list = []
+
+  let filetypes_dict = {}
+  for filetype in neocomplete#get_source_filetypes(
+        \ neocomplete#get_context_filetype())
+    let filetypes_dict[filetype] = 1
+  endfor
+
+  for [key, source] in items(s:member_sources)
+    if has_key(filetypes_dict, source.filetype)
+          \ || has_key(filetypes_dict, '_')
+          \ || bufnr('%') == key
+          \ || (bufname('%') ==# '[Command Line]' && bufnr('#') == key)
+      call add(sources_list, [key, source])
+    endif
+  endfor
+
+  return sources_list
+endfunction"}}}
+
+function! s:initialize_source(srcname) "{{{
+  let path = fnamemodify(bufname(a:srcname), ':p')
+  let filename = fnamemodify(path, ':t')
+  if filename == ''
+    let filename = '[No Name]'
+    let path .= '/[No Name]'
+  endif
+
+  " Set cache line count.
+  let buflines = getbufline(a:srcname, 1, '$')
+  let end_line = len(buflines)
+
+  let ft = getbufvar(a:srcname, '&filetype')
+  if ft == ''
+    let ft = 'nothing'
+  endif
+
+  let s:member_sources[a:srcname] = {
+        \ 'member_cache' : {}, 'filetype' : ft,
+        \ 'keyword_pattern' : neocomplete#get_keyword_pattern(ft),
+        \}
+endfunction"}}}
+
+function! s:get_member_pattern(filetype) "{{{
+  return has_key(g:neocomplete_member_patterns, a:filetype) ?
+        \ g:neocomplete_member_patterns[a:filetype] :
+        \ g:neocomplete_member_patterns['default']
+endfunction"}}}
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: foldmethod=marker

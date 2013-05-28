@@ -1,0 +1,492 @@
+Next	; go to previous file in the argument list
+Print	; print lines
+abbreviate	; enter abbreviation
+abclear	; remove all abbreviations
+aboveleft	; make split window appear left or above
+all	; open a window for each file in the argument list
+amenu	; enter new menu item for all modes
+anoremenu	; enter a new menu for all modes that will not be remapped
+append	; append text
+argadd	; add items to the argument list
+argdelete	; delete items from the argument list
+argdo	; do a command on all items in the argument list
+argedit	; add item to the argument list and edit it
+argglobal	; define the global argument list
+arglocal	; define a local argument list
+args	; print the argument list
+argument	; go to specific file in the argument list
+ascii	; print ascii value of character under the cursor
+augroup	; select the autocommand group to use
+aunmenu	; remove menu for all modes
+autocmd	; enter or show autocommands
+bNext	; go to previous buffer in the buffer list
+badd	; add buffer to the buffer list
+ball	; open a window for each buffer in the buffer list
+bdelete	; remove a buffer from the buffer list
+behave	; set mouse and selection behavior
+belowright	; make split window appear right or below
+bfirst	; go to first buffer in the buffer list
+blast	; go to last buffer in the buffer list
+bmodified	; go to next buffer in the buffer list that has been modified
+bnext	; go to next buffer in the buffer list
+botright	; make split window appear at bottom or far right
+bprevious	; go to previous buffer in the buffer list
+break	; break out of while loop
+breakadd	; add a debugger breakpoint
+breakdel	; delete a debugger breakpoint
+breaklist	; list debugger breakpoints
+brewind	; go to first buffer in the buffer list
+browse	; use file selection dialog
+bufdo	; execute command in each listed buffer
+buffer	; go to specific buffer in the buffer list
+buffers	; list all files in the buffer list
+bunload	; unload a specific buffer
+bwipeout	; really delete a buffer
+cNext	; go to previous error
+cNfile	; go to last error in previous file
+cabbrev	; like "abbreviate" but for Command-line mode
+cabclear	; clear all abbreviations for Command-line mode
+caddbuffer	; add errors from buffer
+caddexpr	; add errors from expr
+caddfile	; add error message to current quickfix list
+call	; call a function
+catch	; part of a try command
+cbuffer	; parse error messages and jump to first error
+cclose	; close quickfix window
+center	; format lines at the center
+cexpr	; read errors from expr and jump to first
+cfile	; read file with error messages and jump to first
+cfirst	; go to the specified error, default first one
+cgetbuffer	; get errors from buffer
+cgetexpr	; get errors from expr
+cgetfile	; read file with error messages
+change	; replace a line or series of lines
+changes	; print the change list
+chdir	; change directory
+checkpath	; list included files
+checktime	; check timestamp of loaded buffers
+clast	; go to the specified error, default last one
+clist	; list all errors
+close	; close current window
+cmap	; like "map" but for Command-line mode
+cmapclear	; clear all mappings for Command-line mode
+cmenu	; add menu for Command-line mode
+cnewer	; go to newer error list
+cnext	; go to next error
+cnfile	; go to first error in next file
+cnoreabbrev	; like "noreabbrev" but for Command-line mode
+cnoremap	; like "noremap" but for Command-line mode
+cnoremenu	; like "noremenu" but for Command-line mode
+colder	; go to older error list
+colorscheme	; load a specific color scheme
+comclear	; clear all user-defined commands
+command	; create user-defined command
+compiler	; do settings for a specific compiler
+confirm	; prompt user when confirmation required
+continue	; go back to while
+copen	; open quickfix window
+copy	; copy lines
+cpfile	; go to last error in previous file
+cprevious	; go to previous error
+cquit	; quit Vim with an error code
+crewind	; go to the specified error, default first one
+cscope	; execute cscope command
+cstag	; use cscope to jump to a tag
+cunabbrev	; like "unabbrev" but for Command-line mode
+cunmap	; like "unmap" but for Command-line mode
+cunmenu	; remove menu for Command-line mode
+cwindow	; open or close quickfix window
+debug	; run a command in debugging mode
+debuggreedy	; read debug mode commands from normal input
+delcommand	; delete user-defined command
+delete	; delete lines
+delfunction	; delete a user function
+delmarks	; delete marks
+diffget	; remove differences in current buffer
+diffoff	; switch off diff mode
+diffpatch	; apply a patch and show differences
+diffput	; remove differences in other buffer
+diffsplit	; show differences with another file
+diffthis	; make current window a diff window
+diffupdate	; update 'diff' buffers
+digraphs	; show or enter digraphs
+display	; display registers
+djump	; jump to #define
+dlist	; list #defines
+doautoall	; apply autocommands for all loaded buffers
+doautocmd	; apply autocommands to current buffer
+drop	; jump to window editing file or edit file in current window
+dsearch	; list one #define
+dsplit	; split window and jump to #define
+earlier	; go to older change, undo
+echo	; echoes the result of expressions
+echoerr	; like echo, show like an error and use history
+echohl	; set highlighting for echo commands
+echomsg	; same as echo, put message in history
+echon	; same as echo, but without <EOL>
+edit	; edit a file
+else	; part of an if command
+elseif	; part of an if command
+emenu	; execute a menu by name
+endfor	; end previous for
+endfunction	; end of a user function
+endif	; end previous if
+endtry	; end previous try
+endwhile	; end previous while
+enew	; edit a new, unnamed buffer
+execute	; execute result of expressions
+exit	; same as "xit"
+exusage	; overview of Ex commands
+file	; show or set the current file name
+files	; list all files in the buffer list
+filetype	; switch file type detection on/off
+finally	; part of a try command
+find	; find file in 'path' and edit it
+finish	; quit sourcing a Vim script
+first	; go to the first file in the argument list
+fixdel	; set key code of <Del>
+fold	; create a fold
+foldclose	; close folds
+folddoclosed	; execute command on lines in a closed fold
+folddoopen	; execute command on lines not in a closed fold
+foldopen	; open folds
+for	; for loop
+function	; define a user function
+global	; execute commands for matching lines
+goto	; go to byte in the buffer
+grep	; run 'grepprg' and jump to first match
+grepadd	; like grep, but append to current list
+gui	; start the GUI
+gvim	; start the GUI
+hardcopy	; send text to the printer
+help	; open a help window
+helpfind	; dialog to open a help window
+helpgrep	; like "grep" but searches help files
+helptags	; generate help tags for a directory
+hide	; hide current buffer for a command
+highlight	; specify highlighting methods
+history	; print a history list
+iabbrev	; like "abbrev" but for Insert mode
+iabclear	; like "abclear" but for Insert mode
+ijump	; jump to definition of identifier
+ilist	; list lines where identifier matches
+imap	; like "map" but for Insert mode
+imapclear	; like "mapclear" but for Insert mode
+imenu	; add menu for Insert mode
+inoreabbrev	; like "noreabbrev" but for Insert mode
+inoremap	; like "noremap" but for Insert mode
+inoremenu	; like "noremenu" but for Insert mode
+insert	; insert text
+intro	; print the introductory message
+isearch	; list one line where identifier matches
+isplit	; split window and jump to definition of identifier
+iunabbrev	; like "unabbrev" but for Insert mode
+iunmap	; like "unmap" but for Insert mode
+iunmenu	; remove menu for Insert mode
+join	; join lines
+jumps	; print the jump list
+keepalt	; following command keeps the alternate file
+keepjumps	; following command keeps jumplist and marks
+keepmarks	; following command keeps marks where they are
+lNext	; go to previous entry in location list
+lNfile	; go to last entry in previous file
+laddbuffer	; add locations from buffer
+laddexpr	; add locations from expr
+laddfile	; add locations to current location list
+language	; set the language (locale)
+last	; go to the last file in the argument list
+later	; go to newer change, redo
+lbuffer	; parse locations and jump to first location
+lcd	; change directory locally
+lchdir	; change directory locally
+lclose	; close location window
+lcscope	; like "cscope" but uses location list
+left	; left align lines
+leftabove	; make split window appear left or above
+let	; assign a value to a variable or option
+lexpr	; read locations from expr and jump to first
+lfile	; read file with locations and jump to first
+lfirst	; go to the specified location, default first one
+lgetbuffer	; get locations from buffer
+lgetexpr	; get locations from expr
+lgetfile	; read file with locations
+lgrep	; run 'grepprg' and jump to first match
+lgrepadd	; like grep, but append to current list
+lhelpgrep	; like "helpgrep" but uses location list
+list	; print lines
+llast	; go to the specified location, default last one
+llist	; list all locations
+lmake	; execute external command 'makeprg' and parse error messages
+lmap	; like "map!" but includes Lang-Arg mode
+lmapclear	; like "mapclear!" but includes Lang-Arg mode
+lnewer	; go to newer location list
+lnext	; go to next location
+lnfile	; go to first location in next file
+lnoremap	; like "noremap!" but includes Lang-Arg mode
+loadkeymap	; load the following keymaps until EOF
+loadview	; load view for current window from a file
+lockmarks	; following command keeps marks where they are
+lockvar	; lock variables
+lolder	; go to older location list
+lopen	; open location window
+lpfile	; go to last location in previous file
+lprevious	; go to previous location
+lrewind	; go to the specified location, default first one
+ltag	; jump to tag and add matching tags to the location list
+lua	; execute Lua chunk.
+luado	; execute Lua function.
+luafile	; execute Lua script in file.
+lunmap	; like "unmap!" but includes Lang-Arg mode
+lvimgrep	; search for pattern in files
+lvimgrepadd	; like vimgrep, but append to current list
+lwindow	; open or close location window
+make	; execute external command 'makeprg' and parse error messages
+map	; show or enter a mapping
+mapclear	; clear all mappings for Normal and Visual mode
+mark	; set a mark
+marks	; list all marks
+match	; define a match to highlight
+menu	; enter a new menu item
+menutranslate	; add a menu translation item
+messages	; view previously displayed messages
+mkexrc	; write current mappings and settings to a file
+mksession	; write session info to a file
+mkspell	; produce .spl spell file
+mkview	; write view of current window to a file
+mkvimrc	; write current mappings and settings to a file
+mode	; show or change the screen mode
+move	; move lines
+mzfile	; execute MzScheme script file
+mzscheme	; execute MzScheme command
+nbkey	; pass a key to Netbeans
+new	; create a new empty window
+next	; go to next file in the argument list
+nmap	; like "map" but for Normal mode
+nmapclear	; clear all mappings for Normal mode
+nmenu	; add menu for Normal mode
+nnoremap	; like "noremap" but for Normal mode
+nnoremenu	; like "noremenu" but for Normal mode
+noautocmd	; following command don't trigger autocommands
+nohlsearch	; suspend 'hlsearch' highlighting
+noreabbrev	; enter an abbreviation that will not be remapped
+noremap	; enter a mapping that will not be remapped
+noremenu	; enter a menu that will not be remapped
+normal	; execute Normal mode commands
+number	; print lines with line number
+nunmap	; like "unmap" but for Normal mode
+nunmenu	; remove menu for Normal mode
+oldfiles	; list files that have marks in the viminfo file
+omap	; like "map" but for Operator-pending mode
+omapclear	; remove all mappings for Operator-pending mode
+omenu	; add menu for Operator-pending mode
+only	; close all windows except the current one
+onoremap	; like "noremap" but for Operator-pending mode
+onoremenu	; like "noremenu" but for Operator-pending mode
+open	; start open mode (not implemented)
+options	; open the options-window
+ounmap	; like "unmap" but for Operator-pending mode
+ounmenu	; remove menu for Operator-pending mode
+ownsyntax	; define Window-local syntax
+pclose	; close preview window
+pedit	; edit file in the preview window
+perl	; execute Perl command
+perldo	; execute Perl command for each line
+pop	; jump to older entry in tag stack
+popup	; popup a menu by name
+ppop	; "pop" in preview window
+preserve	; write all text to swap file
+previous	; go to previous file in argument list
+print	; print lines
+profdel	; stop profiling a function or script
+profile	; profiling functions and scripts
+promptfind	; open GUI dialog for searching
+promptrepl	; open GUI dialog for search/replace
+psearch	; like "ijump" but shows match in preview window
+ptNext	; tNext in preview window
+ptag	; show tag in preview window
+ptfirst	; trewind in preview window
+ptjump	; tjump and show tag in preview window
+ptlast	; tlast in preview window
+ptnext	; tnext in preview window
+ptprevious	; tprevious in preview window
+ptrewind	; trewind in preview window
+ptselect	; tselect and show tag in preview window
+put	; insert contents of register in the text
+pwd	; print current directory
+py3file	; execute Python3 script file
+pyfile	; execute Python script file
+python	; execute Python command
+python3	; execute Python3 command
+qall	; quit Vim
+quit	; quit current window (when one window quit Vim)
+quitall	; quit Vim
+read	; read file into the text
+recover	; recover a file from a swap file
+redir	; redirect messages to a file or register
+redo	; redo one undone change
+redraw	; force a redraw of the display
+redrawstatus	; force a redraw of the status line(s)
+registers	; display the contents of registers
+resize	; change current window height
+retab	; change tab size
+return	; return from a user function
+rewind	; go to the first file in the argument list
+right	; right align text
+rightbelow	; make split window appear right or below
+ruby	; execute Ruby command
+rubydo	; execute Ruby command for each line
+rubyfile	; execute Ruby script file
+runtime	; source vim scripts in 'runtimepath'
+rviminfo	; read from viminfo file
+sNext	; split window and go to previous file in argument list
+sall	; open a window for each file in argument list
+sandbox	; execute a command in the sandbox
+sargument	; split window and go to specific file in argument list
+saveas	; save file under another name.
+sbNext	; split window and go to previous file in the buffer list
+sball	; open a window for each file in the buffer list
+sbfirst	; split window and go to first file in the buffer list
+sblast	; split window and go to last file in buffer list
+sbmodified	; split window and go to modified file in the buffer list
+sbnext	; split window and go to next file in the buffer list
+sbprevious	; split window and go to previous file in the buffer list
+sbrewind	; split window and go to first file in the buffer list
+sbuffer	; split window and go to specific file in the buffer list
+scriptencoding	; encoding used in sourced Vim script
+scriptnames	; list names of all sourced Vim scripts
+scscope	; split window and execute cscope command
+set	; show or set options
+setfiletype	; set 'filetype', unless it was set already
+setglobal	; show global values of options
+setlocal	; show or set options locally
+sfind	; split current window and edit file in 'path'
+sfirst	; split window and go to first file in the argument list
+shell	; escape to a shell
+sign	; manipulate signs
+silent	; run a command silently
+simalt	; Win32 GUI simulate Windows ALT key
+slast	; split window and go to last file in the argument list
+sleep	; do nothing for a few seconds
+smagic	; substitute with 'magic'
+smap	; like "map" but for Select mode
+smapclear	; remove all mappings for Select mode
+smenu	; add menu for Select mode
+snext	; split window and go to next file in the argument list
+sniff	; send request to sniff
+snomagic	; substitute with 'nomagic'
+snoremap	; like "noremap" but for Select mode
+snoremenu	; like "noremenu" but for Select mode
+sort	; sort lines
+source	; read Vim or Ex commands from a file
+spelldump	; split window and fill with all correct words
+spellgood	; add good word for spelling
+spellinfo	; show info about loaded spell files
+spellrepall	; replace all bad words like last z=
+spellundo	; remove good or bad word
+spellwrong	; add spelling mistake
+split	; split current window
+sprevious	; split window and go to previous file in the argument list
+srewind	; split window and go to first file in the argument list
+stag	; split window and jump to a tag
+startgreplace	; start Virtual Replace mode
+startinsert	; start Insert mode
+startreplace	; start Replace mode
+stjump	; do "tjump" and split window
+stop	; suspend the editor or escape to a shell
+stopinsert	; stop Insert mode
+stselect	; do "tselect" and split window
+substitute	; find and replace text
+sunhide	; same as "unhide"
+sunmap	; like "unmap" but for Select mode
+sunmenu	; remove menu for Select mode
+suspend	; same as "stop"
+sview	; split window and edit file read-only
+swapname	; show the name of the current swap file
+syncbind	; sync scroll binding
+syntax	; syntax highlighting
+tNext	; jump to previous matching tag
+tab	; create new tab when opening new window
+tabNext	; go to previous tab page
+tabclose	; close current tab page
+tabdo	; execute command in each tab page
+tabedit	; edit a file in a new tab page
+tabfind	; find file in 'path', edit it in a new tab page
+tabfirst	; got to first tab page
+tablast	; got to last tab page
+tabmove	; move tab page to other position
+tabnew	; edit a file in a new tab page
+tabnext	; go to next tab page
+tabonly	; close all tab pages except the current one
+tabprevious	; go to previous tab page
+tabrewind	; got to first tab page
+tabs	; list the tab pages and what they contain
+tag	; jump to tag
+tags	; show the contents of the tag stack
+tcl	; execute Tcl command
+tcldo	; execute Tcl command for each line
+tclfile	; execute Tcl script file
+tearoff	; tear-off a menu
+tfirst	; jump to first matching tag
+throw	; throw an exception
+tjump	; like "tselect", but jump directly when there is only one match
+tlast	; jump to last matching tag
+tmenu	; define menu tooltip
+tnext	; jump to next matching tag
+topleft	; make split window appear at top or far left
+tprevious	; jump to previous matching tag
+trewind	; jump to first matching tag
+try	; execute commands, abort on error or exception
+tselect	; list matching tags and select one
+tunmenu	; remove menu tooltip
+unabbreviate	; remove abbreviation
+undo	; undo last change(s)
+undojoin	; join next change with previous undo block
+undolist	; list leafs of the undo tree
+unhide	; open a window for each loaded file in the buffer list
+unlet	; delete variable
+unlockvar	; unlock variables
+unmap	; remove mapping
+unmenu	; remove menu
+unsilent	; run a command not silently
+update	; write buffer if modified
+verbose	; execute command with 'verbose' set
+version	; print version number and other info
+vertical	; make following command split vertically
+vglobal	; execute commands for not matching lines
+view	; edit a file read-only
+vimgrep	; search for pattern in files
+vimgrepadd	; like vimgrep, but append to current list
+visual	; same as "edit", but turns off "Ex" mode
+viusage	; overview of Normal mode commands
+vmap	; like "map" but for Visual+Select mode
+vmapclear	; remove all mappings for Visual+Select mode
+vmenu	; add menu for Visual+Select mode
+vnew	; create a new empty window, vertically split
+vnoremap	; like "noremap" but for Visual+Select mode
+vnoremenu	; like "noremenu" but for Visual+Select mode
+vsplit	; split current window vertically
+vunmap	; like "unmap" but for Visual+Select mode
+vunmenu	; remove menu for Visual+Select mode
+wNext	; write to a file and go to previous file in argument list
+wall	; write all (changed) buffers
+while	; execute loop for as long as condition met
+wincmd	; execute a Window (CTRL-W) command
+windo	; execute command in each window
+winpos	; get or set window position
+winsize	; get or set window size (obsolete)
+wnext	; write to a file and go to next file in argument list
+wprevious	; write to a file and go to previous file in argument list
+wqall	; write all changed buffers and quit Vim
+write	; write to a file
+wsverb	; pass the verb to workshop over IPC
+wviminfo	; write to viminfo file
+xall	; same as "wqall"
+xit	; write if buffer changed and quit window or Vim
+xmap	; like "map" but for Visual mode
+xmapclear	; remove all mappings for Visual mode
+xmenu	; add menu for Visual mode
+xnoremap	; like "noremap" but for Visual mode
+xnoremenu	; like "noremenu" but for Visual mode
+xunmap	; like "unmap" but for Visual mode
+xunmenu	; remove menu for Visual mode
+yank	; yank lines into a register

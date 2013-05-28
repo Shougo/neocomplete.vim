@@ -1,0 +1,44 @@
+-bang ; the command can take a ! modifier (like :q or :w)
+-bar ; the command can be followed by a "|" and another command
+-buffer ; the command will only be available in the current buffer
+-complete=augroup ; autocmd groups
+-complete=behave ; :behave suboptions
+-complete=buffer ; buffer names
+-complete=color ; color schemes
+-complete=command ; Ex command (and arguments)
+-complete=compiler ; compilers
+-complete=cscope ; :cscope suboptions
+-complete=custom,{func} ; custom completion, defined via {func}
+-complete=customlist,{func} ; custom completion, defined via {func}
+-complete=dir ; directory names
+-complete=environment ; environment variable names
+-complete=event ; autocommand events
+-complete=expression ; Vim expression
+-complete=file ; file and directory names
+-complete=file_in_path ; file and directory names in 'path'
+-complete=filetype ; filetype names 'filetype'
+-complete=function ; function name
+-complete=help ; help subjects
+-complete=highlight ; highlight groups
+-complete=history ; :history suboptions
+-complete=locale ; locale names (as output of locale -a)
+-complete=mapping ; mapping name
+-complete=menu ; menus
+-complete=option ; options
+-complete=shellcmd ; Shell command
+-complete=sign ;  :sign suboptions
+-complete=syntax ; syntax file names |'syntax'|
+-complete=tag ; tags
+-complete=tag_list ; tags, file names are shown when CTRL-D is hit
+-complete=tag_listfiles ; tags, file names are shown when CTRL-D is hit
+-complete=var ; user variables
+-count= ; a count (default N) in the line or as an initial argument
+-nargs=* ; any number of arguments are allowed (0, 1, or many)
+-nargs=+ ; arguments must be supplied, but any number are allowed
+-nargs=0 ; no arguments are allowed (the default)
+-nargs=1 ; exactly one argument is required
+-nargs=? ; 0 or 1 arguments are allowed
+-range ; range allowed, default is current line
+-range= ; a count (default N) which is specified in the line
+-range=% ; range allowed, default is whole file (1,$)
+-register ; the first argument to the command can be an optional register name

@@ -1,0 +1,498 @@
+N[ext]
+P[rint]
+a[ppend]
+ab[breviate]    abbreviation
+abc[lear]
+abo[veleft]     command
+al[l]           
+am[enu]
+an[oremenu]     menu
+ar[gs]          file
+arga[dd]        file
+argd[elete]     file
+argdo           command
+arge[dit]       file
+argg[lobal]     file
+argl[ocal]      file
+argu[ment]      
+as[cii]
+au[tocmd]       autocmd_args
+aug[roup]       augroup
+aun[menu]       menu
+bN[ext]         
+b[uffer]        buffer
+ba[ll]          
+bad[d]          file
+bd[elete]       buffer
+be[have]        
+bel[owright]    command
+bf[irst]
+bl[ast]
+bm[odified]     
+bn[ext]         
+bo[tright]      command
+bp[revious]     
+br[ewind]
+brea[k]
+breaka[dd]      function
+breakd[el]      
+breakl[ist]
+bro[wse]        command
+bufdo           command
+buffers
+bun[load]       buffer
+bw[ipeout]      buffer
+cN[ext]
+cNf[ile]
+c[hange]
+ca[bbrev]       abbreviation
+cabc[lear]
+cad[dexpr]      expression
+caddb[uffer]    
+caddf[ile]      file
+cal[l]          function
+cat[ch]         
+cb[uffer]     
+cc             
+ccl[ose]
+cd              dir
+ce[nter]        
+cex[pr]         expression
+cf[ile]         file
+cfir[st]        
+cg[etfile]      file
+cgetb[uffer]    
+cgete[xpr]      expression
+changes
+chd[ir]         dir
+che[ckpath]
+checkt[ime]
+cl[ist]         
+cla[st]         
+clo[se]
+cm[ap]          mapping
+cmapc[lear]
+cme[nu]         menu
+cn[ext]
+cnew[er]        
+cnf[ile]
+cno[remap]      mapping
+cnorea[bbrev]   abbreviation
+cnoreme[nu]     menu
+co[py]          
+col[der]        
+colo[rscheme]   colorscheme_args
+com[mand]       command_args
+comc[lear]
+comp[iler]      compiler_args
+con[tinue]
+conf[irm]       command
+cope[n]         
+cp[revious]
+cpf[ile]
+cq[uit]
+cr[ewind]       
+cs[cope]        cscope_args
+cst[ag]
+cu[nmap]        mapping
+cuna[bbrev]     abbreviation
+cunme[nu]       menu
+cw[indow]       
+d[elete]        
+deb[ug]         command
+debugg[reedy]
+del[command]    command
+delf[unction]   function
+delm[arks]      
+di[splay]       
+diffg[et]       
+diffo[ff]
+diffp[atch]     file
+diffpu[t]       
+diffs[plit]     file
+diffthis
+diffu[pdate]
+dig[raphs]      
+dj[ump]         
+dl[ist]         
+do[autocmd]     autocmd_args
+doautoa[ll]     autocmd_args
+dr[op]          file
+ds[earch]       
+dsp[lit]        
+e[dit]          file          
+ea[rlier]       
+ec[ho]          expression
+echoe[rr]       expression
+echoh[l]        expression
+echom[sg]       expression
+echon           expression
+el[se]
+elsei[f]        expression
+em[enu]         menu
+en[dif]
+endf[unction]
+endfo[r]
+endt[ry]
+endw[hile]
+ene[w]
+ex              file
+exe[cute]       execute
+exi[t]          file
+exu[sage]
+f[ile]
+files
+filet[ype]
+fin[d]          file
+fina[lly]
+fini[sh]
+fir[st]         
+fix[del]
+fo[ld]
+foldc[lose]
+foldd[oopen]    command
+folddoc[losed]  command
+foldo[pen]
+for             expression
+fu[nction]      function_args
+go[to]          
+gr[ep]          file
+grepa[dd]       file
+gu[i]           file
+gv[im]          file
+h[elp]          help
+ha[rdcopy]      
+helpf[ind]
+helpg[rep]      
+helpt[ags]      dir
+hi[ghlight]     highlight
+hid[e]          command
+his[tory]       
+i[nsert]
+ia[bbrev]       abbreviation
+iabc[lear]
+if              expression
+ij[ump]       
+il[ist]         
+im[ap]          mapping
+imapc[lear]
+imenu           menu
+ino[remap]      mapping
+inorea[bbrev]   mapping
+inoreme[nu]     menu
+int[ro]
+is[earch]       
+isp[lit]        
+iu[nmap]        mapping
+iuna[bbrev]     abbreviation
+iunme[nu]       menu
+j[oin]          
+ju[mps]
+kee[pmarks]     command
+keep[jumps]     command
+keepa[lt]       command
+lN[ext]
+lNf[ile]
+l[ist]          
+la[st]          
+lad[dexpr]      expr
+laddb[uffer]    
+laddf[ile]      file
+lan[guage]      language_args
+lat[er]         
+lb[uffer]       
+lc[d]           dir
+lch[dir]        dir
+lcl[ose]
+lcs[cope]       cscope_args
+le[ft]          
+lefta[bove]     command
+let             let
+lex[pr]         expression
+lf[ile]         file
+lfir[st]        
+lg[etfile]      file
+lgetb[uffer]    
+lgete[xpr]      expression
+lgr[ep]         file
+lgrepa[dd]      file
+lh[elpgrep]     
+ll              
+lla[st]         
+lli[st]         
+lm[ap]          mapping
+lmak[e]         file
+lmapc[lear]
+ln[oremap]      mapping
+lne[xt]
+lnew[er]        
+lnf[ile]
+lo[adview]      
+loadk[eymap]
+loc[kmarks]     command
+lockv[ar]       var
+lol[der]        
+lop[en]         
+lp[revious]
+lpf[ile]
+lr[ewind]       
+ls
+lt[ag]          
+lu[nmap]        mapping
+lua
+luado
+luafile         file
+lv[imgrep]      file
+lvimgrepadd     file
+lwindow         
+m[ove]          
+ma[rk]          
+mak[e]          file
+map             mapping
+mapc[lear]
+marks
+match           
+menu            menu
+menut[ranslate] menutranslate_args
+mes[sages]      
+mk[exrc]        file
+mks[ession]     file
+mksp[ell]       file
+mkv[imrc]       file
+mkvie[w]        file
+mod[e]          
+mz[scheme]      file
+mzf[ile]        file
+n[ext]          
+nb[key]         
+new
+nm[ap]          mapping
+nmapc[lear]
+nmenu           menu
+nno[remap]      mapping
+nnoreme[nu]     menu
+no[remap]       mapping
+noa[utocmd]     command
+noh[lsearch]    
+norea[bbrev]    abbreviation
+noreme[nu]      menu
+norm[al]        
+nu[mber]        
+nun[map]        mapping
+nunme[nu]       menu
+o[pen]          
+ol[dfiles]
+om[ap]          mapping
+omapc[lear]
+ome[nu]         menu
+on[ly]
+ono[remap]      mapping
+onoreme[nu]     menu
+opt[ions]
+ou[nmap]        lhs
+ounmenu         menu
+ownsyntax       syntax_args
+p[rint]         
+pc[lose]
+pe[rl]          
+ped[it]         file
+perld[o]        
+po[p]
+popu[p]         
+pp[op]
+pre[serve]
+prev[ious]      
+prof[ile]       profile_args
+profd[el]       
+promptf[ind]    
+promptr[epl]    
+ps[earch]       
+ptN[ext]
+pta[g]          tag
+ptf[irst]
+ptj[ump]
+ptl[ast]
+ptn[ext]
+ptp[revious]
+ptr[ewind]
+pts[elect]      tag
+pu[t]           
+pw[d]
+py3f[ile]       file
+py[thon]        
+pyf[ile]        file
+python3        
+q[uit]
+qa[ll]
+quita[ll]
+r[ead]          
+rec[over]       file
+red[o]
+redi[r]         
+redr[aw]
+redraws[tatus]
+reg[isters]     
+res[ize]
+ret[ab]         
+retu[rn]        expression
+rew[ind]        
+ri[ght]         
+rightb[elow]    command
+rub[y]          
+rubyd[o]        
+rubyf[ile]      file
+runtime         file
+rv[iminfo]      file
+sN[ext]         
+s[ubstitute]    
+sa[rgument]     
+sal[l]
+san[dbox]       command
+sav[eas]        file
+sbN[ext]        
+sb[uffer]       buffer
+sba[ll]         
+sbf[irst]
+sbl[ast]
+sbm[odified]    
+sbn[ext]        
+sbp[revious]    
+sbr[ewind]
+scrip[tnames]
+scripte[ncoding] encoding
+scscope          cscope_args
+se[t]            option
+setf[iletype]   filetype
+setg[lobal]     option
+setl[ocal]      option
+sf[ind]         file
+sfir[st]        
+sh[ell]
+sig[n]          sign_args
+sil[ent]        command
+sim[alt]        
+sl[eep]         
+sla[st]         
+sm[agic]        
+sm[ap]          mapping
+smapc[lear]
+sme[nu]         menu
+sn[ext]         file
+sni[ff]         
+sno[remap]      mapping
+snoreme[nu]     menu
+so[urce]        file
+sor[t]          
+sp[lit]         
+spe[llgood]     
+spelld[ump]
+spelli[nfo]     
+spellr[epall]
+spellu[ndo]     
+spellw[rong]    
+spr[evious]     
+sre[wind]       
+st[op]
+sta[g]          tag
+star[tinsert]
+startg[replace]
+startr[eplace]
+stj[ump]        tag
+stopi[nsert]
+sts[elect]      tag
+sun[hide]       
+sunm[ap]        mapping
+sunme[nu]       menu
+sus[pend]
+sv[iew]         file
+sw[apname]
+sy[ntax]        syntax_args
+sync[bind]
+t
+tN[ext]
+ta[g]           tag
+tab             command
+tabN[ext]
+tabc[lose]
+tabd[o]         command
+tabe[dit]       file
+tabf[ind]       file
+tabfir[st]
+tabl[ast]
+tabm[ove]       
+tabn[ext]
+tabnew          file
+tabo[nly]
+tabp[revious]
+tabr[ewind]
+tabs
+tags
+tc[l]           
+tcld[o]         
+tclf[ile]       file
+te[aroff]       menu
+tf[irst]
+th[row]         expression
+tj[ump]         tag
+tl[ast]         
+tm[enu]         menu
+tn[ext]
+to[pleft]       command
+tp[revious]
+tr[ewind]
+try
+tselect
+tu[nmenu]       menu
+u[ndo]          
+una[bbreviate]  abbreviation
+undoj[oin]
+undol[ist]
+unh[ide]        
+unl[et]         var
+unlo[ckvar]     var
+unm[ap]         mapping
+unme[nu]        menu
+uns[ilent]      command
+up[date]        file
+ve[rsion]
+verb[ose]       command
+vert[ical]      command
+vg[lobal]       
+vi[sual]        file
+vie[w]          file
+vim[grep]       file
+vimgrepa[dd]    file
+viu[sage]
+vm[ap]          mapping
+vmapc[lear]
+vmenu           menu
+vn[oremap]      mapping
+vne[w]          file
+vnoremenu       menu
+vsp[lit]        file
+vu[nmap]        mapping
+vunmenu         menu
+wN[ext]         file
+w[rite]         file
+wa[ll]
+wh[ile]         expression
+win[size]       
+winc[md]        
+windo           command
+winp[os]        
+wn[ext]         
+wp[revious]     file
+wq              
+wqa[ll]         
+ws[verb]        
+wv[iminfo]      file
+x[it]           file
+xa[ll]          
+xm[ap]          mapping
+xmapc[lear]
+xmenu           menu
+xn[oremap]      mapping
+xnoremenu       menu
+xu[nmap]        mapping
+xunmenu         menu
+y[ank]          

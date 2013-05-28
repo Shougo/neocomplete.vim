@@ -1,0 +1,354 @@
+aleph ; ASCII code of the letter Aleph (Hebrew)
+allowrevins ; allow CTRL-_ in Insert and Command-line mode
+altkeymap ; for default second language (Farsi/Hebrew)
+ambiwidth ; what to do with Unicode chars of ambiguous width
+antialias ; Mac OS X: use smooth, antialiased fonts
+arabic ; for Arabic as a default second language
+arabicshape ; do shaping for Arabic characters
+autochdir ; change directory to the file in the current window
+autoindent ; take indent for new line from previous line
+autoread ; autom. read file when changed outside of Vim
+autowrite ; automatically write file if changed
+autowriteall ; as 'autowrite', but works with more commands
+background ; "dark" or "light", used for highlight colors
+backspace ; how backspace works at start of line
+backup ; keep backup file after overwriting a file
+backupcopy ; make backup as a copy, don't rename the file
+backupdir ; list of directories for the backup file
+backupext ; extension used for the backup file
+backupskip ; no backup for files that match these patterns
+balloondelay ; delay in mS before a balloon may pop up
+ballooneval ; switch on balloon evaluation
+balloonexpr ; expression to show in balloon
+binary ; read/write/edit file in binary mode
+bioskey ; MS-DOS: use bios calls for input characters
+bomb ; prepend a Byte Order Mark to the file
+breakat ; characters that may cause a line break
+browsedir ; which directory to start browsing in
+bufhidden ; what to do when buffer is no longer in window
+buflisted ; whether the buffer shows up in the buffer list
+buftype ; special type of buffer
+casemap ; specifies how case of letters is changed
+cdpath ; list of directories searched with ":cd"
+cedit ; key used to open the command-line window
+charconvert ; expression for character encoding conversion
+cindent ; do C program indenting
+cinkeys ; keys that trigger indent when 'cindent' is set
+cinoptions ; how to do indenting when 'cindent' is set
+cinwords ; words where 'si' and 'cin' add an indent
+clipboard ; use the clipboard as the unnamed register
+cmdheight ; number of lines to use for the command-line
+cmdwinheight ; height of the command-line window
+colorcolumn ; screen columns that are highlighted with ColorColumn
+columns ; number of columns in the display
+comments ; patterns that can start a comment line
+commentstring ; template for comments; used for fold marker
+compatible ; behave Vi-compatible as much as possible
+complete ; specify how Insert mode completion works
+completefunc ; function to be used for Insert mode completion
+completeopt ; options for Insert mode completion
+concealcursor ; sets the modes in which text in the cursor line can also be concealed
+conceallevel ; how text with the "conceal" syntax attribute
+confirm ; ask what to do about unsaved/read-only files
+conskey ; get keys directly from console (MS-DOS only)
+copyindent ; make 'autoindent' use existing indent structure
+cpoptions ; flags for Vi-compatible behavior
+cryptmethod ; method used for encryption when the buffer is written to a file
+cscopepathcomp ; how many components of the path to show
+cscopeprg ; command to execute cscope
+cscopequickfix ; use quickfix window for cscope results
+cscopetag ; use cscope for tag commands
+cscopetagorder ; determines ":cstag" search order
+cscopeverbose ; give messages when adding a cscope database
+cursorcolumn ; highlight the screen column of the cursor
+cursorline ; highlight the screen line of the cursor
+debug ; set to "msg" to see all error messages
+define ; pattern to be used to find a macro definition
+delcombine ; delete combining characters on their own
+dictionary ; list of file names used for keyword completion
+diff ; use diff mode for the current window
+diffexpr ; expression used to obtain a diff file
+diffopt ; options for using diff mode
+digraph ; enable the entering of digraphs in Insert mode
+directory ; list of directory names for the swap file
+display ; list of flags for how to display text
+eadirection ; in which direction 'equalalways' works
+edcompatible ; toggle flags of ":substitute" command
+encoding ; encoding used internally
+endofline ; write <EOL> for last line in file
+equalalways ; windows are automatically made the same size
+equalprg ; external program to use for "=" command
+errorbells ; ring the bell for error messages
+errorfile ; name of the errorfile for the QuickFix mode
+errorformat ; description of the lines in the error file
+esckeys ; recognize function keys in Insert mode
+eventignore ; autocommand events that are ignored
+expandtab ; use spaces when <Tab> is inserted
+exrc ; read .vimrc and .exrc in the current directory
+fileencoding ; file encoding for multi-byte text
+fileencodings ; automatically detected character encodings
+fileformat ; file format used for file I/O
+fileformats ; automatically detected values for 'fileformat'
+filetype ; type of file, used for autocommands
+fillchars ; characters to use for displaying special items
+fkmap ; Farsi keyboard mapping
+foldclose ; close a fold when the cursor leaves it
+foldcolumn ; width of the column used to indicate folds
+foldenable ; set to display all folds open
+foldexpr ; expression used when 'foldmethod' is "expr"
+foldignore ; ignore lines when 'foldmethod' is "indent"
+foldlevel ; close folds with a level higher than this
+foldlevelstart ; 'foldlevel' when starting to edit a file
+foldmarker ; markers used when 'foldmethod' is "marker"
+foldmethod ; folding type
+foldminlines ; minimum number of lines for a fold to be closed
+foldnestmax ; maximum fold depth
+foldopen ; for which commands a fold will be opened
+foldtext ; expression used to display for a closed fold
+formatexpr ; expression used with "gq" command
+formatlistpat ; pattern used to recognize a list header
+formatoptions ; how automatic formatting is to be done
+formatprg ; name of external program used with "gq" command
+fsync ; whether to invoke fsync() after file write
+gdefault ; the ":substitute" flag 'g' is default on
+grepformat ; format of 'grepprg' output
+grepprg ; program to use for ":grep"
+guicursor ; GUI: settings for cursor shape and blinking
+guifont ; GUI: Name(s) of font(s) to be used
+guifontset ; GUI: Names of multi-byte fonts to be used
+guifontwide ; list of font names for double-wide characters
+guiheadroom ; GUI: pixels room for window decorations
+guioptions ; GUI: Which components and options are used
+guipty ; GUI: try to use a pseudo-tty for ":!" commands
+guitablabel ; GUI: custom label for a tab page
+guitabtooltip ; GUI: custom tooltip for a tab page
+helpfile ; full path name of the main help file
+helpheight ; minimum height of a new help window
+helplang ; preferred help languages
+hidden ; don't unload buffer when it is abandoned
+highlight ; sets highlighting mode for various occasions
+history ; number of command-lines that are remembered
+hkmap ; Hebrew keyboard mapping
+hkmapp ; phonetic Hebrew keyboard mapping
+hlsearch ; highlight matches with last search pattern
+icon ; let Vim set the text of the window icon
+iconstring ; string to use for the Vim icon text
+ignorecase ; ignore case in search patterns
+imactivatekey ; key that activates the X input method
+imcmdline ; use IM when starting to edit a command line
+imdisable ; do not use the IM in any mode
+iminsert ; use :lmap or IM in Insert mode
+imsearch ; use :lmap or IM when typing a search pattern
+include ; pattern to be used to find an include file
+includeexpr ; expression used to process an include line
+incsearch ; highlight match while typing search pattern
+indentexpr ; expression used to obtain the indent of a line
+indentkeys ; keys that trigger indenting with 'indentexpr'
+infercase ; adjust case of match for keyword completion
+insertmode ; start the edit of a file in Insert mode
+isfname ; characters included in file names and pathnames
+isident ; characters included in identifiers
+iskeyword ; characters included in keywords
+isprint ; printable characters
+joinspaces ; two spaces after a period with a join command
+key ; encryption key
+key ; for encrypting and decrypting the current buffer
+keymap ; name of a keyboard mapping
+keymodel ; enable starting/stopping selection with keys
+keywordprg ; program to use for the "K" command
+langmap ; alphabetic characters for other language mode
+langmenu ; language to be used for the menus
+laststatus ; tells when last window has status lines
+lazyredraw ; don't redraw while executing macros
+linebreak ; wrap long lines at a blank
+lines ; number of lines in the display
+linespace ; number of pixel lines to use between characters
+lisp ; automatic indenting for Lisp
+lispwords ; words that change how lisp indenting works
+list ; show <Tab> and <EOL>
+listchars ; characters for displaying in list mode
+loadplugins ; load plugin scripts when starting up
+macatsui ; Mac GUI: use ATSUI text drawing
+magic ; changes special characters in search patterns
+makeef ; name of the errorfile for ":make"
+makeprg ; program to use for the ":make" command
+matchpairs ; pairs of characters that "%" can match
+matchtime ; tenths of a second to show matching paren
+maxcombine ; maximum nr of combining characters displayed
+maxfuncdepth ; maximum recursive depth for user functions
+maxmapdepth ; maximum recursive depth for mapping
+maxmem ; maximum memory (in Kbyte) used for one buffer
+maxmempattern ; maximum memory (in Kbyte) used for pattern search
+maxmemtot ; maximum memory (in Kbyte) used for all buffers
+menuitems ; maximum number of items in a menu
+mkspellmem ; memory used before :mkspell compresses the tree
+modeline ; recognize modelines at start or end of file
+modelines ; number of lines checked for modelines
+modifiable ; changes to the text are not possible
+modified ; buffer has been modified
+more ; pause listings when the whole screen is filled
+mouse ; enable the use of mouse clicks
+mousefocus ; keyboard focus follows the mouse
+mousehide ; hide mouse pointer while typing
+mousemodel ; changes meaning of mouse buttons
+mouseshape ; shape of the mouse pointer in different modes
+mousetime ; max time between mouse double-click
+mzquantum ; the interval between polls for MzScheme threads
+nrformats ; number formats recognized for CTRL-A command
+number ; print the line number in front of each line
+numberwidth ; number of columns used for the line number
+omnifunc ; function for filetype-specific completion
+opendevice ; allow reading/writing devices on MS-Windows
+operatorfunc ; function to be called for g@ operator
+osfiletype ; operating system-specific filetype information
+paragraphs ; nroff macros that separate paragraphs
+paste ; allow pasting text
+pastetoggle ; key code that causes 'paste' to toggle
+patchexpr ; expression used to patch a file
+patchmode ; keep the oldest version of a file
+path ; list of directories searched with "gf" et.al.
+preserveindent ; preserve the indent structure when reindenting
+previewheight ; height of the preview window
+previewwindow ; identifies the preview window
+printdevice ; name of the printer to be used for :hardcopy
+printencoding ; encoding to be used for printing
+printexpr ; expression used to print PostScript for :hardcopy
+printfont ; name of the font to be used for :hardcopy
+printheader ; format of the header used for :hardcopy
+printmbcharset ; CJK character set to be used for :hardcopy
+printmbfont ; font names to be used for CJK output of :hardcopy
+printoptions ; controls the format of :hardcopy output
+pumheight ; maximum height of the popup menu
+quoteescape ; escape characters used in a string
+readonly ; disallow writing the buffer
+redrawtime ; timeout for 'hlsearch' and :match highlighting
+relativenumber ; show the line number relative to the line with the cursor in front of each line
+remap ; allow mappings to work recursively
+report ; threshold for reporting nr. of lines changed
+restorescreen ; Win32: restore screen when exiting
+revins ; inserting characters will work backwards
+rightleft ; window is right-to-left oriented
+rightleftcmd ; commands for which editing works right-to-left
+ruler ; show cursor line and column in the status line
+rulerformat ; custom format for the ruler
+runtimepath ; list of directories used for runtime files
+scroll ; lines to scroll with CTRL-U and CTRL-D
+scrollbind ; scroll in window as other windows scroll
+scrolljump ; minimum number of lines to scroll
+scrolloff ; minimum nr. of lines above and below cursor
+scrollopt ; how 'scrollbind' should behave
+sections ; nroff macros that separate sections
+secure ; secure mode for reading .vimrc in current dir
+selection ; what type of selection to use
+selectmode ; when to use Select mode instead of Visual mode
+sessionoptions ; options for :mksession
+shell ; name of shell to use for external commands
+shellcmdflag ; flag to shell to execute one command
+shellpipe ; string to put output of ":make" in error file
+shellquote ; quote character(s) for around shell command
+shellredir ; string to put output of filter in a temp file
+shellslash ; use forward slash for shell file names
+shelltemp ; whether to use a temp file for shell commands
+shelltype ; Amiga: influences how to use a shell
+shellxquote ; like 'shellquote', but include redirection
+shiftround ; round indent to multiple of shiftwidth
+shiftwidth ; number of spaces to use for (auto)indent step
+shortmess ; list of flags, reduce length of messages
+shortname ; non-MS-DOS: Filenames assumed to be 8.3 chars
+showbreak ; string to use at the start of wrapped lines
+showcmd ; show (partial) command in status line
+showfulltag ; show full tag pattern when completing tag
+showmatch ; briefly jump to matching bracket if insert one
+showmode ; message on status line to show current mode
+showtabline ; tells when the tab pages line is displayed
+sidescroll ; minimum number of columns to scroll horizontal
+sidescrolloff ; min. nr. of columns to left and right of cursor
+smartcase ; no ignore case when pattern has uppercase
+smartindent ; smart autoindenting for C programs
+smarttab ; use 'shiftwidth' when inserting <Tab>
+softtabstop ; number of spaces that <Tab> uses while editing
+spell ; enable spell checking
+spellcapcheck ; pattern to locate end of a sentence
+spellfile ; files where zg and zw store words
+spelllang ; language(s) to do spell checking for
+spellsuggest ; method(s) used to suggest spelling corrections
+splitbelow ; new window from split is below the current one
+splitright ; new window is put right of the current one
+startofline ; commands move cursor to first non-blank in line
+statusline ; custom format for the status line
+suffixes ; suffixes that are ignored with multiple match
+suffixesadd ; suffixes added when searching for a file
+swapfile ; whether to use a swapfile for a buffer
+swapsync ; how to sync the swap file
+switchbuf ; sets behavior when switching to another buffer
+synmaxcol ; maximum column to find syntax items
+syntax ; syntax to be loaded for current buffer
+tabline ; custom format for the console tab pages line
+tabpagemax ; maximum number of tab pages for -p and "tab all"
+tabstop ; number of spaces that <Tab> in file uses
+tagbsearch ; use binary searching in tags files
+taglength ; number of significant characters for a tag
+tagrelative ; file names in tag file are relative
+tags ; list of file names used by the tag command
+tagstack ; push tags onto the tag stack
+term ; name of the terminal
+termbidi ; terminal takes care of bi-directionality
+termencoding ; character encoding used by the terminal
+terse ; shorten some messages
+textauto ; obsolete, use 'fileformats'
+textmode ; obsolete, use 'fileformat'
+textwidth ; maximum width of text that is being inserted
+thesaurus ; list of thesaurus files for keyword completion
+tildeop ; tilde command "~" behaves like an operator
+timeout ; time out on mappings and key codes
+timeoutlen ; time out time in milliseconds
+title ; let Vim set the title of the window
+titlelen ; percentage of 'columns' used for window title
+titleold ; old title, restored when exiting
+titlestring ; string to use for the Vim window title
+toolbar ; GUI: which items to show in the toolbar
+toolbariconsize ; size of the toolbar icons (for GTK 2 only)
+transparency ; GUI: set transparency percentage (max: 255)
+ttimeout ; time out on mappings
+ttimeoutlen ; time out time for key codes in milliseconds
+ttybuiltin ; use built-in termcap before external termcap
+ttyfast ; indicates a fast terminal connection
+ttymouse ; type of mouse codes generated
+ttyscroll ; maximum number of lines for a scroll
+ttytype ; alias for 'term'
+undodir ; list of directory names for undo files
+undofile ; automatically saves undo history to an undo file
+undolevels ; maximum number of changes that can be undone
+undoreload ; save the whole buffer for undo when reloading it
+updatecount ; after this many characters flush swap file
+updatetime ; after this many milliseconds flush swap file
+verbose ; give informative messages
+verbosefile ; file to write messages in
+viewdir ; directory where to store files with :mkview
+viewoptions ; specifies what to save for :mkview
+viminfo ; use .viminfo file upon startup and exiting
+virtualedit ; when to use virtual editing
+visualbell ; use visual bell instead of beeping
+warn ; warn for shell command when buffer was changed
+weirdinvert ; for terminals that have weird inversion method
+whichwrap ; allow specified keys to cross line boundaries
+wildchar ; command-line character for wildcard expansion
+wildcharm ; like 'wildchar' but also works when mapped
+wildignore ; files matching these patterns are not completed
+wildmenu ; use menu for command line completion
+wildmode ; mode for 'wildchar' command-line expansion
+wildoptions ; specifies how command line completion is done.
+winaltkeys ; when the windows system handles ALT keys
+winfixheight ; keep window height when opening/closing windows
+winfixwidth ; keep window width when opening/closing windows
+winheight ; minimum number of lines for the current window
+winminheight ; minimum number of lines for any window
+winminwidth ; minimal number of columns for any window
+winwidth ; minimal number of columns for current window
+wrap ; long lines wrap and continue on the next line
+wrapmargin ; chars from the right where wrapping starts
+wrapscan ; searches wrap around the end of the file
+write ; writing to a file is allowed
+writeany ; write to file with no need for "!" override
+writebackup ; make a backup before overwriting a file
+writedelay ; delay this many msec for each char (for debug)

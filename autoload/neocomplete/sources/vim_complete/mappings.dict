@@ -1,0 +1,72 @@
+<buffer> ; the mapping will be effective in the current buffer only
+<expr> ; the argument is an expression evaluated to obtain the {rhs} that is used
+<Leader> ; define a mapping which uses the "mapleader" variable
+<LocalLeader> ; just like <Leader>, except that it uses "maplocalleader" instead of "mapleader"
+<Plug> ; used for an internal mapping, which is not to be matched with any key sequence
+<script> ; the mapping will only remap characters in the {rhs} using mappings that were defined local to a script
+<SID> ; unique mapping for the script
+<unique> ; the command will fail if the mapping or abbreviation already exists
+<silent> ; define a mapping which will not be echoed on the command line
+<Nul> ; zero
+<Nop> ; no operation
+<BS> ; backspace
+<Tab> ; tab
+<NL> ; linefeed
+<FF> ; formfeed
+<CR> ; carriage return
+<Return> ; same as <CR>
+<Enter> ; same as <CR>
+<Esc> ; escape
+<Space> ; space
+<lt> ; less-than <
+<Bslash> ; backslash \
+<Bar> ; vertical bar |
+<Del> ; delete
+<CSI> ; command sequence intro  ALT-Esc
+<xCSI> ; CSI when typed in the GUI
+<EOL> ; end-of-line (can be <CR>, <LF> or <CR><LF>, depends on system and 'fileformat')
+<Up> ; cursor-up
+<Down> ; cursor-down
+<Left> ; cursor-left
+<Right> ; cursor-right
+<S-Up> ; shift-cursor-up
+<S-Down> ; shift-cursor-down
+<S-Left> ; shift-cursor-left
+<S-Right> ; shift-cursor-right
+<C-Left> ; control-cursor-left
+<C-Right> ; control-cursor-right
+<Help> ; help key
+<Undo> ; undo key
+<Insert> ; insert key
+<Home> ; home
+<End> ; end
+<PageUp> ; page-up
+<PageDown> ; page-down
+<kHome> ; keypad home (upper left)
+<kEnd> ; keypad end (lower left)
+<kPageUp> ; keypad page-up (upper right)
+<kPageDown> ; keypad page-down (lower right)
+<kPlus> ; keypad +
+<kMinus> ; keypad -
+<kMultiply> ; keypad *
+<kDivide> ; keypad /
+<kEnter> ; keypad Enter
+<kPoint> ; keypad Decimal point
+<LeftMouse>     ; Left mouse click
+<A-LeftMouse>   ; Left mouse click with Alt
+<C-LeftMouse>   ; Left mouse click with Ctrl
+<S-LeftMouse>   ; Left mouse click with Shift
+<2-LeftMouse>   ; Double left mouse click
+<3-LeftMouse>   ; Triple left mouse click
+<4-LeftMouse>   ; Quad left mouse click
+<LeftDrag>      ; Left mouse drag
+<LeftRelease>   ; Left mouse release
+<MiddleMouse>   ; Middle mouse click
+<MiddleDrag>    ; Middle mouse drag
+<MiddleRelease> ; Middle mouse drag
+<RightMouse>    ; Right mouse click
+<A-RightMouse>  ; Right mouse click with Alt
+<S-RightMouse>  ; Right mouse click with Shift
+<C-RightMouse>  ; Right mouse click with Ctrl
+<RightDrag>     ; Right mouse drag
+<RightRelease>  ; Right mouse release

@@ -1,0 +1,10 @@
+<line1> ; the starting line of the command range
+<line2> ; the final line of the command range
+<count> ; any count supplied (as described for the '-range' and '-count' attributes)
+<bang> ; expands to a ! if the command was executed with a ! modifier
+<reg> ; the optional register, if specified
+<args> ; the command arguments, exactly as supplied
+<lt> ; a single '<' (Less-Than) character
+<q-args> ; the value is quoted in such a way as to make it a valid value for use in an expression
+<f-args> ; splits the command arguments at spaces and tabs, quotes each argument individually
+<sid> ; defining a user command in a script

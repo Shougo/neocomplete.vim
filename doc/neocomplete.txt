@@ -1,0 +1,1920 @@
+*neocomplete.txt*	Next generation of auto complete framework.
+
+Version: 0.0
+Author : Shougo <Shougo.Matsu@gmail.com>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*neocomplete-contents*
+
+Introduction		|neocomplete-introduction|
+Install			|neocomplete-install|
+Interface		|neocomplete-interface|
+  Commands		  |neocomplete-commands|
+  Variables		  |neocomplete-variables|
+    Sources variables	    |neocomplete-sources-variables|
+  Key mappings		  |neocomplete-key-mappings|
+  Functions		  |neocomplete-functions|
+Examples		|neocomplete-examples|
+Sources			|neocomplete-sources|
+  User sources		  |neocomplete-user-sources|
+Create source		|neocomplete-create-source|
+  Source attributes       |neocomplete-source-attributes|
+  Candidate attributes   |neocomplete-candidate-attributes|
+Create filter		|neocomplete-create-filter|
+  Filter attributes       |neocomplete-filter-attributes|
+FILTERS			|neocomplete-filters|
+FAQ			|neocomplete-faq|
+TODO			|neocomplete-todo|
+Changelog		|neocomplete-changelog|
+
+==============================================================================
+INTRODUCTION					*neocomplete-introduction*
+
+*neocomplete* is the abbreviation of "neo-completion with cache". It
+provides keyword completion system by maintaining a cache of keywords in the
+current buffer. neocomplete could be customized easily and has a lot more
+features than the Vim's standard completion feature.
+Note: neocomplete may consume more memory than other plugins.
+
+==============================================================================
+INSTALL						*neocomplete-install*
+
+Note: To use neocomplete ver.8.1, you must use Vim 7.3.885 or above with
+|if_lua| feature.
+
+In Windows:
+http://files.kaoriya.net/goto/vim73w32
+http://files.kaoriya.net/goto/vim73w64
+
+In Mac(if_lua enabled MacVim):
+https://github.com/zhaocai/macvim
+
+In Linux: You should make Vim and enable |if_lua| manually.
+
+1: Extract the file and put files in your Vim directory
+   (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
+2: Execute |:NeoCompleteEnable| command or set
+let g:neocomplete_enable_at_startup = 1
+in your .vimrc.
+
+						*neocomplete-asynchronous*
+*neocomplete-RECOMMENDATION*
+With neocomplete Ver.6.0 or later, when you have |vimproc| installed,
+neocomplete creates caches asynchronously.
+
+vimproc is distributed at: http://github.com/Shougo/vimproc
+
+To use vimproc, you must compile it.  Refer to the vimproc documentation.
+
+Note: Snippets feature (snippets_complete source), which was originally
+      built-in, left since neocomplete ver.7.
+      If you were using it, please install neosnippet source manually.
+
+https://github.com/Shougo/neosnippet
+
+==============================================================================
+INTERFACE					*neocomplete-interface*
+
+------------------------------------------------------------------------------
+COMMANDS 					*neocomplete-commands*
+
+:NeoCompleteEnable				*:NeoCompleteEnable*
+		Validate neocomplete and initialize it.
+		Warning: Conventional cache disappears.
+
+:NeoCompleteDisable				*:NeoCompleteDisable*
+		Invalidate neocomplete and clean it up.
+
+:NeoCompleteToggle				*:NeoCompleteToggle*
+		Change a lock state of neocomplete.
+		While neocomplete is in locking, you cannot use automatic
+		completions.
+		Note: This command enables neocomplete when neocomplete is
+		already disabled.
+
+:Neco [{anim-number}] 				*:Neco*
+		Secret.
+
+:NeoCompleteLock				*:NeoCompleteLock*
+		Lock neocomplete.
+		While neocomplete is in locking, you cannot use automatic
+		completions but can use manual completions.
+		The lock status is local to each buffer.
+		Note: This command is disabled when neocomplete is disabled.
+
+:NeoCompleteUnlock				*:NeoCompleteUnlock*
+		Unlock neocomplete.
+		Note: This command is disabled when neocomplete is disabled.
+
+:NeoCompleteLockSource {source-name}		*:NeoCompleteLockSource*
+		Disable {source-name} source completion.  Disable state is
+		local to each buffer.
+
+:NeoCompleteUnlockSource {source-name}	*:NeoCompleteUnlockSource*
+		Unlock {source-name} source completion.
+
+					*:NeoCompleteAutoCompletionLength*
+:NeoCompleteAutoCompletionLength {length}
+		Change start length of automatic completion to {length}.
+		Note: This length value is local to each buffer.
+
+:NeoCompleteCachingBuffer [bufname]		*:NeoCompleteCachingBuffer*
+		Cache [bufname] buffer.
+		Warning: it may take time considerably for the big buffer.
+		This selects current buffer when you omitted [bufname].  When
+		[bufname] buffer is not cached, this performs only simple
+		caching.  If [bufname] is not loaded, neocomplete will open
+		[bufname] automatically.
+
+:NeoCompleteCachingSyntax [filetype]		*:NeoCompleteCachingSyntax*
+		Caches [filetype] syntax file.
+		Selects current buffer filetype when [filetype] is omitted.
+
+:NeoCompleteCachingDictionary [filetype]
+					*:NeoCompleteCachingDictionary*
+		Caches [filetype] dictionary file.
+		Selects current buffer filetype when [filetype] is omitted.
+
+:NeoCompleteCachingTags		*:NeoCompleteCachingTags*
+		Caches tags file in current buffer.
+
+:NeoCompleteCachingInclude [bufname]		*:NeoCompleteCachingInclude*
+		Caches [bufname] include file.
+		Selects current buffer name when [bufname] is omitted.
+
+:NeoCompletePrintSource [bufname]		*:NeoCompletePrintSource*
+		Outputs [bufname] buffer's cache in current buffer.
+		This command is for debugging.
+		Selects current buffer when [bufname] is omitted.
+		For a command for debugging, a user will not need to use it
+		mainly.
+
+:NeoCompleteOutputKeyword [bufname]		*:NeoCompleteOutputKeyword*
+		Write the keyword which cached [bufname] buffer in current
+		buffer.  Select current buffer when [bufname] omitted.  When
+		you make a dictionary file by yourself, it may be
+		convenient.
+
+:NeoCompleteCreateTags [bufname]		*:NeoCompleteCreateTags*
+		Create tags from [bufname] buffer.
+		Select current buffer when [bufname] omitted.
+
+:NeoCompleteSetFileType [filetype]		*:NeoCompleteSetFileType*
+		Change filetype to [filetype] in current buffer.
+		This filetype is only used neocomplete.
+		Note: You can get current filetype by
+		|neocomplete#get_context_filetype()|
+
+:NeoCompleteClean 				*:NeoCompleteClean*
+		Clean cache files in |g:neocomplete_temporary_dir|.
+
+------------------------------------------------------------------------------
+VARIABLES 					*neocomplete-variables*
+
+					*g:neocomplete_enable_at_startup*
+g:neocomplete_enable_at_startup
+		neocomplete gets started automatically when Vim starts if
+		this value is 1.
+
+		With the default value 0, you cannot use neocomplete
+		unless you start it manually.
+
+		Note: This option has to be set in .vimrc or _vimrc.  NOT IN
+		.gvimrc nor _gvimrc!
+
+g:neocomplete_max_list			*g:neocomplete_max_list*
+		This variable controls the number of candidates displayed in a
+		pop-up menu.  Candidates more than this value won't be show
+		up.
+
+		Default value is 100.
+
+					*g:neocomplete_max_keyword_width*
+g:neocomplete_max_keyword_width
+		This variable controls the indication width of a candidate
+		displayed in a pop-up menu.  The case beyond this value is
+		cut down properly.
+
+		Default value is 80.
+
+					*g:neocomplete_max_menu_width*
+g:neocomplete_max_menu_width
+		This variable controls the indication width of a menu
+		displayed in a pop-up menu.  The case beyond this value is cut
+		down.
+
+		Default value is 15.
+
+				*g:neocomplete_auto_completion_start_length*
+g:neocomplete_auto_completion_start_length
+		This variable controls the number of the input completion
+		at the time of key input automatically.
+		Note: |g:neocomplete_auto_completion_start_length| is used
+		for "keyword" kind source only. Please refer to
+			|neocomplete-source-attribute-min_pattern_length|.
+
+		Default value is 2.
+
+			*g:neocomplete_manual_completion_start_length*
+g:neocomplete_manual_completion_start_length
+		This variable controls the number of the input completion
+		at the time of manual completion.  It is convenient when you
+		reduce this value, but may get heavy when you deleted a
+		letter in <C-h> or <BS> at popup indication time.
+
+		Default value is 0.
+
+					*g:neocomplete_min_keyword_length*
+g:neocomplete_min_keyword_length
+		In a buffer or dictionary files, this variable controls
+		length of keyword becoming the object of the completion at
+		the minimum.
+
+		Default value is 4.
+
+					*g:neocomplete_min_syntax_length*
+g:neocomplete_min_syntax_length
+		In syntax files, this variable controls length of keyword
+		becoming the object of the completion at the minimum.
+
+		Default value is 4.
+
+					*g:neocomplete_enable_ignore_case*
+g:neocomplete_enable_ignore_case
+		When neocomplete looks for candidate completion, this
+		variable controls whether neocomplete ignores the upper-
+		and lowercase.  If it is 1, neocomplete ignores case.
+
+		Default value is 'ignorecase'.
+
+					*g:neocomplete_enable_smart_case*
+g:neocomplete_enable_smart_case
+		When a capital letter is included in input, neocomplete does
+		not ignore the upper- and lowercase.
+
+		Default value is 'infercase'.
+
+				*g:neocomplete_disable_auto_complete*
+g:neocomplete_disable_auto_complete
+		This variable controls whether you invalidate automatic
+		completion.  If it is 1, automatic completion becomes
+		invalid, but can use the manual completion by <C-x><C-u>.
+
+		Default value is 0.
+
+					*g:neocomplete_enable_wildcard*
+g:neocomplete_enable_wildcard
+		This variable controls whether neocomplete accept wild
+		card character '*' for input-saving.
+		Note: You can customize the wildcard character by
+		|g:neocomplete_wildcard_characters|.
+
+		Default value is 1.
+
+					*g:neocomplete_enable_cursor_hold_i*
+g:neocomplete_enable_cursor_hold_i
+		This variable controls whether neocomplete use |CursorHoldI|
+		event when complete candidates.
+		Note: You should not use this option if less than Vim 7.3.418.
+		Note: This option must be set before call
+		|:NeoCompleteEnable|.
+
+		Default value is 0.
+
+					*g:neocomplete_cursor_hold_i_time*
+g:neocomplete_cursor_hold_i_time
+		If g:neocomplete_enable_cursor_hold_i is non-zero and in
+		insert mode, this value changes 'updatetime' option.
+
+		Default value is 300.
+
+				*g:neocomplete_enable_insert_char_pre*
+g:neocomplete_enable_insert_char_pre
+		This variable controls whether neocomplete use
+		|InsertCharPre| event when complete candidates.
+		Note: You should not use this option if less than Vim 7.3.461.
+		Note: This option must be set before call
+		|:NeoCompleteEnable|.
+		Note: This option is experimental.
+
+		Default value is 0.
+
+					*g:neocomplete_enable_auto_select*
+g:neocomplete_enable_auto_select
+		When neocomplete displays candidates, this option controls
+		whether neocomplete selects the first candidate
+		automatically.  If you enable this option, neocomplete's
+		completion behavior is like |AutoComplPop|.
+
+		Default value is 0.
+
+				*g:neocomplete_enable_auto_delimiter*
+g:neocomplete_enable_auto_delimiter
+		This option controls whether neocomplete insert delimiter
+		automatically.  For example, /(filename) or #(Vim script).
+
+		Default value is 0.
+
+				*g:neocomplete_enable_camel_case_completion*
+g:neocomplete_enable_camel_case_completion
+		When you input a capital letter, this variable controls
+		whether neocomplete takes an ambiguous searching as an end
+		of the words in it.  For example, neocomplete comes to match
+		it with "ArgumentsException" when you input it with "AE".
+
+		Note: This feature may be too slow.
+
+		Default value is 0.
+
+				*g:neocomplete_enable_underbar_completion*
+g:neocomplete_enable_underbar_completion
+		When you input _, this variable controls whether
+		neocomplete takes an ambiguous searching as an end of the
+		words in it.  For example, neocomplete come to match it
+		with "public_html" when you input it with "p_h".
+
+		Note: This feature may be too slow.
+
+		Default value is 0.
+
+				*g:neocomplete_enable_fuzzy_completion*
+g:neocomplete_enable_fuzzy_completion
+		When you input one character, this variable controls whether
+		neocomplete takes an ambiguous searching as an end of the
+		words in it.  For example, neocomplete comes to match it with
+		"public_html" or "PublicHtml" when you input it with "puh".
+
+		Default value is 1.
+
+			*g:neocomplete_fuzzy_completion_start_length*
+g:neocomplete_fuzzy_completion_start_length
+		It controls length of fuzzy completion start length.  For
+		example, if this variable is "3", third and after input
+		characters are fuzzy matched.  But first and second input
+		characters are not fuzzy matched.
+		Note: If this variable changed, completion speed may be too
+		slow.
+
+		Default value is 3.
+
+				*g:neocomplete_enable_caching_message*
+g:neocomplete_enable_caching_message
+		When make cache, this variable controls whether neocomplete
+		displays the message in Command-line.
+
+		Default value is 1.
+
+				*g:neocomplete_caching_limit_file_size*
+g:neocomplete_caching_limit_file_size
+		This variable set file size to make a cache of a file.  If
+		open file is bigger than this size, neocomplete does not
+		make a cache.
+
+		Default value is 500000.
+
+			*g:neocomplete_disable_caching_file_path_pattern*
+g:neocomplete_disable_caching_file_path_pattern
+		This variable set a pattern of the buffer file path.  If
+		matched it, neocomplete does not save a cache of the buffer.
+		When it is an empty character string, neocomplete will
+		ignore.
+
+		Default value is ''.
+
+				*g:neocomplete_lock_buffer_name_pattern*
+g:neocomplete_lock_buffer_name_pattern
+		This variable set a pattern of the buffer name.  If matched it,
+		neocomplete does not complete automatically.  When it is an
+		empty character string, neocomplete will ignore.
+
+		Default value is ''.
+
+g:neocomplete_enable_prefetch		*g:neocomplete_enable_prefetch*
+		This variable controls whether neocomplete prefetches.  If
+		this variable is non-zero, neocomplete does not flick in
+		auto completion.
+
+		Note: This variable has a side effect.  Partial function (ex:
+		|complete_check()|) is disabled in completefunc.
+		Note: If this variable is 0, an input problem may occur in
+		using uim-skk or other IMEs on GVim.
+
+		Default value is 0 (above or equal to 7.3.519.)
+		Default value is 1 (|+xim| and GUI version.)
+
+g:neocomplete_lock_iminsert		*g:neocomplete_lock_iminsert*
+		If this variable is non-zero, neocomplete locks when
+		'iminsert' is non-zero.
+
+		Default value is 0.
+
+g:neocomplete_temporary_dir		*g:neocomplete_temporary_dir*
+		This variable appoints the directory that neocomplete
+		begins to write a file at one time.  When there is not the
+		directory which appointed here, it is made.  For example,
+		buffer_complete.vim stores cache of the keyword in this
+		'buffer_cache' sub directory.
+
+		Default value is '~/.neocomplete'.
+
+g:neocomplete_keyword_patterns
+					*g:neocomplete_keyword_patterns*
+		This dictionary records keyword patterns to completion.
+		This is appointed in regular expression every file type.
+		If the key is "_" or "default", it is used for default
+		pattern.
+
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+>
+		" Examples:
+		if !exists('g:neocomplete_keyword_patterns')
+		  let g:neocomplete_keyword_patterns = {}
+		endif
+		let g:neocomplete_keyword_patterns._ = '\h\w*'
+<
+				*g:neocomplete_next_keyword_patterns*
+g:neocomplete_next_keyword_patterns
+		This dictionary records regular expression to recognize a
+		keyword pattern of the next than a cursor.  The form is the
+		same as |g:neocomplete_keyword_patterns|.
+
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+
+					*g:neocomplete_force_omni_patterns*
+g:neocomplete_force_omni_patterns
+		This dictionary records keyword patterns to Omni completion.
+		This is appointed in regular expression every file type.
+		If this pattern is not defined or empty pattern, neocomplete
+		does not call 'omnifunc'.
+		Note: If it is a set, neocomplete will call 'omnifunc' or
+		|g:neocomplete_omni_functions| directly.  So almost
+		neocomplete features are disabled.  But all Omni completion
+		works instead of |g:neocomplete_omni_patterns|.
+		Note: This feature may change 'omnifunc' value.
+>
+		if !exists('g:neocomplete_force_omni_patterns')
+		  let g:neocomplete_force_omni_patterns = {}
+		endif
+		let g:neocomplete_force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+<
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+
+				*g:neocomplete_same_filetype_lists*
+g:neocomplete_same_filetype_lists
+		It is a dictionary to connect file type mutually.  It is
+		effective at time to let you refer to c and cpp mutually.
+		The value are comma-separated filetypes.
+		If the value contains "_", neocomplete completes from all
+		buffers.  If the key is "_", the value will be used for default
+		same filetypes.
+		Note: neocomplete completes from same filetype buffers in
+		default.
+>
+		if !exists('g:neocomplete_same_filetype_lists')
+		  let g:neocomplete_same_filetype_lists = {}
+		endif
+		" In c buffers, completes from cpp and d buffers.
+		let g:neocomplete_same_filetype_lists.c = 'cpp,d'
+		" In cpp buffers, completes from c buffers.
+		let g:neocomplete_same_filetype_lists.cpp = 'c'
+		" In gitconfig buffers, completes from all buffers.
+		let g:neocomplete_same_filetype_lists.gitconfig = '_'
+		" In default, completes from all buffers.
+		let g:neocomplete_same_filetype_lists._ = '_'
+<
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+		Note: To disable neocomplete initialization, you must use
+		|neocomplete#disable_default_dictionary()|.
+
+				*g:neocomplete_context_filetype_lists*
+g:neocomplete_context_filetype_lists
+		It is a dictionary to define context filetypes.
+		The item is a list of dictionaries.
+				*g:neocomplete_filetype_include_lists*
+		Note: g:neocomplete_filetype_include_lists is deprecated
+		name.
+
+		The keys and values are below.
+		"filetype" : includes filetype name.
+		"start" : filetype start pattern.
+		"end" : filetype end pattern.  You can use \1 to refer start's
+			matched pattern.
+>
+		" Examples:
+		if !exists('g:neocomplete_context_filetype_lists')
+		let g:neocomplete_context_filetype_lists = {}
+		endif
+		let g:neocomplete_context_filetype_lists.perl6 =
+		\ [{'filetype' : 'pir', 'start' : 'Q:PIR\s*{', 'end' : '}'}]
+		let g:neocomplete_context_filetype_lists.vim =
+		\ [{'filetype' : 'python', 'start' : '^\s*python <<\s*\(\h\w*\)', 'end' : '^\1'}]
+<
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+
+					*g:neocomplete_text_mode_filetypes*
+g:neocomplete_text_mode_filetypes
+		It is a dictionary to define text mode filetypes.  The
+		dictionary's key is filetype and value is number.  If the
+		value is non-zero, this filetype is text mode.  In text mode,
+		neocomplete supports word conversion to write English.
+
+		For example, if you input "Fo", neocomplete will convert
+		candidate "foo" to "Foo".  If you input "foo", neocomplete
+		will convert candidate "FooBar" to "foobar".  If you input
+		"FO", neocomplete will convert candidate "foo" to "FOO".
+		Note: Text mode conversion is only used for "foobar" or
+		"Foobar" or "FOOBAR" words.  Not "fooBar" or "FooBar".
+
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+
+g:neocomplete_ctags_program		*g:neocomplete_ctags_program*
+		It is the path to the ctags command.  If this command is not
+		installed, include_complete is disabled.
+
+		Default value is "ctags".
+
+g:neocomplete_ctags_arguments_list
+					*g:neocomplete_ctags_arguments_list*
+		It is the dictionary of the character string to set a value
+		to give as an argument of the commands when buffer_complete
+		and include_complete use a ctags command.  The dictionary's
+		key is filetype.  If the key is "_", it will be used for
+		default.
+
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+
+					*g:neocomplete_delimiter_patterns*
+g:neocomplete_delimiter_patterns
+		This variable appoints a delimiter pattern to smart complete a
+		function.  This is appointed in regular expression's string
+		list every file type.
+>
+		" Examples:
+		if !exists('g:neocomplete_delimiter_patterns')
+		let g:neocomplete_delimiter_patterns= {}
+		endif
+		let g:neocomplete_delimiter_patterns.vim = ['#']
+		let g:neocomplete_delimiter_patterns.cpp = ['::']
+<
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+
+					*g:neocomplete_sources_list*
+g:neocomplete_sources_list
+		It is a dictionary to decide use source names.  The key is
+		filetype and the value is source names list.  If the key is
+		"_", the value will be used for default filetypes.  For
+		example, you can disable some sources in C++ filetype.
+		If the value is "_", it will load all sources.
+		Default value is {}.
+>
+		" Examples:
+		if !exists('g:neocomplete_sources_list')
+		  let g:neocomplete_sources_list = {}
+		endif
+		let g:neocomplete_sources_list._ = ['buffer_complete']
+		let g:neocomplete_sources_list.cpp =
+		\ ['buffer_complete', 'include_complete']
+<
+					*b:neocomplete_sources_list*
+b:neocomplete_sources_list
+		It is a list to decide use source names in buffer local.
+>
+		" Examples:
+		" In cmdwin, only use vim_complete source.
+		autocmd CmdwinEnter * let b:neocomplete_sources_list = ['vim_complete']
+<
+				*g:neocomplete_disabled_sources_list*
+g:neocomplete_disabled_sources_list
+		It is a dictionary to decide disabled source names.  The key is
+		filetype and the value is source names list.  If the key is
+		"_", the value will be used for default filetypes.
+		If the value is "_", it will load all sources.
+		Default value is {}.
+>
+		" Examples:
+		if !exists('g:neocomplete_disabled_sources_list')
+		  let g:neocomplete_disabled_sources_list = {}
+		endif
+		" Disable dictionary_complete in python filetype.
+		let g:neocomplete_disabled_sources_list.python =
+		\ ['dictionary_complete']
+<
+					*g:neocomplete_source_disable*
+		Note: g:neocomplete_source_disable is deprecated variable.
+		Default value is {}.
+
+				*g:neocomplete_source_completion_length*
+g:neocomplete_source_completion_length
+		Note: This option is deprecated. You should use
+		|neocomplete#custom_source()| instead of it.
+>
+		call neocomplete#custom_source(
+				\ 'buffer_complete', 'min_pattern_length', 3)
+<
+
+g:neocomplete_source_rank			*g:neocomplete_source_rank*
+		Note: This option is deprecated. You should use
+		|neocomplete#custom_source()| instead of it.
+>
+		" Examples:
+		call neocomplete#custom_source(
+				\ 'buffer_complete', 'rank', 10)
+<
+		The default rank of each sources:
+		filename_complete : 3
+		dictionary_complete : 4
+		buffer_complete : 5
+		syntax_complete : 4
+		include_complete : 8
+		snippets_complete : 8
+		vim_complete : 100
+		omni_complete : 50
+		other keyword sources : 5
+		other manual sources : 10
+		other manual sources with filetype : 100
+
+				*g:neocomplete_force_overwrite_completefunc*
+g:neocomplete_force_overwrite_completefunc
+		If this variable is 1, neocomplete forces overwrite
+		'completefunc' option.  This variable is useful for other
+		plugin overwrite 'completefunc'.  But other plugin's
+		'completefunc' is disabled.
+
+		Default value is 0.
+
+					*g:neocomplete_release_cache_time*
+g:neocomplete_release_cache_time
+		This variable defines time of automatic released cache by a
+		second unit.
+
+		Default value is 900.
+
+g:neocomplete_use_vimproc			*g:neocomplete_use_vimproc*
+		This variable is non 0, neocomplete uses |vimproc|.
+		Note: If this variable is non 0, neocomplete will make cache
+		asynchronously.
+
+		Default value is vimproc auto detection result.
+
+			*g:neocomplete_ignore_composite_filetype_lists*
+g:neocomplete_ignore_composite_filetype_lists
+		It is a dictionary to ignore composite file type.
+		The dictionary's key is composite filetype and value is
+		filetype.
+>
+		" Examples:
+		let g:neocomplete_ignore_composite_filetype_lists = {
+			\ 'ruby.spec' : 'ruby'
+			\ }
+<
+		If you open filetype like |ruby.spec|, completion is
+		intended for |ruby| and |spec|.
+		But if you only want to complete |ruby| filetype,
+		you can set this variable to ignore |spec|.
+
+		Default value is {}.
+
+					*g:neocomplete_wildcard_characters*
+g:neocomplete_wildcard_characters
+		It is a dictionary to define wildcard characters.
+		You can change default wildcard character "*" to other
+		characters.
+		The dictionary's key is filetype and the value is a wildcard
+		character.  If the key is "_", it is default wildcard
+		character.
+		Note: The wildcard character must be 1 length character.
+>
+		" Examples:
+		if !exists('g:neocomplete_wildcard_characters')
+		  let g:neocomplete_wildcard_characters = {}
+		endif
+		let g:neocomplete_wildcard_characters._ = '-'
+<
+		Default value is { '_' : '*' }.
+
+				*g:neocomplete_skip_auto_completion_time*
+g:neocomplete_skip_auto_completion_time
+		It is a string for skip auto completion.
+		If completion time is higher than it, neocomplete will skip
+		auto completion.
+		If it is "", the skip feature will be disabled.
+
+		Default value is "0.3".
+		{only available when compiled with the |+reltime| feature}
+
+				*g:neocomplete_enable_auto_close_preview*
+g:neocomplete_enable_auto_close_preview
+		If it is non-zero, neocomplete will close preview window
+		automatically.
+
+		Default value is 1.
+
+SOURCES VARIABLES 			*neocomplete-sources-variables*
+				*g:neocomplete_dictionary_filetype_lists*
+g:neocomplete_dictionary_filetype_lists
+		It is a dictionary to connect a dictionary file with file
+		type.  The dictionary's key is filetype and comma-separated
+		multiple value is a path to a dictionary file.  If this
+		variable is empty, neocomplete uses 'dictionary' option.
+		When you set "text" key, you will appoint dictionary files in
+		text mode.  If the key is "_", it is loaded in every filetype.
+		Note: Global 'dictionary' file is not loaded automatically.
+
+		Default value is {}.
+
+					*g:neocomplete_dictionary_patterns*
+g:neocomplete_dictionary_patterns
+		It is a dictionary to dictionary keyword patterns.  The
+		dictionary's key is filetype and value is keyword pattern.
+		If this variable is empty, neocomplete uses
+		|g:neocomplete_keyword_patterns| option.
+
+		Default value is {}.
+
+g:neocomplete_include_paths		*g:neocomplete_include_paths*
+		It is the variable to enumerate path of the include file
+		every file type.  When there is not it, 'path' is used.
+		Refer to 'path' for the description form.  It is the
+		dictionary of the character string that assumed file type a
+		key.
+
+		Because it is complicated, refer to s:source.initialize() in
+		autoload/neocomplete/sources/include_complete.vim for the
+		initial value.
+
+g:neocomplete_include_exprs			*g:neocomplete_include_exprs*
+		It is the expression string of the line analysis to perform
+		to acquire an include file name.  When there is not it,
+		'includeexpr' is used.  Refer to 'includeexpr' for the
+		description form.  It is the dictionary of the character
+		string that assumed file type a key.
+
+		Because it is complicated, refer to s:source.initialize() in
+		autoload/neocomplete/sources/include_complete.vim for the
+		initial value.
+
+g:neocomplete_include_patterns	*g:neocomplete_include_patterns*
+		This variable appoints the pattern of the include command.
+		When there is not it, 'include' is used.  Refer to 'include'
+		for the description form.  It is the dictionary of the
+		character string that assumed file type a key.
+
+		Because it is complicated, refer to s:source.initialize() in
+		autoload/neocomplete/sources/include_complete.vim for the
+		initial value.
+
+					*g:neocomplete_include_functions*
+g:neocomplete_include_functions
+		This variable appoints the function name of the include
+		command.  When there is not it, ignored.  It is the dictionary
+		of the function name string that assumed file type a key.
+
+		The function args are {lines} and {path}.
+		{lines} is the list of buffer lines.
+		{path} is the include path.
+		The return value is the list of include files.
+
+		Because it is complicated, refer to s:source.initialize() in
+		autoload/neocomplete/sources/include_complete.vim for the
+		initial value.
+
+				*g:neocomplete_include_max_processes*
+g:neocomplete_include_max_processes
+		This variable appoints the max number of include processes.
+		When this variable is 0, include process will be disabled.
+
+		Default value is 20.
+
+				*g:neocomplete_filename_include_exprs*
+g:neocomplete_filename_include_exprs
+		It is the expression string of the line analysis to perform
+		to substitute an include file name.  When there is not it,
+		ignored.  Refer to 'includeexpr' for the
+		description form.  It is the dictionary of the character
+		string that assumed file type a key.
+
+		Example: Perl
+>
+		let g:neocomplete_filename_include_exprs.perl =
+		\ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")'
+<
+
+		Because it is complicated, refer to s:source.initialize() in
+		autoload/neocomplete/sources/filename_complete.vim for the
+		initial value.
+
+				*g:neocomplete_filename_include_exts*
+g:neocomplete_filename_include_exts
+		It is the list of include file name extensions.  When there
+		is not it, all file name is used.  It is the dictionary of
+		the list that assumed file type a key.
+
+		Example: C++
+>
+		let g:neocomplete_filename_include_exts.cpp =
+		\ ['', 'h', 'hpp', 'hxx']
+<
+		Because it is complicated, refer to s:source.initialize() in
+		autoload/neocomplete/sources/filename_complete.vim for the
+		initial value.
+
+				*g:neocomplete_member_prefix_patterns*
+g:neocomplete_member_prefix_patterns
+		This variable appoints a prefix pattern to complete a member
+		in buffer_complete.
+		This is appointed in regular expression every file type.
+		If filetype key is not set, disable member completion.
+
+		Because it is complicated, refer in
+		autoload/neocomplete/sources/buffer_complete.vim for the
+		initial value.
+
+g:neocomplete_member_patterns		*g:neocomplete_member_patterns*
+		This variable appoints a keyword pattern to complete a member
+		in buffer_complete.
+		This is appointed in regular expression every file type.
+		If filetype key is not set, use filetype "default" setting.
+
+		Because it is complicated, refer in
+		autoload/neocomplete/sources/buffer_complete.vim for the
+		initial value.
+
+g:neocomplete_omni_functions		*g:neocomplete_omni_functions*
+		This dictionary which appoints |omni_complete| call functions.
+		The key is |&filetype|.  The value is omnifunc String or List
+		of omnifunc String.  If
+		g:neocomplete_omni_function_list[|&filetype|] is undefined,
+		|omni_complete| calls |omnifunc|.
+		If the key is "_", used for all filetypes.
+
+		Default value is {}.
+
+					*g:neocomplete_vim_completefuncs*
+g:neocomplete_vim_completefuncs
+		This dictionary which appoints |vim_complete| call function
+		when completes custom and customlist command.  The key is
+		command name.  The value is function name.
+
+		Default value is {}.
+>
+		" Examples:
+		if !exists('g:neocomplete_vim_completefuncs')
+		  let g:neocomplete_vim_completefuncs = {}
+		endif
+		let g:neocomplete_vim_completefuncs.Ref = 'ref#complete'
+<
+					*g:neocomplete_tags_filter_patterns*
+g:neocomplete_tags_filter_patterns
+		This dictionary records a pattern to filter a candidate in
+		the tag completion.  For example, it can exclude a candidate
+		beginning in _ in file type of C/C++.
+
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+
+				*g:neocomplete_tags_caching_limit_file_size*
+g:neocomplete_tags_caching_limit_file_size
+		This variable set file size to make a cache of a file in
+		tags_complete source.  If open file is bigger than this size,
+		neocomplete does not make a tags cache.
+
+		Default value is 500000.
+
+g:neocomplete_omni_patterns		*g:neocomplete_omni_patterns*
+		This dictionary records keyword patterns used in
+		|omni_complete|.  This is appointed in regular expression
+		every file type or 'omnifunc' name.  If this pattern is not
+		defined or empty pattern, neocomplete does not call
+		'omnifunc'.
+		Note: ruby and php omnifunc are disabled, because they are too
+		slow.
+		Note: Partial omnifunc has problem when neocomplete call(Ex:
+		rubycomplete, jedi.vim, cocoa.vim and clang_complete).  You should
+		|g:neocomplete_force_omni_patterns| instead.
+
+		Because it is complicated, refer to s:source.initialize()
+		autoload/neocomplete/sources/omni_complete.vim for the
+		initial value.
+>
+		" Examples:
+		if !exists('g:neocomplete_omni_patterns')
+		let g:neocomplete_omni_patterns = {}
+		endif
+		let g:neocomplete_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+		let g:neocomplete_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+		let g:neocomplete_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+<
+------------------------------------------------------------------------------
+FUNCTIONS 					*neocomplete-functions*
+
+neocomplete#initialize()			*neocomplete#initialize()*
+		Initialize neocomplete and sources.
+		Note: It enables neocomplete.
+		Note: You should call it in |VimEnter| autocmd.
+		User customization for neocomplete must be set before
+		initialization of neocomplete.
+
+neocomplete#custom_source({source-name}, {option-name}, {value})
+						*neocomplete#custom_source()*
+		Set {source-name} source specialized {option-name}
+		to {value}. You may specify multiple sources with
+		separating "," in {source-name}.
+		If {source-name} is "_", sources default option will be
+		change.
+		
+		These options below are available:
+		|neocomplete-source-attributes|
+		Note: User customization for neocomplete must be set before
+		initialization of neocomplete.
+		
+					*neocomplete#get_context_filetype()*
+neocomplete#get_context_filetype()
+		Get current context filetype of the cursor.  This is smarter
+		than |&filetype| about handling nested filetypes.
+
+		For example html filetype has javascript inside.  Say, you have
+		a buffer which content is below with filetype is html.
+>
+		<script type="text/javascript">
+		  var x = 1;
+		</script>
+<
+		At the line 1 and 3, neocomplete#get_context_filetype() is
+		"html" and at the line 2 it's "javascript", whilst at any
+		lines &filetype is "html".
+
+				*neocomplete#disable_default_dictionary()*
+neocomplete#disable_default_dictionary({variable-name})
+		Disable default {variable-name} dictionary initialization.
+		Note: It must be called in .vimrc.
+>
+	call neocomplete#disable_default_dictionary(
+	      \ 'g:neocomplete_same_filetype_lists')
+<
+------------------------------------------------------------------------------
+KEY MAPPINGS 					*neocomplete-key-mappings*
+
+				*neocomplete#start_manual_complete()*
+neocomplete#start_manual_complete([{sources}])
+		Use this function on inoremap <expr>.  The keymapping call the
+		completion of neocomplete.  When you rearrange the completion
+		of the Vim standard, you use it.
+		If you give {sources} argument, neocomplete call {sources}.
+		{sources} is name of source or list of sources name.
+>
+		inoremap <expr><Tab>  neocomplete#start_manual_complete()
+<
+				*neocomplete#manual_filename_complete()*
+				*neocomplete#manual_omni_complete()*
+		Note: These functions are obsolete.
+
+				*neocomplete#close_popup()*
+neocomplete#close_popup()
+		Inset candidate and close popup menu for neocomplete.
+>
+		inoremap <expr><C-y>  neocomplete#close_popup()
+<
+				*neocomplete#cancel_popup()*
+neocomplete#cancel_popup()
+		cancel completion menu for neocomplete.
+>
+		inoremap <expr><C-e>  neocomplete#cancel_popup()
+<
+				*neocomplete#smart_close_popup()*
+neocomplete#smart_close_popup()
+		Inset candidate and close popup menu for neocomplete.
+		Unlike|neocomplete#close_popup()|, this function changes
+		behavior by|g:neocomplete_enable_auto_select|smart.
+		Note: This mapping is conflicted with |SuperTab| or |endwise|
+		plugins.
+
+				*neocomplete#undo_completion()*
+neocomplete#undo_completion()
+		Use this function on inoremap <expr>.  Undo inputted
+		candidate.  Because there is not mechanism to cancel
+		candidate in Vim, it will be convenient when it inflects.
+>
+		inoremap <expr><C-g>     neocomplete#undo_completion()
+<
+				*neocomplete#complete_common_string()*
+neocomplete#complete_common_string()
+		Use this function on inoremap <expr>.  Complete common
+		string in candidates.  It will be convenient when candidates
+		have long common string.
+>
+		inoremap <expr><C-l>     neocomplete#complete_common_string()
+<
+				*<Plug>(neocomplete_start_unite_complete)*
+<Plug>(neocomplete_start_unite_complete)
+		Start completion with |unite|.
+		Note: Required unite.vim Latest ver.3.0 or above.
+		Note: In unite interface, uses partial match instead of head
+		match.
+
+				*<Plug>(neocomplete_start_quick_match)*
+<Plug>(neocomplete_start_unite_quick_match)
+		Start completion with |unite| and start quick match mode.
+		Note: Required unite.vim Latest ver.3.0 or above.
+
+==============================================================================
+EXAMPLES					*neocomplete-examples*
+>
+	"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+	" Disable AutoComplPop.
+	let g:acp_enableAtStartup = 0
+	" Use neocomplete.
+	let g:neocomplete_enable_at_startup = 1
+	" Use smartcase.
+	let g:neocomplete_enable_smart_case = 1
+	" Set minimum syntax keyword length.
+	let g:neocomplete_min_syntax_length = 3
+	let g:neocomplete_lock_buffer_name_pattern = '\*ku\*'
+
+	" Enable heavy features.
+	" Use camel case completion.
+	"let g:neocomplete_enable_camel_case_completion = 1
+	" Use underbar completion.
+	"let g:neocomplete_enable_underbar_completion = 1
+
+	" Define dictionary.
+	let g:neocomplete_dictionary_filetype_lists = {
+	    \ 'default' : '',
+	    \ 'vimshell' : $HOME.'/.vimshell_hist',
+	    \ 'scheme' : $HOME.'/.gosh_completions'
+	        \ }
+
+	" Define keyword.
+	if !exists('g:neocomplete_keyword_patterns')
+	    let g:neocomplete_keyword_patterns = {}
+	endif
+	let g:neocomplete_keyword_patterns['default'] = '\h\w*'
+
+	" Plugin key-mappings.
+	inoremap <expr><C-g>     neocomplete#undo_completion()
+	inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+	" Recommended key-mappings.
+	" <CR>: close popup and save indent.
+	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	function! s:my_cr_function()
+	  return neocomplete#smart_close_popup() . "\<CR>"
+	  " For no inserting <CR> key.
+	  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+	endfunction
+	" <TAB>: completion.
+	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+	" <C-h>, <BS>: close popup and delete backword char.
+	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+	inoremap <expr><C-y>  neocomplete#close_popup()
+	inoremap <expr><C-e>  neocomplete#cancel_popup()
+	" Close popup by <Space>.
+	"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+	" For cursor moving in insert mode(Not recommended)
+	"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+	"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+	"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+	"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+	" Or set this.
+	"let g:neocomplete_enable_cursor_hold_i = 1
+	" Or set this.
+	"let g:neocomplete_enable_insert_char_pre = 1
+
+	" AutoComplPop like behavior.
+	"let g:neocomplete_enable_auto_select = 1
+
+	" Shell like behavior(not recommended).
+	"set completeopt+=longest
+	"let g:neocomplete_enable_auto_select = 1
+	"let g:neocomplete_disable_auto_complete = 1
+	"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+	" Enable omni completion.
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+	" Enable heavy omni completion.
+	if !exists('g:neocomplete_omni_patterns')
+	  let g:neocomplete_omni_patterns = {}
+	endif
+	let g:neocomplete_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+	let g:neocomplete_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+	let g:neocomplete_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+	if !exists('g:neocomplete_force_omni_patterns')
+	  let g:neocomplete_force_omni_patterns = {}
+	endif
+
+	" For perlomni.vim setting.
+	" https://github.com/c9s/perlomni.vim
+	let g:neocomplete_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+<
+==============================================================================
+SOURCES						*neocomplete-sources*
+
+neocomplete reads automatically sources saved in an
+autoload/neocomplete/sources directory.
+
+buffer_complete.vim				*buffer_complete*
+		This source collects keywords from buffer.
+
+member_complete.vim				*member_complete*
+		This source collects use of member variables from buffer.
+
+tags_complete.vim				*tags_complete*
+		This source analyzes a tag file from tagfiles() for completion.
+		When a huge tag file (above
+		|g:neocomplete_tags_caching_limit_file_size|) is set,
+		neocomplete does not make cache if you do not execute
+		|:NeoCompleteCachingTags|command.  Because tags_complete is
+		too slow if tags_complete read a big tags file.  You should use
+		more convenient include completion now.
+
+syntax_complete.vim				*syntax_complete*
+		This source analyzes a syntax file like
+		autoload/syntaxcomplete.vim offered by default, and to
+		add to candidate completion.  The plugin can recognize
+		candidates a lot more than autoload/syntaxcomplete.vim.
+
+include_complete.vim				*include_complete*
+		This source will add the file which an opening buffer
+		refers to to candidate.  It is convenient, because you do
+		not need to prepare a tags file and a dictionary file.
+		But it is necessary for 'path' and 'include',
+		'includeexpr' to be set adequately.
+
+		Note: |vimproc| is required.
+		http://github.com/Shougo/vimproc
+
+vim_complete.vim				*vim_complete*
+		This source analyzes context and start Omni completion of
+		Vim script.  This plugin does not work other than editing
+		time of Vim script.  I created it because neocomplete
+		cannot call |i_CTRL-X_CTRL-V|.  Local variable and a
+		script variable, a function and the analysis of the
+		command are implemented now.
+
+dictionary_complete.vim				*dictionary_complete*
+		This source adds candidates from 'dictionary' or
+		|g:neocomplete_dictionary_filetype_lists|.
+
+filename_complete.vim				*filename_complete*
+		This source collects filename candidates.
+
+filename_include.vim				*filename_include*
+		This source collects filename candidates.  It is useful
+		when you input header file name.  It recognizes include
+		pattern and include path like include_complete.
+
+omni_complete.vim				*omni_complete*
+		This source calls 'omnifunc' automatically when cursor
+		text is matched with |g:neocomplete_omni_patterns|.  If
+		|g:neocomplete_omni_function_list|is defined,
+		neocomplete will give priority it.
+		Note: This source is not supported wildcard.
+
+
+suffix of complete candidates in popup menu declaration.
+(This will be good for user to know where candidate from and what it is.)
+
+    filename_complete          -> [F] {filename}
+    filename_include           -> [FI] {filename}
+    dictionary_complete        -> [D] {words}
+    member_complete            -> [M] member
+    buffer_complete            -> [B] {buffername}
+    syntax_complete            -> [S] {syntax-keyword}
+    include_complete           -> [I]
+    neosnippet                 -> [neosnip]
+    vim_complete               -> [vim] type
+    omni_complete              -> [O]
+    tags_complete              -> [T]
+    other plugin sources       -> [plugin-name-prefix]
+    other completefunc sources -> [plugin-name-prefix]
+    other ftplugin sources     -> [plugin-name-prefix]
+
+------------------------------------------------------------------------------
+USER SOURCES 					*neocomplete-user-sources*
+
+This section, introduce non default neocomplete sources.
+
+neosnippet				*neocomplete-sources-neosnippet*
+		This source is for snippets completion.
+		Note: This source is not in default sources after
+		neocomplete ver.7.0.
+		https://github.com/Shougo/neosnippet
+
+neco-ghc				*neocomplete-sources-neco-ghc*
+		https://github.com/ujihisa/neco-ghc
+		eagletmt originally implemented and now ujihisa is maintaining
+		this source.  It completes a source file written in Haskell.
+		It requires ghc-mod <http://www.mew.org/~kazu/proj/ghc-mod/>.
+
+==============================================================================
+FILTERS						*neocomplete-filters*
+
+To custom candidates, neocomplete uses the filters. There are three kinds of
+filters are available. "matcher" is to filter candidates by user input.
+"sorter" is to sort candidates. "converter" is to candidates conversion.
+
+Default sources are below. But you can create original filters(cf:
+|neocomplete-create-filter|) and set them by
+|neocomplete#custom_source()|.
+>
+	call neocomplete#custom_source(
+	\ 'buffer_complete', 'converters', [])
+
+	" Change default matcher.
+	call neocomplete#custom_source('_', 'matchers',
+	\ ['matcher_head'])
+
+	" Change default sorter.
+	call neocomplete#custom_source('_', 'sorters',
+	\ ['sorter_length'])
+<
+					*neocomplete-filter-matcher_default*
+Default matchers:
+	if |g:neocomplete_enable_fuzzy_completion| :
+		['matcher_head']
+	else :
+		['matcher_fuzzy']
+
+					*neocomplete-filter-sorter_default*
+Default sorters: ['sorter_rank'].
+
+					*neocomplete-filter-converter_default*
+Default converters: ['converter_remove_next_keyword',
+        \      'converter_delimiter', 'converter_case', 'converter_abbr'].
+
+					*neocomplete-filter-matcher_head*
+matcher_head	Head matching matcher.
+
+					*neocomplete-filter-matcher_fuzzy*
+matcher_fuzzy	Fuzzy matching matcher.
+
+					*neocomplete-filter-sorter_nothing*
+sorter_nothing	Nothing sorter.
+
+					*neocomplete-filter-sorter_rank*
+sorter_rank	Matched rank order sorter.  The higher the matched word is
+		already selected or in current buffer
+
+					*neocomplete-filter-sorter_length*
+sorter_length	Candidates length order sorter.
+
+					*neocomplete-filter-converter_nothing*
+converter_nothing
+		This converter is dummy.
+
+					*neocomplete-filter-converter_abbr*
+converter_abbr
+		The converter which abbreviates a candidate's abbr.
+
+					*neocomplete-filter-converter_case*
+converter_case
+		The converter which converts a candidate's word in text mode.
+		(cf: |g:neocomplete_text_mode_filetypes|)
+
+				*neocomplete-filter-converter_delimiter*
+converter_delimiter
+		The converter which abbreviates a candidate's delimiter.
+		(cf: |g:neocomplete_delimiter_patterns|)
+
+			*neocomplete-filter-converter_remove_next_keyword*
+converter_remove_next_keyword
+		The converter which removes matched next keyword part in a
+		candidate's word.
+		(cf: |g:neocomplete_next_keyword_patterns|)
+
+==============================================================================
+CREATE SOURCE					*neocomplete-create-source*
+
+In this clause, I comment on a method to make source of neocomplete.  The
+ability of neocomplete will spread by creating source by yourself.
+
+The files in autoload/neocomplete/sources are automatically loaded and it
+calls neocomplete#sources#{source_name}#define() whose return value is the
+source.  Each return value can be a list so you can return an empty list to
+avoid adding undesirable sources.  To add your own sources dynamically, you
+can use |neocomplete#define_source()|.
+
+------------------------------------------------------------------------------
+SOURCE ATTRIBUTES			*neocomplete-source-attributes*
+
+					*neocomplete-source-attribute-name*
+name			String		(Required)
+			The name of a source.  It must consist of the
+			following characters:
+			- a-z
+			- 0-9
+			- _
+			- /
+			- - (Not head)
+
+					*neocomplete-source-attribute-kind*
+kind			String			(Optional)
+			Source kind.
+			Following values are available.
+			"manual"  : This source decides complete position
+			            manually.
+			            Note: "complfunc" or "ftplugin" are old
+				    values.
+			"keyword" : This source decides complete position by
+			           |g:neocomplete_keyword_patterns|.
+			            Note: "plugin" is old value.
+
+				*neocomplete-source-attribute-filetypes*
+filetypes		Dictionary		(Optional)
+			Available filetype dictionary.
+
+			For example:
+>
+			let source = {
+			      \ 'name' : 'test',
+			      \ 'kind' : 'manual',
+			      \ 'filetypes' : { 'vim' : 1, 'html' : 1 },
+			      \}
+<
+			The source is available in vim and html filetypes.
+
+			If you omit it, this source available in all
+			filetypes.
+
+
+					*neocomplete-source-attribute-rank*
+rank			Number		(Optional)
+			Source priority.
+			Note: You can set source priority by
+			|g:neocomplete_source_rank|, but it is obsolete way.
+
+			If you omit it, it is set below value.
+			If kind attribute is "keyword" : 5
+			If filetype attribute is empty : 10
+			Else : 100
+
+			*neocomplete-source-attribute-min_pattern_length*
+min_pattern_length
+			Number		(Optional)
+			Required pattern length for completion.
+
+			If you omit it, it is set below value.
+			If kind attribute is "keyword" :
+			    |g:neocomplete_auto_completion_start_length|
+			Else : 0
+
+			*neocomplete-source-attribute-max_candidates*
+max_candidates
+			Number		(Optional)
+			The maximum number of candidates.
+
+			This attribute is optional; if it is not given,
+			0 is used as the default value.  This means
+			maximum number is infinity.
+
+				*neocomplete-source-attribute-is_volatile*
+is_volatile		Number		(Optional)
+			Whether the source recalculates the candidates
+			everytime the input is changed.
+			This attribute is optional.
+			If it's not given, 0 is set as the default value.  In
+			this case, candidates are cached.
+
+					*neocomplete-source-attribute-hooks*
+hooks			Dictionary		(Optional)
+			You may put hook functions in this dictionary in which
+			the key is the position to hook and the value is the
+			reference to the function to be called.  The following
+			hook functions are defined:
+
+				*neocomplete-source-attribute-hooks-on_init*
+			on_init
+			Called when initializing the source.
+			This function takes {context} as its parameters.
+				*neocomplete-source-attribute-initialize*
+			Note initialize() attribute is obsolete interface for
+			initialization.
+
+				*neocomplete-source-attribute-hooks-on_final*
+			on_final
+			Called after executing |:NeoCompleteDisable|.
+			This function takes {context} as its parameters.
+				*neocomplete-source-attribute-finalize*
+			Note finalize() attribute is obsolete interface for
+			finalization.
+
+			*neocomplete-source-attribute-hooks-on_post_filter*
+			on_post_filter
+			Called after the filters to narrow down the
+			candidates.  This is used to set attributes. This
+			filters is to avoid adversely affecting the
+			performance.
+			This function takes {context} as its parameters.
+
+			*neocomplete-source-attribute-get_complete_position*
+get_complete_position	Function	(Optional)
+			This function takes {context} as its
+			parameter and returns complete position in current
+			line.
+			Here, {context} is the context information when the
+			source is called(|neocomplete-notation-{context}|).
+			If you omit it, neocomplete will use the position
+			using |g:neocomplete_keyword_patterns|.
+			Note get_keyword_pos() is obsolete interface for
+			get complete position.
+
+			*neocomplete-source-attribute-gather_candidates*
+gather_candidates	Function	(Required)
+			This function is called in gathering candidates.  If
+			you enabled fuzzy completion by
+			|g:neocomplete_enable_fuzzy_completion| , this
+			function is called whenever the input string is
+			changed.  This function takes {context} as its
+			parameter and returns a list of {candidate}.
+			Here, {context} is the context information when the
+			source is called(|neocomplete-notation-{context}|).
+			Note: get_complete_words() and get_keyword_list() are
+			obsolete interface for gather candidates.
+			Note: You must call |neocomplete#keyword_filter()|
+			in gather_candidates().
+
+{context}				*neocomplete-notation-{context}*
+			A dictionary to give context information.
+			The followings are the primary information.
+			The global context information can be acquired
+			by |neocomplete#get_context()|.
+
+			input			(String)
+				The input string of current line.
+
+			complete_pos		(Number)
+				The complete position of current source.
+
+			complete_str		(String)
+				The complete string of current source.
+
+			source__{name}		(Unknown)	(Optional)
+				Additional source information.
+				Note: Recommend sources save
+				variables instead of s: variables.
+
+------------------------------------------------------------------------------
+CANDIDATE ATTRIBUTES			*neocomplete-candidate-attributes*
+
+				*neocomplete-candidate-attribute-name*
+word			String		(Required)
+			The completion word of a candidate. It is used for
+			matching inputs.
+
+				*neocomplete-candidate-attribute-abbr*
+abbr			String		(Optional)
+			The abbreviation of a candidate. It is displayed in
+			popup window. It is omitted by
+			|g:neocomplete_max_keyword_width|.
+
+				*neocomplete-candidate-attribute-kind*
+kind			String		(Optional)
+			The kind of a candidate. It is displayed in popup
+			window.
+
+				*neocomplete-candidate-attribute-menu*
+menu			String		(Optional)
+			The menu information of a candidate. It is displayed
+			in popup window.
+
+				*neocomplete-candidate-attribute-info*
+info			String		(Optional)
+			The preview information of a candidate. If
+			'completeopt' contains "preview", it will be displayed
+			in |preview-window|.
+
+				*neocomplete-candidate-attribute-rank*
+rank			Number		(Optional)
+			The completion priority.
+
+		*neocomplete-candidate-attribute-neocomplete__refresh*
+neocomplete__refresh	Number		(Optional)
+			If it is non-zero, neocomplete refresh
+			automatically.
+
+CONTEXT						*neocomplete-context*
+
+==============================================================================
+CREATE FILTER					*neocomplete-create-filter*
+
+The files in autoload/neocomplete/filters are automatically loaded and it
+calls neocomplete#filters#{filter_name}#define() whose return value is the
+filter.  Each return value can be a list so you can return an empty list to
+avoid adding undesirable filters.  To add your own filters dynamically, you
+can use |neocomplete#define_filter()|.
+
+------------------------------------------------------------------------------
+FILTER ATTRIBUTES			*neocomplete-filter-attributes*
+
+
+					*neocomplete-filter-attribute-name*
+name			String		(Required)
+			The filter name.
+
+					*neocomplete-filter-attribute-filter*
+filter			Function		(Required)
+			The filter function.  This function takes {context} as
+			its parameter and returns a list of {candidate}.
+			The specification of the parameters and the returned
+			value is same as
+			|neocomplete-source-attribute-gather_candidates|.
+
+					*neocomplete-filter-attribute-description*
+description		String		(Optional)
+			The filter description string.
+
+==============================================================================
+UNITE SOURCES					*neocomplete-unite-sources*
+
+				*neocomplete-unite-source-neocomplete*
+neocomplete
+		Nominates neocomplete completion candidates.  The kind is
+		"completion".  This source is used in
+		|<Plug>(neocomplete_start_unite_complete)|.
+>
+		imap <C-k>  <Plug>(neocomplete_start_unite_complete)
+		imap <C-q>  <Plug>(neocomplete_start_unite_quick_match)
+<
+==============================================================================
+FAQ						*neocomplete-faq*
+
+Q: My customization for neocomplete is invalid. Why?
+
+A: User customization for neocomplete must be set before initialization of
+neocomplete. For example: |neocomplete#custom_source()|
+
+Q: I want to use head match instead of default fuzzy match.
+
+A:
+>
+	let g:neocomplete_enable_fuzzy_completion = 0
+<
+or
+>
+	call neocomplete#custom_source('_', 'matchers',
+	\ ['matcher_head'])
+<
+Note: This customization must be set before source initialization.
+
+Q: Is there a way to control the colors used for popup menu using highlight
+groups?:
+
+A: Like this:
+>
+	highlight Pmenu ctermbg=8 guibg=#606060
+	highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
+	highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
+<
+
+Q: Python (or Ruby) interface crashes Vim when I use neocomplete or not
+responding when input ".":
+
+A: This is not neocomplete's issue.  Please report to the maintainers of the
+omnicomplete (rubycomplete or pythoncomplete) and its Vim interface.  You
+should disable omni_complete in python or ruby.
+>
+	if !exists('g:neocomplete_omni_patterns')
+	  let g:neocomplete_omni_patterns = {}
+	endif
+	let g:neocomplete_omni_patterns.python = ''
+	let g:neocomplete_omni_patterns.ruby = ''
+<
+
+Q: I like moving cursor by cursor-keys.  But neocomplete popups menus...
+
+A: Please set this in your .vimrc.  Note that this feature requires Vim 7.3.418
+or later.
+>
+	let g:neocomplete_enable_insert_char_pre = 1
+<
+
+Q: Where is snippets set for neocomplete?
+
+A: https://github.com/Shougo/neosnippet
+
+
+Q: How I can disable python omni complete of neocomplete?:
+
+A:
+>
+	if !exists('g:neocomplete_omni_patterns')
+	  let g:neocomplete_omni_patterns = {}
+	endif
+	let g:neocomplete_omni_patterns.python = ''
+<
+
+Q: Can I enable quick match? :
+
+A: Quick match feature had been removed in latest neocomplete
+because quick match turned into hard to implement.
+But you can use |unite.vim| instead to use quick match.
+>
+	imap <expr> -  pumvisible() ?
+	    \ "\<Plug>(neocomplete_start_unite_quick_match)" : '-'
+<
+
+Q: How can I change the order of candidates? :
+
+A: Todo.
+
+Q: An input problem occurred in using uim-skk or other IMEs:
+
+A: It may be fixed with setting |g:neocomplete_enable_prefetch| as 1.
+
+
+Q: include_complete does not work.
+
+A: include_complete depends on |vimproc|.  I recommend you to install it.  Also
+you can check 'path' option or change |g:neocomplete_include_paths|.
+
+http://github.com/Shougo/vimproc
+
+
+Q: An error occurred in "sudo vim":
+
+A: neocomplete does not support "sudo vim".  Because neocomplete (and other
+plugins) creates temporary files in super user permission by sudo command.  You
+must use sudo.vim or set "Defaults always_set_home" in "/etc/sudoers", or must
+use "sudoedit" command.
+
+Ubuntu has a command "sudoedit" which can work well with neocomplete.
+I'm not sure if other distros has this command...
+
+http://www.vim.org/scripts/script.php?script_id=729
+
+
+Q: Error occurred in ruby omni complete using |g:neocomplete_omni_patterns|.
+https://github.com/vim-ruby/vim-ruby/issues/95
+
+A: Please set |g:neocomplete_force_omni_patterns| instead of
+|g:neocomplete_omni_patterns|.
+
+Q: Does not work with clang_complete.
+
+A: Please try below settings.
+>
+	if !exists('g:neocomplete_force_omni_patterns')
+	  let g:neocomplete_force_omni_patterns = {}
+	endif
+	let g:neocomplete_force_overwrite_completefunc = 1
+	let g:neocomplete_force_omni_patterns.c =
+	      \ '[^.[:digit:] *\t]\%(\.\|->\)'
+	let g:neocomplete_force_omni_patterns.cpp =
+	      \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+	let g:neocomplete_force_omni_patterns.objc =
+	      \ '[^.[:digit:] *\t]\%(\.\|->\)'
+	let g:neocomplete_force_omni_patterns.objcpp =
+	      \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+	let g:clang_complete_auto = 0
+	let g:clang_auto_select = 0
+	"let g:clang_use_library = 1
+<
+
+Q: I want to support omni patterns for external plugins.
+
+A: You can add find some already found omni patterns and functions at here.
+
+Note: Some patterns are omitted here, (someone should check out those plugin's
+source code's complete function, and find out the omni pattern).
+>
+	" JavaScript (plugin: jscomplete-vim)
+	let g:neocomplete_omni_functions.javascript = 'jscomplete#CompleteJS'
+	" Go (plugin: gocode)
+	let g:neocomplete_omni_functions.go = 'gocomplete#Complete'
+	" Clojure (plugin: vim-clojure)
+	let g:neocomplete_omni_functions.clojure = 'vimclojure#OmniCompletion'
+	" SQL
+	let g:neocomplete_omni_functions.sql = 'sqlcomplete#Complete'
+	" R (plugin: vim-R-plugin)
+	let g:neocomplete_omni_patterns.r = '[[:alnum:].\\]\+'
+	let g:neocomplete_omni_functions.r = 'rcomplete#CompleteR'
+	" XQuery (plugin: XQuery-indentomnicomplete)
+	let g:neocomplete_omni_patterns.xquery = '\k\|:\|\-\|&'
+	let g:neocomplete_omni_functions.xquery = 'xquerycomplete#CompleteXQuery'
+<
+
+Q: Does not indent when I input "else" in ruby filetype.
+
+A:
+
+You must install "vim-ruby" from github to indent in neocomplete first.
+https://github.com/vim-ruby/vim-ruby
+
+neocomplete pops up a completion window automatically, but if the popup
+window is already visible, Vim cannot indent text.  So you must choose "close
+popup window manually by <C-y> or <C-e> mappings" or "close popup window by
+<CR> user mappings".
+
+Q: <CR> mapping conflicts with |SuperTab| or |endwise| plugins.
+
+A: Please try below settings.
+>
+	" <CR>: close popup and save indent.
+	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	function! s:my_cr_function()
+	  return neocomplete#smart_close_popup() . "\<CR>"
+	  " For no inserting <CR> key.
+	  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+	endfunction
+>
+Q: No completion offered from "vim" buffers in "non-vim" buffers.
+
+A: It is feature. neocomplete completes from same filetype buffers in
+default.  But you can completes from other filetype buffers using
+|g:neocomplete_same_filetype_lists|.
+
+Q: I want to complete from all buffers.
+
+A: |g:neocomplete_same_filetype_lists|
+>
+	let g:neocomplete_same_filetype_lists = {}
+	let g:neocomplete_same_filetype_lists._ = '_'
+<
+
+Q: Suggestions are case insensitive in "gitcommit" buffers, but not
+"javascript".
+
+A: This is g:neocomplete_text_mode_filetypes feature.
+You can disable it by following code.
+>
+	if !exists('g:neocomplete_text_mode_filetypes')
+	  let g:neocomplete_tags_filter_patterns = {}
+	endif
+	let g:neocomplete_text_mode_filetypes.gitcommit = 0
+<
+Q: Conflicts completefunc with other plugins in neocomplete.
+
+A: You can disable the error by |g:neocomplete_force_overwrite_completefunc|
+variable to 1.
+
+Q: I want to use Ruby omni_complete.
+
+A: Please set |g:neocomplete_force_omni_patterns|.  But this completion is
+heavy, so disabled by default.
+Note: But you should use |neocomplete-rsense| instead of rubycomplete.
+https://github.com/Shougo/neocomplete-rsense
+>
+	autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+	if !exists('g:neocomplete_force_omni_patterns')
+	  let g:neocomplete_force_omni_patterns = {}
+	endif
+	let g:neocomplete_force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+<
+Q: I want to use jedi omni_complete.
+https://github.com/davidhalter/jedi-vim
+
+A: Please set |g:neocomplete_force_omni_patterns| as below.
+>
+	autocmd FileType python setlocal omnifunc=jedi#complete
+	let g:jedi#popup_on_dot = 0
+	let g:neocomplete_force_omni_patterns.python = '[^. \t]\.\w*'
+<
+Q: Candidates are not found in heavy completion(neco-look, etc).
+
+A: It may be caused by skip completion.
+
+
+Q: I want to disable skip completion.
+
+A:
+>
+	let g:neocomplete_skip_auto_completion_time = ''
+<
+Q: I want to initialize neocomplete in .vimrc.
+
+A: Please call neocomplete#initialize() in .vimrc.  But this function slows
+your Vim initialization.
+>
+	call neocomplete#initialize()
+<
+Q: neocomplete conflicts when multibyte input in GVim.
+
+A: Because Vim multibyte IME integration is incomplete.
+If you set |g:neocomplete_lock_iminsert| is non-zero, it may be fixed.
+
+Q: Freeze for a while and close opened folding when I begin to insert.
+https://github.com/Shougo/neocomplete/issues/368
+
+A: I think you use 'foldmethod' is "expr" or "syntax". It is too heavy to use
+neocomplete(or other auto completion). You should change 'foldmethod'
+option.
+Note: In current version, neocomplete does not restore 'foldmethod'. Because
+it is too heavy.
+
+Q: I want to use Pydiction with neocomplete.
+
+A: You should set |g:neocomplete_dictionary_filetype_lists|.
+neocomplete can load Pydiction dictionary file.
+
+Q: Why neocomplete uses if_lua? Many people may not be able to use it
+because they do not have the root privilege to recompile vim.
+
+A:
+Because:
+ 1. Python interface is not available in every Vim environment. For example,
+ Android, iOS, non configured Vim,...
+ 2. Incompatibility with Python2 and Python3. I must rewrite for it.
+ 3. Loading Python interface is slow(10~20ms). But loading Lua interface is
+ too fast(270ns).
+ 4. Python2 and Python3 is not loaded at same time in Unix environment.
+ 5. Python is too big.
+ 6. Python interface is slow than Lua interface(almost twice).
+ 7. Lua interface is stable(no crashed in latest Vim).
+ 8. Using C module(like vimproc, YouCompleteMe) is hard to compile in Windows
+ environment.
+ 9. Using both Python and C like YouCompleteMe is too unstable. Your Vim may
+ be crash or happen a mysterious error.
+ 10. To build if_lua is easy.
+ 11. I think if_lua is the second level language in Vim(The first is Vim
+ script).
+
+Q: I want to disable preview window.
+
+A:
+>
+	set completeopt-=preview
+<
+Q: I want to use "vim-lua-ftplugin".
+https://github.com/xolox/vim-lua-ftplugin
+
+A: Please set |g:neocomplete_omni_patterns| as below.
+Note: You must not use "vim-lua-ftplugin" if less than 7.3.885.
+Because the if_lua has double free problem.
+>
+	let g:lua_check_syntax = 0
+	let g:lua_complete_omni = 1
+	let g:lua_complete_dynamic = 0
+	
+	let g:neocomplete_omni_functions.lua =
+	      \ 'xolox#lua#omnifunc'
+	let g:neocomplete_omni_patterns.lua =
+	      \ '\w\+[.:]\|require\s*(\?["'']\w*'
+	" let g:neocomplete_force_omni_patterns.lua =
+	      " \ '\w\+[.:]\|require\s*(\?["'']\w*'
+<
+
+Q: I want to use vim-nodejs-complete in neocomplete.
+A:
+Note: This settings works but may heavy.
+>
+	let g:neocomplete_omni_functions.javascript = 'nodejscomplete#CompleteJS'
+	" Use jscomplete.vim
+	let g:nodejs_complete_config = {
+	\  'js_compl_fn': 'jscomplete#CompleteJS',
+	\  'max_node_compl_len': 15
+	\}
+	let g:neocomplete_omni_patterns.javascript = '\h\w*\|[^. \t]\.\w*'
+<
+
+==============================================================================
+TODO						*neocomplete-todo*
+
+==============================================================================
+CHANGELOG					*neocomplete-changelog*
+
+2013-05-28
+- Renamed initial version.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
