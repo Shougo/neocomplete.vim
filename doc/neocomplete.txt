@@ -1,4 +1,4 @@
-*neocomplete.txt*	Next generation of auto complete framework.
+*neocomplete.txt*	Next generation of auto completion framework.
 
 Version: 0.0
 Author : Shougo <Shougo.Matsu@gmail.com>
@@ -48,16 +48,16 @@ Changelog		|neocomplete-changelog|
 ==============================================================================
 INTRODUCTION					*neocomplete-introduction*
 
-*neocomplete* is the abbreviation of "neo-completion with cache". It
-provides keyword completion system by maintaining a cache of keywords in the
-current buffer. neocomplete could be customized easily and has a lot more
-features than the Vim's standard completion feature.
+*neocomplete* is the next generation of auto completion framework after
+neocomplcache. It provides keyword completion system by maintaining a cache of
+keywords in the current buffer. neocomplete could be customized easily and has
+a lot more features than the Vim's standard completion feature.
 Note: neocomplete may consume more memory than other plugins.
 
 ==============================================================================
 INSTALL						*neocomplete-install*
 
-Note: To use neocomplete ver.8.1, you must use Vim 7.3.885 or above with
+Note: To use neocomplete , you must use Vim 7.3.885 or above with
 |if_lua| feature.
 
 In Windows:
@@ -67,7 +67,7 @@ http://files.kaoriya.net/goto/vim73w64
 In Mac(if_lua enabled MacVim):
 https://github.com/zhaocai/macvim
 
-In Linux: You should make Vim and enable |if_lua| manually.
+In Linux: You must make Vim and enable |if_lua| manually.
 
 1: Extract the file and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
@@ -166,12 +166,6 @@ COMMANDS 					*neocomplete-commands*
 		Selects current buffer when [bufname] is omitted.
 		For a command for debugging, a user will not need to use it
 		mainly.
-
-:NeoCompleteOutputKeyword [bufname]		*:NeoCompleteOutputKeyword*
-		Write the keyword which cached [bufname] buffer in current
-		buffer.  Select current buffer when [bufname] omitted.  When
-		you make a dictionary file by yourself, it may be
-		convenient.
 
 :NeoCompleteCreateTags [bufname]		*:NeoCompleteCreateTags*
 		Create tags from [bufname] buffer.
