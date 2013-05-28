@@ -120,7 +120,7 @@ function! neocomplete#helper#get_source_filetypes(filetype) "{{{
 
   let filetype_dict = {}
 
-  let filetypes = [filetype, '_']
+  let filetypes = [filetype]
   if filetype =~ '\.'
     if exists('g:neocomplete_ignore_composite_filetype_lists')
           \ && has_key(g:neocomplete_ignore_composite_filetype_lists, filetype)
@@ -133,13 +133,8 @@ function! neocomplete#helper#get_source_filetypes(filetype) "{{{
 
   if exists('g:neocomplete_same_filetype_lists')
     for ft in filetypes
-      for same_ft in split(get(g:neocomplete_same_filetype_lists, ft,
+      let filetypes += split(get(g:neocomplete_same_filetype_lists, ft,
             \ get(g:neocomplete_same_filetype_lists, '_', '')), ',')
-        if same_ft != '' && index(filetypes, same_ft) < 0
-          " Add same filetype.
-          call add(filetypes, same_ft)
-        endif
-      endfor
     endfor
   endif
 
