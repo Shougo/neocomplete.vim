@@ -38,8 +38,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
       let &l:completefunc = 'neocomplete#complete#manual_complete'
 
       return (neocomplete#is_prefetch()
-            \ || g:neocomplete_enable_insert_char_pre
-            \ ) ?
+            \ || g:neocomplete_enable_insert_char_pre) ?
             \ -1 : -3
     endif
 
@@ -285,8 +284,6 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
 
     try
       let complete_pos =
-            \ has_key(source, 'get_keyword_pos') ?
-            \ source.get_keyword_pos(context.input) :
             \ has_key(source, 'get_complete_position') ?
             \ source.get_complete_position(context) :
             \ neocomplete#match_word(context.input)[0]
@@ -360,8 +357,6 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
     else
       try
         let context.candidates =
-              \ has_key(source, 'get_keyword_list') ?
-              \   source.get_keyword_list(context.complete_str) :
               \ has_key(source, 'get_complete_words') ?
               \   source.get_complete_words(
               \     context.complete_pos, context.complete_str) :

@@ -906,10 +906,6 @@ neocomplete#start_manual_complete([{sources}])
 >
 		inoremap <expr><Tab>  neocomplete#start_manual_complete()
 <
-				*neocomplete#manual_filename_complete()*
-				*neocomplete#manual_omni_complete()*
-		Note: These functions are obsolete.
-
 				*neocomplete#close_popup()*
 neocomplete#close_popup()
 		Inset candidate and close popup menu for neocomplete.
@@ -961,7 +957,8 @@ neocomplete#complete_common_string()
 ==============================================================================
 EXAMPLES					*neocomplete-examples*
 >
-	"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+	" Note: This option must set it in .vimrc(_vimrc).
+	" NOT IN .gvimrc(_gvimrc)!
 	" Disable AutoComplPop.
 	let g:acp_enableAtStartup = 0
 	" Use neocomplete.
@@ -1326,17 +1323,11 @@ hooks			Dictionary		(Optional)
 			on_init
 			Called when initializing the source.
 			This function takes {context} as its parameters.
-				*neocomplete-source-attribute-initialize*
-			Note initialize() attribute is obsolete interface for
-			initialization.
 
 				*neocomplete-source-attribute-hooks-on_final*
 			on_final
 			Called after executing |:NeoCompleteDisable|.
 			This function takes {context} as its parameters.
-				*neocomplete-source-attribute-finalize*
-			Note finalize() attribute is obsolete interface for
-			finalization.
 
 			*neocomplete-source-attribute-hooks-on_post_filter*
 			on_post_filter

@@ -315,13 +315,7 @@ endfunction"}}}
 function! neocomplete#helper#call_hook(sources, hook_name, context) "{{{
   for source in neocomplete#util#convert2list(a:sources)
     try
-      if !has_key(source.hooks, a:hook_name)
-        if a:hook_name ==# 'on_init' && has_key(source, 'initialize')
-          call source.initialize()
-        elseif a:hook_name ==# 'on_final' && has_key(source, 'finalize')
-          call source.finalize()
-        endif
-      else
+      if has_key(source.hooks, a:hook_name)
         call call(source.hooks[a:hook_name],
               \ [extend(source.neocomplete__context, a:context)],
               \ source.hooks)
