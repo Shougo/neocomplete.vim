@@ -95,8 +95,7 @@ function! s:source.get_complete_position(context) "{{{
 
   if a:context.input !~ '\.\%(\h\w*\)\?$' && neocomplete#is_auto_complete()
         \ && bufname('%') !=# '[Command Line]'
-        \ && neocomplete#util#mb_strlen(complete_str)
-        \      < g:neocomplete_auto_completion_start_length
+        \ && len(complete_str) < g:neocomplete_auto_completion_start_length
     return -1
   endif
 

@@ -64,8 +64,8 @@ function! s:source.get_complete_position(context) "{{{
   return complete_pos
 endfunction"}}}
 
-function! s:source.get_complete_words(complete_pos, complete_str) "{{{
-  return s:get_glob_files(a:complete_str, '')
+function! s:source.gather_candidates(context) "{{{
+  return s:get_glob_files(a:context.complete_str, '')
 endfunction"}}}
 
 let s:cached_files = {}
@@ -169,14 +169,6 @@ endfunction"}}}
 
 function! neocomplete#sources#filename_complete#define() "{{{
   return s:source
-endfunction"}}}
-
-function! neocomplete#sources#filename_complete#get_complete_words(complete_str, path) "{{{
-  if !neocomplete#is_enabled()
-    return []
-  endif
-
-  return s:get_glob_files(a:complete_str, a:path)
 endfunction"}}}
 
 let &cpo = s:save_cpo

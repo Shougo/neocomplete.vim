@@ -1187,19 +1187,12 @@ matcher_head	Head matching matcher.
 					*neocomplete-filter-matcher_fuzzy*
 matcher_fuzzy	Fuzzy matching matcher.
 
-					*neocomplete-filter-sorter_nothing*
-sorter_nothing	Nothing sorter.
-
 					*neocomplete-filter-sorter_rank*
 sorter_rank	Matched rank order sorter.  The higher the matched word is
 		already selected or in current buffer
 
 					*neocomplete-filter-sorter_length*
 sorter_length	Candidates length order sorter.
-
-					*neocomplete-filter-converter_nothing*
-converter_nothing
-		This converter is dummy.
 
 					*neocomplete-filter-converter_abbr*
 converter_abbr

@@ -76,25 +76,27 @@ function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, 
   endif
 
   let cache_list = a:async_cache_dictionary[a:key]
-  for cache in filter(copy(cache_list),
-        \ 'filereadable(v:val.cachename)')
+
+  for cache in filter(copy(cache_list), 'filereadable(v:val.cachename)')
     let loaded_keywords = neocomplete#cache#load_from_cache(
               \ a:cache_dir, cache.filename, a:is_string)
-    if type(a:keywords) == type({})
-      if a:is_string
-        for keyword in filter(loaded_keywords,
-              \ '!has_key(a:keywords, v:val)')
-          let a:keywords[keyword] = ''
-        endfor
-      else
-        for keyword in filter(loaded_keywords,
-              \ '!has_key(a:keyword_list, v:val.word)')
-          let a:keywords[keyword.word] = keyword
-        endfor
-      endif
-    else
+    if type(a:keywords) == type([])
       let a:keywords = loaded_keywords
+      break
     endif
+
+  lua << EOF
+do
+    local keywords = vim.eval('a:keywords')
+    local loaded_keywords = vim.eval('loaded_keywords')
+    for i = 0, #loaded_keywords-1 do
+      if keywords[loaded_keywords[i]] == nil then
+        keywords[loaded_keywords[i]] = ''
+      end
+    end
+end
+EOF
+    break
   endfor
 
   call filter(cache_list, '!filereadable(v:val.cachename)')
@@ -102,6 +104,7 @@ function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, 
   if empty(cache_list)
     " Delete from dictionary.
     call remove(a:async_cache_dictionary, a:key)
+    return
   endif
 endfunction"}}}
 

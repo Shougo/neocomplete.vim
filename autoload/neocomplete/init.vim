@@ -774,6 +774,7 @@ function! neocomplete#init#_source(source) "{{{
         \ 'max_candidates' : 0,
         \ 'filetypes' : {},
         \ 'hooks' : {},
+        \ 'mark' : '',
         \ 'matchers' : g:neocomplete_enable_fuzzy_completion ?
         \        ['matcher_fuzzy'] : ['matcher_head'],
         \ 'sorters' : ['sorter_rank'],
@@ -795,9 +796,7 @@ function! neocomplete#init#_source(source) "{{{
 
   let source.loaded = 0
   " Source kind convertion.
-  if source.kind ==# 'plugin' ||
-        \ (!has_key(source, 'gather_candidates') &&
-        \  !has_key(source, 'get_complete_words'))
+  if source.kind ==# 'plugin'
     let source.kind = 'keyword'
   elseif source.kind ==# 'ftplugin' || source.kind ==# 'complfunc'
     " For compatibility.

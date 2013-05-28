@@ -179,10 +179,11 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
   for source in sort(filter(copy(a:sources),
         \ '!empty(v:val.neocomplete__context.candidates)'),
         \  's:compare_source_rank')
+    let mark = source.mark
     let context = source.neocomplete__context
     let words =
           \ type(context.candidates[0]) == type('') ?
-          \ map(copy(context.candidates), "{'word': v:val}") :
+          \ map(copy(context.candidates), "{'word': v:val, 'menu' : mark}") :
           \ deepcopy(context.candidates)
     let context.candidates = words
 
@@ -198,14 +199,9 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
       endfor
     endif
 
-    for candidate in words
-      if !has_key(candidate, 'menu') && has_key(source, 'mark')
-        " Set default menu.
-        let candidate.menu = source.mark
-      endif
-      if has_key(frequencies, candidate.word)
-        let candidate.rank = frequencies[candidate.word]
-      endif
+    for candidate in filter(copy(words),
+          \ 'has_key(frequencies, v:val.word)')
+      let candidate.rank = frequencies[candidate.word]
     endfor
 
     let words = neocomplete#helper#call_filters(
@@ -214,6 +210,11 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
     if source.max_candidates > 0
       let words = words[: len(source.max_candidates)-1]
     endif
+
+    for candidate in filter(copy(words), "!has_key(v:val, 'menu')")
+      " Set default menu.
+      let candidate.menu = mark
+    endfor
 
     let words = neocomplete#helper#call_filters(
           \ source.converters, source, {})
@@ -310,8 +311,7 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
 
     let complete_str = context.input[complete_pos :]
     if neocomplete#is_auto_complete() &&
-          \ neocomplete#util#mb_strlen(complete_str)
-          \     < neocomplete#get_completion_length(source.name)
+          \ len(complete_str) < neocomplete#get_completion_length(source.name)
       " Skip.
       let source.neocomplete__context =
             \ neocomplete#init#_context(
@@ -356,11 +356,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
       let context.candidates = context.prev_candidates
     else
       try
-        let context.candidates =
-              \ has_key(source, 'get_complete_words') ?
-              \   source.get_complete_words(
-              \     context.complete_pos, context.complete_str) :
-              \   source.gather_candidates(context)
+        let context.candidates = source.gather_candidates(context)
       catch
         call neocomplete#print_error(v:throwpoint)
         call neocomplete#print_error(v:exception)
@@ -379,10 +375,8 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
     let context.prev_candidates = copy(context.candidates)
     let context.prev_complete_pos = context.complete_pos
 
-    if has_key(source, 'gather_candidates')
-      let context.candidates = neocomplete#helper#call_filters(
-            \ source.matchers, source, {})
-    endif
+    let context.candidates = neocomplete#helper#call_filters(
+          \ source.matchers, source, {})
 
     if g:neocomplete_enable_debug
       echomsg source.name
