@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: vim_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -45,7 +45,6 @@ function! s:source.hooks.on_init(context) "{{{
   endif
   "}}}
 
-  " Call caching event.
   autocmd neocomplete FileType *
         \ call neocomplete#sources#vim_complete#helper#on_filetype()
 
@@ -53,12 +52,12 @@ function! s:source.hooks.on_init(context) "{{{
   call neocomplete#sources#vim_complete#helper#on_filetype()
 
   " Add command.
-  command! -nargs=? -complete=buffer NeoCompleteCachingVim
-        \ call neocomplete#sources#vim_complete#helper#recaching(<q-args>)
+  command! -nargs=? -complete=buffer NeoCompleteVimMakeCache
+        \ call neocomplete#sources#vim_complete#helper#make_cache(<q-args>)
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  silent! delcommand NeoCompleteCachingVim
+  silent! delcommand NeoCompleteVimMakeCache
 
   if neocomplete#exists_echodoc()
     call echodoc#unregister('vim_complete')

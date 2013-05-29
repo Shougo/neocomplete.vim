@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: dictionary_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -58,18 +58,18 @@ function! s:source.hooks.on_init(context) "{{{
   endif
   "}}}
 
-  " Set caching event.
-  autocmd neocomplete FileType * call s:caching()
+  " Set make cache event.
+  autocmd neocomplete FileType * call s:make_cache()
 
   " Create cache directory.
   call neocomplete#cache#make_directory('dictionary_cache')
 
   " Initialize check.
-  call s:caching()
+  call s:make_cache()
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  silent! delcommand NeoCompleteCachingDictionary
+  silent! delcommand NeoCompleteDictionaryMakeCache
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
@@ -78,8 +78,7 @@ function! s:source.gather_candidates(context) "{{{
   let filetype = neocomplete#is_text_mode() ?
         \ 'text' : neocomplete#get_context_filetype()
   if !has_key(s:dictionary_list, filetype)
-    " Caching.
-    call s:caching()
+    call s:make_cache()
   endif
 
   for ft in neocomplete#get_source_filetypes(filetype)
@@ -95,7 +94,7 @@ function! s:source.gather_candidates(context) "{{{
   return list
 endfunction"}}}
 
-function! s:caching() "{{{
+function! s:make_cache() "{{{
   if !bufloaded(bufnr('%'))
     return
   endif
@@ -105,26 +104,12 @@ function! s:caching() "{{{
   for filetype in neocomplete#get_source_filetypes(key)
     if !has_key(s:dictionary_list, filetype)
           \ && !has_key(s:async_dictionary_list, filetype)
-      call neocomplete#sources#dictionary_complete#recaching(filetype)
+      call neocomplete#sources#dictionary_complete#remake_cache(filetype)
     endif
   endfor
 endfunction"}}}
 
-function! s:caching_dictionary(filetype)
-  let filetype = a:filetype
-  if filetype == ''
-    let filetype = neocomplete#get_context_filetype(1)
-  endif
-
-  if has_key(s:async_dictionary_list, filetype)
-        \ && filereadable(s:async_dictionary_list[filetype].cache_name)
-    " Delete old cache.
-    call delete(s:async_dictionary_list[filetype].cache_name)
-  endif
-
-  call neocomplete#sources#dictionary_complete#recaching(filetype)
-endfunction
-function! neocomplete#sources#dictionary_complete#recaching(filetype) "{{{
+function! neocomplete#sources#dictionary_complete#remake_cache(filetype) "{{{
   if !exists('g:neocomplete_dictionary_filetype_lists')
     call neocomplete#initialize()
   endif
@@ -134,7 +119,7 @@ function! neocomplete#sources#dictionary_complete#recaching(filetype) "{{{
     let filetype = neocomplete#get_context_filetype(1)
   endif
 
-  " Caching.
+  " Make cache.
   let dictionaries = get(
         \ g:neocomplete_dictionary_filetype_lists, filetype, '')
   if has_key(g:neocomplete_dictionary_filetype_lists, '_')
@@ -158,7 +143,7 @@ function! neocomplete#sources#dictionary_complete#recaching(filetype) "{{{
     let dictionary = neocomplete#util#substitute_path_separator(
           \ fnamemodify(dictionary, ':p'))
     if filereadable(dictionary)
-      call neocomplete#print_debug('Caching dictionary: ' . dictionary)
+      call neocomplete#print_debug('Make cache dictionary: ' . dictionary)
       call add(s:async_dictionary_list[filetype], {
             \ 'filename' : dictionary,
             \ 'cachename' : neocomplete#cache#async_load_from_file(

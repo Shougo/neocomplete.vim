@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 "=============================================================================
 
 if exists('g:loaded_neocomplete_include_complete')
@@ -12,8 +12,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Add commands. "{{{
-command! -nargs=? -complete=buffer NeoCompleteCachingInclude
-      \ call neocomplete#sources#include_complete#caching_include(<q-args>)
+command! -nargs=? -complete=buffer NeoCompleteIncludeMakeCache
+      \ call neocomplete#sources#include_complete#make_cache(<q-args>)
 "}}}
 
 let &cpo = s:save_cpo

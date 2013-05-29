@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -35,14 +35,14 @@ if !exists('s:internal_candidates_list')
 endif
 
 function! neocomplete#sources#vim_complete#helper#on_filetype() "{{{
-  " Caching script candidates.
   let bufnumber = 1
 
   " Check buffer.
   while bufnumber <= bufnr('$')
     if getbufvar(bufnumber, '&filetype') == 'vim' && bufloaded(bufnumber)
           \&& !has_key(s:script_candidates_list, bufnumber)
-      let s:script_candidates_list[bufnumber] = s:get_script_candidates(bufnumber)
+      let s:script_candidates_list[bufnumber] =
+            \ s:get_script_candidates(bufnumber)
     endif
 
     let bufnumber += 1
@@ -53,8 +53,7 @@ function! neocomplete#sources#vim_complete#helper#on_filetype() "{{{
   endif
 endfunction"}}}
 
-function! neocomplete#sources#vim_complete#helper#recaching(bufname) "{{{
-  " Caching script candidates.
+function! neocomplete#sources#vim_complete#helper#make_cache(bufname) "{{{
   let bufnumber = a:bufname != '' ? bufnr(a:bufname) : bufnr('%')
 
   if getbufvar(bufnumber, '&filetype') == 'vim' && bufloaded(bufnumber)
@@ -138,7 +137,7 @@ endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#get_completion_name(command_name) "{{{
   if !has_key(s:internal_candidates_list, 'command_completions')
     let s:internal_candidates_list.command_completions =
-          \ s:caching_completion_from_dict('command_completions')
+          \ s:make_cache_completion_from_dict('command_completions')
   endif
   if !has_key(s:global_candidates_list, 'command_completions')
     let s:global_candidates_list.commands = s:get_cmdlist()
@@ -163,13 +162,13 @@ function! neocomplete#sources#vim_complete#helper#autocmd_args(cur_text, complet
     return []
   endif
 
-  " Caching.
+  " Make cache.
   if !has_key(s:global_candidates_list, 'augroups')
     let s:global_candidates_list.augroups = s:get_augrouplist()
   endif
   if !has_key(s:internal_candidates_list, 'autocmds')
     let s:internal_candidates_list.autocmds =
-          \ s:caching_from_dict('autocmds', '')
+          \ s:make_cache_from_dict('autocmds', '')
   endif
 
   let list = []
@@ -206,7 +205,7 @@ function! neocomplete#sources#vim_complete#helper#autocmd_args(cur_text, complet
   return list
 endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#augroup(cur_text, complete_str) "{{{
-  " Caching.
+  " Make cache.
   if !has_key(s:global_candidates_list, 'augroups')
     let s:global_candidates_list.augroups = s:get_augrouplist()
   endif
@@ -226,14 +225,14 @@ function! neocomplete#sources#vim_complete#helper#command(cur_text, complete_str
         \ a:cur_text =~ '^[[:digit:],[:space:][:tab:]$''<>]*\h\w*$'
     " Commands.
 
-    " Caching.
+    " Make cache.
     if !has_key(s:global_candidates_list, 'commands')
       let s:global_candidates_list.commands = s:get_cmdlist()
     endif
     if !has_key(s:internal_candidates_list, 'commands')
       let s:internal_candidates_list.command_prototypes =
-            \ s:caching_prototype_from_dict('command_prototypes')
-      let commands = s:caching_from_dict('commands', 'c')
+            \ s:make_cache_prototype_from_dict('command_prototypes')
+      let commands = s:make_cache_from_dict('commands', 'c')
       for command in commands
         if has_key(s:internal_candidates_list.command_prototypes, command.word)
           let command.description = command.word .
@@ -270,12 +269,12 @@ function! neocomplete#sources#vim_complete#helper#command(cur_text, complete_str
   return list
 endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#command_args(cur_text, complete_str) "{{{
-  " Caching.
+  " Make cache.
   if !has_key(s:internal_candidates_list, 'command_args')
     let s:internal_candidates_list.command_args =
-          \ s:caching_from_dict('command_args', '')
+          \ s:make_cache_from_dict('command_args', '')
     let s:internal_candidates_list.command_replaces =
-          \ s:caching_from_dict('command_replaces', '')
+          \ s:make_cache_from_dict('command_replaces', '')
   endif
 
   return s:internal_candidates_list.command_args +
@@ -304,7 +303,7 @@ function! neocomplete#sources#vim_complete#helper#dir(cur_text, complete_str) "{
   return []
 endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#environment(cur_text, complete_str) "{{{
-  " Caching.
+  " Make cache.
   if !has_key(s:global_candidates_list, 'environments')
     let s:global_candidates_list.environments = s:get_envlist()
   endif
@@ -328,7 +327,7 @@ function! neocomplete#sources#vim_complete#helper#expression(cur_text, complete_
 endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#feature(cur_text, complete_str) "{{{
   if !has_key(s:internal_candidates_list, 'features')
-    let s:internal_candidates_list.features = s:caching_from_dict('features', '')
+    let s:internal_candidates_list.features = s:make_cache_from_dict('features', '')
   endif
   return s:internal_candidates_list.features
 endfunction"}}}
@@ -349,15 +348,15 @@ function! neocomplete#sources#vim_complete#helper#filetype(cur_text, complete_st
   return s:internal_candidates_list.filetypes
 endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#function(cur_text, complete_str) "{{{
-  " Caching.
+  " Make cache.
   if !has_key(s:global_candidates_list, 'functions')
     let s:global_candidates_list.functions = s:get_functionlist()
   endif
   if !has_key(s:internal_candidates_list, 'functions')
     let s:internal_candidates_list.function_prototypes =
-          \ s:caching_prototype_from_dict('functions')
+          \ s:make_cache_prototype_from_dict('functions')
 
-    let functions = s:caching_from_dict('functions', 'f')
+    let functions = s:make_cache_from_dict('functions', 'f')
     for function in functions
       if has_key(s:internal_candidates_list.function_prototypes, function.word)
         let function.description = function.word
@@ -402,12 +401,12 @@ function! neocomplete#sources#vim_complete#helper#let(cur_text, complete_str) "{
   endif
 endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#mapping(cur_text, complete_str) "{{{
-  " Caching.
+  " Make cache.
   if !has_key(s:global_candidates_list, 'mappings')
     let s:global_candidates_list.mappings = s:get_mappinglist()
   endif
   if !has_key(s:internal_candidates_list, 'mappings')
-    let s:internal_candidates_list.mappings = s:caching_from_dict('mappings', '')
+    let s:internal_candidates_list.mappings = s:make_cache_from_dict('mappings', '')
   endif
 
   let list = s:internal_candidates_list.mappings + s:global_candidates_list.mappings
@@ -425,9 +424,9 @@ function! neocomplete#sources#vim_complete#helper#menu(cur_text, complete_str) "
   return []
 endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#option(cur_text, complete_str) "{{{
-  " Caching.
+  " Make cache.
   if !has_key(s:internal_candidates_list, 'options')
-    let s:internal_candidates_list.options = s:caching_from_dict('options', 'o')
+    let s:internal_candidates_list.options = s:make_cache_from_dict('options', 'o')
 
     for keyword in deepcopy(s:internal_candidates_list.options)
       let keyword.word = 'no' . keyword.word
@@ -466,7 +465,7 @@ function! neocomplete#sources#vim_complete#helper#var_dictionary(cur_text, compl
   return list
 endfunction"}}}
 function! neocomplete#sources#vim_complete#helper#var(cur_text, complete_str) "{{{
-  " Caching.
+  " Make cache.
   if !has_key(s:global_candidates_list, 'variables')
     let s:global_candidates_list.variables =
           \ s:get_variablelist(g:, 'g:') + s:get_variablelist(v:, 'v:')
@@ -576,7 +575,7 @@ function! s:get_script_candidates(bufnumber) "{{{
         \ 'dictionary_variables' : dictionary_variable_dict }
 endfunction"}}}
 
-function! s:caching_from_dict(dict_name, kind) "{{{
+function! s:make_cache_from_dict(dict_name, kind) "{{{
   let dict_files = split(globpath(&runtimepath,
         \ 'autoload/neocomplete/sources/vim_complete/'.a:dict_name.'.dict'), '\n')
   if empty(dict_files)
@@ -597,7 +596,7 @@ function! s:caching_from_dict(dict_name, kind) "{{{
 
   return keyword_list
 endfunction"}}}
-function! s:caching_completion_from_dict(dict_name) "{{{
+function! s:make_cache_completion_from_dict(dict_name) "{{{
   let dict_files = split(globpath(&runtimepath,
         \ 'autoload/neocomplete/sources/vim_complete/'.a:dict_name.'.dict'), '\n')
   if empty(dict_files)
@@ -625,7 +624,7 @@ function! s:caching_completion_from_dict(dict_name) "{{{
 
   return keyword_dict
 endfunction"}}}
-function! s:caching_prototype_from_dict(dict_name) "{{{
+function! s:make_cache_prototype_from_dict(dict_name) "{{{
   let dict_files = split(globpath(&runtimepath,
         \ 'autoload/neocomplete/sources/vim_complete/'.a:dict_name.'.dict'), '\n')
   if empty(dict_files)

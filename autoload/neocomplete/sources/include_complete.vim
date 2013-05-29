@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -42,7 +42,6 @@ function! s:source.hooks.on_init(context) "{{{
   call s:initialize_variables()
 
   augroup neocomplete
-    " Caching events
     autocmd BufWritePost * call s:check_buffer('', 0)
     autocmd CursorHold * call s:check_cache()
   augroup END
@@ -59,7 +58,7 @@ function! s:source.hooks.on_init(context) "{{{
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  silent! delcommand NeoCompleteCachingInclude
+  silent! delcommand NeoCompleteIncludeMakeCache
 
   if neocomplete#exists_echodoc()
     call echodoc#unregister('include_complete')
@@ -72,13 +71,13 @@ function! s:source.gather_candidates(context) "{{{
   endif
 
   if !has_key(s:include_info, bufnr('%'))
-    " Auto caching.
+    " Make cache automatically.
     call s:check_buffer('', 0)
   endif
 
   let keyword_list = []
 
-  " Check caching.
+  " Make cache automatically.
   for include in s:include_info[bufnr('%')].include_files
     call neocomplete#cache#check_cache(
           \ 'include_cache', include,
@@ -228,7 +227,6 @@ function! s:check_buffer(bufnumber, is_force) "{{{
         break
       endif
 
-      " Caching.
       let s:async_include_cache[filename]
             \ = [ s:initialize_include(filename, filetype) ]
       let include_info.async_files[filename] = 1
@@ -359,7 +357,7 @@ function! s:initialize_include(filename, filetype) "{{{
         \              'include_cache', a:filename, a:filetype, 'I', 1)
         \ }
 endfunction"}}}
-function! neocomplete#sources#include_complete#caching_include(bufname) "{{{
+function! neocomplete#sources#include_complete#make_cache(bufname) "{{{
   let bufnumber = (a:bufname == '') ? bufnr('%') : bufnr(a:bufname)
   if has_key(s:async_include_cache, bufnumber)
         \ && filereadable(s:async_include_cache[bufnumber].cache_name)

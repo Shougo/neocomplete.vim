@@ -123,7 +123,6 @@ function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencodi
   endif
 
   if empty(tags_list)
-    " File caching.
     return s:load_from_file(a:filename, a:pattern_file_name,
           \ a:mark, a:minlen, a:fileencoding, 0)
   endif

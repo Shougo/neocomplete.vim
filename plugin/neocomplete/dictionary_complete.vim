@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: dictionary_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 "=============================================================================
 
 if exists('g:loaded_neocomplete_dictionary_complete')
@@ -13,8 +13,8 @@ set cpo&vim
 
 " Add commands. "{{{
 command! -nargs=? -complete=customlist,neocomplete#filetype_complete
-      \ NeoCompleteCachingDictionary
-      \ call neocomplete#sources#dictionary_complete#recaching(<q-args>)
+      \ NeoCompleteDictionaryMakeCache
+      \ call neocomplete#sources#dictionary_complete#remake_cache(<q-args>)
 "}}}
 
 let &cpo = s:save_cpo

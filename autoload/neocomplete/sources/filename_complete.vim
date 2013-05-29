@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: filename_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -156,15 +156,6 @@ function! s:get_glob_files(complete_str, path) "{{{
   endfor
 
   return candidates
-endfunction"}}}
-function! s:caching_current_files() "{{{
-  let files = s:cached_files[getcwd()]
-  let files = neocomplete#util#glob('*')
-  if !exists('vimproc#readdir')
-    let files += neocomplete#util#glob('.*')
-  endif
-
-  let files = filter(files, "v:val !~ '/.$'")
 endfunction"}}}
 
 function! neocomplete#sources#filename_complete#define() "{{{

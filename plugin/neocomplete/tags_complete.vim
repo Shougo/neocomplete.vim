@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: tags_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 "=============================================================================
 
 if exists('g:loaded_neocomplete_tags_complete')
@@ -13,8 +13,8 @@ set cpo&vim
 
 " Add commands. "{{{
 command! -nargs=0 -bar
-      \ NeoCompleteCachingTags
-      \ call neocomplete#sources#tags_complete#caching_tags(1)
+      \ NeoCompleteTagMakeCache
+      \ call neocomplete#sources#tags_complete#make_cache(1)
 "}}}
 
 let &cpo = s:save_cpo

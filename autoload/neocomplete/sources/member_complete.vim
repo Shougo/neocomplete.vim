@@ -43,8 +43,8 @@ let s:source = {
 
 function! s:source.hooks.on_init(context) "{{{
   augroup neocomplete "{{{
-    " Caching events
-    autocmd CursorHold * call s:caching_current_buffer(
+    " Make cache events
+    autocmd CursorHold * call s:make_cache_current_buffer(
           \ line('.')-10, line('.')+10)
     autocmd InsertEnter,InsertLeave *
           \ call neocomplete#sources#member_complete#make_cache_current_line()
@@ -121,16 +121,14 @@ function! neocomplete#sources#member_complete#define() "{{{
 endfunction"}}}
 
 function! neocomplete#sources#member_complete#make_cache_current_line() "{{{
-  " Current line caching.
-  return s:caching_current_buffer(line('.')-1, line('.')+1)
+  " Make cache from current line.
+  return s:make_cache_current_buffer(line('.')-1, line('.')+1)
 endfunction"}}}
-function! neocomplete#sources#member_complete#caching_current_buffer() "{{{
-  " Current line caching.
-  return s:caching_current_buffer(1, line('$'))
+function! neocomplete#sources#member_complete#make_cache_current_buffer() "{{{
+  " Make cache from current buffer.
+  return s:make_cache_current_buffer(1, line('$'))
 endfunction"}}}
-function! s:caching_current_buffer(start, end) "{{{
-  " Current line caching.
-
+function! s:make_cache_current_buffer(start, end) "{{{
   if !exists('g:neocomplete_member_prefix_patterns')
     return
   endif

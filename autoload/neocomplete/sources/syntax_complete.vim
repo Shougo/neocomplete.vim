@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: syntax_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -41,18 +41,17 @@ let s:source = {
       \}
 
 function! s:source.hooks.on_init(context) "{{{
-  " Set caching event.
-  autocmd neocomplete Syntax * call s:caching()
+  autocmd neocomplete Syntax * call s:make_cache()
 
   " Create cache directory.
   call neocomplete#cache#make_directory('syntax_cache')
 
   " Initialize check.
-  call s:caching()
+  call s:make_cache()
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  silent! delcommand NeoCompleteCachingSyntax
+  silent! delcommand NeoCompleteSyntaxMakeCache
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
@@ -64,7 +63,7 @@ function! s:source.gather_candidates(context) "{{{
 
   let filetype = neocomplete#get_context_filetype()
   if !has_key(s:syntax_list, filetype)
-    call s:caching()
+    call s:make_cache()
   endif
 
   for syntax in neocomplete#get_sources_list(
@@ -79,7 +78,7 @@ function! neocomplete#sources#syntax_complete#define() "{{{
   return s:source
 endfunction"}}}
 
-function! s:caching() "{{{
+function! s:make_cache() "{{{
   if &filetype == '' || &filetype ==# 'vim'
     return
   endif
@@ -94,8 +93,8 @@ function! s:caching() "{{{
       if getftime(cache_name) < 0 || (!empty(syntax_files)
             \ && getftime(cache_name) <= getftime(syntax_files[0]))
         if filetype ==# &filetype
-          " Caching from syn list.
-          let s:syntax_list[filetype] = s:caching_from_syn(filetype)
+          " Make cache from syntax list.
+          let s:syntax_list[filetype] = s:make_cache_from_syntax(filetype)
         endif
       else
         let s:syntax_list[filetype] =
@@ -106,18 +105,17 @@ function! s:caching() "{{{
   endfor
 endfunction"}}}
 
-function! neocomplete#sources#syntax_complete#recaching(filetype) "{{{
+function! neocomplete#sources#syntax_complete#remake_cache(filetype) "{{{
   if a:filetype == ''
     let filetype = &filetype
   else
     let filetype = a:filetype
   endif
 
-  " Caching.
-  let s:syntax_list[filetype] = s:caching_from_syn(filetype)
+  let s:syntax_list[filetype] = s:make_cache_from_syntax(filetype)
 endfunction"}}}
 
-function! s:caching_from_syn(filetype) "{{{
+function! s:make_cache_from_syntax(filetype) "{{{
   " Get current syntax list.
   redir => syntax_list
   silent! syntax list

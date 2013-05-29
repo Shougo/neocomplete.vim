@@ -103,17 +103,17 @@ function! neocomplete#sources#buffer_complete#get_frequencies() "{{{
   return get(get(s:buffer_sources, bufnr('%'), {}), 'frequencies', {})
 endfunction"}}}
 function! neocomplete#sources#buffer_complete#make_cache_current_line() "{{{
-  " Make cache in current line.
+  " Make cache from current line.
   return s:make_cache_current_buffer(
         \ max([1, line('.') - 10]), min([line('.') + 10, line('$')]))
 endfunction"}}}
 function! s:make_cache_current_block() "{{{
-  " Make cache in current block.
+  " Make cache from current block.
   return s:make_cache_current_buffer(
           \ max([1, line('.') - 500]), min([line('.') + 500, line('$')]))
 endfunction"}}}
 function! s:make_cache_current_buffer(start, end) "{{{
-  " Make cache in current buffer.
+  " Make cache from current buffer.
   if !s:exists_current_source()
     call s:make_cache(bufnr('%'))
   endif
@@ -295,7 +295,7 @@ function! s:check_recache() "{{{
         \  || (neocomplete#util#has_vimproc() && line('$') != source.end_line)
     " Buffer recache.
     if g:neocomplete_enable_debug
-      echomsg 'Make cache in buffer: ' . bufname('%')
+      echomsg 'Make cache from buffer: ' . bufname('%')
     endif
 
     call s:make_cache_current_block()
