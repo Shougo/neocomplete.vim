@@ -47,7 +47,7 @@ function! s:source.hooks.on_init(context) "{{{
   let s:buffer_sources = {}
 
   augroup neocomplete "{{{
-    " Caching events
+    " Make cache events
     autocmd BufEnter,BufRead,BufWinEnter *
           \ call s:check_source()
     autocmd CursorHold,CursorHoldI *
@@ -55,7 +55,7 @@ function! s:source.hooks.on_init(context) "{{{
     autocmd BufWritePost *
           \ call s:check_recache()
     autocmd InsertEnter,InsertLeave *
-          \ call neocomplete#sources#buffer_complete#caching_current_line()
+          \ call neocomplete#sources#buffer_complete#make_cache_current_line()
   augroup END"}}}
 
   " Create cache directory.
@@ -65,7 +65,6 @@ function! s:source.hooks.on_init(context) "{{{
   let s:buffer_sources = {}
   let s:cache_line_count = 70
   let s:rank_cache_count = 1
-  let s:disable_caching_list = {}
   let s:async_dictionary_list = {}
   "}}}
 
@@ -74,7 +73,7 @@ endfunction
 "}}}
 
 function! s:source.hooks.on_final(context) "{{{
-  silent! delcommand NeoCompleteCachingBuffer
+  silent! delcommand NeoCompleteBufferMakeCache
 
   let s:buffer_sources = {}
 endfunction"}}}
@@ -101,23 +100,22 @@ function! neocomplete#sources#buffer_complete#define() "{{{
 endfunction"}}}
 
 function! neocomplete#sources#buffer_complete#get_frequencies() "{{{
-  " Current line caching.
   return get(get(s:buffer_sources, bufnr('%'), {}), 'frequencies', {})
 endfunction"}}}
-function! neocomplete#sources#buffer_complete#caching_current_line() "{{{
-  " Current line caching.
-  return s:caching_current_buffer(
+function! neocomplete#sources#buffer_complete#make_cache_current_line() "{{{
+  " Make cache in current line.
+  return s:make_cache_current_buffer(
         \ max([1, line('.') - 10]), min([line('.') + 10, line('$')]))
 endfunction"}}}
-function! neocomplete#sources#buffer_complete#caching_current_block() "{{{
-  " Current line caching.
-  return s:caching_current_buffer(
+function! s:make_cache_current_block() "{{{
+  " Make cache in current block.
+  return s:make_cache_current_buffer(
           \ max([1, line('.') - 500]), min([line('.') + 500, line('$')]))
 endfunction"}}}
-function! s:caching_current_buffer(start, end) "{{{
-  " Current line caching.
+function! s:make_cache_current_buffer(start, end) "{{{
+  " Make cache in current buffer.
   if !s:exists_current_source()
-    call s:word_caching(bufnr('%'))
+    call s:make_cache(bufnr('%'))
   endif
 
   let source = s:buffer_sources[bufnr('%')]
@@ -202,7 +200,7 @@ function! s:initialize_source(srcname) "{{{
         \}
 endfunction"}}}
 
-function! s:word_caching(srcname) "{{{
+function! s:make_cache(srcname) "{{{
   " Initialize source.
   call s:initialize_source(a:srcname)
 
@@ -244,7 +242,7 @@ endfunction"}}}
 
 function! s:check_source() "{{{
   if !s:exists_current_source()
-    call neocomplete#sources#buffer_complete#caching_current_block()
+    call s:make_cache_current_block()
     return
   endif
 
@@ -253,14 +251,12 @@ function! s:check_source() "{{{
     let bufname = fnamemodify(bufname(bufnumber), ':p')
     if (!has_key(s:buffer_sources, bufnumber)
           \ || s:check_changed_buffer(bufnumber))
-          \ && !has_key(s:disable_caching_list, bufnumber)
           \ && (!neocomplete#is_locked(bufnumber) ||
           \    g:neocomplete_disable_auto_complete)
           \ && !getwinvar(bufwinnr(bufnumber), '&previewwindow')
           \ && getfsize(bufname) <
           \      g:neocomplete_caching_limit_file_size
-      " Caching.
-      call s:word_caching(bufnumber)
+      call s:make_cache(bufnumber)
     endif
 
     if has_key(s:buffer_sources, bufnumber)
@@ -299,10 +295,10 @@ function! s:check_recache() "{{{
         \  || (neocomplete#util#has_vimproc() && line('$') != source.end_line)
     " Buffer recache.
     if g:neocomplete_enable_debug
-      echomsg 'Caching buffer: ' . bufname('%')
+      echomsg 'Make cache in buffer: ' . bufname('%')
     endif
 
-    call neocomplete#sources#buffer_complete#caching_current_block()
+    call s:make_cache_current_block()
   endif
 endfunction"}}}
 
@@ -311,7 +307,7 @@ function! s:exists_current_source() "{{{
 endfunction"}}}
 
 " Command functions. "{{{
-function! neocomplete#sources#buffer_complete#caching_buffer(name) "{{{
+function! neocomplete#sources#buffer_complete#make_cache(name) "{{{
   if a:name == ''
     let number = bufnr('%')
   else
@@ -338,9 +334,8 @@ function! neocomplete#sources#buffer_complete#caching_buffer(name) "{{{
     let number = bufnr(a:name)
   endif
 
-  " Word recaching.
-  call s:word_caching(number)
-  call s:caching_current_buffer(1, line('$'))
+  call s:make_cache(number)
+  call s:make_cache_current_buffer(1, line('$'))
 endfunction"}}}
 "}}}
 

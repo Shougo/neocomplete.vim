@@ -136,8 +136,8 @@ COMMANDS 					*neocomplete-commands*
 		Change start length of automatic completion to {length}.
 		Note: This length value is local to each buffer.
 
-:NeoCompleteCachingBuffer [bufname]		*:NeoCompleteCachingBuffer*
-		Cache [bufname] buffer.
+:NeoCompleteBufferMakeCache [bufname]		*:NeoCompleteBufferMakeCache*
+		Make cache in [bufname] buffer.
 		Warning: it may take time considerably for the big buffer.
 		This selects current buffer when you omitted [bufname].  When
 		[bufname] buffer is not cached, this performs only simple

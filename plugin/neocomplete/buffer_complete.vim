@@ -13,8 +13,8 @@ set cpo&vim
 
 " Add commands. "{{{
 command! -nargs=? -complete=file -bar
-      \ NeoCompleteCachingBuffer
-      \ call neocomplete#sources#buffer_complete#caching_buffer(<q-args>)
+      \ NeoCompleteBufferMakeCache
+      \ call neocomplete#sources#buffer_complete#make_cache(<q-args>)
 "}}}
 
 let &cpo = s:save_cpo

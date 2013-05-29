@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: member_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -47,7 +47,7 @@ function! s:source.hooks.on_init(context) "{{{
     autocmd CursorHold * call s:caching_current_buffer(
           \ line('.')-10, line('.')+10)
     autocmd InsertEnter,InsertLeave *
-          \ call neocomplete#sources#member_complete#caching_current_line()
+          \ call neocomplete#sources#member_complete#make_cache_current_line()
   augroup END"}}}
 
   " Initialize member prefix patterns. "{{{
@@ -120,7 +120,7 @@ function! neocomplete#sources#member_complete#define() "{{{
   return s:source
 endfunction"}}}
 
-function! neocomplete#sources#member_complete#caching_current_line() "{{{
+function! neocomplete#sources#member_complete#make_cache_current_line() "{{{
   " Current line caching.
   return s:caching_current_buffer(line('.')-1, line('.')+1)
 endfunction"}}}
