@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_delimiter.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -53,36 +53,50 @@ function! s:converter.filter(context) "{{{
       let delim_cnt += 1
     endwhile
 
-    for candidate in a:context.candidates
-      let split_list = split(candidate.word, delimiter.'\ze.', 1)
-      if len(split_list) > 1
-        let delimiter_sub = substitute(
-              \ delimiter, '\\\([.^$]\)', '\1', 'g')
-        let candidate.word = join(split_list[ : delim_cnt], delimiter_sub)
-        let candidate.abbr = join(
-              \ split(get(candidate, 'abbr', candidate.word),
-              \             delimiter.'\ze.', 1)[ : delim_cnt],
-              \ delimiter_sub)
-
-        if g:neocomplete_max_keyword_width >= 0
-              \ && len(candidate.abbr) > g:neocomplete_max_keyword_width
-          let candidate.abbr = substitute(candidate.abbr,
-                \ '\(\h\)\w*'.delimiter, '\1'.delimiter_sub, 'g')
-        endif
-        if delim_cnt+1 < len(split_list)
-          let candidate.abbr .= delimiter_sub . '~'
-          let candidate.dup = 0
-
-          if g:neocomplete_enable_auto_delimiter && next_keyword == ''
-            let candidate.word .= delimiter_sub
-          endif
-        endif
-      endif
-    endfor
+    lua << EOF
+    do
+      local candidates = vim.eval('a:context.candidates')
+      local pattern = vim.eval('neocomplete#filters#escape(delimiter)')..'.'
+      for i = 0, #candidates-1 do
+        if string.find(candidates[i].word, pattern, 1) ~= nil then
+          vim.command('call s:process_delimiter('..
+            'a:context.candidates['.. i ..
+            '], delimiter, delim_cnt, next_keyword)')
+        end
+      end
+    end
+EOF
   endfor
 
   return a:context.candidates
 endfunction"}}}
+
+function! s:process_delimiter(candidate, delimiter, delim_cnt, next_keyword)
+  let candidate = a:candidate
+
+  let split_list = split(candidate.word, a:delimiter.'\ze.', 1)
+  let delimiter_sub = substitute(
+        \ a:delimiter, '\\\([.^$]\)', '\1', 'g')
+  let candidate.word = join(split_list[ : a:delim_cnt], delimiter_sub)
+  let candidate.abbr = join(
+        \ split(get(candidate, 'abbr', candidate.word),
+        \             a:delimiter.'\ze.', 1)[ : a:delim_cnt],
+        \ delimiter_sub)
+
+  if g:neocomplete_max_keyword_width >= 0
+        \ && len(candidate.abbr) > g:neocomplete_max_keyword_width
+    let candidate.abbr = substitute(candidate.abbr,
+          \ '\(\h\)\w*'.a:delimiter, '\1'.delimiter_sub, 'g')
+  endif
+  if a:delim_cnt+1 < len(split_list)
+    let candidate.abbr .= delimiter_sub . '~'
+    let candidate.dup = 0
+
+    if g:neocomplete_enable_auto_delimiter && a:next_keyword == ''
+      let candidate.word .= delimiter_sub
+    endif
+  endif
+endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
