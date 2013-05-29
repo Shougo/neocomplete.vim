@@ -705,7 +705,6 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'completion_length' : -1,
         \ 'update_time_save' : &updatetime,
         \ 'foldinfo' : [],
-        \ 'lock_sources' : {},
         \ 'skipped' : 0,
         \ 'event' : '',
         \ 'cur_text' : '',

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -270,9 +270,6 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
 
   let sources = filter(copy(get(a:000, 0,
         \ neocomplete#helper#get_sources_list())), 'v:val.loaded')
-  if a:0 < 1
-    call filter(sources, '!neocomplete#is_plugin_locked(v:key)')
-  endif
 
   " Try source completion. "{{{
   let complete_sources = []

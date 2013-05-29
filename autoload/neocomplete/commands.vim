@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: commands.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -51,30 +51,6 @@ endfunction"}}}
 function! neocomplete#commands#_unlock() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.lock = 0
-endfunction"}}}
-
-function! neocomplete#commands#_lock_source(source_name) "{{{
-  if !neocomplete#is_enabled()
-    call neocomplete#print_warning(
-          \ 'neocomplete is disabled! This command is ignored.')
-    return
-  endif
-
-  let neocomplete = neocomplete#get_current_neocomplete()
-
-  let neocomplete.lock_sources[a:source_name] = 1
-endfunction"}}}
-
-function! neocomplete#commands#_unlock_source(source_name) "{{{
-  if !neocomplete#is_enabled()
-    call neocomplete#print_warning(
-          \ 'neocomplete is disabled! This command is ignored.')
-    return
-  endif
-
-  let neocomplete = neocomplete#get_current_neocomplete()
-
-  let neocomplete.lock_sources[a:source_name] = 1
 endfunction"}}}
 
 function! neocomplete#commands#_clean() "{{{

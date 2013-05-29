@@ -127,9 +127,6 @@ COMMANDS 					*neocomplete-commands*
 		Unlock neocomplete.
 		Note: This command is disabled when neocomplete is disabled.
 
-:NeoCompleteLockSource {source-name}		*:NeoCompleteLockSource*
-		Disable {source-name} source completion.  Disable state is
-		local to each buffer.
 
 :NeoCompleteUnlockSource {source-name}	*:NeoCompleteUnlockSource*
 		Unlock {source-name} source completion.
@@ -163,12 +160,6 @@ COMMANDS 					*neocomplete-commands*
 		Caches [bufname] include file.
 		Selects current buffer name when [bufname] is omitted.
 
-:NeoCompletePrintSource [bufname]		*:NeoCompletePrintSource*
-		Outputs [bufname] buffer's cache in current buffer.
-		This command is for debugging.
-		Selects current buffer when [bufname] is omitted.
-		For a command for debugging, a user will not need to use it
-		mainly.
 
 :NeoCompleteCreateTags [bufname]		*:NeoCompleteCreateTags*
 		Create tags from [bufname] buffer.
