@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: matcher_fuzzy.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -37,6 +37,11 @@ let s:matcher = {
       \}
 
 function! s:matcher.filter(context) "{{{
+  if len(a:context.complete_str) > 20
+    " Fall back to matcher_head.
+    return neocomplete#filters#matcher_head#define().filter(a:context)
+  endif
+
   let pattern = neocomplete#filters#fuzzy_escape(
         \ a:context.complete_str)
   lua << EOF

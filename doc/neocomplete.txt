@@ -1753,6 +1753,7 @@ CHANGELOG					*neocomplete-changelog*
 
 2013-05-29
 - Improved filename_include source.
+- Fixed fuzzy match problem.
 
 2013-05-28
 - Renamed initial version.

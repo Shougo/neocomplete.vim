@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_abbr.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -37,18 +37,23 @@ let s:converter = {
       \}
 
 function! s:converter.filter(context) "{{{
-  for candidate in a:context.candidates
-    let abbr = get(candidate, 'abbr', candidate.word)
-    if len(abbr) > g:neocomplete_max_keyword_width
-      let len = neocomplete#util#wcswidth(abbr)
-
-      if len > g:neocomplete_max_keyword_width
-        let candidate.abbr = neocomplete#util#truncate_smart(
-              \ abbr, g:neocomplete_max_keyword_width,
-              \ g:neocomplete_max_keyword_width/2, '..')
-      endif
-    endif
-  endfor
+  lua << EOF
+do
+  local candidates = vim.eval('a:context.candidates')
+  local max = vim.eval('g:neocomplete_max_keyword_width')
+  for i = 0, #candidates-1 do
+    local abbr = candidates[i].abbr == nil and
+      candidates[i].word or candidates[i].abbr
+    if string.len(abbr) > max then
+      print("foo")
+      candidates[i].abbr = abbr
+      candidates[i].abbr = vim.eval("neocomplete#util#truncate_smart("..
+              "a:context.candidates["..i.."].abbr, g:neocomplete_max_keyword_width," ..
+              "g:neocomplete_max_keyword_width/2, '..')")
+    end
+  end
+end
+EOF
 
   return a:context.candidates
 endfunction"}}}
