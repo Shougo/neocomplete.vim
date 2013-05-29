@@ -90,48 +90,6 @@ endfunction"}}}
 function! neocomplete#dup_filter(list) "{{{
   return neocomplete#util#dup_filter(a:list)
 endfunction"}}}
-function! neocomplete#unpack_dictionary(dict) "{{{
-  let ret = []
-  let values = values(a:dict)
-  for l in (type(values) == type([]) ?
-        \ values : values(values))
-    let ret += (type(l) == type([])) ? copy(l) : values(l)
-  endfor
-
-  return ret
-endfunction"}}}
-function! neocomplete#pack_dictionary(list) "{{{
-  let completion_length = 2
-  let ret = {}
-  for candidate in a:list
-    let key = tolower(candidate.word[: completion_length-1])
-    if !has_key(ret, key)
-      let ret[key] = {}
-    endif
-
-    let ret[key][candidate.word] = candidate
-  endfor
-
-  return ret
-endfunction"}}}
-function! neocomplete#add_dictionaries(dictionaries) "{{{
-  if empty(a:dictionaries)
-    return {}
-  endif
-
-  let ret = a:dictionaries[0]
-  for dict in a:dictionaries[1:]
-    for [key, value] in items(dict)
-      if has_key(ret, key)
-        let ret[key] += value
-      else
-        let ret[key] = value
-      endif
-    endfor
-  endfor
-
-  return ret
-endfunction"}}}
 
 function! neocomplete#system(...) "{{{
   let V = vital#of('neocomplete')
@@ -239,9 +197,6 @@ function! neocomplete#is_text_mode() "{{{
         \ neocomplete.context_filetype, 0)
 endfunction"}}}
 function! neocomplete#is_windows() "{{{
-  return neocomplete#util#is_windows()
-endfunction"}}}
-function! neocomplete#is_win() "{{{
   return neocomplete#util#is_windows()
 endfunction"}}}
 function! neocomplete#is_prefetch() "{{{
