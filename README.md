@@ -21,13 +21,7 @@ in your `.vimrc`. Not in `.gvimrc`(`_gvimrc`)!
 Caution
 -------
 
-Because all variable names were changed in neocomplete Ver.5, it is not
-backwards compatible. If you want to upgrade, you should use the following
-script from Mr.thinca.
-
-http://gist.github.com/422503
-
-Snippets feature(snippets\_complete source) was split from Ver.7.
+Snippets feature(snippets\_complete source) was split.
 If you used it, please install neosnippet source manually.
 
 https://github.com/Shougo/neosnippet
