@@ -1766,6 +1766,9 @@ TODO						*neocomplete-todo*
 ==============================================================================
 CHANGELOG					*neocomplete-changelog*
 
+2013-05-29
+- Improved filename_include source.
+
 2013-05-28
 - Renamed initial version.
 - Removed obsolete interfaces.

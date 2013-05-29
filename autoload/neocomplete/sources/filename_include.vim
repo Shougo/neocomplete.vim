@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: filename_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -98,7 +98,7 @@ function! s:source.get_complete_position(context) "{{{
   " Not Filename pattern.
   if exists('g:neocomplete_include_patterns')
     let pattern = get(g:neocomplete_include_patterns, filetype,
-        \      getbufvar(bufnr('%'), '&include'))
+        \      &l:include)
   else
     let pattern = ''
   endif
@@ -110,8 +110,8 @@ function! s:source.get_complete_position(context) "{{{
   endif
 
   " Check include pattern.
-  let pattern = get(g:neocomplete_include_patterns, filetype,
-        \ getbufvar(bufnr('%'), '&include'))
+  let pattern = get(g:neocomplete_include_patterns,
+        \ filetype, &l:include)
   if pattern == '' || a:context.input !~ pattern
     return -1
   endif
@@ -119,8 +119,8 @@ function! s:source.get_complete_position(context) "{{{
   let match_end = matchend(a:context.input, pattern)
   let complete_str = matchstr(a:context.input[match_end :], '\f\+')
 
-  let expr = get(g:neocomplete_include_exprs, filetype,
-        \ getbufvar(bufnr('%'), '&includeexpr'))
+  let expr = get(g:neocomplete_include_exprs,
+        \ filetype, &l:includeexpr)
   if expr != ''
     let cur_text =
           \ substitute(eval(substitute(expr,
@@ -144,16 +144,15 @@ function! s:get_include_files(complete_str) "{{{
   let filetype = neocomplete#get_context_filetype()
 
   let path = neocomplete#util#substitute_path_separator(
-        \ get(g:neocomplete_include_paths, filetype,
-        \   getbufvar(bufnr('%'), '&path')))
-  let pattern = get(g:neocomplete_include_patterns, filetype,
-        \ getbufvar(bufnr('%'), '&include'))
-  let expr = get(g:neocomplete_include_exprs, filetype,
-        \ getbufvar(bufnr('%'), '&includeexpr'))
-  let reverse_expr = get(g:neocomplete_filename_include_exprs, filetype,
-        \ '')
-  let exts = get(g:neocomplete_filename_include_exts, filetype,
-        \ [])
+        \ get(g:neocomplete_include_paths, filetype, &l:path))
+  let pattern = get(g:neocomplete_include_patterns,
+        \ filetype, &l:include)
+  let expr = get(g:neocomplete_include_exprs,
+        \ filetype, &l:includeexpr)
+  let reverse_expr = get(g:neocomplete_filename_include_exprs,
+        \ filetype, '')
+  let exts = get(g:neocomplete_filename_include_exts,
+        \ filetype, [])
 
   let line = neocomplete#get_cur_text()
   if line =~ '^\s*\<require_relative\>' && &filetype =~# 'ruby'
