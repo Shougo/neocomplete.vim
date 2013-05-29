@@ -1699,27 +1699,27 @@ Q: I want to use Pydiction with neocomplete.
 A: You should set |g:neocomplete_dictionary_filetype_lists|.
 neocomplete can load Pydiction dictionary file.
 
-Q: Why neocomplete uses if_lua? Many people may not be able to use it
-because they do not have the root privilege to recompile vim.
+Q: Why does neocomplcache use if_lua besides if_python? Many people may not be
+able to use it because they do not have the root privilege to recompile vim.
 
 A:
-Because:
- 1. Python interface is not available in every Vim environment. For example,
- Android, iOS, non configured Vim,...
- 2. Incompatibility with Python2 and Python3. I must rewrite for it.
- 3. Loading Python interface is slow(10~20ms). But loading Lua interface is
- too fast(270ns).
- 4. Python2 and Python3 is not loaded at same time in Unix environment.
- 5. Python is too big.
- 6. Python interface is slow than Lua interface(almost twice).
- 7. Lua interface is stable(no crashed in latest Vim).
- 8. Using C module(like vimproc, YouCompleteMe) is hard to compile in Windows
+Because of the following reasons.
+ 1. Python interface is not available on every Vim environment. For example,
+ Android, iOS, non configured Vim, or etc.
+ 2. Incompatibility between Python2 and Python3. I must rewrite for it.
+ 3. Loading Python interface is slow (10~20ms), but loading Lua interface is
+ absolutely fast (270ns).
+ 4. Python2 and Python3 are not loaded at the same time on Unix environment.
+ 5. Python itself is too large.
+ 6. Python interface is slower than Lua interface (almost twice.)
+ 7. Lua interface is stable (no crashes on latest Vim.)
+ 8. Using C module (like vimproc, YouCompleteMe) is hard to compile on Windows
  environment.
- 9. Using both Python and C like YouCompleteMe is too unstable. Your Vim may
- be crash or happen a mysterious error.
+ 9. Using both Python and C, like YouCompleteMe, is too unstable. Your Vim may
+ crashes or causes mysterious errors.
  10. To build if_lua is easy.
- 11. I think if_lua is the second level language in Vim(The first is Vim
- script).
+ 11. I think if_lua is the second level language in Vim (The first is Vim
+ script.)
 
 Q: I want to disable preview window.
 
@@ -1727,12 +1727,13 @@ A:
 >
 	set completeopt-=preview
 <
+
 Q: I want to use "vim-lua-ftplugin".
 https://github.com/xolox/vim-lua-ftplugin
 
 A: Please set |g:neocomplete_omni_patterns| as below.
-Note: You must not use "vim-lua-ftplugin" if less than 7.3.885.
-Because the if_lua has double free problem.
+Note: You can not use "vim-lua-ftplugin" on 7.3.885 or below,
+because if_lua has double-free problem.
 >
 	let g:lua_check_syntax = 0
 	let g:lua_complete_omni = 1
