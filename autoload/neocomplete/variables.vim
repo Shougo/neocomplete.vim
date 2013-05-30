@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: variables.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -31,7 +31,7 @@ function! neocomplete#variables#get_frequencies() "{{{
   if !exists('s:filetype_frequencies')
     let s:filetype_frequencies = {}
   endif
-  let filetype = neocomplete#context_filetype#get(&filetype)
+  let filetype = neocomplete#get_context_filetype()
   if !has_key(s:filetype_frequencies, filetype)
     let s:filetype_frequencies[filetype] = {}
   endif
