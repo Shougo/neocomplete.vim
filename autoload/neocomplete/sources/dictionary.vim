@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: dictionary_complete.vim
+" FILE: dictionary.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -33,12 +33,12 @@ if !exists('s:dictionary_list')
   let s:async_dictionary_list = {}
 endif
 
-function! neocomplete#sources#dictionary_complete#define() "{{{
+function! neocomplete#sources#dictionary#define() "{{{
   return s:source
 endfunction"}}}
 
 let s:source = {
-      \ 'name' : 'dictionary_complete',
+      \ 'name' : 'dictionary',
       \ 'kind' : 'keyword',
       \ 'mark' : '[D]',
       \ 'rank' : 4,
@@ -104,12 +104,12 @@ function! s:make_cache() "{{{
   for filetype in neocomplete#get_source_filetypes(key)
     if !has_key(s:dictionary_list, filetype)
           \ && !has_key(s:async_dictionary_list, filetype)
-      call neocomplete#sources#dictionary_complete#remake_cache(filetype)
+      call neocomplete#sources#dictionary#remake_cache(filetype)
     endif
   endfor
 endfunction"}}}
 
-function! neocomplete#sources#dictionary_complete#remake_cache(filetype) "{{{
+function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
   if !exists('g:neocomplete_dictionary_filetype_lists')
     call neocomplete#initialize()
   endif

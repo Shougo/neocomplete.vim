@@ -43,9 +43,9 @@ function! neocomplete#handler#_on_moved_i() "{{{
       " Caching current cache line.
       call neocomplete#sources#buffer#make_cache_current_line()
     endif
-    if neocomplete#is_enabled_source('member_complete')
+    if neocomplete#is_enabled_source('member')
       " Caching current cache line.
-      call neocomplete#sources#member_complete#make_cache_current_line()
+      call neocomplete#sources#member#make_cache_current_line()
     endif
   endif
 
@@ -141,8 +141,8 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   let neocomplete.old_cur_text = cur_text
 
-  if neocomplete#helper#is_omni_complete(cur_text)
-    call feedkeys("\<Plug>(neocomplete_start_omni_complete)")
+  if neocomplete#helper#is_omni(cur_text)
+    call feedkeys("\<Plug>(neocomplete_start_omni)")
     return
   endif
 

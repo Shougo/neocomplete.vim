@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: member_complete.vim
+" FILE: member.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -33,7 +33,7 @@ if !exists('s:member_sources')
 endif
 
 let s:source = {
-      \ 'name' : 'member_complete',
+      \ 'name' : 'member',
       \ 'kind' : 'manual',
       \ 'mark' : '[M]',
       \ 'rank' : 5,
@@ -47,7 +47,7 @@ function! s:source.hooks.on_init(context) "{{{
     autocmd CursorHold * call s:make_cache_current_buffer(
           \ line('.')-10, line('.')+10)
     autocmd InsertEnter,InsertLeave *
-          \ call neocomplete#sources#member_complete#make_cache_current_line()
+          \ call neocomplete#sources#member#make_cache_current_line()
   augroup END"}}}
 
   " Initialize member prefix patterns. "{{{
@@ -116,15 +116,15 @@ function! s:source.gather_candidates(context) "{{{
   return s:get_member_list(a:context.input, var_name)
 endfunction"}}}
 
-function! neocomplete#sources#member_complete#define() "{{{
+function! neocomplete#sources#member#define() "{{{
   return s:source
 endfunction"}}}
 
-function! neocomplete#sources#member_complete#make_cache_current_line() "{{{
+function! neocomplete#sources#member#make_cache_current_line() "{{{
   " Make cache from current line.
   return s:make_cache_current_buffer(line('.')-1, line('.')+1)
 endfunction"}}}
-function! neocomplete#sources#member_complete#make_cache_current_buffer() "{{{
+function! neocomplete#sources#member#make_cache_current_buffer() "{{{
   " Make cache from current buffer.
   return s:make_cache_current_buffer(1, line('$'))
 endfunction"}}}

@@ -33,7 +33,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
   if a:findstart
     let cur_text = neocomplete#get_cur_text()
     if !neocomplete#is_enabled()
-          \ || neocomplete#helper#is_omni_complete(cur_text)
+          \ || neocomplete#helper#is_omni(cur_text)
       call neocomplete#helper#clear_result()
       let &l:completefunc = 'neocomplete#complete#manual_complete'
 

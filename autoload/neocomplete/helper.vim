@@ -54,7 +54,7 @@ function! neocomplete#helper#get_cur_text() "{{{
   return neocomplete.cur_text
 endfunction"}}}
 
-function! neocomplete#helper#is_omni_complete(cur_text) "{{{
+function! neocomplete#helper#is_omni(cur_text) "{{{
   " Check eskk complete length.
   if neocomplete#is_eskk_enabled()
         \ && exists('g:eskk#start_completion_length')
@@ -79,7 +79,7 @@ function! neocomplete#helper#is_omni_complete(cur_text) "{{{
 
   let syn_name = neocomplete#helper#get_syn_name(1)
   if syn_name ==# 'Comment' || syn_name ==# 'String'
-    " Skip omni_complete in string literal.
+    " Skip omni in string literal.
     return 0
   endif
 

@@ -1,10 +1,10 @@
 "=============================================================================
-" FILE: include_complete.vim
+" FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 "=============================================================================
 
-if exists('g:loaded_neocomplete_include_complete')
+if exists('g:loaded_neocomplete_include')
   finish
 endif
 
@@ -13,12 +13,12 @@ set cpo&vim
 
 " Add commands. "{{{
 command! -nargs=? -complete=buffer NeoCompleteIncludeMakeCache
-      \ call neocomplete#sources#include_complete#make_cache(<q-args>)
+      \ call neocomplete#sources#include#make_cache(<q-args>)
 "}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-let g:loaded_neocomplete_include_complete = 1
+let g:loaded_neocomplete_include = 1
 
 " vim: foldmethod=marker

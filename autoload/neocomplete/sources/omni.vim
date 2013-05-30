@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: omni_complete.vim
+" FILE: omni.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -28,7 +28,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:source = {
-      \ 'name' : 'omni_complete',
+      \ 'name' : 'omni',
       \ 'kind' : 'manual',
       \ 'mark' : '[O]',
       \ 'rank' : 50,
@@ -106,7 +106,7 @@ endfunction"}}}
 function! s:source.get_complete_position(context) "{{{
   let syn_name = neocomplete#helper#get_syn_name(1)
   if syn_name ==# 'Comment' || syn_name ==# 'String'
-    " Skip omni_complete in string literal.
+    " Skip omni in string literal.
     return -1
   endif
 
@@ -125,7 +125,7 @@ function! s:source.gather_candidates(context) "{{{
         \  a:context.complete_pos, a:context.complete_str)
 endfunction"}}}
 
-function! neocomplete#sources#omni_complete#define() "{{{
+function! neocomplete#sources#omni#define() "{{{
   return s:source
 endfunction"}}}
 

@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: include_complete.vim
+" FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -28,13 +28,13 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:source = {
-      \ 'name' : 'include_complete',
+      \ 'name' : 'include',
       \ 'kind' : 'keyword',
       \ 'rank' : 8,
       \ 'hooks' : {},
       \}
 
-function! neocomplete#sources#include_complete#define() "{{{
+function! neocomplete#sources#include#define() "{{{
   return neocomplete#has_vimproc() ? s:source : {}
 endfunction"}}}
 
@@ -53,7 +53,7 @@ function! s:source.hooks.on_init(context) "{{{
   call neocomplete#cache#make_directory('include_cache')
 
   if neocomplete#exists_echodoc()
-    call echodoc#register('include_complete', s:doc_dict)
+    call echodoc#register('include', s:doc_dict)
   endif
 endfunction"}}}
 
@@ -61,7 +61,7 @@ function! s:source.hooks.on_final(context) "{{{
   silent! delcommand NeoCompleteIncludeMakeCache
 
   if neocomplete#exists_echodoc()
-    call echodoc#unregister('include_complete')
+    call echodoc#unregister('include')
   endif
 endfunction"}}}
 
@@ -91,7 +91,7 @@ function! s:source.gather_candidates(context) "{{{
   return keyword_list
 endfunction"}}}
 
-function! neocomplete#sources#include_complete#get_include_files(bufnumber) "{{{
+function! neocomplete#sources#include#get_include_files(bufnumber) "{{{
   if has_key(s:include_info, a:bufnumber)
     return copy(s:include_info[a:bufnumber].include_files)
   else
@@ -99,21 +99,21 @@ function! neocomplete#sources#include_complete#get_include_files(bufnumber) "{{{
   endif
 endfunction"}}}
 
-function! neocomplete#sources#include_complete#get_include_tags(bufnumber) "{{{
+function! neocomplete#sources#include#get_include_tags(bufnumber) "{{{
   return filter(map(
-        \ neocomplete#sources#include_complete#get_include_files(a:bufnumber),
+        \ neocomplete#sources#include#get_include_files(a:bufnumber),
         \ "neocomplete#cache#encode_name('tags_output', v:val)"),
         \ 'filereadable(v:val)')
 endfunction"}}}
 
 " For Debug.
-function! neocomplete#sources#include_complete#get_current_include_files() "{{{
+function! neocomplete#sources#include#get_current_include_files() "{{{
   return s:get_buffer_include_files(bufnr('%'))
 endfunction"}}}
 
 " For echodoc. "{{{
 let s:doc_dict = {
-      \ 'name' : 'include_complete',
+      \ 'name' : 'include',
       \ 'rank' : 5,
       \ 'filetypes' : {},
       \ }
@@ -165,7 +165,7 @@ endfunction"}}}
 "}}}
 
 function! s:check_buffer(bufnumber, is_force) "{{{
-  if !neocomplete#is_enabled_source('include_complete')
+  if !neocomplete#is_enabled_source('include')
     return
   endif
 
@@ -335,7 +335,7 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "
 endfunction"}}}
 
 function! s:check_cache() "{{{
-  if neocomplete#is_disabled_source('include_complete')
+  if neocomplete#is_disabled_source('include')
     return
   endif
 
@@ -357,7 +357,7 @@ function! s:initialize_include(filename, filetype) "{{{
         \              'include_cache', a:filename, a:filetype, 'I', 1)
         \ }
 endfunction"}}}
-function! neocomplete#sources#include_complete#make_cache(bufname) "{{{
+function! neocomplete#sources#include#make_cache(bufname) "{{{
   let bufnumber = (a:bufname == '') ? bufnr('%') : bufnr(a:bufname)
   if has_key(s:async_include_cache, bufnumber)
         \ && filereadable(s:async_include_cache[bufnumber].cache_name)
@@ -374,7 +374,7 @@ function! neocomplete#sources#include_complete#make_cache(bufname) "{{{
 endfunction"}}}
 
 " Analyze include files functions.
-function! neocomplete#sources#include_complete#analyze_vim_include_files(lines, path) "{{{
+function! neocomplete#sources#include#analyze_vim_include_files(lines, path) "{{{
   let include_files = []
   let dup_check = {}
   for line in a:lines
@@ -395,7 +395,7 @@ function! neocomplete#sources#include_complete#analyze_vim_include_files(lines, 
 
   return include_files
 endfunction"}}}
-function! neocomplete#sources#include_complete#analyze_ruby_include_files(lines, path) "{{{
+function! neocomplete#sources#include#analyze_ruby_include_files(lines, path) "{{{
   let include_files = []
   let dup_check = {}
   for line in a:lines
@@ -465,10 +465,10 @@ function! s:initialize_variables() "{{{
         \ 'g:neocomplete_include_functions', {})
   " call neocomplete#util#set_default_dictionary(
   "       \ 'g:neocomplete_include_functions', 'vim',
-  "       \ 'neocomplete#sources#include_complete#analyze_vim_include_files')
+  "       \ 'neocomplete#sources#include#analyze_vim_include_files')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete_include_functions', 'ruby',
-        \ 'neocomplete#sources#include_complete#analyze_ruby_include_files')
+        \ 'neocomplete#sources#include#analyze_ruby_include_files')
   "}}}
 endfunction"}}}
 

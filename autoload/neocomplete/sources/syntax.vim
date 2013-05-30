@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: syntax_complete.vim
+" FILE: syntax.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -33,7 +33,7 @@ if !exists('s:syntax_list')
 endif
 
 let s:source = {
-      \ 'name' : 'syntax_complete',
+      \ 'name' : 'syntax',
       \ 'kind' : 'keyword',
       \ 'mark' : '[S]',
       \ 'rank' : 4,
@@ -74,7 +74,7 @@ function! s:source.gather_candidates(context) "{{{
   return list
 endfunction"}}}
 
-function! neocomplete#sources#syntax_complete#define() "{{{
+function! neocomplete#sources#syntax#define() "{{{
   return s:source
 endfunction"}}}
 
@@ -105,7 +105,7 @@ function! s:make_cache() "{{{
   endfor
 endfunction"}}}
 
-function! neocomplete#sources#syntax_complete#remake_cache(filetype) "{{{
+function! neocomplete#sources#syntax#remake_cache(filetype) "{{{
   if a:filetype == ''
     let filetype = &filetype
   else

@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: filename_include.vim
+" FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -43,7 +43,7 @@ endif
 "}}}
 
 let s:source = {
-      \ 'name' : 'filename_include',
+      \ 'name' : 'file/include',
       \ 'kind' : 'manual',
       \ 'mark' : '[FI]',
       \ 'rank' : 10,
@@ -54,7 +54,7 @@ let s:source = {
       \ 'is_volatile' : 1,
       \}
 
-function! neocomplete#sources#filename_include#define() "{{{
+function! neocomplete#sources#file_include#define() "{{{
   return s:source
 endfunction"}}}
 
@@ -62,32 +62,32 @@ function! s:source.hooks.on_init(context) "{{{
   " Initialize.
 
   " Initialize filename include expr. "{{{
-  let g:neocomplete_filename_include_exprs =
-        \ get(g:, 'neocomplete_filename_include_exprs', {})
+  let g:neocomplete_file_include_exprs =
+        \ get(g:, 'neocomplete_file_include_exprs', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_filename_include_exprs',
+        \ 'g:neocomplete_file_include_exprs',
         \ 'perl',
         \ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_filename_include_exprs',
+        \ 'g:neocomplete_file_include_exprs',
         \ 'ruby,python,java,d',
         \ 'fnamemodify(substitute(v:fname, "/", ".", "g"), ":r")')
   "}}}
 
   " Initialize filename include extensions. "{{{
-  let g:neocomplete_filename_include_exts =
-        \ get(g:, 'neocomplete_filename_include_exts', {})
+  let g:neocomplete_file_include_exts =
+        \ get(g:, 'neocomplete_file_include_exts', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_filename_include_exts',
+        \ 'g:neocomplete_file_include_exts',
         \ 'c', ['h'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_filename_include_exts',
+        \ 'g:neocomplete_file_include_exts',
         \ 'cpp', ['', 'h', 'hpp', 'hxx'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_filename_include_exts',
+        \ 'g:neocomplete_file_include_exts',
         \ 'perl', ['pm'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_filename_include_exts',
+        \ 'g:neocomplete_file_include_exts',
         \ 'java', ['java'])
   "}}}
 endfunction"}}}
@@ -149,9 +149,9 @@ function! s:get_include_files(complete_str) "{{{
         \ filetype, &l:include)
   let expr = get(g:neocomplete_include_exprs,
         \ filetype, &l:includeexpr)
-  let reverse_expr = get(g:neocomplete_filename_include_exprs,
+  let reverse_expr = get(g:neocomplete_file_include_exprs,
         \ filetype, '')
-  let exts = get(g:neocomplete_filename_include_exts,
+  let exts = get(g:neocomplete_file_include_exts,
         \ filetype, [])
 
   let line = neocomplete#get_cur_text()
