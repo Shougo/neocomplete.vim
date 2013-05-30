@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -156,7 +156,6 @@ function! neocomplete#helper#complete_check() "{{{
         \     && split(reltimestr(reltime(neocomplete.start_time)))[0] >
         \          g:neocomplete_skip_auto_completion_time)
   if ret
-    call neocomplete#helper#clear_result()
     let neocomplete = neocomplete#get_current_neocomplete()
     let neocomplete.skipped = 1
 
