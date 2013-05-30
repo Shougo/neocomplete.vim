@@ -43,7 +43,7 @@ Completion with vimshell(http://github.com/Shougo/vimshell).
 
 Vim completion
 ------------------------------------------------------------
-![Vim completion.](http://1.bp.blogspot.com/_ci2yBnqzJgM/TD1PfKTlwnI/AAAAAAAAADs/nOGWTRLuae8/s1600/vim_complete.png)
+![Vim completion.](http://1.bp.blogspot.com/_ci2yBnqzJgM/TD1PfKTlwnI/AAAAAAAAADs/nOGWTRLuae8/s1600/vim.png)
 
 Setting examples
 

@@ -166,9 +166,9 @@ endfunction"}}}
 
 function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "{{{
   let frequencies = neocomplete#variables#get_frequencies()
-  if exists('*neocomplete#sources#buffer_complete#get_frequencies')
+  if exists('*neocomplete#sources#buffer#get_frequencies')
     let frequencies = extend(copy(
-          \ neocomplete#sources#buffer_complete#get_frequencies()),
+          \ neocomplete#sources#buffer#get_frequencies()),
           \ frequencies)
   endif
 

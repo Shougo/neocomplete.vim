@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: tags_complete.vim
+" FILE: tag.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -34,7 +34,7 @@ if !exists('s:tags_list')
 endif
 
 let s:source = {
-      \ 'name' : 'tags_complete',
+      \ 'name' : 'tag',
       \ 'kind' : 'keyword',
       \ 'hooks' : {},
       \}
@@ -51,14 +51,14 @@ function! s:source.hooks.on_final(context) "{{{
   silent! delcommand NeoCompleteTagMakeCache
 endfunction"}}}
 
-function! neocomplete#sources#tags_complete#define() "{{{
+function! neocomplete#sources#tag#define() "{{{
   return s:source
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
   if !has_key(s:async_tags_list, bufnr('%'))
         \ && !has_key(s:tags_list, bufnr('%'))
-    call neocomplete#sources#tags_complete#make_cache(0)
+    call neocomplete#sources#tag#make_cache(0)
   endif
 
   if neocomplete#within_comment()
@@ -84,7 +84,7 @@ function! s:initialize_tags(filename) "{{{
         \              'tags_cache', a:filename, ft, 'T', 0)
         \ }
 endfunction"}}}
-function! neocomplete#sources#tags_complete#make_cache(force) "{{{
+function! neocomplete#sources#tag#make_cache(force) "{{{
   let bufnumber = bufnr('%')
 
   let s:async_tags_list[bufnumber] = []

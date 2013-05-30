@@ -355,7 +355,7 @@ g:neocomplete_data_directory		*g:neocomplete_data_directory*
 		This variable appoints the directory that neocomplete
 		begins to write a file at one time.  When there is not the
 		directory which appointed here, it is made.  For example,
-		buffer_complete.vim stores cache of the keyword in this
+		buffer.vim stores cache of the keyword in this
 		'buffer_cache' sub directory.
 
 		Default value is '~/.neocomplete'.
@@ -465,7 +465,7 @@ g:neocomplete_ctags_program		*g:neocomplete_ctags_program*
 g:neocomplete_ctags_arguments_list
 					*g:neocomplete_ctags_arguments_list*
 		It is the dictionary of the character string to set a value
-		to give as an argument of the commands when buffer_complete
+		to give as an argument of the commands when buffer
 		and include_complete use a ctags command.  The dictionary's
 		key is filetype.  If the key is "_", it will be used for
 		default.
@@ -504,17 +504,17 @@ g:neocomplete_sources_list
 		if !exists('g:neocomplete_sources_list')
 		  let g:neocomplete_sources_list = {}
 		endif
-		let g:neocomplete_sources_list._ = ['buffer_complete']
+		let g:neocomplete_sources_list._ = ['buffer']
 		let g:neocomplete_sources_list.cpp =
-		\ ['buffer_complete', 'include_complete']
+		\ ['buffer', 'include_complete']
 <
 					*b:neocomplete_sources_list*
 b:neocomplete_sources_list
 		It is a list to decide use source names in buffer local.
 >
 		" Examples:
-		" In cmdwin, only use vim_complete source.
-		autocmd CmdwinEnter * let b:neocomplete_sources_list = ['vim_complete']
+		" In cmdwin, only use vim source.
+		autocmd CmdwinEnter * let b:neocomplete_sources_list = ['vim']
 <
 				*g:neocomplete_disabled_sources_list*
 g:neocomplete_disabled_sources_list
@@ -724,22 +724,22 @@ g:neocomplete_filename_include_exts
 				*g:neocomplete_member_prefix_patterns*
 g:neocomplete_member_prefix_patterns
 		This variable appoints a prefix pattern to complete a member
-		in buffer_complete.
+		in buffer.
 		This is appointed in regular expression every file type.
 		If filetype key is not set, disable member completion.
 
 		Because it is complicated, refer in
-		autoload/neocomplete/sources/buffer_complete.vim for the
+		autoload/neocomplete/sources/buffer.vim for the
 		initial value.
 
 g:neocomplete_member_patterns		*g:neocomplete_member_patterns*
 		This variable appoints a keyword pattern to complete a member
-		in buffer_complete.
+		in buffer.
 		This is appointed in regular expression every file type.
 		If filetype key is not set, use filetype "default" setting.
 
 		Because it is complicated, refer in
-		autoload/neocomplete/sources/buffer_complete.vim for the
+		autoload/neocomplete/sources/buffer.vim for the
 		initial value.
 
 g:neocomplete_omni_functions		*g:neocomplete_omni_functions*
@@ -752,19 +752,19 @@ g:neocomplete_omni_functions		*g:neocomplete_omni_functions*
 
 		Default value is {}.
 
-					*g:neocomplete_vim_completefuncs*
-g:neocomplete_vim_completefuncs
-		This dictionary which appoints |vim_complete| call function
+					*g:neocomplete_vimfuncs*
+g:neocomplete_vimfuncs
+		This dictionary which appoints |vim| call function
 		when completes custom and customlist command.  The key is
 		command name.  The value is function name.
 
 		Default value is {}.
 >
 		" Examples:
-		if !exists('g:neocomplete_vim_completefuncs')
-		  let g:neocomplete_vim_completefuncs = {}
+		if !exists('g:neocomplete_vimfuncs')
+		  let g:neocomplete_vimfuncs = {}
 		endif
-		let g:neocomplete_vim_completefuncs.Ref = 'ref#complete'
+		let g:neocomplete_vimfuncs.Ref = 'ref#complete'
 <
 					*g:neocomplete_tags_filter_patterns*
 g:neocomplete_tags_filter_patterns
@@ -779,7 +779,7 @@ g:neocomplete_tags_filter_patterns
 				*g:neocomplete_tags_caching_limit_file_size*
 g:neocomplete_tags_caching_limit_file_size
 		This variable set file size to make a cache of a file in
-		tags_complete source.  If open file is bigger than this size,
+		tag source.  If open file is bigger than this size,
 		neocomplete does not make a tags cache.
 
 		Default value is 500000.
@@ -1016,19 +1016,19 @@ SOURCES						*neocomplete-sources*
 neocomplete reads automatically sources saved in an
 autoload/neocomplete/sources directory.
 
-buffer_complete.vim				*buffer_complete*
+buffer.vim				*buffer*
 		This source collects keywords from buffer.
 
 member_complete.vim				*member_complete*
 		This source collects use of member variables from buffer.
 
-tags_complete.vim				*tags_complete*
+tag.vim				*tag*
 		This source analyzes a tag file from tagfiles() for completion.
 		When a huge tag file (above
 		|g:neocomplete_tags_caching_limit_file_size|) is set,
 		neocomplete does not make cache if you do not execute
-		|:NeoCompleteCachingTags|command.  Because tags_complete is
-		too slow if tags_complete read a big tags file.  You should use
+		|:NeoCompleteCachingTags|command.  Because tag is
+		too slow if tag read a big tags file.  You should use
 		more convenient include completion now.
 
 syntax_complete.vim				*syntax_complete*
@@ -1047,7 +1047,7 @@ include_complete.vim				*include_complete*
 		Note: |vimproc| is required.
 		http://github.com/Shougo/vimproc
 
-vim_complete.vim				*vim_complete*
+vim.vim				*vim*
 		This source analyzes context and start Omni completion of
 		Vim script.  This plugin does not work other than editing
 		time of Vim script.  I created it because neocomplete
@@ -1082,13 +1082,13 @@ suffix of complete candidates in popup menu declaration.
     filename_include           -> [FI] {filename}
     dictionary_complete        -> [D] {words}
     member_complete            -> [M] member
-    buffer_complete            -> [B] {buffername}
+    buffer            -> [B] {buffername}
     syntax_complete            -> [S] {syntax-keyword}
     include_complete           -> [I]
     neosnippet                 -> [neosnip]
-    vim_complete               -> [vim] type
+    vim               -> [vim] type
     omni_complete              -> [O]
-    tags_complete              -> [T]
+    tag              -> [T]
     other plugin sources       -> [plugin-name-prefix]
     other completefunc sources -> [plugin-name-prefix]
     other ftplugin sources     -> [plugin-name-prefix]
@@ -1122,7 +1122,7 @@ Default sources are below. But you can create original filters(cf:
 |neocomplete#custom_source()|.
 >
 	call neocomplete#custom_source(
-	\ 'buffer_complete', 'converters', [])
+	\ 'buffer', 'converters', [])
 
 	" Change default matcher.
 	call neocomplete#custom_source('_', 'matchers',

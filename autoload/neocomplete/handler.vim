@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,9 +39,9 @@ function! neocomplete#handler#_on_moved_i() "{{{
 
   " Make cache.
   if cur_text =~ '^\s*$\|\s\+$'
-    if neocomplete#is_enabled_source('buffer_complete')
+    if neocomplete#is_enabled_source('buffer')
       " Caching current cache line.
-      call neocomplete#sources#buffer_complete#make_cache_current_line()
+      call neocomplete#sources#buffer#make_cache_current_line()
     endif
     if neocomplete#is_enabled_source('member_complete')
       " Caching current cache line.

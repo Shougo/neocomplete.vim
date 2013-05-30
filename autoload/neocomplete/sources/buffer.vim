@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: buffer_complete.vim
+" FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -34,7 +34,7 @@ if !exists('s:buffer_sources')
 endif
 
 let s:source = {
-      \ 'name' : 'buffer_complete',
+      \ 'name' : 'buffer',
       \ 'kind' : 'manual',
       \ 'mark' : '[B]',
       \ 'rank' : 5,
@@ -55,7 +55,7 @@ function! s:source.hooks.on_init(context) "{{{
     autocmd BufWritePost *
           \ call s:check_recache()
     autocmd InsertEnter,InsertLeave *
-          \ call neocomplete#sources#buffer_complete#make_cache_current_line()
+          \ call neocomplete#sources#buffer#make_cache_current_line()
   augroup END"}}}
 
   " Create cache directory.
@@ -95,14 +95,14 @@ function! s:source.gather_candidates(context) "{{{
   return keyword_list
 endfunction"}}}
 
-function! neocomplete#sources#buffer_complete#define() "{{{
+function! neocomplete#sources#buffer#define() "{{{
   return s:source
 endfunction"}}}
 
-function! neocomplete#sources#buffer_complete#get_frequencies() "{{{
+function! neocomplete#sources#buffer#get_frequencies() "{{{
   return get(get(s:buffer_sources, bufnr('%'), {}), 'frequencies', {})
 endfunction"}}}
-function! neocomplete#sources#buffer_complete#make_cache_current_line() "{{{
+function! neocomplete#sources#buffer#make_cache_current_line() "{{{
   " Make cache from current line.
   return s:make_cache_current_buffer(
         \ max([1, line('.') - 10]), min([line('.') + 10, line('$')]))
@@ -307,7 +307,7 @@ function! s:exists_current_source() "{{{
 endfunction"}}}
 
 " Command functions. "{{{
-function! neocomplete#sources#buffer_complete#make_cache(name) "{{{
+function! neocomplete#sources#buffer#make_cache(name) "{{{
   if a:name == ''
     let number = bufnr('%')
   else

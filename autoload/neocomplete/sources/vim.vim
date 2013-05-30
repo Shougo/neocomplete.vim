@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: vim_complete.vim
+" FILE: vim.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -28,7 +28,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:source = {
-      \ 'name' : 'vim_complete',
+      \ 'name' : 'vim',
       \ 'kind' : 'manual',
       \ 'filetypes' : { 'vim' : 1, },
       \ 'mark' : '[vim]',
@@ -40,32 +40,32 @@ function! s:source.hooks.on_init(context) "{{{
   " Initialize.
 
   " Initialize complete function list. "{{{
-  if !exists('g:neocomplete_vim_completefuncs')
-    let g:neocomplete_vim_completefuncs = {}
+  if !exists('g:neocomplete_vimfuncs')
+    let g:neocomplete_vimfuncs = {}
   endif
   "}}}
 
   autocmd neocomplete FileType *
-        \ call neocomplete#sources#vim_complete#helper#on_filetype()
+        \ call neocomplete#sources#vim#helper#on_filetype()
 
   " Initialize check.
-  call neocomplete#sources#vim_complete#helper#on_filetype()
+  call neocomplete#sources#vim#helper#on_filetype()
 
   " Add command.
   command! -nargs=? -complete=buffer NeoCompleteVimMakeCache
-        \ call neocomplete#sources#vim_complete#helper#make_cache(<q-args>)
+        \ call neocomplete#sources#vim#helper#make_cache(<q-args>)
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
   silent! delcommand NeoCompleteVimMakeCache
 
   if neocomplete#exists_echodoc()
-    call echodoc#unregister('vim_complete')
+    call echodoc#unregister('vim')
   endif
 endfunction"}}}
 
 function! s:source.get_complete_position(context) "{{{
-  let cur_text = neocomplete#sources#vim_complete#get_cur_text()
+  let cur_text = neocomplete#sources#vim#get_cur_text()
 
   if cur_text =~ '^\s*"'
     " Comment.
@@ -77,8 +77,8 @@ function! s:source.get_complete_position(context) "{{{
   if cur_text != '' && cur_text !~
         \ '^[[:digit:],[:space:][:tab:]$''<>]*\h\w*$'
     let command_completion =
-          \ neocomplete#sources#vim_complete#helper#get_completion_name(
-          \   neocomplete#sources#vim_complete#get_command(cur_text))
+          \ neocomplete#sources#vim#helper#get_completion_name(
+          \   neocomplete#sources#vim#get_command(cur_text))
     if command_completion =~ '\%(dir\|file\|shellcmd\)'
       let pattern = neocomplete#get_keyword_pattern_end('filename')
     endif
@@ -102,7 +102,7 @@ function! s:source.get_complete_position(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  let cur_text = neocomplete#sources#vim_complete#get_cur_text()
+  let cur_text = neocomplete#sources#vim#get_cur_text()
   if neocomplete#is_auto_complete() && cur_text !~ '\h\w*\.\%(\h\w*\)\?$'
         \ && len(a:context.complete_str) <
         \      g:neocomplete_auto_completion_start_length
@@ -113,13 +113,13 @@ function! s:source.gather_candidates(context) "{{{
   if cur_text =~ '\h\w*\.\%(\h\w*\)\?$'
     " Dictionary.
     let complete_str = matchstr(cur_text, '.\%(\h\w*\)\?$')
-    return neocomplete#sources#vim_complete#helper#var_dictionary(
+    return neocomplete#sources#vim#helper#var_dictionary(
           \ cur_text, complete_str)
   elseif a:context.complete_str =~# '^&\%([gl]:\)\?'
     " Options.
     let prefix = matchstr(a:context.complete_str, '&\%([gl]:\)\?')
     let list = deepcopy(
-          \ neocomplete#sources#vim_complete#helper#option(
+          \ neocomplete#sources#vim#helper#option(
           \   cur_text, a:context.complete_str))
     for keyword in list
       let keyword.word =
@@ -133,7 +133,7 @@ function! s:source.gather_candidates(context) "{{{
     let complete_str = substitute(
           \ a:context.complete_str, '^\c<sid>', 's:', '')
     let list = deepcopy(
-          \ neocomplete#sources#vim_complete#helper#function(
+          \ neocomplete#sources#vim#helper#function(
           \     cur_text, complete_str))
     for keyword in list
       let keyword.word = prefix . keyword.word[2:]
@@ -142,34 +142,34 @@ function! s:source.gather_candidates(context) "{{{
     endfor
   elseif cur_text =~# '\<has([''"]\w*$'
     " Features.
-    let list = neocomplete#sources#vim_complete#helper#feature(
+    let list = neocomplete#sources#vim#helper#feature(
           \ cur_text, a:context.complete_str)
   elseif cur_text =~# '\<expand([''"][<>[:alnum:]]*$'
     " Expand.
-    let list = neocomplete#sources#vim_complete#helper#expand(
+    let list = neocomplete#sources#vim#helper#expand(
           \ cur_text, a:context.complete_str)
   elseif a:context.complete_str =~ '^\$'
     " Environment.
-    let list = neocomplete#sources#vim_complete#helper#environment(
+    let list = neocomplete#sources#vim#helper#environment(
           \ cur_text, a:context.complete_str)
   elseif cur_text =~ '^[[:digit:],[:space:][:tab:]$''<>]*!\s*\f\+$'
     " Shell commands.
-    let list = neocomplete#sources#vim_complete#helper#shellcmd(
+    let list = neocomplete#sources#vim#helper#shellcmd(
           \ cur_text, a:context.complete_str)
   else
     " Commands.
-    let list = neocomplete#sources#vim_complete#helper#command(
+    let list = neocomplete#sources#vim#helper#command(
           \ cur_text, a:context.complete_str)
   endif
 
   return list
 endfunction"}}}
 
-function! neocomplete#sources#vim_complete#define() "{{{
+function! neocomplete#sources#vim#define() "{{{
   return s:source
 endfunction"}}}
 
-function! neocomplete#sources#vim_complete#get_cur_text() "{{{
+function! neocomplete#sources#vim#get_cur_text() "{{{
   let cur_text = neocomplete#get_cur_text(1)
   if &filetype == 'vimshell' && exists('*vimshell#get_secondary_prompt')
         \   && empty(b:vimshell.continuation)
@@ -187,7 +187,7 @@ function! neocomplete#sources#vim_complete#get_cur_text() "{{{
 
   return split(cur_text, '\s\+|\s\+\|<bar>', 1)[-1]
 endfunction"}}}
-function! neocomplete#sources#vim_complete#get_command(cur_text) "{{{
+function! neocomplete#sources#vim#get_command(cur_text) "{{{
   return matchstr(a:cur_text, '\<\%(\d\+\)\?\zs\h\w*\ze!\?\|'.
         \ '\<\%([[:digit:],[:space:]$''<>]\+\)\?\zs\h\w*\ze/.*')
 endfunction"}}}
