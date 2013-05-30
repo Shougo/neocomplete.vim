@@ -198,10 +198,17 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
       endfor
     endif
 
-    for candidate in filter(copy(words),
-          \ 'has_key(frequencies, v:val.word)')
-      let candidate.rank = frequencies[candidate.word]
-    endfor
+    lua << EOF
+    do
+      local frequencies = vim.eval('frequencies')
+      local candidates = vim.eval('words')
+      for i = 0, #candidates-1 do
+        if frequencies[candidates[i].word] ~= nil then
+          candidates[i].rank = frequencies[candidates[i].word]
+        end
+      end
+    end
+EOF
 
     let words = neocomplete#helper#call_filters(
           \ source.sorters, source, {})
@@ -210,10 +217,18 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
       let words = words[: len(source.max_candidates)-1]
     endif
 
-    for candidate in filter(copy(words), "!has_key(v:val, 'menu')")
-      " Set default menu.
-      let candidate.menu = mark
-    endfor
+    " Set default menu.
+    lua << EOF
+    do
+      local candidates = vim.eval('words')
+      local mark = vim.eval('mark')
+      for i = 0, #candidates-1 do
+        if candidates[i].menu == nil then
+          candidates[i].menu = mark
+        end
+      end
+    end
+EOF
 
     let words = neocomplete#helper#call_filters(
           \ source.converters, source, {})
@@ -238,13 +253,7 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
   " Check dup and set icase.
   let icase = g:neocomplete_enable_ignore_case &&
         \!(g:neocomplete_enable_smart_case && a:complete_str =~ '\u')
-        \ && !neocomplete#is_text_mode()
   for candidate in candidates
-    if has_key(candidate, 'kind') && candidate.kind == ''
-      " Remove kind key.
-      call remove(candidate, 'kind')
-    endif
-
     let candidate.icase = icase
   endfor
 
@@ -304,7 +313,7 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
 
     let complete_str = context.input[complete_pos :]
     if neocomplete#is_auto_complete() &&
-          \ len(complete_str) < neocomplete#get_completion_length(source.name)
+          \ len(complete_str) < source.min_pattern_length
       " Skip.
       let source.neocomplete__context =
             \ neocomplete#init#_context(

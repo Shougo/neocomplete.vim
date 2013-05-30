@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 30 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -111,30 +111,6 @@ function! neocomplete#get_next_keyword() "{{{
   let pattern = '^\%(' . neocomplete#get_next_keyword_pattern() . '\m\)'
 
   return matchstr('a'.getline('.')[len(neocomplete#get_cur_text()) :], pattern)[1:]
-endfunction"}}}
-function! neocomplete#get_completion_length(source_name) "{{{
-  let sources = neocomplete#variables#get_sources()
-  if !has_key(sources, a:source_name)
-    " Unknown.
-    return -1
-  endif
-
-  if neocomplete#is_auto_complete()
-        \ && neocomplete#get_current_neocomplete().completion_length >= 0
-    return neocomplete#get_current_neocomplete().completion_length
-  else
-    return sources[a:source_name].min_pattern_length
-  endif
-endfunction"}}}
-function! neocomplete#set_completion_length(source_name, length) "{{{
-  let custom = neocomplete#variables#get_custom().sources
-  if !has_key(custom, a:source_name)
-    let custom[a:source_name] = {}
-  endif
-
-  if !has_key(custom[a:source_name], 'min_pattern_length')
-    let custom[a:source_name].min_pattern_length = a:length
-  endif
 endfunction"}}}
 function! neocomplete#get_keyword_pattern(...) "{{{
   let filetype = a:0 != 0? a:000[0] : neocomplete#get_context_filetype()

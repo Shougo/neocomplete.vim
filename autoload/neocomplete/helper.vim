@@ -141,10 +141,6 @@ function! neocomplete#helper#get_source_filetypes(filetype) "{{{
   return neocomplete#util#uniq(filetypes)
 endfunction"}}}
 
-function! neocomplete#helper#get_completion_length(plugin_name) "{{{
-  " Todo.
-endfunction"}}}
-
 function! neocomplete#helper#complete_check() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   if g:neocomplete_enable_debug
@@ -204,32 +200,44 @@ endfunction"}}}
 
 function! neocomplete#helper#unite_patterns(pattern_var, filetype) "{{{
   let keyword_patterns = []
-  let dup_check = {}
 
-  " Composite filetype.
-  for ft in split(a:filetype, '\.')
-    if has_key(a:pattern_var, ft) && !has_key(dup_check, ft)
-      let dup_check[ft] = 1
-      call add(keyword_patterns, a:pattern_var[ft])
-    endif
+  lua << EOF
+  local patterns = vim.eval('keyword_patterns')
+  local filetypes = vim.eval("split(a:filetype, '\\.')")
+  local pattern_var = vim.eval('a:pattern_var')
+  local same_filetypes = vim.eval('g:neocomplete_same_filetype_lists')
 
-    " Same filetype.
-    if has_key(g:neocomplete_same_filetype_lists, ft)
-      for ft in split(g:neocomplete_same_filetype_lists[ft], ',')
-        if has_key(a:pattern_var, ft) && !has_key(dup_check, ft)
-          let dup_check[ft] = 1
-          call add(keyword_patterns, a:pattern_var[ft])
-        endif
-      endfor
-    endif
-  endfor
+  local dup_check = {}
+  for i = 0, #filetypes-1 do
+    local ft = filetypes[i]
 
-  if empty(keyword_patterns)
-    let default = get(a:pattern_var, '_', get(a:pattern_var, 'default', ''))
-    if default != ''
-      call add(keyword_patterns, default)
-    endif
-  endif
+    -- Composite filetype.
+    if pattern_var[ft] ~= nil and dup_check[ft] == nil then
+      dup_check[ft] = 1
+      patterns:add(pattern_var[ft])
+    end
+
+    -- Same filetype.
+    if same_filetypes[ft] ~= nil then
+      for ft in string.gmatch(same_filetypes[ft], '[^,]+') do
+        if pattern_var[ft] ~= nil and dup_check[ft] == nil then
+          dup_check[ft] = 1
+          patterns:add(pattern_var[ft])
+        end
+      end
+    end
+  end
+
+  if #patterns == 0 then
+    local default = pattern_var['_']
+    if default == nil then
+      default = pattern_var['default']
+    end
+    if default ~= nil and default ~= '' then
+      patterns:add(default)
+    end
+  end
+EOF
 
   return join(keyword_patterns, '\m\|')
 endfunction"}}}
