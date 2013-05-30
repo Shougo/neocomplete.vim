@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: commands.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 31 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -28,7 +28,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! neocomplete#commands#_initialize() "{{{
-  command! -nargs=? Neco call s:display_neco(<q-args>)
   command! -nargs=1 NeoCompleteAutoCompletionLength
         \ call s:set_auto_completion_length(<args>)
 endfunction"}}}
@@ -69,167 +68,6 @@ endfunction"}}}
 function! neocomplete#commands#_set_file_type(filetype) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.filetype = a:filetype
-endfunction"}}}
-
-function! s:display_neco(number) "{{{
-  let cmdheight_save = &cmdheight
-
-  let animation = [
-    \[
-        \[
-        \ "   A A",
-        \ "~(-'_'-)"
-        \],
-        \[
-        \ "      A A",
-        \ "   ~(-'_'-)",
-        \],
-        \[
-        \ "        A A",
-        \ "     ~(-'_'-)",
-        \],
-        \[
-        \ "          A A  ",
-        \ "       ~(-'_'-)",
-        \],
-        \[
-        \ "             A A",
-        \ "          ~(-^_^-)",
-        \],
-    \],
-    \[
-        \[
-        \ "   A A",
-        \ "~(-'_'-)",
-        \],
-        \[
-        \ "      A A",
-        \ "   ~(-'_'-)",
-        \],
-        \[
-        \ "        A A",
-        \ "     ~(-'_'-)",
-        \],
-        \[
-        \ "          A A  ",
-        \ "       ~(-'_'-)",
-        \],
-        \[
-        \ "             A A",
-        \ "          ~(-'_'-)",
-        \],
-        \[
-        \ "          A A  ",
-        \ "       ~(-'_'-)"
-        \],
-        \[
-        \ "        A A",
-        \ "     ~(-'_'-)"
-        \],
-        \[
-        \ "      A A",
-        \ "   ~(-'_'-)"
-        \],
-        \[
-        \ "   A A",
-        \ "~(-'_'-)"
-        \],
-    \],
-    \[
-        \[
-        \ "   A A",
-        \ "~(-'_'-)",
-        \],
-        \[
-        \ "        A A",
-        \ "     ~(-'_'-)",
-        \],
-        \[
-        \ "             A A",
-        \ "          ~(-'_'-)",
-        \],
-        \[
-        \ "                  A A",
-        \ "               ~(-'_'-)",
-        \],
-        \[
-        \ "                       A A",
-        \ "                    ~(-'_'-)",
-        \],
-        \["                           A A",
-        \ "                        ~(-'_'-)",
-        \],
-    \],
-    \[
-        \[
-        \ "",
-        \ "   A A",
-        \ "~(-'_'-)",
-        \],
-        \["      A A",
-        \ "   ~(-'_'-)",
-        \ "",
-        \],
-        \[
-        \ "",
-        \ "        A A",
-        \ "     ~(-'_'-)",
-        \],
-        \[
-        \ "          A A  ",
-        \ "       ~(-'_'-)",
-        \ "",
-        \],
-        \[
-        \ "",
-        \ "             A A",
-        \ "          ~(-^_^-)",
-        \],
-    \],
-    \[
-        \[
-        \ "   A A        A A",
-        \ "~(-'_'-)  -8(*'_'*)"
-        \],
-        \[
-        \ "     A A        A A",
-        \ "  ~(-'_'-)  -8(*'_'*)"
-        \],
-        \[
-        \ "       A A        A A",
-        \ "    ~(-'_'-)  -8(*'_'*)"
-        \],
-        \[
-        \ "     A A        A A",
-        \ "  ~(-'_'-)  -8(*'_'*)"
-        \],
-        \[
-        \ "   A A        A A",
-        \ "~(-'_'-)  -8(*'_'*)"
-        \],
-    \],
-    \[
-        \[
-        \ "  A\\_A\\",
-        \ "(=' .' ) ~w",
-        \ "(,(\")(\")",
-        \],
-    \],
-  \]
-
-  let number = (a:number != '') ? a:number : len(animation)
-  let anim = get(animation, number, animation[s:rand(len(animation) - 1)])
-  let &cmdheight = len(anim[0])
-
-  for frame in anim
-    echo repeat("\n", &cmdheight-2)
-    redraw
-    echon join(frame, "\n")
-    sleep 300m
-  endfor
-  redraw
-
-  let &cmdheight = cmdheight_save
 endfunction"}}}
 
 function! s:rand(max) "{{{

@@ -113,9 +113,6 @@ COMMANDS 					*neocomplete-commands*
 		Note: This command enables neocomplete when neocomplete is
 		already disabled.
 
-:Neco [{anim-number}] 				*:Neco*
-		Secret.
-
 :NeoCompleteLock				*:NeoCompleteLock*
 		Lock neocomplete.
 		While neocomplete is in locking, you cannot use automatic
