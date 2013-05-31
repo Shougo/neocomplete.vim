@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 31 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -66,10 +66,11 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
 
     return complete_pos
   else
-    " Restore completeselect.
-    if has_key(neocomplete, 'completeselect')
-          \ && &completeselect != neocomplete.completeselect
-      let &completeselect = neocomplete.completeselect
+    if neocomplete#util#is_complete_select() &&
+          \ get(neocomplete, 'completeopt', &completeopt)
+      " Restore completeopt.
+          \  !=# &completeopt
+      let &completeopt = neocomplete.completeopt
     endif
 
     let complete_pos = neocomplete#complete#_get_complete_pos(

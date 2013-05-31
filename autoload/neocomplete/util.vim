@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 31 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -84,6 +84,9 @@ function! neocomplete#util#is_windows(...) "{{{
 endfunction"}}}
 function! neocomplete#util#is_mac(...) "{{{
   return call(s:V.is_mac, a:000)
+endfunction"}}}
+function! neocomplete#util#is_complete_select() "{{{
+  return get(g:, 'neocomplete#enable_complete_select', 0)
 endfunction"}}}
 function! neocomplete#util#get_last_status(...) "{{{
   return call(s:V.get_last_status, a:000)
