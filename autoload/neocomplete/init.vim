@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 31 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -460,7 +460,7 @@ function! neocomplete#init#_variables() "{{{
         \'[[:alnum:]:_]\+[*[{}]')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete_next_keyword_patterns', 'html,xhtml,xml,mkd',
-        \'[[:alnum:]_:-]*>\|[^"]*"')
+        \'[^"]*"\|[[:alnum:]_:-]*>')
   "}}}
 
   " Initialize same file type lists. "{{{
