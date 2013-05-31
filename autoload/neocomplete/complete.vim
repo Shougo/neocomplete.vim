@@ -34,7 +34,6 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
     let cur_text = neocomplete#get_cur_text()
     if !neocomplete#is_enabled()
           \ || neocomplete#helper#is_omni(cur_text)
-      call neocomplete#helper#clear_result()
       let &l:completefunc = 'neocomplete#complete#manual_complete'
 
       return (neocomplete#is_prefetch()
@@ -55,8 +54,6 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
           \ neocomplete.complete_sources)
 
     if complete_pos < 0
-      call neocomplete#helper#clear_result()
-
       let neocomplete = neocomplete#get_current_neocomplete()
       let complete_pos = (neocomplete#is_prefetch() ||
             \ g:neocomplete_enable_insert_char_pre ||
@@ -97,7 +94,6 @@ function! neocomplete#complete#sources_manual_complete(findstart, base) "{{{
 
   if a:findstart
     if !neocomplete#is_enabled()
-      call neocomplete#helper#clear_result()
       return -2
     endif
 
@@ -108,8 +104,6 @@ function! neocomplete#complete#sources_manual_complete(findstart, base) "{{{
           \ neocomplete#complete#_get_complete_pos(complete_sources)
 
     if neocomplete.complete_pos < 0
-      call neocomplete#helper#clear_result()
-
       return -2
     endif
 

@@ -1746,6 +1746,9 @@ TODO						*neocomplete-todo*
 ==============================================================================
 CHANGELOG					*neocomplete-changelog*
 
+2013-05-31
+- Improved clear result timing.
+
 2013-05-30
 - Renamed sources.
 

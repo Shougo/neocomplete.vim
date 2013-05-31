@@ -61,7 +61,6 @@ endfunction
 function! neocomplete#mappings#cancel_popup() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skip_next_complete = 1
-  call neocomplete#helper#clear_result()
 
   return pumvisible() ? "\<C-e>" : ''
 endfunction

@@ -134,8 +134,6 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     if g:neocomplete_enable_debug
       echomsg 'Skipped.'
     endif
-
-    call neocomplete#helper#clear_result()
     return
   endif
 
@@ -180,7 +178,6 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
       " Skip completion.
       let &l:completefunc = 'neocomplete#complete#manual_complete'
-      call neocomplete#helper#clear_result()
       return
     endif
   endif
