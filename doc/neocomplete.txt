@@ -54,6 +54,17 @@ keywords in the current buffer. neocomplete could be customized easily and has
 a lot more features than the Vim's standard completion feature.
 Note: neocomplete may consume more memory than other plugins.
 
+neocomplete difference from |neocomplcache|:
+
+1. Real fuzzy match behavior like |YouCompleteMe| in default.
+2. Refactorred source interface.
+3. Removed legacy interface.
+4. Required |if_lua|.
+5. Optimized completion speed.
+6. Changed source names.
+7. Changed variable names.
+8. Added new features.
+
 ==============================================================================
 INSTALL						*neocomplete-install*
 
