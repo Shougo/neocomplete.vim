@@ -32,6 +32,13 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ unite#sources#neocomplete#start_complete()
   inoremap <expr><silent> <Plug>(neocomplete_start_unite_quick_match)
         \ unite#sources#neocomplete#start_quick_match()
+  if neocomplete#util#is_complete_select()
+    inoremap <silent> <Plug>(neocomplete_start_auto_complete)
+          \ <C-x><C-u>
+  else
+    inoremap <silent> <Plug>(neocomplete_start_auto_complete)
+          \ <C-x><C-u><C-r>=neocomplete#mappings#popup_post()<CR>
+  endif
 endfunction"}}}
 
 function! neocomplete#mappings#smart_close_popup() "{{{

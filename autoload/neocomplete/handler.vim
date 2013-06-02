@@ -199,9 +199,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   endif
 
   " Start auto complete.
-  call feedkeys((neocomplete#util#is_complete_select() ?
-        \ "\<C-x>\<C-u>" :
-        \ "\<C-x>\<C-u>\<C-r>=neocomplete#mappings#popup_post()\<CR>"), 'n')
+  call feedkeys("\<Plug>(neocomplete_start_auto_complete)")
 endfunction"}}}
 
 function! s:save_foldinfo() "{{{
