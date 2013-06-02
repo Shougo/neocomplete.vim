@@ -1007,16 +1007,20 @@ EXAMPLES					*neocomplete-examples*
 	if !exists('g:neocomplete_omni_patterns')
 	  let g:neocomplete_omni_patterns = {}
 	endif
-	let g:neocomplete_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-	let g:neocomplete_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-	let g:neocomplete_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 	if !exists('g:neocomplete_force_omni_patterns')
 	  let g:neocomplete_force_omni_patterns = {}
 	endif
+	let g:neocomplete_omni_patterns.php =
+	\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+	let g:neocomplete_omni_patterns.c =
+	\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+	let g:neocomplete_omni_patterns.cpp =
+	\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
 	" For perlomni.vim setting.
 	" https://github.com/c9s/perlomni.vim
-	let g:neocomplete_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+	let g:neocomplete_omni_patterns.perl =
+	\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 <
 ==============================================================================
 SOURCES						*neocomplete-sources*

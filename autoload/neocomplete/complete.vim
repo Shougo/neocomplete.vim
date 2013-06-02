@@ -29,7 +29,6 @@ set cpo&vim
 
 function! neocomplete#complete#manual_complete(findstart, base) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
-
   if a:findstart
     let cur_text = neocomplete#get_cur_text()
     if !neocomplete#is_enabled()
