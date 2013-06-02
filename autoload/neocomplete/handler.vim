@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 May 2013.
+" Last Modified: 02 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -140,7 +140,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   let neocomplete.old_cur_text = cur_text
 
   if neocomplete#helper#is_omni(cur_text)
-    call feedkeys("\<Plug>(neocomplete_start_omni)")
+    call feedkeys("\<C-x>\<C-o>\<C-p>", 'n')
     return
   endif
 
@@ -199,7 +199,9 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   endif
 
   " Start auto complete.
-  call feedkeys("\<Plug>(neocomplete_start_auto_complete)")
+  call feedkeys((neocomplete#util#is_complete_select() ?
+        \ "\<C-x>\<C-u>" :
+        \ "\<C-x>\<C-u>\<C-r>=neocomplete#mappings#popup_post()\<CR>"), 'n')
 endfunction"}}}
 
 function! s:save_foldinfo() "{{{

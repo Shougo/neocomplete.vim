@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 May 2013.
+" Last Modified: 02 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,15 +32,6 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ unite#sources#neocomplete#start_complete()
   inoremap <expr><silent> <Plug>(neocomplete_start_unite_quick_match)
         \ unite#sources#neocomplete#start_quick_match()
-  if neocomplete#util#is_complete_select()
-    inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-x><C-u>
-  else
-    inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-x><C-u><C-r>=neocomplete#mappings#popup_post()<CR>
-  endif
-  inoremap <silent> <Plug>(neocomplete_start_omni)
-        \ <C-x><C-o><C-p>
 endfunction"}}}
 
 function! neocomplete#mappings#smart_close_popup() "{{{
