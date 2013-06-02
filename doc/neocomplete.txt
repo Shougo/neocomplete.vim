@@ -1139,7 +1139,7 @@ Default sorters: ['sorter_rank'].
 
 					*neocomplete-filter-converter_default*
 Default converters: ['converter_remove_next_keyword',
-        \      'converter_delimiter', 'converter_abbr'].
+        \      'converter_delimiter', 'converter_case', 'converter_abbr'].
 
 					*neocomplete-filter-matcher_head*
 matcher_head	Head matching matcher.
@@ -1157,6 +1157,11 @@ sorter_length	Candidates length order sorter.
 					*neocomplete-filter-converter_abbr*
 converter_abbr
 		The converter which abbreviates a candidate's abbr.
+
+					*neocomplete-filter-converter_case*
+converter_case
+		The converter which converts a candidate's word in text mode.
+		(cf: |g:neocomplete_text_mode_filetypes|)
 
 				*neocomplete-filter-converter_delimiter*
 converter_delimiter
