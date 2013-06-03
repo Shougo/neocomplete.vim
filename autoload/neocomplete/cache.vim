@@ -246,7 +246,7 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
   endif
 
   let filter_pattern =
-        \ get(g:neocomplete_tags_filter_patterns, a:filetype, '')
+        \ get(g:neocomplete#tags_filter_patterns, a:filetype, '')
   call neocomplete#cache#writefile('tags_pattens', a:filename,
         \ [neocomplete#get_keyword_pattern(),
         \  tags_file_name, filter_pattern, a:filetype])

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: tag.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -40,8 +40,8 @@ let s:source = {
       \}
 
 function! s:source.hooks.on_init(context) "{{{
-  let g:neocomplete_tags_caching_limit_file_size =
-        \ get(g:, 'neocomplete_tags_caching_limit_file_size', 500000)
+  let g:neocomplete#sources#tags#cache_limit_size =
+        \ get(g:, 'neocomplete#sources#tags#cache_limit_size', 500000)
 
   " Create cache directory.
   call neocomplete#cache#make_directory('tags_cache')
@@ -93,7 +93,7 @@ function! neocomplete#sources#tag#make_cache(force) "{{{
         \    fnamemodify(v:val, ':p'))")
     if tags !~? '/doc/tags\%(-\w\+\)\?$' &&
           \ (a:force || getfsize(tags)
-          \         < g:neocomplete_tags_caching_limit_file_size)
+          \         < g:neocomplete#sources#tags#cache_limit_size)
       call add(s:async_tags_list[bufnumber],
             \ s:initialize_tags(tags))
     endif

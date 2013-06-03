@@ -83,11 +83,11 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
     return 0
   endif
 
-  if has_key(g:neocomplete#force_omni_patterns, omnifunc)
-    let pattern = g:neocomplete#force_omni_patterns[omnifunc]
+  if has_key(g:neocomplete#force_omni_input_patterns, omnifunc)
+    let pattern = g:neocomplete#force_omni_input_patterns[omnifunc]
   elseif filetype != '' &&
-        \ get(g:neocomplete#force_omni_patterns, filetype, '') != ''
-    let pattern = g:neocomplete#force_omni_patterns[filetype]
+        \ get(g:neocomplete#force_omni_input_patterns, filetype, '') != ''
+    let pattern = g:neocomplete#force_omni_input_patterns[filetype]
   else
     return 0
   endif

@@ -215,7 +215,7 @@ g:neocomplete#auto_completion_start_length
 
 		Default value is 2.
 
-			*g:neocomplete#manual_completion_start_length*
+				*g:neocomplete#manual_completion_start_length*
 g:neocomplete#manual_completion_start_length
 		This variable controls the number of the input completion
 		at the time of manual completion.  It is convenient when you
@@ -247,7 +247,7 @@ g:neocomplete#enable_smart_case
 
 		Default value is 'infercase'.
 
-				*g:neocomplete#disable_auto_complete*
+					*g:neocomplete#disable_auto_complete*
 g:neocomplete#disable_auto_complete
 		This variable controls whether you invalidate automatic
 		completion.  If it is 1, automatic completion becomes
@@ -272,7 +272,7 @@ g:neocomplete#cursor_hold_i_time
 
 		Default value is 300.
 
-				*g:neocomplete#enable_insert_char_pre*
+					*g:neocomplete#enable_insert_char_pre*
 g:neocomplete#enable_insert_char_pre
 		This variable controls whether neocomplete use
 		|InsertCharPre| event when complete candidates.
@@ -344,8 +344,8 @@ g:neocomplete#data_directory		*g:neocomplete#data_directory*
 
 		Default value is '~/.neocomplete'.
 
-g:neocomplete#keyword_patterns
 					*g:neocomplete#keyword_patterns*
+g:neocomplete#keyword_patterns
 		This dictionary records keyword patterns to completion.
 		This is appointed in regular expression every file type.
 		If the key is "_" or "default", it is used for default
@@ -361,7 +361,7 @@ g:neocomplete#keyword_patterns
 		endif
 		let g:neocomplete#keyword_patterns._ = '\h\w*'
 <
-				*g:neocomplete#next_keyword_patterns*
+					*g:neocomplete#next_keyword_patterns*
 g:neocomplete#next_keyword_patterns
 		This dictionary records regular expression to recognize a
 		keyword pattern of the next than a cursor.  The form is the
@@ -371,8 +371,8 @@ g:neocomplete#next_keyword_patterns
 		neocomplete#init#_variables() in
 		autoload/neocomplete/init.vim for the initial value.
 
-					*g:neocomplete#force_omni_patterns*
-g:neocomplete#force_omni_patterns
+				*g:neocomplete#force_omni_input_patterns*
+g:neocomplete#force_omni_input_patterns
 		This dictionary records keyword patterns to Omni completion.
 		This is appointed in regular expression every file type.
 		If this pattern is not defined or empty pattern, neocomplete
@@ -380,19 +380,19 @@ g:neocomplete#force_omni_patterns
 		Note: If it is a set, neocomplete will call 'omnifunc' or
 		|g:neocomplete#omni_functions| directly.  So almost
 		neocomplete features are disabled.  But all Omni completion
-		works instead of |g:neocomplete_omni_patterns|.
+		works instead of |g:neocomplete#sources#omni#input_patterns|.
 		Note: This feature may change 'omnifunc' value.
 >
-		if !exists('g:neocomplete#force_omni_patterns')
-		  let g:neocomplete#force_omni_patterns = {}
+		if !exists('g:neocomplete#force_omni_input_patterns')
+		  let g:neocomplete#force_omni_input_patterns = {}
 		endif
-		let g:neocomplete#force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+		let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 <
 		Because it is complicated, refer to
 		neocomplete#init#_variables() in
 		autoload/neocomplete/init.vim for the initial value.
 
-				*g:neocomplete#same_filetypes*
+					*g:neocomplete#same_filetypes*
 g:neocomplete#same_filetypes
 		It is a dictionary to connect file type mutually.  It is
 		effective at time to let you refer to c and cpp mutually.
@@ -446,8 +446,8 @@ g:neocomplete#ctags_command		*g:neocomplete#ctags_command*
 
 		Default value is "ctags".
 
-g:neocomplete#ctags_arguments
 					*g:neocomplete#ctags_arguments*
+g:neocomplete#ctags_arguments
 		It is the dictionary of the character string to set a value
 		to give as an argument of the commands when buffer
 		and include use a ctags command.  The dictionary's
@@ -490,8 +490,7 @@ g:neocomplete#sources			*g:neocomplete#sources*
 		let g:neocomplete#sources._ = ['buffer']
 		let g:neocomplete#sources.cpp = ['buffer', 'include']
 <
-					*b:neocomplete#sources*
-b:neocomplete#sources
+b:neocomplete#sources			*b:neocomplete#sources*
 		It is a list to decide use source names in buffer local.
 >
 		" Examples:
@@ -514,6 +513,16 @@ g:neocomplete#release_cache_time
 
 		Default value is 900.
 
+					*g:neocomplete#tags_filter_patterns*
+g:neocomplete#tags_filter_patterns
+		This dictionary records a pattern to filter a candidate in
+		the tag completion.  For example, it can exclude a candidate
+		beginning in _ in file type of C/C++.
+
+		Because it is complicated, refer to
+		neocomplete#init#_variables() in
+		autoload/neocomplete/init.vim for the initial value.
+
 g:neocomplete#use_vimproc			*g:neocomplete#use_vimproc*
 		This variable is non 0, neocomplete uses |vimproc|.
 		Note: If this variable is non 0, neocomplete will make cache
@@ -521,17 +530,17 @@ g:neocomplete#use_vimproc			*g:neocomplete#use_vimproc*
 
 		Default value is vimproc auto detection result.
 
-g:neocomplete#omni_functions		*g:neocomplete#omni_functions*
-		This dictionary which appoints |omni| call functions.
+g:neocomplete#omni_functions			*g:neocomplete#omni_functions*
+		This dictionary which appoints omni source call functions.
 		The key is |&filetype|.  The value is omnifunc String or List
-		of omnifunc String.  If
-		g:neocomplete_omni_function_list[|&filetype|] is undefined,
-		|omni| calls |omnifunc|.
+		of omnifunc String.
+		If |g:neocomplete#omni_functions| [|&filetype|] is undefined,
+		omni source calls 'omnifunc'.
 		If the key is "_", used for all filetypes.
 
 		Default value is {}.
 
-			*g:neocomplete#ignore_composite_filetypes*
+				*g:neocomplete#ignore_composite_filetypes*
 g:neocomplete#ignore_composite_filetypes
 		It is a dictionary to ignore composite file type.
 		The dictionary's key is composite filetype and value is
@@ -568,7 +577,7 @@ g:neocomplete#enable_auto_close_preview
 
 SOURCES VARIABLES 			*neocomplete-sources-variables*
 
-				*g:neocomplete#sources#buffer#cache_limit_size*
+			*g:neocomplete#sources#buffer#cache_limit_size*
 g:neocomplete#sources#buffer#cache_limit_size
 		This variable set file size to make a cache of a file.  If
 		open file is bigger than this size, neocomplete does not
@@ -585,8 +594,8 @@ g:neocomplete#sources#buffer#disabled_pattern
 
 		Default value is ''.
 
-				*g:neocomplete_dictionary_filetype_lists*
-g:neocomplete_dictionary_filetype_lists
+			*g:neocomplete#sources#dictionary#dictionaries*
+g:neocomplete#sources#dictionary#dictionaries
 		It is a dictionary to connect a dictionary file with file
 		type.  The dictionary's key is filetype and comma-separated
 		multiple value is a path to a dictionary file.  If this
@@ -597,8 +606,8 @@ g:neocomplete_dictionary_filetype_lists
 
 		Default value is {}.
 
-					*g:neocomplete_dictionary_patterns*
-g:neocomplete_dictionary_patterns
+			*g:neoocmplete#sources#dictionary#keyword_patterns*
+g:neoocmplete#sources#dictionary#keyword_patterns
 		It is a dictionary to dictionary keyword patterns.  The
 		dictionary's key is filetype and value is keyword pattern.
 		If this variable is empty, neocomplete uses
@@ -606,8 +615,8 @@ g:neocomplete_dictionary_patterns
 
 		Default value is {}.
 
-				*g:neocomplete_file_include_exprs*
-g:neocomplete_file_include_exprs
+				*g:neocomplete#sources#file_include#exprs*
+g:neocomplete#sources#file_include#exprs
 		It is the expression string of the line analysis to perform
 		to substitute an include file name.  When there is not it,
 		ignored.  Refer to 'includeexpr' for the
@@ -616,7 +625,7 @@ g:neocomplete_file_include_exprs
 
 		Example: Perl
 >
-		let g:neocomplete_file_include_exprs.perl =
+		let g:neocomplete#sources#file_include#exprs.perl =
 		\ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")'
 <
 
@@ -624,22 +633,23 @@ g:neocomplete_file_include_exprs
 		autoload/neocomplete/sources/file.vim for the
 		initial value.
 
-				*g:neocomplete_file_include_exts*
-g:neocomplete_file_include_exts
+				*g:neocomplete#sources#file_include#exts*
+g:neocomplete#sources#file_include#exts
 		It is the list of include file name extensions.  When there
 		is not it, all file name is used.  It is the dictionary of
 		the list that assumed file type a key.
 
 		Example: C++
 >
-		let g:neocomplete_file_include_exts.cpp =
+		let g:neocomplete#sources#file_include#exts.cpp =
 		\ ['', 'h', 'hpp', 'hxx']
 <
 		Because it is complicated, refer to s:source.initialize() in
 		autoload/neocomplete/sources/file.vim for the
 		initial value.
 
-g:neocomplete_include_paths		*g:neocomplete_include_paths*
+					*g:neocomplete#sources#include#paths*
+g:neocomplete#sources#include#paths
 		It is the variable to enumerate path of the include file
 		every file type.  When there is not it, 'path' is used.
 		Refer to 'path' for the description form.  It is the
@@ -650,7 +660,8 @@ g:neocomplete_include_paths		*g:neocomplete_include_paths*
 		autoload/neocomplete/sources/include.vim for the
 		initial value.
 
-g:neocomplete_include_exprs			*g:neocomplete_include_exprs*
+					*g:neocomplete#sources#include#exprs*
+g:neocomplete#sources#include#exprs
 		It is the expression string of the line analysis to perform
 		to acquire an include file name.  When there is not it,
 		'includeexpr' is used.  Refer to 'includeexpr' for the
@@ -661,7 +672,8 @@ g:neocomplete_include_exprs			*g:neocomplete_include_exprs*
 		autoload/neocomplete/sources/include.vim for the
 		initial value.
 
-g:neocomplete_include_patterns	*g:neocomplete_include_patterns*
+				*g:neocomplete#sources#include#patterns*
+g:neocomplete#sources#include#patterns
 		This variable appoints the pattern of the include command.
 		When there is not it, 'include' is used.  Refer to 'include'
 		for the description form.  It is the dictionary of the
@@ -671,8 +683,8 @@ g:neocomplete_include_patterns	*g:neocomplete_include_patterns*
 		autoload/neocomplete/sources/include.vim for the
 		initial value.
 
-					*g:neocomplete_include_functions*
-g:neocomplete_include_functions
+				*g:neocomplete#sources#include#functions*
+g:neocomplete#sources#include#functions
 		This variable appoints the function name of the include
 		command.  When there is not it, ignored.  It is the dictionary
 		of the function name string that assumed file type a key.
@@ -686,14 +698,14 @@ g:neocomplete_include_functions
 		autoload/neocomplete/sources/include.vim for the
 		initial value.
 
-				*g:neocomplete_include_max_processes*
-g:neocomplete_include_max_processes
+				*g:neocomplete#sources#include#max_processes*
+g:neocomplete#sources#include#max_processes
 		This variable appoints the max number of include processes.
 		When this variable is 0, include process will be disabled.
 
 		Default value is 20.
 
-					*g:neocomplete#sources#syntax#min_keyword_length*
+			*g:neocomplete#sources#syntax#min_keyword_length*
 g:neocomplete#sources#syntax#min_keyword_length
 		In syntax files, this variable controls length of keyword
 		becoming the object of the completion at the minimum.
@@ -722,7 +734,8 @@ g:neocomplete#sources#member#input_patterns
 		autoload/neocomplete/sources/buffer.vim for the
 		initial value.
 
-g:neocomplete_omni_patterns		*g:neocomplete_omni_patterns*
+				*g:neocomplete#sources#omni#input_patterns*
+g:neocomplete#sources#omni#input_patterns
 		This dictionary records keyword patterns used in
 		|omni|.  This is appointed in regular expression
 		every file type or 'omnifunc' name.  If this pattern is not
@@ -732,41 +745,31 @@ g:neocomplete_omni_patterns		*g:neocomplete_omni_patterns*
 		slow.
 		Note: Partial omnifunc has problem when neocomplete call(Ex:
 		rubycomplete, jedi.vim, cocoa.vim and clang_complete).  You
-		should |g:neocomplete#force_omni_patterns| instead.
+		should |g:neocomplete#force_omni_input_patterns| instead.
 
 		Because it is complicated, refer to s:source.initialize()
 		autoload/neocomplete/sources/omni.vim for the
 		initial value.
 >
 		" Examples:
-		if !exists('g:neocomplete_omni_patterns')
-		  let g:neocomplete_omni_patterns = {}
+		if !exists('g:neocomplete#sources#omni#input_patterns')
+		  let g:neocomplete#sources#omni#input_patterns = {}
 		endif
-		let g:neocomplete_omni_patterns.php =
+		let g:neocomplete#sources#omni#input_patterns.php =
 		\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-		let g:neocomplete_omni_patterns.c =
+		let g:neocomplete#sources#omni#input_patterns.c =
 		\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
 <
-					*g:neocomplete_tags_filter_patterns*
-g:neocomplete_tags_filter_patterns
-		This dictionary records a pattern to filter a candidate in
-		the tag completion.  For example, it can exclude a candidate
-		beginning in _ in file type of C/C++.
-
-		Because it is complicated, refer to
-		neocomplete#init#_variables() in
-		autoload/neocomplete/init.vim for the initial value.
-
-				*g:neocomplete_tags_caching_limit_file_size*
-g:neocomplete_tags_caching_limit_file_size
+				*g:neocomplete#sources#tags#cache_limit_size*
+g:neocomplete#sources#tags#cache_limit_size
 		This variable set file size to make a cache of a file in
 		tag source.  If open file is bigger than this size,
 		neocomplete does not make a tags cache.
 
 		Default value is 500000.
 
-					*g:neocomplete_vimfuncs*
-g:neocomplete_vimfuncs
+				*g:neocomplete#sources#vim#complete_functions*
+g:neocomplete#sources#vim#complete_functions
 		This dictionary which appoints |vim| call function
 		when completes custom and customlist command.  The key is
 		command name.  The value is function name.
@@ -774,10 +777,11 @@ g:neocomplete_vimfuncs
 		Default value is {}.
 >
 		" Examples:
-		if !exists('g:neocomplete_vimfuncs')
-		  let g:neocomplete_vimfuncs = {}
+		if !exists('g:neocomplete#sources#vim#complete_functions')
+		  let g:neocomplete#sources#vim#complete_functions = {}
 		endif
-		let g:neocomplete_vimfuncs.Ref = 'ref#complete'
+		let g:neocomplete#sources#vim#complete_functions.Ref =
+		\ 'ref#complete'
 <
 ------------------------------------------------------------------------------
 FUNCTIONS 					*neocomplete-functions*
@@ -906,7 +910,7 @@ EXAMPLES					*neocomplete-examples*
 	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 	" Define dictionary.
-	let g:neocomplete_dictionary_filetype_lists = {
+	let g:neocomplete#sources#dictionary#dictionaries = {
 	    \ 'default' : '',
 	    \ 'vimshell' : $HOME.'/.vimshell_hist',
 	    \ 'scheme' : $HOME.'/.gosh_completions'
@@ -967,22 +971,22 @@ EXAMPLES					*neocomplete-examples*
 	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 	" Enable heavy omni completion.
-	if !exists('g:neocomplete_omni_patterns')
-	  let g:neocomplete_omni_patterns = {}
+	if !exists('g:neocomplete#sources#omni#input_patterns')
+	  let g:neocomplete#sources#omni#input_patterns = {}
 	endif
-	if !exists('g:neocomplete#force_omni_patterns')
-	  let g:neocomplete#force_omni_patterns = {}
+	if !exists('g:neocomplete#force_omni_input_patterns')
+	  let g:neocomplete#force_omni_input_patterns = {}
 	endif
-	let g:neocomplete_omni_patterns.php =
+	let g:neocomplete#sources#omni#input_patterns.php =
 	\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-	let g:neocomplete_omni_patterns.c =
+	let g:neocomplete#sources#omni#input_patterns.c =
 	\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
-	let g:neocomplete_omni_patterns.cpp =
+	let g:neocomplete#sources#omni#input_patterns.cpp =
 	\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
 	" For perlomni.vim setting.
 	" https://github.com/c9s/perlomni.vim
-	let g:neocomplete_omni_patterns.perl =
+	let g:neocomplete#sources#omni#input_patterns.perl =
 	\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 <
 ==============================================================================
@@ -1000,7 +1004,7 @@ member						*neocomplete-source-member*
 tag						*neocomplete-source-tag*
 		This source analyzes a tag file from tagfiles() for completion.
 		When a huge tag file (above
-		|g:neocomplete_tags_caching_limit_file_size|) is set,
+		|g:neocomplete#sources#tags#cache_limit_size|) is set,
 		neocomplete does not make cache if you do not execute
 		|:NeoCompleteCachingTags|command.  Because tag is
 		too slow if tag read a big tags file.  You should use
@@ -1032,7 +1036,7 @@ vim						*neocomplete-source-vim*
 
 dictionary					*neocomplete-source-dictionary*
 		This source adds candidates from 'dictionary' or
-		|g:neocomplete_dictionary_filetype_lists|.
+		|g:neocomplete#sources#dictionary#dictionaries|.
 
 file						*neocomplete-source-file*
 		This source collects filename candidates.
@@ -1044,7 +1048,7 @@ file_include				*neocomplete-source-file/include*
 
 omni						*neocomplete-source-omni*
 		This source calls 'omnifunc' automatically when cursor
-		text is matched with |g:neocomplete_omni_patterns|.  If
+		text is matched with |g:neocomplete#sources#omni#input_patterns|.  If
 		|g:neocomplete_omni_function_list|is defined,
 		neocomplete will give priority it.
 
@@ -1420,8 +1424,14 @@ or
 	call neocomplete#custom_source('_', 'matchers',
 	\ ['matcher_head'])
 <
-Note: This customization must be set before source initialization.
+Q: I want to sort candidates by different way.
 
+A:
+>
+>
+	call neocomplete#custom_source('_', 'sorters',
+	\ ['sorter_length'])
+<
 Q: Is there a way to control the colors used for popup menu using highlight
 groups?:
 
@@ -1439,11 +1449,11 @@ A: This is not neocomplete's issue.  Please report to the maintainers of the
 omnicomplete (rubycomplete or pythoncomplete) and its Vim interface.  You
 should disable omni source in python or ruby.
 >
-	if !exists('g:neocomplete_omni_patterns')
-	  let g:neocomplete_omni_patterns = {}
+	if !exists('g:neocomplete#sources#omni#input_patterns')
+	  let g:neocomplete#sources#omni#input_patterns = {}
 	endif
-	let g:neocomplete_omni_patterns.python = ''
-	let g:neocomplete_omni_patterns.ruby = ''
+	let g:neocomplete#sources#omni#input_patterns.python = ''
+	let g:neocomplete#sources#omni#input_patterns.ruby = ''
 <
 
 Q: I like moving cursor by cursor-keys.  But neocomplete popups menus...
@@ -1463,10 +1473,10 @@ Q: How I can disable python omni complete of neocomplete?:
 
 A:
 >
-	if !exists('g:neocomplete_omni_patterns')
-	  let g:neocomplete_omni_patterns = {}
+	if !exists('g:neocomplete#sources#omni#input_patterns')
+	  let g:neocomplete#sources#omni#input_patterns = {}
 	endif
-	let g:neocomplete_omni_patterns.python = ''
+	let g:neocomplete#sources#omni#input_patterns.python = ''
 <
 
 Q: Can I enable quick match? :
@@ -1491,7 +1501,7 @@ A: It may be fixed with setting |g:neocomplete#enable_prefetch| as 1.
 Q: include source does not work.
 
 A: include source depends on |vimproc|.  I recommend you to install it.  Also
-you can check 'path' option or change |g:neocomplete_include_paths|.
+you can check 'path' option or change |g:neocomplete#sources#include#paths|.
 
 http://github.com/Shougo/vimproc
 
@@ -1509,27 +1519,27 @@ I'm not sure if other distros has this command...
 http://www.vim.org/scripts/script.php?script_id=729
 
 
-Q: Error occurred in ruby omni complete using |g:neocomplete_omni_patterns|.
+Q: Error occurred in ruby omni complete using |g:neocomplete#sources#omni#input_patterns|.
 https://github.com/vim-ruby/vim-ruby/issues/95
 
-A: Please set |g:neocomplete#force_omni_patterns| instead of
-|g:neocomplete_omni_patterns|.
+A: Please set |g:neocomplete#force_omni_input_patterns| instead of
+|g:neocomplete#sources#omni#input_patterns|.
 
 Q: Does not work with clang_complete.
 
 A: Please try below settings.
 >
-	if !exists('g:neocomplete#force_omni_patterns')
-	  let g:neocomplete#force_omni_patterns = {}
+	if !exists('g:neocomplete#force_omni_input_patterns')
+	  let g:neocomplete#force_omni_input_patterns = {}
 	endif
 	let g:neocomplete#force_overwrite_completefunc = 1
-	let g:neocomplete#force_omni_patterns.c =
+	let g:neocomplete#force_omni_input_patterns.c =
 	      \ '[^.[:digit:] *\t]\%(\.\|->\)'
-	let g:neocomplete#force_omni_patterns.cpp =
+	let g:neocomplete#force_omni_input_patterns.cpp =
 	      \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-	let g:neocomplete#force_omni_patterns.objc =
+	let g:neocomplete#force_omni_input_patterns.objc =
 	      \ '[^.[:digit:] *\t]\%(\.\|->\)'
-	let g:neocomplete#force_omni_patterns.objcpp =
+	let g:neocomplete#force_omni_input_patterns.objcpp =
 	      \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 	let g:clang_complete_auto = 0
 	let g:clang_auto_select = 0
@@ -1552,10 +1562,10 @@ source code's complete function, and find out the omni pattern).
 	" SQL
 	let g:neocomplete#omni_functions.sql = 'sqlcomplete#Complete'
 	" R (plugin: vim-R-plugin)
-	let g:neocomplete_omni_patterns.r = '[[:alnum:].\\]\+'
+	let g:neocomplete#sources#omni#input_patterns.r = '[[:alnum:].\\]\+'
 	let g:neocomplete#omni_functions.r = 'rcomplete#CompleteR'
 	" XQuery (plugin: XQuery-indentomnicomplete)
-	let g:neocomplete_omni_patterns.xquery = '\k\|:\|\-\|&'
+	let g:neocomplete#sources#omni#input_patterns.xquery = '\k\|:\|\-\|&'
 	let g:neocomplete#omni_functions.xquery = 'xquerycomplete#CompleteXQuery'
 <
 
@@ -1604,7 +1614,7 @@ A: This is g:neocomplete#text_mode_filetypes feature.
 You can disable it by following code.
 >
 	if !exists('g:neocomplete#text_mode_filetypes')
-	  let g:neocomplete_tags_filter_patterns = {}
+	  let g:neocomplete#tags_filter_patterns = {}
 	endif
 	let g:neocomplete#text_mode_filetypes.gitcommit = 0
 <
@@ -1615,25 +1625,25 @@ variable to 1.
 
 Q: I want to use Ruby omni completion.
 
-A: Please set |g:neocomplete#force_omni_patterns|.  But this completion is
+A: Please set |g:neocomplete#force_omni_input_patterns|.  But this completion is
 heavy, so disabled by default.
 Note: But you should use |neocomplete-rsense| instead of rubycomplete.
 https://github.com/Shougo/neocomplete-rsense
 >
 	autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-	if !exists('g:neocomplete#force_omni_patterns')
-	  let g:neocomplete#force_omni_patterns = {}
+	if !exists('g:neocomplete#force_omni_input_patterns')
+	  let g:neocomplete#force_omni_input_patterns = {}
 	endif
-	let g:neocomplete#force_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+	let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 <
 Q: I want to use jedi omni completion.
 https://github.com/davidhalter/jedi-vim
 
-A: Please set |g:neocomplete#force_omni_patterns| as below.
+A: Please set |g:neocomplete#force_omni_input_patterns| as below.
 >
 	autocmd FileType python setlocal omnifunc=jedi#complete
 	let g:jedi#popup_on_dot = 0
-	let g:neocomplete#force_omni_patterns.python = '[^. \t]\.\w*'
+	let g:neocomplete#force_omni_input_patterns.python = '[^. \t]\.\w*'
 <
 Q: Candidates are not found in heavy completion(neco-look, etc).
 
@@ -1669,7 +1679,7 @@ it is too heavy.
 
 Q: I want to use Pydiction with neocomplete.
 
-A: You should set |g:neocomplete_dictionary_filetype_lists|.
+A: You should set |g:neocomplete#sources#dictionary#dictionaries|.
 neocomplete can load Pydiction dictionary file.
 
 Q: Why does neocomplcache use if_lua besides if_python? Many people may not be
@@ -1704,7 +1714,7 @@ A:
 Q: I want to use "vim-lua-ftplugin".
 https://github.com/xolox/vim-lua-ftplugin
 
-A: Please set |g:neocomplete_omni_patterns| as below.
+A: Please set |g:neocomplete#sources#omni#input_patterns| as below.
 Note: You can not use "vim-lua-ftplugin" on 7.3.885 or below,
 because if_lua has double-free problem.
 >
@@ -1714,9 +1724,9 @@ because if_lua has double-free problem.
 	
 	let g:neocomplete#omni_functions.lua =
 	      \ 'xolox#lua#omnifunc'
-	let g:neocomplete_omni_patterns.lua =
+	let g:neocomplete#sources#omni#input_patterns.lua =
 	      \ '\w\+[.:]\|require\s*(\?["'']\w*'
-	" let g:neocomplete#force_omni_patterns.lua =
+	" let g:neocomplete#force_omni_input_patterns.lua =
 	      " \ '\w\+[.:]\|require\s*(\?["'']\w*'
 <
 
@@ -1730,7 +1740,7 @@ Note: This settings works but may heavy.
 	\  'js_compl_fn': 'jscomplete#CompleteJS',
 	\  'max_node_compl_len': 15
 	\}
-	let g:neocomplete_omni_patterns.javascript = '\h\w*\|[^. \t]\.\w*'
+	let g:neocomplete#sources#omni#input_patterns.javascript = '\h\w*\|[^. \t]\.\w*'
 <
 Q: I want to disable sources in certain filetype.
 

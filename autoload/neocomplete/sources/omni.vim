@@ -40,64 +40,64 @@ let s:List = vital#of('neocomplete').import('Data.List')
 
 function! s:source.hooks.on_init(context) "{{{
   " Initialize omni completion pattern. "{{{
-  if !exists('g:neocomplete_omni_patterns')
-    let g:neocomplete_omni_patterns = {}
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
   endif
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_omni_patterns',
+        \'g:neocomplete#sources#omni#input_patterns',
         \'html,xhtml,xml,markdown',
         \'<[^>]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_omni_patterns',
+        \'g:neocomplete#sources#omni#input_patterns',
         \'css,scss,sass',
         \'^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_omni_patterns',
+        \'g:neocomplete#sources#omni#input_patterns',
         \'javascript',
         \'[^. \t]\.\%(\h\w*\)\?')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_omni_patterns',
+        \'g:neocomplete#sources#omni#input_patterns',
         \'actionscript',
         \'[^. \t][.:]\h\w*')
   "call neocomplete#util#set_default_dictionary(
-        "\'g:neocomplete_omni_patterns',
+        "\'g:neocomplete#sources#omni#input_patterns',
         "\'php',
         "\'[^. \t]->\h\w*\|\h\w*::')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_omni_patterns',
+        \'g:neocomplete#sources#omni#input_patterns',
         \'java',
         \'\%(\h\w*\|)\)\.')
   "call neocomplete#util#set_default_dictionary(
-        "\'g:neocomplete_omni_patterns',
+        "\'g:neocomplete#sources#omni#input_patterns',
         "\'perl',
         "\'\h\w*->\h\w*\|\h\w*::')
   "call neocomplete#util#set_default_dictionary(
-        "\'g:neocomplete_omni_patterns',
+        "\'g:neocomplete#sources#omni#input_patterns',
         "\'c',
         "\'[^.[:digit:] *\t]\%(\.\|->\)'
   "call neocomplete#util#set_default_dictionary(
-        "\'g:neocomplete_omni_patterns',
+        "\'g:neocomplete#sources#omni#input_patterns',
         "\'cpp',
         "\'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_omni_patterns',
+        \'g:neocomplete#sources#omni#input_patterns',
         \'objc',
         \'[^.[:digit:] *\t]\%(\.\|->\)')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_omni_patterns',
+        \'g:neocomplete#sources#omni#input_patterns',
         \'objj',
         \'[\[ \.]\w\+$\|:\w*$')
 
   " External language interface check.
   if has('ruby')
     " call neocomplete#util#set_default_dictionary(
-          "\'g:neocomplete_omni_patterns', 'ruby',
+          "\'g:neocomplete#sources#omni#input_patterns', 'ruby',
           "\'[^. *\t]\.\h\w*\|\h\w*::')
   endif
   if has('python/dyn') || has('python3/dyn')
         \ || has('python') || has('python3')
     call neocomplete#util#set_default_dictionary(
-          \'g:neocomplete_omni_patterns',
+          \'g:neocomplete#sources#omni#input_patterns',
           \'python', '[^. \t]\.\w*')
   endif
   "}}}
@@ -147,10 +147,10 @@ function! s:get_omni_funcs(filetype) "{{{
         continue
       endif
 
-      if get(g:neocomplete_omni_patterns, omnifunc, '') != ''
-        let pattern = g:neocomplete_omni_patterns[omnifunc]
-      elseif get(g:neocomplete_omni_patterns, ft, '') != ''
-        let pattern = g:neocomplete_omni_patterns[ft]
+      if get(g:neocomplete#sources#omni#input_patterns, omnifunc, '') != ''
+        let pattern = g:neocomplete#sources#omni#input_patterns[omnifunc]
+      elseif get(g:neocomplete#sources#omni#input_patterns, ft, '') != ''
+        let pattern = g:neocomplete#sources#omni#input_patterns[ft]
       else
         let pattern = ''
       endif

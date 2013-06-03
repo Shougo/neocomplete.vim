@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: dictionary.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -47,14 +47,14 @@ let s:source = {
 
 function! s:source.hooks.on_init(context) "{{{
   " Initialize dictionary. "{{{
-  if !exists('g:neocomplete_dictionary_filetype_lists')
-    let g:neocomplete_dictionary_filetype_lists = {}
+  if !exists('g:neocomplete#sources#dictionary#dictionaries')
+    let g:neocomplete#sources#dictionary#dictionaries = {}
   endif
   "}}}
 
   " Initialize dictionary completion pattern. "{{{
-  if !exists('g:neocomplete_dictionary_patterns')
-    let g:neocomplete_dictionary_patterns = {}
+  if !exists('g:neoocmplete#sources#dictionary#keyword_patterns')
+    let g:neoocmplete#sources#dictionary#keyword_patterns = {}
   endif
   "}}}
 
@@ -110,7 +110,7 @@ function! s:make_cache() "{{{
 endfunction"}}}
 
 function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
-  if !exists('g:neocomplete_dictionary_filetype_lists')
+  if !exists('g:neocomplete#sources#dictionary#dictionaries')
     call neocomplete#initialize()
   endif
 
@@ -121,11 +121,11 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
 
   " Make cache.
   let dictionaries = get(
-        \ g:neocomplete_dictionary_filetype_lists, filetype, '')
-  if has_key(g:neocomplete_dictionary_filetype_lists, '_')
+        \ g:neocomplete#sources#dictionary#dictionaries, filetype, '')
+  if has_key(g:neocomplete#sources#dictionary#dictionaries, '_')
     " Load global dictionaries.
     let dictionaries .= ',' .
-          \ g:neocomplete_dictionary_filetype_lists['_']
+          \ g:neocomplete#sources#dictionary#dictionaries['_']
   endif
 
   if dictionaries == ''
@@ -137,7 +137,7 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
 
   let s:async_dictionary_list[filetype] = []
 
-  let pattern = get(g:neocomplete_dictionary_patterns, filetype,
+  let pattern = get(g:neoocmplete#sources#dictionary#keyword_patterns, filetype,
         \ neocomplete#get_keyword_pattern(filetype))
   for dictionary in split(dictionaries, ',')
     let dictionary = neocomplete#util#substitute_path_separator(

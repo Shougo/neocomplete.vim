@@ -28,17 +28,17 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Global options definition. "{{{
-if !exists('g:neocomplete_include_patterns')
-  let g:neocomplete_include_patterns = {}
+if !exists('g:neocomplete#sources#include#patterns')
+  let g:neocomplete#sources#include#patterns = {}
 endif
-if !exists('g:neocomplete_include_exprs')
-  let g:neocomplete_include_exprs = {}
+if !exists('g:neocomplete#sources#include#exprs')
+  let g:neocomplete#sources#include#exprs = {}
 endif
-if !exists('g:neocomplete_include_paths')
-  let g:neocomplete_include_paths = {}
+if !exists('g:neocomplete#sources#include#paths')
+  let g:neocomplete#sources#include#paths = {}
 endif
-if !exists('g:neocomplete_include_suffixes')
-  let g:neocomplete_include_suffixes = {}
+if !exists('g:neocomplete#sources#include#suffixes')
+  let g:neocomplete#sources#include#suffixes = {}
 endif
 "}}}
 
@@ -62,32 +62,32 @@ function! s:source.hooks.on_init(context) "{{{
   " Initialize.
 
   " Initialize filename include expr. "{{{
-  let g:neocomplete_file_include_exprs =
-        \ get(g:, 'neocomplete_file_include_exprs', {})
+  let g:neocomplete#sources#file_include#exprs =
+        \ get(g:, 'neocomplete#sources#file_include#exprs', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_file_include_exprs',
+        \ 'g:neocomplete#sources#file_include#exprs',
         \ 'perl',
         \ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_file_include_exprs',
+        \ 'g:neocomplete#sources#file_include#exprs',
         \ 'ruby,python,java,d',
         \ 'fnamemodify(substitute(v:fname, "/", ".", "g"), ":r")')
   "}}}
 
   " Initialize filename include extensions. "{{{
-  let g:neocomplete_file_include_exts =
-        \ get(g:, 'neocomplete_file_include_exts', {})
+  let g:neocomplete#sources#file_include#exts =
+        \ get(g:, 'neocomplete#sources#file_include#exts', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_file_include_exts',
+        \ 'g:neocomplete#sources#file_include#exts',
         \ 'c', ['h'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_file_include_exts',
+        \ 'g:neocomplete#sources#file_include#exts',
         \ 'cpp', ['', 'h', 'hpp', 'hxx'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_file_include_exts',
+        \ 'g:neocomplete#sources#file_include#exts',
         \ 'perl', ['pm'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_file_include_exts',
+        \ 'g:neocomplete#sources#file_include#exts',
         \ 'java', ['java'])
   "}}}
 endfunction"}}}
@@ -96,8 +96,8 @@ function! s:source.get_complete_position(context) "{{{
   let filetype = neocomplete#get_context_filetype()
 
   " Not Filename pattern.
-  if exists('g:neocomplete_include_patterns')
-    let pattern = get(g:neocomplete_include_patterns, filetype,
+  if exists('g:neocomplete#sources#include#patterns')
+    let pattern = get(g:neocomplete#sources#include#patterns, filetype,
         \      &l:include)
   else
     let pattern = ''
@@ -110,7 +110,7 @@ function! s:source.get_complete_position(context) "{{{
   endif
 
   " Check include pattern.
-  let pattern = get(g:neocomplete_include_patterns,
+  let pattern = get(g:neocomplete#sources#include#patterns,
         \ filetype, &l:include)
   if pattern == '' || a:context.input !~ pattern
     return -1
@@ -119,7 +119,7 @@ function! s:source.get_complete_position(context) "{{{
   let match_end = matchend(a:context.input, pattern)
   let complete_str = matchstr(a:context.input[match_end :], '\f\+')
 
-  let expr = get(g:neocomplete_include_exprs,
+  let expr = get(g:neocomplete#sources#include#exprs,
         \ filetype, &l:includeexpr)
   if expr != ''
     let cur_text =
@@ -144,14 +144,14 @@ function! s:get_include_files(complete_str) "{{{
   let filetype = neocomplete#get_context_filetype()
 
   let path = neocomplete#util#substitute_path_separator(
-        \ get(g:neocomplete_include_paths, filetype, &l:path))
-  let pattern = get(g:neocomplete_include_patterns,
+        \ get(g:neocomplete#sources#include#paths, filetype, &l:path))
+  let pattern = get(g:neocomplete#sources#include#patterns,
         \ filetype, &l:include)
-  let expr = get(g:neocomplete_include_exprs,
+  let expr = get(g:neocomplete#sources#include#exprs,
         \ filetype, &l:includeexpr)
-  let reverse_expr = get(g:neocomplete_file_include_exprs,
+  let reverse_expr = get(g:neocomplete#sources#file_include#exprs,
         \ filetype, '')
-  let exts = get(g:neocomplete_file_include_exts,
+  let exts = get(g:neocomplete#sources#file_include#exts,
         \ filetype, [])
 
   let line = neocomplete#get_cur_text()

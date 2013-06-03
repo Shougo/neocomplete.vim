@@ -40,8 +40,8 @@ function! s:source.hooks.on_init(context) "{{{
   " Initialize.
 
   " Initialize complete function list. "{{{
-  if !exists('g:neocomplete_vimfuncs')
-    let g:neocomplete_vimfuncs = {}
+  if !exists('g:neocomplete#sources#vim#complete_functions')
+    let g:neocomplete#sources#vim#complete_functions = {}
   endif
   "}}}
 

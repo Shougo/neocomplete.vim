@@ -640,9 +640,9 @@ function! neocomplete#init#_variables() "{{{
 
   " Initialize tags filter patterns. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_tags_filter_patterns', {})
+        \ 'g:neocomplete#tags_filter_patterns', {})
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_tags_filter_patterns', 'c,cpp',
+        \'g:neocomplete#tags_filter_patterns', 'c,cpp',
         \'v:val.word !~ ''^[~_]''')
   "}}}
 
@@ -654,9 +654,9 @@ function! neocomplete#init#_variables() "{{{
 
   " Initialize force omni completion patterns. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete#force_omni_patterns', {})
+        \ 'g:neocomplete#force_omni_input_patterns', {})
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete#force_omni_patterns', 'objc',
+        \'g:neocomplete#force_omni_input_patterns', 'objc',
         \'\h\w\+\|[^.[:digit:] *\t]\%(\.\|->\)')
   "}}}
 

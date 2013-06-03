@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -281,21 +281,21 @@ function! neocomplete#sources#vim#helper#command_args(cur_text, complete_str) "{
         \ s:internal_candidates_list.command_replaces
 endfunction"}}}
 function! neocomplete#sources#vim#helper#custom(command_name, cur_text, complete_str) "{{{
-  if !has_key(g:neocomplete_vimfuncs, a:command_name)
+  if !has_key(g:neocomplete#sources#vim#complete_functions, a:command_name)
     return []
   endif
 
   return s:make_completion_list(split(
-        \ call(g:neocomplete_vimfuncs[a:command_name],
+        \ call(g:neocomplete#sources#vim#complete_functions[a:command_name],
         \ [a:complete_str, getline('.'), len(a:cur_text)]), '\n'), '')
 endfunction"}}}
 function! neocomplete#sources#vim#helper#customlist(command_name, cur_text, complete_str) "{{{
-  if !has_key(g:neocomplete_vimfuncs, a:command_name)
+  if !has_key(g:neocomplete#sources#vim#complete_functions, a:command_name)
     return []
   endif
 
   return s:make_completion_list(
-        \ call(g:neocomplete_vimfuncs[a:command_name],
+        \ call(g:neocomplete#sources#vim#complete_functions[a:command_name],
         \ [a:complete_str, getline('.'), len(a:cur_text)]), '')
 endfunction"}}}
 function! neocomplete#sources#vim#helper#dir(cur_text, complete_str) "{{{

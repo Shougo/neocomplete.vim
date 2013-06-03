@@ -47,7 +47,7 @@ function! s:source.hooks.on_init(context) "{{{
   augroup END
 
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_include_max_processes', 20)
+        \ 'g:neocomplete#sources#include#max_processes', 20)
 
   " Create cache directory.
   call neocomplete#cache#make_directory('include_cache')
@@ -194,9 +194,9 @@ function! s:check_buffer(bufnumber, is_force) "{{{
 
     " Check include files from function.
     let filetype = getbufvar(a:bufnumber, '&filetype')
-    let function = get(g:neocomplete_include_functions, filetype, '')
+    let function = get(g:neocomplete#sources#include#functions, filetype, '')
     if function != '' && getbufvar(bufnumber, '&buftype') !~ 'nofile'
-      let path = get(g:neocomplete_include_paths, filetype,
+      let path = get(g:neocomplete#sources#include#paths, filetype,
             \ getbufvar(a:bufnumber, '&path'))
       let include_files += call(function,
             \ [getbufline(bufnumber, 1, (a:is_force ? '$' : 1000)), path])
@@ -209,7 +209,7 @@ function! s:check_buffer(bufnumber, is_force) "{{{
     let include_info.include_files = neocomplete#util#uniq(include_files)
   endif
 
-  if g:neocomplete_include_max_processes <= 0
+  if g:neocomplete#sources#include#max_processes <= 0
     return
   endif
 
@@ -223,7 +223,7 @@ function! s:check_buffer(bufnumber, is_force) "{{{
           \ && !has_key(s:include_cache, filename)
       if !a:is_force && has_key(s:async_include_cache, filename)
             \ && len(s:async_include_cache[filename])
-            \            >= g:neocomplete_include_max_processes
+            \            >= g:neocomplete#sources#include#max_processes
         break
       endif
 
@@ -248,7 +248,7 @@ function! s:get_buffer_include_files(bufnumber) "{{{
       let path .= ',' . neocomplete#system('python3 -',
           \ 'import sys;sys.stdout.write(",".join(sys.path))')
       call neocomplete#util#set_default_dictionary(
-            \ 'g:neocomplete_include_paths', 'python3', path)
+            \ 'g:neocomplete#sources#include#paths', 'python3', path)
     endif
     if executable('python')
       let path .= ',' . neocomplete#system('python -',
@@ -257,25 +257,25 @@ function! s:get_buffer_include_files(bufnumber) "{{{
     let path = join(neocomplete#util#uniq(filter(
           \ split(path, ',', 1), "v:val != ''")), ',')
     call neocomplete#util#set_default_dictionary(
-          \ 'g:neocomplete_include_paths', 'python', path)
+          \ 'g:neocomplete#sources#include#paths', 'python', path)
   elseif filetype ==# 'cpp' && isdirectory('/usr/include/c++')
     " Add cpp path.
     call neocomplete#util#set_default_dictionary(
-          \ 'g:neocomplete_include_paths', 'cpp',
+          \ 'g:neocomplete#sources#include#paths', 'cpp',
           \ getbufvar(a:bufnumber, '&path') .
           \ ','.join(split(glob('/usr/include/c++/*'), '\n'), ','))
   endif
 
-  let pattern = get(g:neocomplete_include_patterns, filetype,
+  let pattern = get(g:neocomplete#sources#include#patterns, filetype,
         \ getbufvar(a:bufnumber, '&include'))
   if pattern == ''
     return []
   endif
-  let path = get(g:neocomplete_include_paths, filetype,
+  let path = get(g:neocomplete#sources#include#paths, filetype,
         \ getbufvar(a:bufnumber, '&path'))
-  let expr = get(g:neocomplete_include_exprs, filetype,
+  let expr = get(g:neocomplete#sources#include#exprs, filetype,
         \ getbufvar(a:bufnumber, '&includeexpr'))
-  if has_key(g:neocomplete_include_suffixes, filetype)
+  if has_key(g:neocomplete#sources#include#suffixes, filetype)
     let suffixes = &l:suffixesadd
   endif
 
@@ -294,7 +294,7 @@ function! s:get_buffer_include_files(bufnumber) "{{{
   endif
 
   " Restore option.
-  if has_key(g:neocomplete_include_suffixes, filetype)
+  if has_key(g:neocomplete#sources#include#suffixes, filetype)
     let &l:suffixesadd = suffixes
   endif
 
@@ -429,45 +429,45 @@ function! s:initialize_variables() "{{{
   let s:cached_pattern = {}
 
   " Initialize include pattern. "{{{
-  let g:neocomplete_include_patterns =
+  let g:neocomplete#sources#include#patterns =
         \ get(g:, 'neocomplete_include_patterns', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_include_patterns',
+        \ 'g:neocomplete#sources#include#patterns',
         \ 'java,haskell', '^\s*\<import')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_include_patterns',
+        \ 'g:neocomplete#sources#include#patterns',
         \ 'cs', '^\s*\<using')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_include_patterns',
+        \ 'g:neocomplete#sources#include#patterns',
         \ 'ruby', '^\s*\<\%(load\|require\|require_relative\)\>')
   "}}}
   " Initialize expr pattern. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_include_exprs', {})
+        \ 'g:neocomplete#sources#include#exprs', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_include_exprs',
+        \ 'g:neocomplete#sources#include#exprs',
         \ 'haskell,cs',
         \ "substitute(v:fname, '\\.', '/', 'g')")
   "}}}
   " Initialize path pattern. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_include_paths', {})
+        \ 'g:neocomplete#sources#include#paths', {})
   "}}}
   " Initialize include suffixes. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_include_suffixes', {})
+        \ 'g:neocomplete#sources#include#suffixes', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_include_suffixes',
+        \ 'g:neocomplete#sources#include#suffixes',
         \ 'haskell', '.hs')
   "}}}
   " Initialize include functions. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_include_functions', {})
+        \ 'g:neocomplete#sources#include#functions', {})
   " call neocomplete#util#set_default_dictionary(
-  "       \ 'g:neocomplete_include_functions', 'vim',
+  "       \ 'g:neocomplete#sources#include#functions', 'vim',
   "       \ 'neocomplete#sources#include#analyze_vim_include_files')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_include_functions', 'ruby',
+        \ 'g:neocomplete#sources#include#functions', 'ruby',
         \ 'neocomplete#sources#include#analyze_ruby_include_files')
   "}}}
 endfunction"}}}
