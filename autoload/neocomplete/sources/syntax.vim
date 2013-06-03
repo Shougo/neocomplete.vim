@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: syntax.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -106,10 +106,18 @@ function! s:make_cache() "{{{
 endfunction"}}}
 
 function! neocomplete#sources#syntax#remake_cache(filetype) "{{{
+  if !neocomplete#is_enabled()
+    call neocomplete#initialize()
+  endif
+
   if a:filetype == ''
     let filetype = &filetype
   else
     let filetype = a:filetype
+  endif
+
+  if filetype == ''
+    let filetype = 'nothing'
   endif
 
   let s:syntax_list[filetype] = s:make_cache_from_syntax(filetype)
@@ -128,9 +136,7 @@ function! s:make_cache_from_syntax(filetype) "{{{
   let group_name = ''
   let keyword_pattern = neocomplete#get_keyword_pattern(a:filetype)
 
-  let dup_check = {}
-
-  let filetype_pattern = substitute(a:filetype, '\W', '\\A', 'g') . '\u'
+  let filetype_pattern = tolower(a:filetype)
 
   let keyword_list = []
   for line in split(syntax_list, '\n')
@@ -142,7 +148,7 @@ function! s:make_cache_from_syntax(filetype) "{{{
 
     if line =~ 'Syntax items' || line =~ '^\s*links to' ||
           \ line =~ '^\s*nextgroup=' ||
-          \ group_name !~# filetype_pattern
+          \ strridx(tolower(group_name), filetype_pattern) != 0
       " Next line.
       continue
     endif
@@ -165,17 +171,13 @@ function! s:make_cache_from_syntax(filetype) "{{{
 
     " Add keywords.
     let match_num = 0
-    let completion_length = 2
     let match_str = matchstr(line, keyword_pattern, match_num)
+
     while match_str != ''
       " Ignore too short keyword.
       if len(match_str) >= g:neocomplete_min_syntax_length
-            \ && !has_key(dup_check, match_str)
             \&& match_str =~ '^[[:print:]]\+$'
-        let key = tolower(match_str[: completion_length-1])
         call add(keyword_list, match_str)
-
-        let dup_check[match_str] = 1
       endif
 
       let match_num += len(match_str)
@@ -184,9 +186,11 @@ function! s:make_cache_from_syntax(filetype) "{{{
     endwhile
   endfor
 
+  let keyword_list = neocomplete#util#uniq(keyword_list)
+
   " Save syntax cache.
   call neocomplete#cache#save_cache(
-        \ 'syntax_cache', &filetype, keyword_list)
+        \ 'syntax_cache', a:filetype, keyword_list)
 
   return keyword_list
 endfunction"}}}
