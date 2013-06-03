@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -64,11 +64,11 @@ command! -nargs=0 -bar NeoCompleteClean
       \ call neocomplete#commands#_clean()
 
 " Global options definition. "{{{
-let g:neocomplete_data_directory =
-      \ get(g:, 'neocomplete_data_directory', expand('~/.neocomplete'))
-let g:neocomplete_enable_debug =
-      \ get(g:, 'neocomplete_enable_debug', 0)
-if get(g:, 'neocomplete_enable_at_startup', 0)
+let g:neocomplete#data_directory =
+      \ get(g:, 'neocomplete#data_directory', expand('~/.neocomplete'))
+let g:neocomplete#enable_debug =
+      \ get(g:, 'neocomplete#enable_debug', 0)
+if get(g:, 'neocomplete#enable_at_startup', 0)
   augroup neocomplete
     " Enable startup.
     autocmd CursorHold,CursorMovedI

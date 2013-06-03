@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -50,15 +50,15 @@ function! s:neocomplete_source.hooks.on_init(args, context) "{{{
   endif
 
   " Save options.
-  let max_list_save = g:neocomplete_max_list
-  let max_keyword_width_save = g:neocomplete_max_keyword_width
+  let max_list_save = g:neocomplete#max_list
+  let max_keyword_width_save = g:neocomplete#max_keyword_width
   let completefunc_save = &l:completefunc
-  let manual_start_length = g:neocomplete_manual_completion_start_length
+  let manual_start_length = g:neocomplete#manual_completion_start_length
 
   try
-    let g:neocomplete_max_list = -1
-    let g:neocomplete_max_keyword_width = -1
-    let g:neocomplete_manual_completion_start_length = 0
+    let g:neocomplete#max_list = -1
+    let g:neocomplete#max_keyword_width = -1
+    let g:neocomplete#manual_completion_start_length = 0
     let &l:completefunc = 'neocomplete#complete#unite_complete'
 
     let cur_text = neocomplete#get_cur_text(1)
@@ -70,10 +70,10 @@ function! s:neocomplete_source.hooks.on_init(args, context) "{{{
           \ cur_text[a:context.source__complete_pos :])
   finally
     " Restore options.
-    let g:neocomplete_max_list = max_list_save
-    let g:neocomplete_max_keyword_width = max_keyword_width_save
+    let g:neocomplete#max_list = max_list_save
+    let g:neocomplete#max_keyword_width = max_keyword_width_save
     let &l:completefunc = 'neocomplete#complete#auto_complete'
-    let g:neocomplete_manual_completion_start_length = manual_start_length
+    let g:neocomplete#manual_completion_start_length = manual_start_length
   endtry
 endfunction"}}}
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Jun 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -99,11 +99,11 @@ function! neocomplete#handler#_on_complete_done() "{{{
   endif
 endfunction"}}}
 function! neocomplete#handler#_change_update_time() "{{{
-  if &updatetime > g:neocomplete_cursor_hold_i_time
+  if &updatetime > g:neocomplete#cursor_hold_i_time
     " Change updatetime.
     let neocomplete = neocomplete#get_current_neocomplete()
     let neocomplete.update_time_save = &updatetime
-    let &updatetime = g:neocomplete_cursor_hold_i_time
+    let &updatetime = g:neocomplete#cursor_hold_i_time
   endif
 endfunction"}}}
 function! neocomplete#handler#_restore_update_time() "{{{
@@ -125,13 +125,13 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   let cur_text = neocomplete#get_cur_text(1)
 
-  if g:neocomplete_enable_debug
+  if g:neocomplete#enable_debug
     echomsg 'cur_text = ' . cur_text
   endif
 
   " Prevent infinity loop.
   if s:is_skip_auto_complete(cur_text)
-    if g:neocomplete_enable_debug
+    if g:neocomplete#enable_debug
       echomsg 'Skipped.'
     endif
     return
@@ -147,7 +147,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   " Check multibyte input or eskk.
   if neocomplete#is_eskk_enabled()
         \ || neocomplete#is_multibyte_input(cur_text)
-    if g:neocomplete_enable_debug
+    if g:neocomplete#enable_debug
       echomsg 'Skipped.'
     endif
 
@@ -157,7 +157,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   " Check complete position.
   let complete_sources = neocomplete#complete#_set_results_pos(cur_text)
   if empty(complete_sources)
-    if g:neocomplete_enable_debug
+    if g:neocomplete#enable_debug
       echomsg 'Skipped.'
     endif
 
@@ -172,7 +172,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
           \ neocomplete#complete#_get_results(cur_text)
 
     if empty(neocomplete.complete_sources)
-      if g:neocomplete_enable_debug
+      if g:neocomplete#enable_debug
         echomsg 'Skipped.'
       endif
 
@@ -190,7 +190,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   if neocomplete#util#is_complete_select()
     let neocomplete.completeopt = &completeopt
-    if g:neocomplete_enable_auto_select
+    if g:neocomplete#enable_auto_select
       set completeopt-=noselect
       set completeopt+=noinsert
     else
@@ -228,7 +228,7 @@ function! s:check_in_do_auto_complete() "{{{
 
   " Detect completefunc.
   if &l:completefunc !~# '^neocomplete#'
-    if g:neocomplete_force_overwrite_completefunc
+    if g:neocomplete#force_overwrite_completefunc
       " Set completefunc.
       let &l:completefunc = 'neocomplete#complete#manual_complete'
     else
@@ -257,7 +257,7 @@ function! s:is_skip_auto_complete(cur_text) "{{{
 
   if a:cur_text =~ '^\s*$\|\s\+$'
         \ || a:cur_text == neocomplete.old_cur_text
-        \ || (g:neocomplete_lock_iminsert && &l:iminsert)
+        \ || (g:neocomplete#lock_iminsert && &l:iminsert)
         \ || (&l:formatoptions =~# '[tc]' && &l:textwidth > 0
         \     && neocomplete#util#wcswidth(a:cur_text) >= &l:textwidth)
     return 1
@@ -291,7 +291,7 @@ function! s:is_skip_auto_complete(cur_text) "{{{
   return 1
 endfunction"}}}
 function! s:close_preview_window() "{{{
-  if g:neocomplete_enable_auto_close_preview &&
+  if g:neocomplete#enable_auto_close_preview &&
         \ bufname('%') !=# '[Command Line]' && winnr('$') != 1
     " Close preview window.
     pclose!

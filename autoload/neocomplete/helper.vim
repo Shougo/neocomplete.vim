@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -103,16 +103,14 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
 endfunction"}}}
 
 function! neocomplete#helper#is_enabled_source(source_name) "{{{
-  if neocomplete#is_disabled_source(a:source_name)
-    return 0
-  endif
-
   let neocomplete = neocomplete#get_current_neocomplete()
-  if !has_key(neocomplete, 'sources')
-    call neocomplete#helper#get_sources_list()
-  endif
+  let source = get(neocomplete#variables#get_sources(), a:source_name, {})
 
-  return index(keys(neocomplete.sources), a:source_name) >= 0
+  return !empty(source) && (empty(source.filetypes) ||
+        \     get(source.filetypes, neocomplete.context_filetype, 0))
+        \  && (!get(source.disabled_filetypes, '_', 0) &&
+        \      !get(source.disabled_filetypes,
+        \           neocomplete.context_filetype, 0))
 endfunction"}}}
 
 function! neocomplete#helper#get_source_filetypes(filetype) "{{{
@@ -143,19 +141,19 @@ endfunction"}}}
 
 function! neocomplete#helper#complete_check() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
-  if g:neocomplete_enable_debug
+  if g:neocomplete#enable_debug
     echomsg split(reltimestr(reltime(neocomplete.start_time)))[0]
   endif
   let ret = (!neocomplete#is_prefetch() && complete_check())
         \ || (neocomplete#is_auto_complete()
-        \     && g:neocomplete_skip_auto_completion_time != ''
+        \     && g:neocomplete#skip_auto_completion_time != ''
         \     && split(reltimestr(reltime(neocomplete.start_time)))[0] >
-        \          g:neocomplete_skip_auto_completion_time)
+        \          g:neocomplete#skip_auto_completion_time)
   if ret
     let neocomplete = neocomplete#get_current_neocomplete()
     let neocomplete.skipped = 1
 
-    if g:neocomplete_enable_debug
+    if g:neocomplete#enable_debug
       redraw
       echomsg 'Skipped.'
     endif
@@ -256,14 +254,11 @@ endfunction"}}}
 function! neocomplete#helper#get_sources_list(...) "{{{
   let filetype = neocomplete#get_context_filetype()
 
-  let source_names = exists('b:neocomplete_sources_list') ?
-        \ b:neocomplete_sources_list :
+  let source_names = exists('b:neocomplete#sources') ?
+        \ b:neocomplete#sources :
         \ get(a:000, 0,
-        \   get(g:neocomplete_sources_list, filetype,
-        \     get(g:neocomplete_sources_list, '_', ['_'])))
-  let disabled_sources = get(
-        \ g:neocomplete_disabled_sources_list, filetype,
-        \   get(g:neocomplete_disabled_sources_list, '_', []))
+        \   get(g:neocomplete#sources, filetype,
+        \     get(g:neocomplete#sources, '_', ['_'])))
   call neocomplete#init#_sources(source_names)
 
   let all_sources = neocomplete#available_sources()
@@ -286,7 +281,6 @@ function! neocomplete#helper#get_sources_list(...) "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.sources = filter(sources, "
-        \ index(disabled_sources, v:val.name) < 0 &&
         \   (empty(v:val.filetypes) ||
         \    get(v:val.filetypes, neocomplete.context_filetype, 0))")
 

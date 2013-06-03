@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,12 +39,17 @@ let s:source = {
       \ 'mark' : '[B]',
       \ 'rank' : 5,
       \ 'min_pattern_length' :
-      \     g:neocomplete_auto_completion_start_length,
+      \     g:neocomplete#auto_completion_start_length,
       \ 'hooks' : {},
       \}
 
 function! s:source.hooks.on_init(context) "{{{
   let s:buffer_sources = {}
+
+  let g:neocomplete_caching_limit_file_size =
+        \ get(g:, 'neocomplete_caching_limit_file_size', 500000)
+  let g:neocomplete_disable_caching_file_path_pattern =
+        \ get(g:, 'neocomplete_disable_caching_file_path_pattern', '')
 
   augroup neocomplete "{{{
     " Make cache events
@@ -125,7 +130,7 @@ function! s:make_cache_current_buffer(start, end) "{{{
 do
   local keywords = vim.eval('source.keyword_cache')
   local b = vim.buffer()
-  local min_length = vim.eval('g:neocomplete_min_keyword_length')
+  local min_length = vim.eval('g:neocomplete#min_keyword_length')
   for linenr = vim.eval('a:start'), vim.eval('a:end') do
     local match = 0
     while match >= 0 do
@@ -252,7 +257,7 @@ function! s:check_source() "{{{
     if (!has_key(s:buffer_sources, bufnumber)
           \ || s:check_changed_buffer(bufnumber))
           \ && (!neocomplete#is_locked(bufnumber) ||
-          \    g:neocomplete_disable_auto_complete)
+          \    g:neocomplete#disable_auto_complete)
           \ && !getwinvar(bufwinnr(bufnumber), '&previewwindow')
           \ && getfsize(bufname) <
           \      g:neocomplete_caching_limit_file_size
@@ -268,7 +273,7 @@ function! s:check_source() "{{{
 endfunction"}}}
 function! s:check_cache() "{{{
   let release_accessd_time =
-        \ localtime() - g:neocomplete_release_cache_time
+        \ localtime() - g:neocomplete#release_cache_time
 
   for [key, source] in items(s:buffer_sources)
     " Check deleted buffer and access time.
@@ -286,7 +291,7 @@ function! s:check_recache() "{{{
   endif
 
   let release_accessd_time =
-        \ localtime() - g:neocomplete_release_cache_time
+        \ localtime() - g:neocomplete#release_cache_time
 
   let source = s:buffer_sources[bufnr('%')]
 
@@ -294,7 +299,7 @@ function! s:check_recache() "{{{
   if (source.cached_time > 0 && source.cached_time < release_accessd_time)
         \  || (neocomplete#util#has_vimproc() && line('$') != source.end_line)
     " Buffer recache.
-    if g:neocomplete_enable_debug
+    if g:neocomplete#enable_debug
       echomsg 'Make cache from buffer: ' . bufname('%')
     endif
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_delimiter.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -83,8 +83,8 @@ function! s:process_delimiter(candidate, delimiter, delim_cnt, next_keyword)
         \             a:delimiter.'\ze.', 1)[ : a:delim_cnt],
         \ delimiter_sub)
 
-  if g:neocomplete_max_keyword_width >= 0
-        \ && len(candidate.abbr) > g:neocomplete_max_keyword_width
+  if g:neocomplete#max_keyword_width >= 0
+        \ && len(candidate.abbr) > g:neocomplete#max_keyword_width
     let candidate.abbr = substitute(candidate.abbr,
           \ '\(\h\)\w*'.a:delimiter, '\1'.delimiter_sub, 'g')
   endif
@@ -92,7 +92,7 @@ function! s:process_delimiter(candidate, delimiter, delim_cnt, next_keyword)
     let candidate.abbr .= delimiter_sub . '~'
     let candidate.dup = 0
 
-    if g:neocomplete_enable_auto_delimiter && a:next_keyword == ''
+    if g:neocomplete#enable_auto_delimiter && a:next_keyword == ''
       let candidate.word .= delimiter_sub
     endif
   endif

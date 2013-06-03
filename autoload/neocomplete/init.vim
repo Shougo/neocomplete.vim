@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Jun 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,67 +32,54 @@ if !exists('s:is_enabled')
 endif
 
 " Global options definition. "{{{
-let g:neocomplete_max_list =
-      \ get(g:, 'neocomplete_max_list', 100)
-let g:neocomplete_max_keyword_width =
-      \ get(g:, 'neocomplete_max_keyword_width', 80)
-let g:neocomplete_auto_completion_start_length =
-      \ get(g:, 'neocomplete_auto_completion_start_length', 2)
-let g:neocomplete_manual_completion_start_length =
-      \ get(g:, 'neocomplete_manual_completion_start_length', 0)
-let g:neocomplete_min_keyword_length =
-      \ get(g:, 'neocomplete_min_keyword_length', 4)
-let g:neocomplete_enable_ignore_case =
-      \ get(g:, 'neocomplete_enable_ignore_case', &ignorecase)
-let g:neocomplete_enable_smart_case =
-      \ get(g:, 'neocomplete_enable_smart_case', &infercase)
-let g:neocomplete_disable_auto_complete =
-      \ get(g:, 'neocomplete_disable_auto_complete', 0)
-let g:neocomplete_enable_fuzzy_completion =
-      \ get(g:, 'neocomplete_enable_fuzzy_completion', 1)
-let g:neocomplete_enable_insert_char_pre =
-      \ get(g:, 'neocomplete_enable_insert_char_pre', 0)
-let g:neocomplete_enable_cursor_hold_i =
-      \ get(g:, 'neocomplete_enable_cursor_hold_i', 0)
-let g:neocomplete_cursor_hold_i_time =
-      \ get(g:, 'neocomplete_cursor_hold_i_time', 300)
-let g:neocomplete_enable_auto_select =
-      \ get(g:, 'neocomplete_enable_auto_select', 0)
-let g:neocomplete_enable_auto_delimiter =
-      \ get(g:, 'neocomplete_enable_auto_delimiter', 0)
-let g:neocomplete_caching_limit_file_size =
-      \ get(g:, 'neocomplete_caching_limit_file_size', 500000)
-let g:neocomplete_disable_caching_file_path_pattern =
-      \ get(g:, 'neocomplete_disable_caching_file_path_pattern', '')
-let g:neocomplete_lock_buffer_name_pattern =
-      \ get(g:, 'neocomplete_lock_buffer_name_pattern', '')
-let g:neocomplete_ctags_program =
-      \ get(g:, 'neocomplete_ctags_program', 'ctags')
-let g:neocomplete_force_overwrite_completefunc =
-      \ get(g:, 'neocomplete_force_overwrite_completefunc', 0)
-let g:neocomplete_enable_prefetch =
-      \ get(g:, 'neocomplete_enable_prefetch',
+let g:neocomplete#max_list =
+      \ get(g:, 'neocomplete#max_list', 100)
+let g:neocomplete#max_keyword_width =
+      \ get(g:, 'neocomplete#max_keyword_width', 80)
+let g:neocomplete#auto_completion_start_length =
+      \ get(g:, 'neocomplete#auto_completion_start_length', 2)
+let g:neocomplete#manual_completion_start_length =
+      \ get(g:, 'neocomplete#manual_completion_start_length', 0)
+let g:neocomplete#min_keyword_length =
+      \ get(g:, 'neocomplete#min_keyword_length', 4)
+let g:neocomplete#enable_ignore_case =
+      \ get(g:, 'neocomplete#enable_ignore_case', &ignorecase)
+let g:neocomplete#enable_smart_case =
+      \ get(g:, 'neocomplete#enable_smart_case', &infercase)
+let g:neocomplete#disable_auto_complete =
+      \ get(g:, 'neocomplete#disable_auto_complete', 0)
+let g:neocomplete#enable_fuzzy_completion =
+      \ get(g:, 'neocomplete#enable_fuzzy_completion', 1)
+let g:neocomplete#enable_insert_char_pre =
+      \ get(g:, 'neocomplete#enable_insert_char_pre', 0)
+let g:neocomplete#enable_cursor_hold_i =
+      \ get(g:, 'neocomplete#enable_cursor_hold_i', 0)
+let g:neocomplete#cursor_hold_i_time =
+      \ get(g:, 'neocomplete#cursor_hold_i_time', 300)
+let g:neocomplete#enable_auto_select =
+      \ get(g:, 'neocomplete#enable_auto_select', 0)
+let g:neocomplete#enable_auto_delimiter =
+      \ get(g:, 'neocomplete#enable_auto_delimiter', 0)
+let g:neocomplete#lock_buffer_name_pattern =
+      \ get(g:, 'neocomplete#lock_buffer_name_pattern', '')
+let g:neocomplete#ctags_command =
+      \ get(g:, 'neocomplete#ctags_command', 'ctags')
+let g:neocomplete#force_overwrite_completefunc =
+      \ get(g:, 'neocomplete#force_overwrite_completefunc', 0)
+let g:neocomplete#enable_prefetch =
+      \ get(g:, 'neocomplete#enable_prefetch',
       \  has('gui_running') && has('xim'))
-let g:neocomplete_lock_iminsert =
-      \ get(g:, 'neocomplete_lock_iminsert', 0)
-let g:neocomplete_release_cache_time =
-      \ get(g:, 'neocomplete_release_cache_time', 900)
-let g:neocomplete_wildcard_characters =
-      \ get(g:, 'neocomplete_wildcard_characters', {
-      \ '_' : '*' })
-let g:neocomplete_skip_auto_completion_time =
-      \ get(g:, 'neocomplete_skip_auto_completion_time', '0.3')
-let g:neocomplete_enable_auto_close_preview =
-      \ get(g:, 'neocomplete_enable_auto_close_preview', 1)
+let g:neocomplete#lock_iminsert =
+      \ get(g:, 'neocomplete#lock_iminsert', 0)
+let g:neocomplete#release_cache_time =
+      \ get(g:, 'neocomplete#release_cache_time', 900)
+let g:neocomplete#skip_auto_completion_time =
+      \ get(g:, 'neocomplete#skip_auto_completion_time', '0.3')
+let g:neocomplete#enable_auto_close_preview =
+      \ get(g:, 'neocomplete#enable_auto_close_preview', 1)
 
-let g:neocomplete_sources_list =
-      \ get(g:, 'neocomplete_sources_list', {})
-let g:neocomplete_disabled_sources_list =
-      \ get(g:, 'neocomplete_disabled_sources_list', {})
-if exists('g:neocomplete_source_disable')
-  let g:neocomplete_disabled_sources_list._ =
-        \ keys(filter(copy(g:neocomplete_source_disable), 'v:val'))
-endif
+let g:neocomplete#sources =
+      \ get(g:, 'neocomplete#sources', {})
 "}}}
 
 function! neocomplete#init#lazy() "{{{
@@ -104,7 +91,7 @@ function! neocomplete#init#lazy() "{{{
     call neocomplete#init#_others()
     let s:is_enabled = 0
   elseif s:lazy_progress == 1
-    call neocomplete#init#_sources(get(g:neocomplete_sources_list,
+    call neocomplete#init#_sources(get(g:neocomplete#sources,
           \ neocomplete#get_context_filetype(), ['_']))
   else
     call neocomplete#init#_autocmds()
@@ -122,7 +109,7 @@ function! neocomplete#init#enable() "{{{
   call neocomplete#init#_autocmds()
   call neocomplete#init#_others()
 
-  call neocomplete#init#_sources(get(g:neocomplete_sources_list,
+  call neocomplete#init#_sources(get(g:neocomplete#sources,
         \ neocomplete#get_context_filetype(), ['_']))
   let s:is_enabled = 1
 endfunction"}}}
@@ -164,10 +151,10 @@ function! neocomplete#init#_autocmds() "{{{
           \ call neocomplete#handler#_on_write_post()
   augroup END
 
-  if g:neocomplete_enable_insert_char_pre
+  if g:neocomplete#enable_insert_char_pre
     autocmd neocomplete InsertCharPre *
           \ call neocomplete#handler#_do_auto_complete('InsertCharPre')
-  elseif g:neocomplete_enable_cursor_hold_i
+  elseif g:neocomplete#enable_cursor_hold_i
     augroup neocomplete
       autocmd CursorHoldI *
             \ call neocomplete#handler#_do_auto_complete('CursorHoldI')
@@ -672,13 +659,13 @@ function! neocomplete#init#_variables() "{{{
   call neocomplete#util#set_default(
         \ 'g:neocomplete_ignore_composite_filetype_lists', {})
 
-  " Must g:neocomplete_auto_completion_start_length > 1.
-  if g:neocomplete_auto_completion_start_length < 1
-    let g:neocomplete_auto_completion_start_length = 1
+  " Must g:neocomplete#auto_completion_start_length > 1.
+  if g:neocomplete#auto_completion_start_length < 1
+    let g:neocomplete#auto_completion_start_length = 1
   endif
-  " Must g:neocomplete_min_keyword_length > 1.
-  if g:neocomplete_min_keyword_length < 1
-    let g:neocomplete_min_keyword_length = 1
+  " Must g:neocomplete#min_keyword_length > 1.
+  if g:neocomplete#min_keyword_length < 1
+    let g:neocomplete#min_keyword_length = 1
   endif
 
   " Initialize omni function list. "{{{
@@ -770,9 +757,10 @@ function! neocomplete#init#_source(source) "{{{
         \ 'is_volatile' : 0,
         \ 'max_candidates' : 0,
         \ 'filetypes' : {},
+        \ 'disabled_filetypes' : {},
         \ 'hooks' : {},
         \ 'mark' : '',
-        \ 'matchers' : g:neocomplete_enable_fuzzy_completion ?
+        \ 'matchers' : g:neocomplete#enable_fuzzy_completion ?
         \        ['matcher_fuzzy'] : ['matcher_head'],
         \ 'sorters' : ['sorter_rank'],
         \ 'converters' : [
@@ -811,27 +799,10 @@ function! neocomplete#init#_source(source) "{{{
   if !has_key(source, 'min_pattern_length')
     " Set min_pattern_length.
     let source.min_pattern_length = (source.kind ==# 'keyword') ?
-          \ g:neocomplete_auto_completion_start_length : 0
+          \ g:neocomplete#auto_completion_start_length : 0
   endif
 
   let source.neocomplete__context.source_name = source.name
-
-  " Note: This routine is for compatibility of old sources implementation.
-  " Initialize sources.
-  if empty(source.filetypes) && has_key(source, 'initialize')
-    try
-      call source.initialize()
-    catch
-      call neocomplete#print_error(v:throwpoint)
-      call neocomplete#print_error(v:exception)
-      call neocomplete#print_error(
-            \ 'Error occured in source''s initialize()!')
-      call neocomplete#print_error(
-            \ 'Source name is ' . source.name)
-    endtry
-
-    let source.loaded = 1
-  endif
 
   return source
 endfunction"}}}

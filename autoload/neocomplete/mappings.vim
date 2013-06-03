@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Jun 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -42,7 +42,7 @@ function! neocomplete#mappings#define_default_mappings() "{{{
 endfunction"}}}
 
 function! neocomplete#mappings#smart_close_popup() "{{{
-  return g:neocomplete_enable_auto_select ?
+  return g:neocomplete#enable_auto_select ?
         \ neocomplete#mappings#cancel_popup() :
         \ neocomplete#mappings#close_popup()
 endfunction
@@ -66,7 +66,7 @@ endfunction
 
 function! neocomplete#mappings#popup_post() "{{{
   return  !pumvisible() ? "" :
-        \ g:neocomplete_enable_auto_select ? "\<C-p>\<Down>" :
+        \ g:neocomplete#enable_auto_select ? "\<C-p>\<Down>" :
         \ "\<C-p>"
 endfunction"}}}
 
@@ -102,10 +102,10 @@ function! neocomplete#mappings#complete_common_string() "{{{
 
   if neocomplete#is_text_mode()
     let &ignorecase = 1
-  elseif g:neocomplete_enable_smart_case && complete_str =~ '\u'
+  elseif g:neocomplete#enable_smart_case && complete_str =~ '\u'
     let &ignorecase = 0
   else
-    let &ignorecase = g:neocomplete_enable_ignore_case
+    let &ignorecase = g:neocomplete#enable_ignore_case
   endif
 
   let neocomplete = neocomplete#get_current_neocomplete()

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Jun 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -36,7 +36,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
       let &l:completefunc = 'neocomplete#complete#manual_complete'
 
       return (neocomplete#is_prefetch()
-            \ || g:neocomplete_enable_insert_char_pre) ?
+            \ || g:neocomplete#enable_insert_char_pre) ?
             \ -1 : -3
     endif
 
@@ -55,7 +55,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
     if complete_pos < 0
       let neocomplete = neocomplete#get_current_neocomplete()
       let complete_pos = (neocomplete#is_prefetch() ||
-            \ g:neocomplete_enable_insert_char_pre ||
+            \ g:neocomplete#enable_insert_char_pre ||
             \ neocomplete#get_current_neocomplete().skipped) ?  -1 : -3
       let neocomplete.skipped = 0
     endif
@@ -77,7 +77,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
 
     let dict = { 'words' : neocomplete.candidates }
 
-    if len(a:base) < g:neocomplete_auto_completion_start_length
+    if len(a:base) < g:neocomplete#auto_completion_start_length
           \   || !empty(filter(copy(neocomplete.candidates),
           \          "get(v:val, 'neocomplete__refresh', 0)"))
       " Note: If Vim is less than 7.3.561, it have broken register "." problem.
@@ -134,7 +134,7 @@ function! neocomplete#complete#auto_complete(findstart, base) "{{{
 endfunction"}}}
 
 function! neocomplete#complete#_get_results(cur_text, ...) "{{{
-  if g:neocomplete_enable_debug
+  if g:neocomplete#enable_debug
     echomsg 'start get_complete_sources'
   endif
 
@@ -230,8 +230,8 @@ EOF
     let candidates += words
     let len_words += len(words)
 
-    if g:neocomplete_max_list > 0
-          \ && len_words > g:neocomplete_max_list
+    if g:neocomplete#max_list > 0
+          \ && len_words > g:neocomplete#max_list
       break
     endif
 
@@ -240,13 +240,13 @@ EOF
     endif
   endfor
 
-  if g:neocomplete_max_list > 0
-    let candidates = candidates[: g:neocomplete_max_list]
+  if g:neocomplete#max_list > 0
+    let candidates = candidates[: g:neocomplete#max_list]
   endif
 
   " Check dup and set icase.
-  let icase = g:neocomplete_enable_ignore_case &&
-        \!(g:neocomplete_enable_smart_case && a:complete_str =~ '\u')
+  let icase = g:neocomplete#enable_ignore_case &&
+        \!(g:neocomplete#enable_smart_case && a:complete_str =~ '\u')
   for candidate in candidates
     let candidate.icase = icase
   endfor
@@ -261,9 +261,8 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
   " Initialize sources.
   let neocomplete = neocomplete#get_current_neocomplete()
   for source in filter(values(neocomplete#variables#get_sources()),
-        \ '!v:val.loaded && (empty(v:val.filetypes) ||
-        \       get(v:val.filetypes,
-        \             neocomplete.context_filetype, 0))')
+        \ '!v:val.loaded
+        \  && neocomplete#helper#is_enabled_source(v:val.name)')
     call neocomplete#helper#call_hook(source, 'on_init', {})
     let source.loaded = 1
   endfor
@@ -337,11 +336,11 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
 
     if neocomplete#is_text_mode()
       let &ignorecase = 1
-    elseif g:neocomplete_enable_smart_case
+    elseif g:neocomplete#enable_smart_case
           \ && context.complete_str =~ '\u'
       let &ignorecase = 0
     else
-      let &ignorecase = g:neocomplete_enable_ignore_case
+      let &ignorecase = g:neocomplete#enable_ignore_case
     endif
 
     let pos = winsaveview()
@@ -374,7 +373,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
     let context.candidates = neocomplete#helper#call_filters(
           \ source.matchers, source, {})
 
-    if g:neocomplete_enable_debug
+    if g:neocomplete#enable_debug
       echomsg source.name
     endif
 

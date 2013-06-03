@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: vim.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -94,7 +94,7 @@ function! s:source.get_complete_position(context) "{{{
 
   if a:context.input !~ '\.\%(\h\w*\)\?$' && neocomplete#is_auto_complete()
         \ && bufname('%') !=# '[Command Line]'
-        \ && len(complete_str) < g:neocomplete_auto_completion_start_length
+        \ && len(complete_str) < g:neocomplete#auto_completion_start_length
     return -1
   endif
 
@@ -105,7 +105,7 @@ function! s:source.gather_candidates(context) "{{{
   let cur_text = neocomplete#sources#vim#get_cur_text()
   if neocomplete#is_auto_complete() && cur_text !~ '\h\w*\.\%(\h\w*\)\?$'
         \ && len(a:context.complete_str) <
-        \      g:neocomplete_auto_completion_start_length
+        \      g:neocomplete#auto_completion_start_length
         \ && bufname('%') !=# '[Command Line]'
     return []
   endif

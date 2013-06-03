@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Jun 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -79,14 +79,6 @@ endfunction"}}}
 function! neocomplete#is_enabled_source(source_name) "{{{
   return neocomplete#helper#is_enabled_source(a:source_name)
 endfunction"}}}
-function! neocomplete#is_disabled_source(source_name) "{{{
-  let filetype = neocomplete#get_context_filetype()
-
-  let disabled_sources = get(
-        \ g:neocomplete_disabled_sources_list, filetype,
-        \   get(g:neocomplete_disabled_sources_list, '_', []))
-  return index(disabled_sources, a:source_name) >= 0
-endfunction"}}}
 function! neocomplete#dup_filter(list) "{{{
   return neocomplete#util#dup_filter(a:list)
 endfunction"}}}
@@ -140,15 +132,15 @@ endfunction"}}}
 function! neocomplete#is_locked(...) "{{{
   let bufnr = a:0 > 0 ? a:1 : bufnr('%')
   return !neocomplete#is_enabled() || &paste
-        \ || g:neocomplete_disable_auto_complete
+        \ || g:neocomplete#disable_auto_complete
         \ || &l:completefunc == ''
         \ || neocomplete#get_current_neocomplete().lock
-        \ || (g:neocomplete_lock_buffer_name_pattern != '' &&
-        \   bufname(bufnr) =~ g:neocomplete_lock_buffer_name_pattern)
+        \ || (g:neocomplete#lock_buffer_name_pattern != '' &&
+        \   bufname(bufnr) =~ g:neocomplete#lock_buffer_name_pattern)
         \ || &l:omnifunc ==# 'fuf#onComplete'
 endfunction"}}}
 function! neocomplete#is_auto_select() "{{{
-  return g:neocomplete_enable_auto_select && !neocomplete#is_eskk_enabled()
+  return g:neocomplete#enable_auto_select && !neocomplete#is_eskk_enabled()
 endfunction"}}}
 function! neocomplete#is_auto_complete() "{{{
   return &l:completefunc == 'neocomplete#complete#auto_complete'
@@ -178,7 +170,7 @@ function! neocomplete#is_windows() "{{{
 endfunction"}}}
 function! neocomplete#is_prefetch() "{{{
   return !neocomplete#is_locked() &&
-        \ (g:neocomplete_enable_prefetch || &l:formatoptions =~# 'a')
+        \ (g:neocomplete#enable_prefetch || &l:formatoptions =~# 'a')
 endfunction"}}}
 function! neocomplete#exists_echodoc() "{{{
   return exists('g:loaded_echodoc') && g:loaded_echodoc
@@ -241,13 +233,13 @@ function! neocomplete#get_context_filetype_range(...) "{{{
   return neocomplete.context_filetype_range
 endfunction"}}}
 function! neocomplete#print_debug(expr) "{{{
-  if g:neocomplete_enable_debug
+  if g:neocomplete#enable_debug
     echomsg string(a:expr)
   endif
 endfunction"}}}
 function! neocomplete#get_data_directory() "{{{
   let directory = neocomplete#util#substitute_path_separator(
-        \ neocomplete#util#expand(g:neocomplete_data_directory))
+        \ neocomplete#util#expand(g:neocomplete#data_directory))
   if !isdirectory(directory)
     call mkdir(directory, 'p')
   endif

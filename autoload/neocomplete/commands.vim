@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: commands.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -55,14 +55,14 @@ endfunction"}}}
 function! neocomplete#commands#_clean() "{{{
   " Delete cache files.
   for directory in filter(neocomplete#util#glob(
-        \ g:neocomplete_data_directory.'/*'), 'isdirectory(v:val)')
+        \ g:neocomplete#data_directory.'/*'), 'isdirectory(v:val)')
     for filename in filter(neocomplete#util#glob(directory.'/*'),
           \ '!isdirectory(v:val)')
       call delete(filename)
     endfor
   endfor
 
-  echo 'Cleaned cache files in: ' . g:neocomplete_data_directory
+  echo 'Cleaned cache files in: ' . g:neocomplete#data_directory
 endfunction"}}}
 
 function! neocomplete#commands#_set_file_type(filetype) "{{{

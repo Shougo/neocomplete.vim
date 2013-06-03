@@ -15,7 +15,7 @@ Installation
 * Extract the file and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
 * Execute `|:NeoCompleteEnable|` command or
-`let g:neocomplete_enable_at_startup = 1`
+`let g:neocomplete#enable_at_startup = 1`
 in your `.vimrc`. Not in `.gvimrc`(`_gvimrc`)!
 
 Caution
@@ -52,12 +52,12 @@ Setting examples
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
-let g:neocomplete_enable_at_startup = 1
+let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplete_enable_smart_case = 1
+let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplete_min_syntax_length = 3
-let g:neocomplete_lock_buffer_name_pattern = '\*ku\*'
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplete_dictionary_filetype_lists = {
@@ -100,17 +100,17 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
 "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
 " Or set this.
-"let g:neocomplete_enable_cursor_hold_i = 1
+"let g:neocomplete#enable_cursor_hold_i = 1
 " Or set this.
-"let g:neocomplete_enable_insert_char_pre = 1
+"let g:neocomplete#enable_insert_char_pre = 1
 
 " AutoComplPop like behavior.
-"let g:neocomplete_enable_auto_select = 1
+"let g:neocomplete#enable_auto_select = 1
 
 " Shell like behavior(not recommended).
 "set completeopt+=longest
-"let g:neocomplete_enable_auto_select = 1
-"let g:neocomplete_disable_auto_complete = 1
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
 "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 " Enable omni completion.

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -173,7 +173,7 @@ function! neocomplete#cache#test_async() "{{{
         \ &fileencoding == '' ? &encoding : &fileencoding
   let argv = [
         \  'load_from_file', cache_name, filename, pattern_file_name, '[B]',
-        \  g:neocomplete_min_keyword_length, fileencoding
+        \  g:neocomplete#min_keyword_length, fileencoding
         \ ]
   return s:async_load(argv, 'test_cache', filename)
 endfunction"}}}
@@ -198,7 +198,7 @@ function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, m
         \ &fileencoding == '' ? &encoding : &fileencoding
   let argv = [
         \  'load_from_file', cache_name, a:filename, pattern_file_name, a:mark,
-        \  g:neocomplete_min_keyword_length, fileencoding
+        \  g:neocomplete#min_keyword_length, fileencoding
         \ ]
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
@@ -213,9 +213,9 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
         \ neocomplete#cache#encode_name('tags_pattens', a:filename)
 
   if a:is_create_tags
-    if !executable(g:neocomplete_ctags_program)
+    if !executable(g:neocomplete#ctags_command)
       echoerr 'Create tags error! Please install '
-            \ . g:neocomplete_ctags_program . '.'
+            \ . g:neocomplete#ctags_command . '.'
       return neocomplete#cache#encode_name(a:cache_dir, a:filename)
     endif
 
@@ -230,10 +230,10 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
       let filename =
             \ neocomplete#util#substitute_path_separator(a:filename)
       let command = printf('%s -f "%s" %s "%s" ',
-            \ g:neocomplete_ctags_program, tags_file_name, args, filename)
+            \ g:neocomplete#ctags_command, tags_file_name, args, filename)
     else
       let command = printf('%s -f ''%s'' 2>/dev/null %s ''%s''',
-            \ g:neocomplete_ctags_program, tags_file_name, args, a:filename)
+            \ g:neocomplete#ctags_command, tags_file_name, args, a:filename)
     endif
 
     if neocomplete#has_vimproc()
@@ -256,7 +256,7 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
   let fileencoding = &fileencoding == '' ? &encoding : &fileencoding
   let argv = [
         \  'load_from_tags', cache_name, a:filename, pattern_file_name, a:mark,
-        \  g:neocomplete_min_keyword_length, fileencoding
+        \  g:neocomplete#min_keyword_length, fileencoding
         \ ]
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}

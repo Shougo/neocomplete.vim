@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -33,7 +33,7 @@ let s:source = {
       \ 'mark' : '[F]',
       \ 'rank' : 3,
       \ 'min_pattern_length' :
-      \        g:neocomplete_auto_completion_start_length,
+      \        g:neocomplete#auto_completion_start_length,
       \ 'sorters' : 'sorter_filename',
       \ 'is_volatile' : 1,
       \}
@@ -132,7 +132,7 @@ function! s:get_glob_files(complete_str, path) "{{{
     let abbr = dict.word
     if dict.action__is_directory && dict.word !~ '/$'
       let abbr .= '/'
-      if g:neocomplete_enable_auto_delimiter
+      if g:neocomplete#enable_auto_delimiter
         let dict.word .= '/'
       endif
     elseif neocomplete#is_windows()

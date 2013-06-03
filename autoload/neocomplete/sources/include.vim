@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -180,7 +180,7 @@ function! s:check_buffer(bufnumber, is_force) "{{{
           \ }
   endif
 
-  if !executable(g:neocomplete_ctags_program)
+  if !executable(g:neocomplete#ctags_command)
     return
   endif
 
@@ -339,7 +339,7 @@ function! s:check_cache() "{{{
     return
   endif
 
-  let release_accessd_time = localtime() - g:neocomplete_release_cache_time
+  let release_accessd_time = localtime() - g:neocomplete#release_cache_time
 
   for key in keys(s:include_cache)
     if has_key(s:cache_accessed_time, key)
