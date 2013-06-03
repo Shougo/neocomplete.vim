@@ -521,6 +521,16 @@ g:neocomplete#use_vimproc			*g:neocomplete#use_vimproc*
 
 		Default value is vimproc auto detection result.
 
+g:neocomplete#omni_functions		*g:neocomplete#omni_functions*
+		This dictionary which appoints |omni| call functions.
+		The key is |&filetype|.  The value is omnifunc String or List
+		of omnifunc String.  If
+		g:neocomplete_omni_function_list[|&filetype|] is undefined,
+		|omni| calls |omnifunc|.
+		If the key is "_", used for all filetypes.
+
+		Default value is {}.
+
 			*g:neocomplete#ignore_composite_filetypes*
 g:neocomplete#ignore_composite_filetypes
 		It is a dictionary to ignore composite file type.
@@ -558,16 +568,16 @@ g:neocomplete#enable_auto_close_preview
 
 SOURCES VARIABLES 			*neocomplete-sources-variables*
 
-				*g:neocomplete_caching_limit_file_size*
-g:neocomplete_caching_limit_file_size
+				*g:neocomplete#sources#buffer#cache_limit_size*
+g:neocomplete#sources#buffer#cache_limit_size
 		This variable set file size to make a cache of a file.  If
 		open file is bigger than this size, neocomplete does not
 		make a cache.
 
 		Default value is 500000.
 
-			*g:neocomplete_disable_caching_file_path_pattern*
-g:neocomplete_disable_caching_file_path_pattern
+			*g:neocomplete#sources#buffer#disabled_pattern*
+g:neocomplete#sources#buffer#disabled_pattern
 		This variable set a pattern of the buffer file path.  If
 		matched it, neocomplete does not save a cache of the buffer.
 		When it is an empty character string, neocomplete will
@@ -683,15 +693,15 @@ g:neocomplete_include_max_processes
 
 		Default value is 20.
 
-					*g:neocomplete_min_syntax_length*
-g:neocomplete_min_syntax_length
+					*g:neocomplete#sources#syntax#min_keyword_length*
+g:neocomplete#sources#syntax#min_keyword_length
 		In syntax files, this variable controls length of keyword
 		becoming the object of the completion at the minimum.
 
 		Default value is 4.
 
-				*g:neocomplete_member_prefix_patterns*
-g:neocomplete_member_prefix_patterns
+				*g:neocomplete#sources#member#prefix_patterns*
+g:neocomplete#sources#member#prefix_patterns
 		This variable appoints a prefix pattern to complete a member
 		in buffer.
 		This is appointed in regular expression every file type.
@@ -701,25 +711,16 @@ g:neocomplete_member_prefix_patterns
 		autoload/neocomplete/sources/buffer.vim for the
 		initial value.
 
-g:neocomplete_member_patterns		*g:neocomplete_member_patterns*
+				*g:neocomplete#sources#member#input_patterns*
+g:neocomplete#sources#member#input_patterns
 		This variable appoints a keyword pattern to complete a member
 		in buffer.
 		This is appointed in regular expression every file type.
-		If filetype key is not set, use filetype "default" setting.
+		If filetype key is not set, use filetype "_" setting.
 
 		Because it is complicated, refer in
 		autoload/neocomplete/sources/buffer.vim for the
 		initial value.
-
-g:neocomplete#omni_functions		*g:neocomplete#omni_functions*
-		This dictionary which appoints |omni| call functions.
-		The key is |&filetype|.  The value is omnifunc String or List
-		of omnifunc String.  If
-		g:neocomplete_omni_function_list[|&filetype|] is undefined,
-		|omni| calls |omnifunc|.
-		If the key is "_", used for all filetypes.
-
-		Default value is {}.
 
 g:neocomplete_omni_patterns		*g:neocomplete_omni_patterns*
 		This dictionary records keyword patterns used in
@@ -901,7 +902,7 @@ EXAMPLES					*neocomplete-examples*
 	" Use smartcase.
 	let g:neocomplete#enable_smart_case = 1
 	" Set minimum syntax keyword length.
-	let g:neocomplete_min_syntax_length = 3
+	let g:neocomplete#sources#syntax#min_keyword_length = 3
 	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 	" Define dictionary.

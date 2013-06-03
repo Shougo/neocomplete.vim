@@ -46,10 +46,10 @@ let s:source = {
 function! s:source.hooks.on_init(context) "{{{
   let s:buffer_sources = {}
 
-  let g:neocomplete_caching_limit_file_size =
-        \ get(g:, 'neocomplete_caching_limit_file_size', 500000)
-  let g:neocomplete_disable_caching_file_path_pattern =
-        \ get(g:, 'neocomplete_disable_caching_file_path_pattern', '')
+  let g:neocomplete#sources#buffer#cache_limit_size =
+        \ get(g:, 'neocomplete#sources#buffer#cache_limit_size', 500000)
+  let g:neocomplete#sources#buffer#disabled_pattern =
+        \ get(g:, 'neocomplete#sources#buffer#disabled_pattern', '')
 
   augroup neocomplete "{{{
     " Make cache events
@@ -260,7 +260,7 @@ function! s:check_source() "{{{
           \    g:neocomplete#disable_auto_complete)
           \ && !getwinvar(bufwinnr(bufnumber), '&previewwindow')
           \ && getfsize(bufname) <
-          \      g:neocomplete_caching_limit_file_size
+          \      g:neocomplete#sources#buffer#cache_limit_size
       call s:make_cache(bufnumber)
     endif
 

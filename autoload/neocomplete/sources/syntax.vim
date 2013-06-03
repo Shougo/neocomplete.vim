@@ -175,7 +175,7 @@ function! s:make_cache_from_syntax(filetype) "{{{
 
     while match_str != ''
       " Ignore too short keyword.
-      if len(match_str) >= g:neocomplete_min_syntax_length
+      if len(match_str) >= g:neocomplete#sources#syntax#min_keyword_length
             \&& match_str =~ '^[[:print:]]\+$'
         call add(keyword_list, match_str)
       endif
@@ -313,9 +313,8 @@ function! s:match_pair(string, start_pattern, end_pattern, start_cnt) "{{{
 endfunction"}}}
 
 " Global options definition. "{{{
-if !exists('g:neocomplete_min_syntax_length')
-  let g:neocomplete_min_syntax_length = 4
-endif
+let g:neocomplete#sources#syntax#min_keyword_length =
+ \ get(g:, 'neocomplete#sources#syntax#min_keyword_length')
 "}}}
 
 let &cpo = s:save_cpo

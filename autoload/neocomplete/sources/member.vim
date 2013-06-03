@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: member.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -51,29 +51,29 @@ function! s:source.hooks.on_init(context) "{{{
   augroup END"}}}
 
   " Initialize member prefix patterns. "{{{
-  if !exists('g:neocomplete_member_prefix_patterns')
-    let g:neocomplete_member_prefix_patterns = {}
+  if !exists('g:neocomplete#sources#member#prefix_patterns')
+    let g:neocomplete#sources#member#prefix_patterns = {}
   endif
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_member_prefix_patterns',
+        \ 'g:neocomplete#sources#member#prefix_patterns',
         \ 'c,cpp,objc,objcpp', '\.\|->')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_member_prefix_patterns',
+        \ 'g:neocomplete#sources#member#prefix_patterns',
         \ 'perl,php', '->')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_member_prefix_patterns',
+        \ 'g:neocomplete#sources#member#prefix_patterns',
         \ 'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb', '\.')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_member_prefix_patterns',
+        \ 'g:neocomplete#sources#member#prefix_patterns',
         \ 'lua', '\.\|:')
   "}}}
 
   " Initialize member patterns. "{{{
-  if !exists('g:neocomplete_member_patterns')
-    let g:neocomplete_member_patterns = {}
+  if !exists('g:neocomplete#sources#member#input_patterns')
+    let g:neocomplete#sources#member#input_patterns = {}
   endif
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_member_patterns',
+        \ 'g:neocomplete#sources#member#input_patterns',
         \'default', '\h\w*\%(()\|\[\h\w*\]\)\?')
   "}}}
 
@@ -86,13 +86,13 @@ endfunction
 function! s:source.get_complete_position(context) "{{{
   " Check member prefix pattern.
   let filetype = neocomplete#get_context_filetype()
-  if !has_key(g:neocomplete_member_prefix_patterns, filetype)
-        \ || g:neocomplete_member_prefix_patterns[filetype] == ''
+  if !has_key(g:neocomplete#sources#member#prefix_patterns, filetype)
+        \ || g:neocomplete#sources#member#prefix_patterns[filetype] == ''
     return -1
   endif
 
   let member = s:get_member_pattern(filetype)
-  let prefix = g:neocomplete_member_prefix_patterns[filetype]
+  let prefix = g:neocomplete#sources#member#prefix_patterns[filetype]
   let complete_pos = matchend(a:context.input,
         \ '\%(' . member . '\%(' . prefix . '\m\)\)\+\ze\w*$')
   return complete_pos
@@ -101,14 +101,14 @@ endfunction"}}}
 function! s:source.gather_candidates(context) "{{{
   " Check member prefix pattern.
   let filetype = neocomplete#get_context_filetype()
-  if !has_key(g:neocomplete_member_prefix_patterns, filetype)
-        \ || g:neocomplete_member_prefix_patterns[filetype] == ''
+  if !has_key(g:neocomplete#sources#member#prefix_patterns, filetype)
+        \ || g:neocomplete#sources#member#prefix_patterns[filetype] == ''
     return []
   endif
 
   let var_name = matchstr(a:context.input,
         \ '\%(' . s:get_member_pattern(filetype) . '\%(' .
-        \ g:neocomplete_member_prefix_patterns[filetype] . '\m\)\)\+\ze\w*$')
+        \ g:neocomplete#sources#member#prefix_patterns[filetype] . '\m\)\)\+\ze\w*$')
   if var_name == ''
     return []
   endif
@@ -129,7 +129,7 @@ function! neocomplete#sources#member#make_cache_current_buffer() "{{{
   return s:make_cache_current_buffer(1, line('$'))
 endfunction"}}}
 function! s:make_cache_current_buffer(start, end) "{{{
-  if !exists('g:neocomplete_member_prefix_patterns')
+  if !exists('g:neocomplete#sources#member#prefix_patterns')
     return
   endif
 
@@ -138,15 +138,15 @@ function! s:make_cache_current_buffer(start, end) "{{{
   endif
 
   let filetype = neocomplete#get_context_filetype(1)
-  if !has_key(g:neocomplete_member_prefix_patterns, filetype)
-        \ || g:neocomplete_member_prefix_patterns[filetype] == ''
+  if !has_key(g:neocomplete#sources#member#prefix_patterns, filetype)
+        \ || g:neocomplete#sources#member#prefix_patterns[filetype] == ''
     return
   endif
 
   let source = s:member_sources[bufnr('%')]
   let keyword_pattern =
         \ '\%(' . s:get_member_pattern(filetype) . '\%('
-        \ . g:neocomplete_member_prefix_patterns[filetype]
+        \ . g:neocomplete#sources#member#prefix_patterns[filetype]
         \ . '\m\)\)\+' . s:get_member_pattern(filetype)
   let keyword_pattern2 = '^'.keyword_pattern
   let member_pattern = s:get_member_pattern(filetype) . '$'
@@ -238,9 +238,8 @@ function! s:initialize_source(srcname) "{{{
 endfunction"}}}
 
 function! s:get_member_pattern(filetype) "{{{
-  return has_key(g:neocomplete_member_patterns, a:filetype) ?
-        \ g:neocomplete_member_patterns[a:filetype] :
-        \ g:neocomplete_member_patterns['default']
+  return get(g:neocomplete#sources#member#input_patterns, a:filetype,
+        \ get(g:neocomplete#sources#member#input_patterns, '_', ''))
 endfunction"}}}
 
 let &cpo = s:save_cpo
