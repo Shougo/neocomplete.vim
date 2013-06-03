@@ -70,7 +70,7 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
   endif
 
   let filetype = neocomplete#get_context_filetype()
-  let omnifunc = get(g:neocomplete_omni_functions,
+  let omnifunc = get(g:neocomplete#omni_functions,
         \ filetype, &l:omnifunc)
 
   if neocomplete#helper#check_invalid_omnifunc(omnifunc)
@@ -83,11 +83,11 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
     return 0
   endif
 
-  if has_key(g:neocomplete_force_omni_patterns, omnifunc)
-    let pattern = g:neocomplete_force_omni_patterns[omnifunc]
+  if has_key(g:neocomplete#force_omni_patterns, omnifunc)
+    let pattern = g:neocomplete#force_omni_patterns[omnifunc]
   elseif filetype != '' &&
-        \ get(g:neocomplete_force_omni_patterns, filetype, '') != ''
-    let pattern = g:neocomplete_force_omni_patterns[filetype]
+        \ get(g:neocomplete#force_omni_patterns, filetype, '') != ''
+    let pattern = g:neocomplete#force_omni_patterns[filetype]
   else
     return 0
   endif
@@ -120,19 +120,19 @@ function! neocomplete#helper#get_source_filetypes(filetype) "{{{
 
   let filetypes = [filetype]
   if filetype =~ '\.'
-    if exists('g:neocomplete_ignore_composite_filetype_lists')
-          \ && has_key(g:neocomplete_ignore_composite_filetype_lists, filetype)
-      let filetypes = [g:neocomplete_ignore_composite_filetype_lists[filetype]]
+    if exists('g:neocomplete#ignore_composite_filetypes')
+          \ && has_key(g:neocomplete#ignore_composite_filetypes, filetype)
+      let filetypes = [g:neocomplete#ignore_composite_filetypes[filetype]]
     else
       " Set composite filetype.
       let filetypes += split(filetype, '\.')
     endif
   endif
 
-  if exists('g:neocomplete_same_filetype_lists')
+  if exists('g:neocomplete#same_filetypes')
     for ft in filetypes
-      let filetypes += split(get(g:neocomplete_same_filetype_lists, ft,
-            \ get(g:neocomplete_same_filetype_lists, '_', '')), ',')
+      let filetypes += split(get(g:neocomplete#same_filetypes, ft,
+            \ get(g:neocomplete#same_filetypes, '_', '')), ',')
     endfor
   endif
 
@@ -203,7 +203,7 @@ function! neocomplete#helper#unite_patterns(pattern_var, filetype) "{{{
   local patterns = vim.eval('keyword_patterns')
   local filetypes = vim.eval("split(a:filetype, '\\.')")
   local pattern_var = vim.eval('a:pattern_var')
-  local same_filetypes = vim.eval('g:neocomplete_same_filetype_lists')
+  local same_filetypes = vim.eval('g:neocomplete#same_filetypes')
 
   local dup_check = {}
   for i = 0, #filetypes-1 do

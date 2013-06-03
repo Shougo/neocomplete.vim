@@ -223,8 +223,8 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
     let tags_file_name =
           \ neocomplete#cache#encode_name('tags_output', a:filename)
 
-    let default = get(g:neocomplete_ctags_arguments_list, '_', '')
-    let args = get(g:neocomplete_ctags_arguments_list, a:filetype, default)
+    let default = get(g:neocomplete#ctags_arguments, '_', '')
+    let args = get(g:neocomplete#ctags_arguments, a:filetype, default)
 
     if has('win32') || has('win64')
       let filename =
@@ -271,7 +271,7 @@ function! s:async_load(argv, cache_dir, filename) "{{{
           call neocomplete#print_error(
                 \ 'You installed MacVim in not default directory!'.
                 \ ' You must add MacVim installed path in $PATH.')
-          let g:neocomplete_use_vimproc = 0
+          let g:neocomplete#use_vimproc = 0
           return
         endif
 
@@ -281,7 +281,7 @@ function! s:async_load(argv, cache_dir, filename) "{{{
               \ printf('Vim path : "%s" is not found.'.
               \        ' You must add "%s" installed path in $PATH.',
               \        v:progname, v:progname))
-        let g:neocomplete_use_vimproc = 0
+        let g:neocomplete#use_vimproc = 0
         return
       endif
     else
@@ -300,7 +300,7 @@ function! s:async_load(argv, cache_dir, filename) "{{{
     if !executable(vim_path)
       call neocomplete#print_error(
             \ printf('Vim path : "%s" is not executable.', vim_path))
-      let g:neocomplete_use_vimproc = 0
+      let g:neocomplete#use_vimproc = 0
       return
     endif
 

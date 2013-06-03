@@ -67,10 +67,10 @@ let g:neocomplete_dictionary_filetype_lists = {
         \ }
 
 " Define keyword.
-if !exists('g:neocomplete_keyword_patterns')
-    let g:neocomplete_keyword_patterns = {}
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
 endif
-let g:neocomplete_keyword_patterns['default'] = '\h\w*'
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()

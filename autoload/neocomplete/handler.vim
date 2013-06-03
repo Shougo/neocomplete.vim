@@ -272,7 +272,7 @@ function! s:is_skip_auto_complete(cur_text) "{{{
   let filetype = neocomplete#get_context_filetype()
 
   for delimiter in ['/', '\.'] +
-        \ get(g:neocomplete_delimiter_patterns, filetype, [])
+        \ get(g:neocomplete#delimiter_patterns, filetype, [])
     if a:cur_text =~ delimiter . '$'
       let is_delimiter = 1
       break

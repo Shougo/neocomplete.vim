@@ -108,12 +108,12 @@ function! neocomplete#get_keyword_pattern(...) "{{{
   let filetype = a:0 != 0? a:000[0] : neocomplete#get_context_filetype()
 
   return neocomplete#helper#unite_patterns(
-        \ g:neocomplete_keyword_patterns, filetype)
+        \ g:neocomplete#keyword_patterns, filetype)
 endfunction"}}}
 function! neocomplete#get_next_keyword_pattern(...) "{{{
   let filetype = a:0 != 0? a:000[0] : neocomplete#get_context_filetype()
   let next_pattern = neocomplete#helper#unite_patterns(
-        \ g:neocomplete_next_keyword_patterns, filetype)
+        \ g:neocomplete#next_keyword_patterns, filetype)
 
   return (next_pattern == '' ? '' : next_pattern.'\m\|')
         \ . neocomplete#get_keyword_pattern(filetype)
@@ -162,7 +162,7 @@ function! neocomplete#is_multibyte_input(cur_text) "{{{
 endfunction"}}}
 function! neocomplete#is_text_mode() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
-  return get(g:neocomplete_text_mode_filetypes,
+  return get(g:neocomplete#text_mode_filetypes,
         \ neocomplete.context_filetype, 0)
 endfunction"}}}
 function! neocomplete#is_windows() "{{{

@@ -43,7 +43,7 @@ function! s:converter.filter(context) "{{{
   let next_keyword = neocomplete#filters#
         \converter_remove_next_keyword#get_next_keyword(a:context.source_name)
   for delimiter in ['/'] +
-        \ get(g:neocomplete_delimiter_patterns, filetype, [])
+        \ get(g:neocomplete#delimiter_patterns, filetype, [])
     " Count match.
     let delim_cnt = 0
     let matchend = matchend(a:context.complete_str, delimiter)

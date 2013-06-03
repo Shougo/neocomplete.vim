@@ -77,7 +77,6 @@ let g:neocomplete#skip_auto_completion_time =
       \ get(g:, 'neocomplete#skip_auto_completion_time', '0.3')
 let g:neocomplete#enable_auto_close_preview =
       \ get(g:, 'neocomplete#enable_auto_close_preview', 1)
-
 let g:neocomplete#sources =
       \ get(g:, 'neocomplete#sources', {})
 "}}}
@@ -204,414 +203,414 @@ endfunction"}}}
 function! neocomplete#init#_variables() "{{{
   " Initialize keyword patterns. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_keyword_patterns', {})
+        \ 'g:neocomplete#keyword_patterns', {})
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'_',
         \'\k\+')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_keyword_patterns',
+        \ 'g:neocomplete#keyword_patterns',
         \'filename',
         \ neocomplete#util#is_windows() ?
         \'\%(\a\+:/\)\?\%([/[:alnum:]()$+_~.\x80-\xff-]\|[^[:print:]]\|\\.\)\+' :
         \'\%([/\[\][:alnum:]()$+_~.-]\|[^[:print:]]\|\\.\)\+')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'lisp,scheme,clojure,int-gosh,int-clisp,int-clj',
         \'[[:alpha:]+*/@$_=.!?-][[:alnum:]+*/@$_:=.!?-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'ruby,int-irb',
         \'^=\%(b\%[egin]\|e\%[nd]\)\|\%(@@\|[:$@]\)\h\w*\|\h\w*\%(::\w*\)*[!?]\?')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'php,int-php',
         \'</\?\%(\h[[:alnum:]_-]*\s*\)\?\%(/\?>\)\?'.
         \'\|\$\h\w*\|\h\w*\%(\%(\\\|::\)\w*\)*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'perl,int-perlsh',
         \'<\h\w*>\?\|[$@%&*]\h\w*\|\h\w*\%(::\w*\)*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'perl6,int-perl6',
         \'<\h\w*>\?\|[$@%&][!.*?]\?\h[[:alnum:]_-]*'.
         \'\|\h[[:alnum:]_-]*\%(::[[:alnum:]_-]*\)*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'pir',
         \'[$@%.=]\?\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'pasm',
         \'[=]\?\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'vim,help',
         \'-\h[[:alnum:]-]*=\?\|\c\[:\%(\h\w*:\]\)\?\|&\h[[:alnum:]_:]*\|'.
         \'<SID>\%(\h\w*\)\?\|<Plug>([^)]*)\?'.
         \'\|<\h[[:alnum:]_-]*>\?\|\h[[:alnum:]_:#]*!\?\|$\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'tex',
         \'\\\a{\a\{1,2}}\|\\[[:alpha:]@][[:alnum:]@]*'.
         \'\%({\%([[:alnum:]:_]\+\*\?}\?\)\?\)\?\|\a[[:alnum:]:_]*\*\?')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'sh,zsh,int-zsh,int-bash,int-sh',
         \'[[:alpha:]_.-][[:alnum:]_.-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'vimshell',
         \'\$\$\?\w*\|[[:alpha:]_.\\/~-][[:alnum:]_.\\/~-]*\|\d\+\%(\.\d\+\)\+')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'ps1,int-powershell',
         \'\[\h\%([[:alnum:]_.]*\]::\)\?\|[$%@.]\?[[:alpha:]_.:-][[:alnum:]_.:-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'c',
         \'^\s*#\s*\h\w*\|\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'cpp',
         \'^\s*#\s*\h\w*\|\h\w*\%(::\w*\)*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'objc',
         \'^\s*#\s*\h\w*\|\h\w*\|@\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'objcpp',
         \'^\s*#\s*\h\w*\|\h\w*\%(::\w*\)*\|@\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'objj',
         \'\h\w*\|@\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'d',
         \'\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'python,int-python,int-ipython',
         \'[@]\?\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'cs',
         \'\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'java',
         \'[@]\?\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'javascript,actionscript,int-js,int-kjs,int-rhino',
         \'\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'coffee,int-coffee',
         \'[@]\?\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'awk',
         \'\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'haskell,int-ghci',
         \'\%(\u\w*\.\)\+[[:alnum:]_'']*\|[[:alpha:]_''][[:alnum:]_'']*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'ml,ocaml,int-ocaml,int-sml,int-smlsharp',
         \'[''`#.]\?\h[[:alnum:]_'']*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'erlang,int-erl',
         \'^\s*-\h\w*\|\%(\h\w*:\)*\h\w\|\h[[:alnum:]_@]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'html,xhtml,xml,markdown,eruby',
         \'</\?\%([[:alnum:]_:-]\+\s*\)\?\%(/\?>\)\?\|&\h\%(\w*;\)\?'.
         \'\|\h[[:alnum:]_-]*="\%([^"]*"\?\)\?\|\h[[:alnum:]_:-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'css,stylus,scss,less',
         \'[@#.]\?[[:alpha:]_:-][[:alnum:]_:-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'tags',
         \'^[^!][^/[:blank:]]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'pic',
         \'^\s*#\h\w*\|\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'arm',
         \'\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'asmh8300',
         \'[[:alpha:]_.][[:alnum:]_.]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'masm',
         \'\.\h\w*\|[[:alpha:]_@?$][[:alnum:]_@?$]*\|\h\w*:\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'nasm',
         \'^\s*\[\h\w*\|[%.]\?\h\w*\|\%(\.\.@\?\|%[%$!]\)\%(\h\w*\)\?\|\h\w*:\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'asm',
         \'[%$.]\?\h\w*\%(\$\h\w*\)\?')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'gas',
         \'[$.]\?\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'gdb,int-gdb',
         \'$\h\w*\|[[:alnum:]:._-]\+')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'make',
         \'[[:alpha:]_.-][[:alnum:]_.-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'scala,int-scala',
         \'\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'int-termtter',
         \'\h[[:alnum:]_/-]*\|\$\a\+\|#\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'int-earthquake',
         \'[:#$]\h\w*\|\h[[:alnum:]_/-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'dosbatch,int-cmdproxy',
         \'\$\w+\|[[:alpha:]_./-][[:alnum:]_.-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'vb',
         \'\h\w*\|#\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'lua',
         \'\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \ 'zimbu',
         \'\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'konoha',
         \'[*$@%]\h\w*\|\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'cobol',
         \'\a[[:alnum:]-]*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'coq',
         \'\h[[:alnum:]_'']*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'tcl',
         \'[.-]\h\w*\|\h\w*')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_keyword_patterns',
+        \'g:neocomplete#keyword_patterns',
         \'nyaos,int-nyaos',
         \'\h\w*')
   "}}}
 
   " Initialize next keyword patterns. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_next_keyword_patterns', {})
+        \ 'g:neocomplete#next_keyword_patterns', {})
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_next_keyword_patterns', 'perl',
+        \'g:neocomplete#next_keyword_patterns', 'perl',
         \'\h\w*>')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_next_keyword_patterns', 'perl6',
+        \'g:neocomplete#next_keyword_patterns', 'perl6',
         \'\h\w*>')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_next_keyword_patterns', 'vim,help',
+        \'g:neocomplete#next_keyword_patterns', 'vim,help',
         \'\w*()\?\|\w*:\]\|[[:alnum:]_-]*[)>=]')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_next_keyword_patterns', 'python',
+        \'g:neocomplete#next_keyword_patterns', 'python',
         \'\w*()\?')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_next_keyword_patterns', 'tex',
+        \'g:neocomplete#next_keyword_patterns', 'tex',
         \'[[:alnum:]:_]\+[*[{}]')
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_next_keyword_patterns', 'html,xhtml,xml,mkd',
+        \'g:neocomplete#next_keyword_patterns', 'html,xhtml,xml,mkd',
         \'[^"]*"\|[[:alnum:]_:-]*>')
   "}}}
 
-  " Initialize same file type lists. "{{{
+  " Initialize same file types. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_same_filetype_lists', {})
+        \ 'g:neocomplete#same_filetypes', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'c', 'cpp')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'cpp', 'c')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'erb', 'ruby,html,xhtml')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'html,xml', 'xhtml')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'html,xhtml', 'css,stylus,less')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'css', 'scss')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'scss', 'css')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'stylus', 'css')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'less', 'css')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'xhtml', 'html,xml')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'help', 'vim')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'tex', 'bib,plaintex')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'plaintex', 'bib,tex')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'lingr-say', 'lingr-messages,lingr-members')
 
   " Interactive filetypes.
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-irb', 'ruby')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-ghci,int-hugs', 'haskell')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-python,int-ipython', 'python')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-gosh', 'scheme')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-clisp', 'lisp')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-erl', 'erlang')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-zsh', 'zsh')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-bash', 'bash')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-sh', 'sh')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-cmdproxy', 'dosbatch')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-powershell', 'powershell')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-perlsh', 'perl')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-perl6', 'perl6')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-ocaml', 'ocaml')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-clj', 'clojure')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-sml,int-smlsharp', 'sml')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-js,int-kjs,int-rhino', 'javascript')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-coffee', 'coffee')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-gdb', 'gdb')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-scala', 'scala')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-nyaos', 'nyaos')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_same_filetype_lists',
+        \ 'g:neocomplete#same_filetypes',
         \ 'int-php', 'php')
   "}}}
 
   " Initialize delimiter patterns. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_delimiter_patterns', {})
+        \ 'g:neocomplete#delimiter_patterns', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'vim,help', ['#'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'erlang,lisp,int-clisp', [':'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'lisp,int-clisp', ['/', ':'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'clojure,int-clj', ['/', '\.'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'perl,cpp', ['::'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'php', ['\', '::'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'java,d,javascript,actionscript,'.
         \ 'ruby,eruby,haskell,int-ghci,coffee,zimbu,konoha',
         \ ['\.'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'lua', ['\.', ':'])
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_delimiter_patterns',
+        \ 'g:neocomplete#delimiter_patterns',
         \ 'perl6', ['\.', '::'])
   "}}}
 
   " Initialize ctags arguments. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_ctags_arguments_list', {})
+        \ 'g:neocomplete#ctags_arguments', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_ctags_arguments_list',
+        \ 'g:neocomplete#ctags_arguments',
         \ '_', '')
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_ctags_arguments_list', 'vim',
+        \ 'g:neocomplete#ctags_arguments', 'vim',
         \ '--extra=fq --fields=afmiKlnsStz ' .
         \ "--regex-vim='/function!? ([a-z#:_0-9A-Z]+)/\\1/function/'")
   if neocomplete#util#is_mac()
     call neocomplete#util#set_default_dictionary(
-          \ 'g:neocomplete_ctags_arguments_list', 'c',
+          \ 'g:neocomplete#ctags_arguments', 'c',
           \ '--c-kinds=+p --fields=+iaS --extra=+q
           \ -I__DARWIN_ALIAS,__DARWIN_ALIAS_C,__DARWIN_ALIAS_I,__DARWIN_INODE64
           \ -I__DARWIN_1050,__DARWIN_1050ALIAS,__DARWIN_1050ALIAS_C,__DARWIN_1050ALIAS_I,__DARWIN_1050INODE64
@@ -619,13 +618,13 @@ function! neocomplete#init#_variables() "{{{
           \ -I__DARWIN_LDBL_COMPAT,__DARWIN_LDBL_COMPAT2')
   else
     call neocomplete#util#set_default_dictionary(
-          \ 'g:neocomplete_ctags_arguments_list', 'c',
+          \ 'g:neocomplete#ctags_arguments', 'c',
           \ '-R --sort=1 --c-kinds=+p --fields=+iaS --extra=+q ' .
           \ '-I __wur,__THROW,__attribute_malloc__,__nonnull+,'.
           \   '__attribute_pure__,__attribute_warn_unused_result__,__attribute__+')
   endif
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_ctags_arguments_list', 'cpp',
+        \ 'g:neocomplete#ctags_arguments', 'cpp',
         \ '--language-force=C++ -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q '.
         \ '-I __wur,__THROW,__attribute_malloc__,__nonnull+,'.
         \   '__attribute_pure__,__attribute_warn_unused_result__,__attribute__+')
@@ -633,9 +632,9 @@ function! neocomplete#init#_variables() "{{{
 
   " Initialize text mode filetypes. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_text_mode_filetypes', {})
+        \ 'g:neocomplete#text_mode_filetypes', {})
   call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete_text_mode_filetypes',
+        \ 'g:neocomplete#text_mode_filetypes',
         \ 'hybrid,text,help,tex,gitcommit,vcs-commit', 1)
   "}}}
 
@@ -647,32 +646,33 @@ function! neocomplete#init#_variables() "{{{
         \'v:val.word !~ ''^[~_]''')
   "}}}
 
-  " Initialize force omni completion pattern. "{{{
+  " Initialize omni function list. "{{{
+  if !exists('g:neocomplete#omni_functions')
+    let g:neocomplete#omni_functions = {}
+  endif
+  "}}}
+
+  " Initialize force omni completion patterns. "{{{
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_force_omni_patterns', {})
+        \ 'g:neocomplete#force_omni_patterns', {})
   call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete_force_omni_patterns', 'objc',
+        \'g:neocomplete#force_omni_patterns', 'objc',
         \'\h\w\+\|[^.[:digit:] *\t]\%(\.\|->\)')
   "}}}
 
-  " Initialize ignore composite filetypes
+  " Initialize ignore composite filetypes.
   call neocomplete#util#set_default(
-        \ 'g:neocomplete_ignore_composite_filetype_lists', {})
+        \ 'g:neocomplete#ignore_composite_filetypes', {})
 
   " Must g:neocomplete#auto_completion_start_length > 1.
   if g:neocomplete#auto_completion_start_length < 1
     let g:neocomplete#auto_completion_start_length = 1
   endif
+
   " Must g:neocomplete#min_keyword_length > 1.
   if g:neocomplete#min_keyword_length < 1
     let g:neocomplete#min_keyword_length = 1
   endif
-
-  " Initialize omni function list. "{{{
-  if !exists('g:neocomplete_omni_functions')
-    let g:neocomplete_omni_functions = {}
-  endif
-  "}}}
 endfunction"}}}
 
 function! neocomplete#init#_current_neocomplete() "{{{

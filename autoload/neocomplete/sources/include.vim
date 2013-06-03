@@ -335,7 +335,7 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "
 endfunction"}}}
 
 function! s:check_cache() "{{{
-  if neocomplete#is_disabled_source('include')
+  if !neocomplete#is_enabled_source('include')
     return
   endif
 

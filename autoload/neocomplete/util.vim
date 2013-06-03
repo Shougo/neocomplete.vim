@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 May 2013.
+" Last Modified: 03 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -195,7 +195,7 @@ endfunction"}}}
 
 function! neocomplete#util#has_vimproc() "{{{
   " Initialize.
-  if !exists('g:neocomplete_use_vimproc')
+  if !exists('g:neocomplete#use_vimproc')
     " Check vimproc.
     try
       call vimproc#version()
@@ -204,10 +204,10 @@ function! neocomplete#util#has_vimproc() "{{{
       let exists_vimproc = 0
     endtry
 
-    let g:neocomplete_use_vimproc = exists_vimproc
+    let g:neocomplete#use_vimproc = exists_vimproc
   endif
 
-  return g:neocomplete_use_vimproc
+  return g:neocomplete#use_vimproc
 endfunction"}}}
 
 function! neocomplete#util#dup_filter(list) "{{{
