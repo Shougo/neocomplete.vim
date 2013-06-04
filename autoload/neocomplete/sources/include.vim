@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -26,6 +26,19 @@
 
 let s:save_cpo = &cpo
 set cpo&vim
+
+" Global options definition. "{{{
+let g:neocomplete#sources#include#patterns =
+      \ get(g:, 'neocomplete#sources#include#patterns', {})
+let g:neocomplete#sources#include#exprs =
+      \ get(g:, 'neocomplete#sources#include#exprs', {})
+let g:neocomplete#sources#include#paths =
+      \ get(g:, 'neocomplete#sources#include#paths', {})
+let g:neocomplete#sources#include#suffixes =
+      \ get(g:, 'neocomplete#sources#include#suffixes', {})
+let g:neocomplete#sources#include#functions =
+      \ get(g:, 'neocomplete#sources#include#functions', {})
+"}}}
 
 let s:source = {
       \ 'name' : 'include',
@@ -429,8 +442,6 @@ function! s:initialize_variables() "{{{
   let s:cached_pattern = {}
 
   " Initialize include pattern. "{{{
-  let g:neocomplete#sources#include#patterns =
-        \ get(g:, 'neocomplete_include_patterns', {})
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#include#patterns',
         \ 'java,haskell', '^\s*\<import')
@@ -441,28 +452,12 @@ function! s:initialize_variables() "{{{
         \ 'g:neocomplete#sources#include#patterns',
         \ 'ruby', '^\s*\<\%(load\|require\|require_relative\)\>')
   "}}}
-  " Initialize expr pattern. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#sources#include#exprs', {})
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#exprs',
-        \ 'haskell,cs',
-        \ "substitute(v:fname, '\\.', '/', 'g')")
-  "}}}
-  " Initialize path pattern. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#sources#include#paths', {})
-  "}}}
   " Initialize include suffixes. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#sources#include#suffixes', {})
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#include#suffixes',
         \ 'haskell', '.hs')
   "}}}
   " Initialize include functions. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#sources#include#functions', {})
   " call neocomplete#util#set_default_dictionary(
   "       \ 'g:neocomplete#sources#include#functions', 'vim',
   "       \ 'neocomplete#sources#include#analyze_vim_include_files')

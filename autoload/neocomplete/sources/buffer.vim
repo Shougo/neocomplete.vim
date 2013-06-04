@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,6 +27,13 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Global options definition. "{{{
+let g:neocomplete#sources#buffer#cache_limit_size =
+      \ get(g:, 'neocomplete#sources#buffer#cache_limit_size', 500000)
+let g:neocomplete#sources#buffer#disabled_pattern =
+      \ get(g:, 'neocomplete#sources#buffer#disabled_pattern', '')
+"}}}
+
 " Important variables.
 if !exists('s:buffer_sources')
   let s:buffer_sources = {}
@@ -45,11 +52,6 @@ let s:source = {
 
 function! s:source.hooks.on_init(context) "{{{
   let s:buffer_sources = {}
-
-  let g:neocomplete#sources#buffer#cache_limit_size =
-        \ get(g:, 'neocomplete#sources#buffer#cache_limit_size', 500000)
-  let g:neocomplete#sources#buffer#disabled_pattern =
-        \ get(g:, 'neocomplete#sources#buffer#disabled_pattern', '')
 
   augroup neocomplete "{{{
     " Make cache events

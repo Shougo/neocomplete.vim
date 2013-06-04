@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: member.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,6 +27,13 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Global options definition. "{{{
+let g:neocomplete#sources#member#prefix_patterns =
+      \ get(g:, 'neocomplete#sources#member#prefix_patterns', {})
+let g:neocomplete#sources#member#input_patterns =
+      \ get(g:, 'neocomplete#sources#member#input_patterns', {})
+"}}}
+
 " Important variables.
 if !exists('s:member_sources')
   let s:member_sources = {}
@@ -51,9 +58,6 @@ function! s:source.hooks.on_init(context) "{{{
   augroup END"}}}
 
   " Initialize member prefix patterns. "{{{
-  if !exists('g:neocomplete#sources#member#prefix_patterns')
-    let g:neocomplete#sources#member#prefix_patterns = {}
-  endif
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#member#prefix_patterns',
         \ 'c,cpp,objc,objcpp', '\.\|->')
@@ -69,9 +73,6 @@ function! s:source.hooks.on_init(context) "{{{
   "}}}
 
   " Initialize member patterns. "{{{
-  if !exists('g:neocomplete#sources#member#input_patterns')
-    let g:neocomplete#sources#member#input_patterns = {}
-  endif
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#member#input_patterns',
         \'default', '\h\w*\%(()\|\[\h\w*\]\)\?')

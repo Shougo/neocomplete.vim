@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: vim.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,6 +27,11 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Global options definition. "{{{
+let g:neocomplete#sources#vim#complete_functions =
+      \ get(g:, 'neocomplete#sources#vim#complete_functions', {})
+"}}}
+
 let s:source = {
       \ 'name' : 'vim',
       \ 'kind' : 'manual',
@@ -38,12 +43,6 @@ let s:source = {
 
 function! s:source.hooks.on_init(context) "{{{
   " Initialize.
-
-  " Initialize complete function list. "{{{
-  if !exists('g:neocomplete#sources#vim#complete_functions')
-    let g:neocomplete#sources#vim#complete_functions = {}
-  endif
-  "}}}
 
   autocmd neocomplete FileType *
         \ call neocomplete#sources#vim#helper#on_filetype()

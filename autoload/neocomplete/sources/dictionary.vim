@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: dictionary.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,6 +27,13 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Global options definition. "{{{
+let g:neocomplete#sources#dictionary#dictionaries =
+      \ get(g:, 'neocomplete#sources#dictionary#dictionaries', {})
+let g:neocomplete#sources#dictionary#keyword_patterns =
+      \ get(g:, 'neocomplete#sources#dictionary#keyword_patterns', {})
+"}}}
+
 " Important variables.
 if !exists('s:dictionary_list')
   let s:dictionary_list = {}
@@ -46,18 +53,6 @@ let s:source = {
       \}
 
 function! s:source.hooks.on_init(context) "{{{
-  " Initialize dictionary. "{{{
-  if !exists('g:neocomplete#sources#dictionary#dictionaries')
-    let g:neocomplete#sources#dictionary#dictionaries = {}
-  endif
-  "}}}
-
-  " Initialize dictionary completion pattern. "{{{
-  if !exists('g:neoocmplete#sources#dictionary#keyword_patterns')
-    let g:neoocmplete#sources#dictionary#keyword_patterns = {}
-  endif
-  "}}}
-
   " Set make cache event.
   autocmd neocomplete FileType * call s:make_cache()
 
@@ -137,8 +132,8 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
 
   let s:async_dictionary_list[filetype] = []
 
-  let pattern = get(g:neoocmplete#sources#dictionary#keyword_patterns, filetype,
-        \ neocomplete#get_keyword_pattern(filetype))
+  let pattern = get(g:neocomplete#sources#dictionary#keyword_patterns,
+        \ filetype, neocomplete#get_keyword_pattern(filetype))
   for dictionary in split(dictionaries, ',')
     let dictionary = neocomplete#util#substitute_path_separator(
           \ fnamemodify(dictionary, ':p'))

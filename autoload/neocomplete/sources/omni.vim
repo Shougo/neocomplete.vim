@@ -27,6 +27,13 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Global options definition. "{{{
+let g:neocomplete#sources#omni#functions =
+      \ get(g:, 'neocomplete#sources#omni#functions', {})
+let g:neocomplete#sources#omni#input_patterns =
+      \ get(g:, 'neocomplete#sources#omni#input_patterns', {})
+"}}}
+
 let s:source = {
       \ 'name' : 'omni',
       \ 'kind' : 'manual',
@@ -39,16 +46,7 @@ let s:source = {
 let s:List = vital#of('neocomplete').import('Data.List')
 
 function! s:source.hooks.on_init(context) "{{{
-  " Initialize omni function list. "{{{
-  if !exists('g:neocomplete#sources#omni#functions')
-    let g:neocomplete#sources#omni#functions = {}
-  endif
-  "}}}
-
   " Initialize omni completion pattern. "{{{
-  if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-  endif
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'html,xhtml,xml,markdown',

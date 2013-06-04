@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -28,18 +28,14 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Global options definition. "{{{
-if !exists('g:neocomplete#sources#include#patterns')
-  let g:neocomplete#sources#include#patterns = {}
-endif
-if !exists('g:neocomplete#sources#include#exprs')
-  let g:neocomplete#sources#include#exprs = {}
-endif
-if !exists('g:neocomplete#sources#include#paths')
-  let g:neocomplete#sources#include#paths = {}
-endif
-if !exists('g:neocomplete#sources#include#suffixes')
-  let g:neocomplete#sources#include#suffixes = {}
-endif
+let g:neocomplete#sources#include#patterns =
+      \ get(g:, 'neocomplete#sources#include#patterns', {})
+let g:neocomplete#sources#include#exprs =
+      \ get(g:, 'neocomplete#sources#include#exprs', {})
+let g:neocomplete#sources#include#paths =
+      \ get(g:, 'neocomplete#sources#include#paths', {})
+let g:neocomplete#sources#include#suffixes =
+      \ get(g:, 'neocomplete#sources#include#suffixes', {})
 "}}}
 
 let s:source = {
