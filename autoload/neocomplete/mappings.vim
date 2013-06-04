@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -71,7 +71,7 @@ function! neocomplete#mappings#popup_post() "{{{
 endfunction"}}}
 
 function! neocomplete#mappings#undo_completion() "{{{
-  if !exists(':NeoCompleteDisable')
+  if !neocomplete#is_enabled()
     return ''
   endif
 
@@ -89,7 +89,7 @@ function! neocomplete#mappings#undo_completion() "{{{
 endfunction"}}}
 
 function! neocomplete#mappings#complete_common_string() "{{{
-  if !exists(':NeoCompleteDisable')
+  if !neocomplete#is_enabled()
     return ''
   endif
 
@@ -109,7 +109,9 @@ function! neocomplete#mappings#complete_common_string() "{{{
   endif
 
   let neocomplete = neocomplete#get_current_neocomplete()
-  let candidates = neocomplete.candidates
+  let candidates = neocomplete#filters#matcher_head#define().filter(
+        \ { 'candidates' : copy(neocomplete.candidates),
+        \   'complete_str' : complete_str})
 
   let common_str = candidates[0].word
   try
