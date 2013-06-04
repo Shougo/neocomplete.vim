@@ -1783,6 +1783,7 @@ CHANGELOG					*neocomplete-changelog*
 - Added neocomplete#custom#source().
 - Improved documentation.
 - Fixed neocomplete#complete_common_string().
+- Fixed completefunc problem.
 
 2013-06-03
 - Fixed syntax source.
