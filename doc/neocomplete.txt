@@ -1754,6 +1754,13 @@ A:
 	\ 'disabled_filetypes', {'python' : 1})
 <
 
+Q: neocomplete closes DiffGitCached window from vim-fugitive
+https://github.com/Shougo/neocomplcache.vim/issues/424
+A:
+>
+	let g:neocomplete#enable_auto_close_preview = 0
+<
+
 ==============================================================================
 TODO						*neocomplete-todo*
 
