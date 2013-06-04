@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -31,7 +31,73 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-scriptencoding utf-8
+" Global options definition. "{{{
+let g:neocomplete#max_list =
+      \ get(g:, 'neocomplete#max_list', 100)
+let g:neocomplete#max_keyword_width =
+      \ get(g:, 'neocomplete#max_keyword_width', 80)
+let g:neocomplete#auto_completion_start_length =
+      \ get(g:, 'neocomplete#auto_completion_start_length', 2)
+let g:neocomplete#manual_completion_start_length =
+      \ get(g:, 'neocomplete#manual_completion_start_length', 0)
+let g:neocomplete#min_keyword_length =
+      \ get(g:, 'neocomplete#min_keyword_length', 4)
+let g:neocomplete#enable_ignore_case =
+      \ get(g:, 'neocomplete#enable_ignore_case', &ignorecase)
+let g:neocomplete#enable_smart_case =
+      \ get(g:, 'neocomplete#enable_smart_case', &infercase)
+let g:neocomplete#disable_auto_complete =
+      \ get(g:, 'neocomplete#disable_auto_complete', 0)
+let g:neocomplete#enable_fuzzy_completion =
+      \ get(g:, 'neocomplete#enable_fuzzy_completion', 1)
+let g:neocomplete#enable_insert_char_pre =
+      \ get(g:, 'neocomplete#enable_insert_char_pre', 0)
+let g:neocomplete#enable_cursor_hold_i =
+      \ get(g:, 'neocomplete#enable_cursor_hold_i', 0)
+let g:neocomplete#cursor_hold_i_time =
+      \ get(g:, 'neocomplete#cursor_hold_i_time', 300)
+let g:neocomplete#enable_auto_select =
+      \ get(g:, 'neocomplete#enable_auto_select', 0)
+let g:neocomplete#enable_auto_delimiter =
+      \ get(g:, 'neocomplete#enable_auto_delimiter', 0)
+let g:neocomplete#lock_buffer_name_pattern =
+      \ get(g:, 'neocomplete#lock_buffer_name_pattern', '')
+let g:neocomplete#ctags_command =
+      \ get(g:, 'neocomplete#ctags_command', 'ctags')
+let g:neocomplete#force_overwrite_completefunc =
+      \ get(g:, 'neocomplete#force_overwrite_completefunc', 0)
+let g:neocomplete#enable_prefetch =
+      \ get(g:, 'neocomplete#enable_prefetch',
+      \  has('gui_running') && has('xim'))
+let g:neocomplete#lock_iminsert =
+      \ get(g:, 'neocomplete#lock_iminsert', 0)
+let g:neocomplete#release_cache_time =
+      \ get(g:, 'neocomplete#release_cache_time', 900)
+let g:neocomplete#skip_auto_completion_time =
+      \ get(g:, 'neocomplete#skip_auto_completion_time', '0.3')
+let g:neocomplete#enable_auto_close_preview =
+      \ get(g:, 'neocomplete#enable_auto_close_preview', 1)
+let g:neocomplete#sources =
+      \ get(g:, 'neocomplete#sources', {})
+let g:neocomplete#keyword_patterns =
+      \ get(g:, 'neocomplete#keyword_patterns', {})
+let g:neocomplete#next_keyword_patterns =
+      \ get(g:, 'neocomplete#next_keyword_patterns', {})
+let g:neocomplete#same_filetypes =
+      \ get(g:, 'neocomplete#same_filetypes', {})
+let g:neocomplete#delimiter_patterns =
+      \ get(g:, 'neocomplete#delimiter_patterns', {})
+let g:neocomplete#ctags_arguments =
+      \ get(g:, 'neocomplete#ctags_arguments', {})
+let g:neocomplete#text_mode_filetypes =
+      \ get(g:, 'neocomplete#text_mode_filetypes', {})
+let g:neocomplete#tags_filter_patterns =
+      \ get(g:, 'neocomplete#tags_filter_patterns', {})
+let g:neocomplete#force_omni_input_patterns =
+      \ get(g:, 'neocomplete#force_omni_input_patterns', {})
+let g:neocomplete#ignore_composite_filetypes =
+      \ get(g:, 'neocomplete#ignore_composite_filetypes', {})
+"}}}
 
 function! neocomplete#initialize() "{{{
   return neocomplete#init#enable()

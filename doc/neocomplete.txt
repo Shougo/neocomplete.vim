@@ -1757,6 +1757,9 @@ TODO						*neocomplete-todo*
 ==============================================================================
 CHANGELOG					*neocomplete-changelog*
 
+2013-06-04
+- Improved initialization.
+
 2013-06-03
 - Fixed syntax source.
 - Refactorred variable names.

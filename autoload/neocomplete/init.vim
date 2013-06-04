@@ -31,56 +31,6 @@ if !exists('s:is_enabled')
   let s:is_enabled = 0
 endif
 
-" Global options definition. "{{{
-let g:neocomplete#max_list =
-      \ get(g:, 'neocomplete#max_list', 100)
-let g:neocomplete#max_keyword_width =
-      \ get(g:, 'neocomplete#max_keyword_width', 80)
-let g:neocomplete#auto_completion_start_length =
-      \ get(g:, 'neocomplete#auto_completion_start_length', 2)
-let g:neocomplete#manual_completion_start_length =
-      \ get(g:, 'neocomplete#manual_completion_start_length', 0)
-let g:neocomplete#min_keyword_length =
-      \ get(g:, 'neocomplete#min_keyword_length', 4)
-let g:neocomplete#enable_ignore_case =
-      \ get(g:, 'neocomplete#enable_ignore_case', &ignorecase)
-let g:neocomplete#enable_smart_case =
-      \ get(g:, 'neocomplete#enable_smart_case', &infercase)
-let g:neocomplete#disable_auto_complete =
-      \ get(g:, 'neocomplete#disable_auto_complete', 0)
-let g:neocomplete#enable_fuzzy_completion =
-      \ get(g:, 'neocomplete#enable_fuzzy_completion', 1)
-let g:neocomplete#enable_insert_char_pre =
-      \ get(g:, 'neocomplete#enable_insert_char_pre', 0)
-let g:neocomplete#enable_cursor_hold_i =
-      \ get(g:, 'neocomplete#enable_cursor_hold_i', 0)
-let g:neocomplete#cursor_hold_i_time =
-      \ get(g:, 'neocomplete#cursor_hold_i_time', 300)
-let g:neocomplete#enable_auto_select =
-      \ get(g:, 'neocomplete#enable_auto_select', 0)
-let g:neocomplete#enable_auto_delimiter =
-      \ get(g:, 'neocomplete#enable_auto_delimiter', 0)
-let g:neocomplete#lock_buffer_name_pattern =
-      \ get(g:, 'neocomplete#lock_buffer_name_pattern', '')
-let g:neocomplete#ctags_command =
-      \ get(g:, 'neocomplete#ctags_command', 'ctags')
-let g:neocomplete#force_overwrite_completefunc =
-      \ get(g:, 'neocomplete#force_overwrite_completefunc', 0)
-let g:neocomplete#enable_prefetch =
-      \ get(g:, 'neocomplete#enable_prefetch',
-      \  has('gui_running') && has('xim'))
-let g:neocomplete#lock_iminsert =
-      \ get(g:, 'neocomplete#lock_iminsert', 0)
-let g:neocomplete#release_cache_time =
-      \ get(g:, 'neocomplete#release_cache_time', 900)
-let g:neocomplete#skip_auto_completion_time =
-      \ get(g:, 'neocomplete#skip_auto_completion_time', '0.3')
-let g:neocomplete#enable_auto_close_preview =
-      \ get(g:, 'neocomplete#enable_auto_close_preview', 1)
-let g:neocomplete#sources =
-      \ get(g:, 'neocomplete#sources', {})
-"}}}
-
 function! neocomplete#init#lazy() "{{{
   if !exists('s:lazy_progress')
     let s:lazy_progress = 0
@@ -202,8 +152,6 @@ endfunction"}}}
 
 function! neocomplete#init#_variables() "{{{
   " Initialize keyword patterns. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#keyword_patterns', {})
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'_',
@@ -427,8 +375,6 @@ function! neocomplete#init#_variables() "{{{
   "}}}
 
   " Initialize next keyword patterns. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#next_keyword_patterns', {})
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#next_keyword_patterns', 'perl',
         \'\h\w*>')
@@ -450,8 +396,6 @@ function! neocomplete#init#_variables() "{{{
   "}}}
 
   " Initialize same file types. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#same_filetypes', {})
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#same_filetypes',
         \ 'c', 'cpp')
@@ -565,8 +509,6 @@ function! neocomplete#init#_variables() "{{{
   "}}}
 
   " Initialize delimiter patterns. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#delimiter_patterns', {})
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#delimiter_patterns',
         \ 'vim,help', ['#'])
@@ -599,8 +541,6 @@ function! neocomplete#init#_variables() "{{{
   "}}}
 
   " Initialize ctags arguments. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#ctags_arguments', {})
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#ctags_arguments',
         \ '_', '')
@@ -631,32 +571,22 @@ function! neocomplete#init#_variables() "{{{
   "}}}
 
   " Initialize text mode filetypes. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#text_mode_filetypes', {})
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#text_mode_filetypes',
         \ 'hybrid,text,help,tex,gitcommit,vcs-commit', 1)
   "}}}
 
   " Initialize tags filter patterns. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#tags_filter_patterns', {})
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#tags_filter_patterns', 'c,cpp',
         \'v:val.word !~ ''^[~_]''')
   "}}}
 
   " Initialize force omni completion patterns. "{{{
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#force_omni_input_patterns', {})
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#force_omni_input_patterns', 'objc',
         \'\h\w\+\|[^.[:digit:] *\t]\%(\.\|->\)')
   "}}}
-
-  " Initialize ignore composite filetypes.
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#ignore_composite_filetypes', {})
 
   " Must g:neocomplete#auto_completion_start_length > 1.
   if g:neocomplete#auto_completion_start_length < 1
