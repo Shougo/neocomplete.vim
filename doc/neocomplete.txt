@@ -42,7 +42,6 @@ Create filter		|neocomplete-create-filter|
   Filter attributes       |neocomplete-filter-attributes|
 FILTERS			|neocomplete-filters|
 FAQ			|neocomplete-faq|
-TODO			|neocomplete-todo|
 Changelog		|neocomplete-changelog|
 
 ==============================================================================
@@ -86,8 +85,9 @@ In Linux: You must make Vim and enable |if_lua| manually.
 let g:neocomplete#enable_at_startup = 1
 in your .vimrc.
 
+						*neocomplete-RECOMMENDATION*
+
 						*neocomplete-asynchronous*
-*neocomplete-RECOMMENDATION*
 With neocomplete Ver.6.0 or later, when you have |vimproc| installed,
 neocomplete creates caches asynchronously.
 
@@ -145,13 +145,16 @@ COMMANDS 					*neocomplete-commands*
 		Note: This length value is local to each buffer.
 
 :NeoCompleteClean 				*:NeoCompleteClean*
-		Clean cache files in |g:neocomplete#data_directory|.
+		Clean files in |g:neocomplete#data_directory|.
 
 :NeoCompleteSetFileType [filetype]		*:NeoCompleteSetFileType*
 		Change filetype to [filetype] in current buffer.
 		This filetype is only used neocomplete.
 		Note: You can get current filetype by
 		|neocomplete#get_context_filetype()|
+
+
+SOURCES COMMANDS 				*neocomplete-sources-COMMANDS*
 
 :NeoCompleteBufferMakeCache [bufname]		*:NeoCompleteBufferMakeCache*
 		Make cache from [bufname] buffer.
@@ -170,10 +173,10 @@ COMMANDS 					*neocomplete-commands*
 		Selects current buffer filetype when [filetype] is omitted.
 
 :NeoCompleteTagMakeCache		*:NeoCompleteTagMakeCache*
-		Make cache tags file in current buffer.
+		Make cache from tags file in current buffer.
 
 :NeoCompleteIncludeMakeCache [bufname]		*:NeoCompleteIncludeMakeCache*
-		Make cache [bufname] from include file.
+		Make cache from include file in [bufname].
 		Selects current buffer name when [bufname] is omitted.
 
 ------------------------------------------------------------------------------
@@ -190,7 +193,7 @@ g:neocomplete#enable_at_startup
 		Note: This option has to be set in .vimrc or _vimrc.  NOT IN
 		.gvimrc nor _gvimrc!
 
-g:neocomplete#max_list			*g:neocomplete#max_list*
+g:neocomplete#max_list				*g:neocomplete#max_list*
 		This variable controls the number of candidates displayed in a
 		pop-up menu.  Candidates more than this value won't be show
 		up.
@@ -259,7 +262,6 @@ g:neocomplete#disable_auto_complete
 g:neocomplete#enable_cursor_hold_i
 		This variable controls whether neocomplete use |CursorHoldI|
 		event when complete candidates.
-		Note: You should not use this option if less than Vim 7.3.418.
 		Note: This option must be set before call
 		|:NeoCompleteEnable|.
 
@@ -276,7 +278,6 @@ g:neocomplete#cursor_hold_i_time
 g:neocomplete#enable_insert_char_pre
 		This variable controls whether neocomplete use
 		|InsertCharPre| event when complete candidates.
-		Note: You should not use this option if less than Vim 7.3.461.
 		Note: This option must be set before call
 		|:NeoCompleteEnable|.
 		Note: This option is experimental.
@@ -326,8 +327,8 @@ g:neocomplete#enable_prefetch		*g:neocomplete#enable_prefetch*
 		Note: If this variable is 0, an input problem may occur in
 		using uim-skk or other IMEs on GVim.
 
-		Default value is 0 (above or equal to 7.3.519.)
 		Default value is 1 (|+xim| and GUI version.)
+		Default value is 0 (Others)
 
 g:neocomplete#lock_iminsert		*g:neocomplete#lock_iminsert*
 		If this variable is non-zero, neocomplete locks when
@@ -385,7 +386,8 @@ g:neocomplete#force_omni_input_patterns
 		if !exists('g:neocomplete#force_omni_input_patterns')
 		  let g:neocomplete#force_omni_input_patterns = {}
 		endif
-		let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+		let g:neocomplete#force_omni_input_patterns.ruby =
+		\ '[^. *\t]\.\w*\|\h\w*::'
 <
 		Because it is complicated, refer to
 		neocomplete#init#_variables() in
@@ -440,8 +442,9 @@ g:neocomplete#text_mode_filetypes
 		autoload/neocomplete/init.vim for the initial value.
 
 g:neocomplete#ctags_command		*g:neocomplete#ctags_command*
-		It is the path to the ctags command.  If this command is not
-		installed, include is disabled.
+		It is the path to the ctags command.
+		Note: If this command is not installed, include source is
+		disabled.
 
 		Default value is "ctags".
 
@@ -540,10 +543,10 @@ g:neocomplete#ignore_composite_filetypes
 			\ 'ruby.spec' : 'ruby'
 			\ }
 <
-		If you open filetype like |ruby.spec|, completion is
-		intended for |ruby| and |spec|.
-		But if you only want to complete |ruby| filetype,
-		you can set this variable to ignore |spec|.
+		If you open filetype like "ruby.spec", completion is
+		intended for "ruby" and "spec".
+		But if you only want to complete "ruby" filetype,
+		you can set this variable to ignore "spec".
 
 		Default value is {}.
 
@@ -726,10 +729,10 @@ g:neocomplete#sources#member#input_patterns
 				*g:neocomplete#sources#omni#functions*
 g:neocomplete#sources#omni#functions
 		This dictionary which appoints omni source call functions.
-		The key is |&filetype|.  The value is omnifunc String or List
-		of omnifunc String.
-		If |g:neocomplete#sources#omni#functions| [|&filetype|] is undefined,
-		omni source calls 'omnifunc'.
+		The key is |&filetype|.  The value is omnifunc name String or
+		List of omnifunc name String.
+		If |g:neocomplete#sources#omni#functions| [|&filetype|] is
+		undefined, omni source calls 'omnifunc'.
 		If the key is "_", used for all filetypes.
 
 		Default value is {}.
@@ -737,7 +740,7 @@ g:neocomplete#sources#omni#functions
 				*g:neocomplete#sources#omni#input_patterns*
 g:neocomplete#sources#omni#input_patterns
 		This dictionary records keyword patterns used in
-		|omni|.  This is appointed in regular expression
+		omni source.  This is appointed in regular expression
 		every file type or 'omnifunc' name.  If this pattern is not
 		defined or empty pattern, neocomplete does not call
 		'omnifunc'.
@@ -770,7 +773,7 @@ g:neocomplete#sources#tags#cache_limit_size
 
 				*g:neocomplete#sources#vim#complete_functions*
 g:neocomplete#sources#vim#complete_functions
-		This dictionary which appoints |vim| call function
+		This dictionary which appoints vim source call function
 		when completes custom and customlist command.  The key is
 		command name.  The value is function name.
 
@@ -812,7 +815,7 @@ neocomplete#custom#source({source-name}, {option-name}, {value})
 					*neocomplete#get_context_filetype()*
 neocomplete#get_context_filetype()
 		Get current context filetype of the cursor.  This is smarter
-		than |&filetype| about handling nested filetypes.
+		than 'filetype' about handling nested filetypes.
 		Note: To enable context filetype feature, you must install
 		context_filetype.vim.
 		https://github.com/Shougo/context_filetype.vim
@@ -825,8 +828,8 @@ neocomplete#get_context_filetype()
 		</script>
 <
 		At the line 1 and 3, neocomplete#get_context_filetype() is
-		"html" and at the line 2 it's "javascript", whilst at any
-		lines &filetype is "html".
+		"html" and at the line 2 it's "javascript", while at any
+		lines 'filetype' is "html".
 
 				*neocomplete#disable_default_dictionary()*
 neocomplete#disable_default_dictionary({variable-name})
@@ -851,19 +854,19 @@ neocomplete#start_manual_complete([{sources}])
 <
 				*neocomplete#close_popup()*
 neocomplete#close_popup()
-		Inset candidate and close popup menu for neocomplete.
+		Insert candidate and close popup menu for neocomplete.
 >
 		inoremap <expr><C-y>  neocomplete#close_popup()
 <
 				*neocomplete#cancel_popup()*
 neocomplete#cancel_popup()
-		cancel completion menu for neocomplete.
+		Cancel completion menu for neocomplete.
 >
 		inoremap <expr><C-e>  neocomplete#cancel_popup()
 <
 				*neocomplete#smart_close_popup()*
 neocomplete#smart_close_popup()
-		Inset candidate and close popup menu for neocomplete.
+		Insert candidate and close popup menu for neocomplete.
 		Unlike|neocomplete#close_popup()|, this function changes
 		behavior by|g:neocomplete#enable_auto_select|smart.
 		Note: This mapping is conflicted with |SuperTab| or |endwise|
@@ -871,7 +874,7 @@ neocomplete#smart_close_popup()
 
 				*neocomplete#undo_completion()*
 neocomplete#undo_completion()
-		Use this function on inoremap <expr>.  Undo inputted
+		Use this function on inoremap <expr> to undo inputted
 		candidate.  Because there is not mechanism to cancel
 		candidate in Vim, it will be convenient when it inflects.
 >
@@ -879,7 +882,7 @@ neocomplete#undo_completion()
 <
 				*neocomplete#complete_common_string()*
 neocomplete#complete_common_string()
-		Use this function on inoremap <expr>.  Complete common
+		Use this function on inoremap <expr> to complete common
 		string in candidates.  It will be convenient when candidates
 		have long common string.
 >
@@ -1461,8 +1464,7 @@ should disable omni source in python or ruby.
 
 Q: I like moving cursor by cursor-keys.  But neocomplete popups menus...
 
-A: Please set this in your .vimrc.  Note that this feature requires Vim 7.3.418
-or later.
+A: Please set this in your .vimrc.
 >
 	let g:neocomplete#enable_insert_char_pre = 1
 <
@@ -1512,9 +1514,9 @@ http://github.com/Shougo/vimproc
 Q: An error occurred in "sudo vim":
 
 A: neocomplete does not support "sudo vim".  Because neocomplete (and other
-plugins) creates temporary files in super user permission by sudo command.  You
-must use sudo.vim or set "Defaults always_set_home" in "/etc/sudoers", or must
-use "sudoedit" command.
+plugins) creates temporary files in super user permission by sudo command.
+You must use sudo.vim or set "Defaults always_set_home" in "/etc/sudoers", or
+must use "sudoedit" command.
 
 Ubuntu has a command "sudoedit" which can work well with neocomplete.
 I'm not sure if other distros has this command...
@@ -1522,7 +1524,8 @@ I'm not sure if other distros has this command...
 http://www.vim.org/scripts/script.php?script_id=729
 
 
-Q: Error occurred in ruby omni complete using |g:neocomplete#sources#omni#input_patterns|.
+Q: Error occurred in ruby omni complete using
+|g:neocomplete#sources#omni#input_patterns|.
 https://github.com/vim-ruby/vim-ruby/issues/95
 
 A: Please set |g:neocomplete#force_omni_input_patterns| instead of
@@ -1557,19 +1560,27 @@ Note: Some patterns are omitted here, (someone should check out those plugin's
 source code's complete function, and find out the omni pattern).
 >
 	" JavaScript (plugin: jscomplete-vim)
-	let g:neocomplete#sources#omni#functions.javascript = 'jscomplete#CompleteJS'
+	let g:neocomplete#sources#omni#functions.javascript =
+	\ 'jscomplete#CompleteJS'
 	" Go (plugin: gocode)
-	let g:neocomplete#sources#omni#functions.go = 'gocomplete#Complete'
+	let g:neocomplete#sources#omni#functions.go =
+	\ 'gocomplete#Complete'
 	" Clojure (plugin: vim-clojure)
-	let g:neocomplete#sources#omni#functions.clojure = 'vimclojure#OmniCompletion'
+	let g:neocomplete#sources#omni#functions.clojure =
+	\ 'vimclojure#OmniCompletion'
 	" SQL
-	let g:neocomplete#sources#omni#functions.sql = 'sqlcomplete#Complete'
+	let g:neocomplete#sources#omni#functions.sql =
+	\ 'sqlcomplete#Complete'
 	" R (plugin: vim-R-plugin)
-	let g:neocomplete#sources#omni#input_patterns.r = '[[:alnum:].\\]\+'
-	let g:neocomplete#sources#omni#functions.r = 'rcomplete#CompleteR'
+	let g:neocomplete#sources#omni#input_patterns.r =
+	\ '[[:alnum:].\\]\+'
+	let g:neocomplete#sources#omni#functions.r =
+	\ 'rcomplete#CompleteR'
 	" XQuery (plugin: XQuery-indentomnicomplete)
-	let g:neocomplete#sources#omni#input_patterns.xquery = '\k\|:\|\-\|&'
-	let g:neocomplete#sources#omni#functions.xquery = 'xquerycomplete#CompleteXQuery'
+	let g:neocomplete#sources#omni#input_patterns.xquery =
+	\ '\k\|:\|\-\|&'
+	let g:neocomplete#sources#omni#functions.xquery =
+	\ 'xquerycomplete#CompleteXQuery'
 <
 
 Q: Does not indent when I input "else" in ruby filetype.
@@ -1628,8 +1639,8 @@ variable to 1.
 
 Q: I want to use Ruby omni completion.
 
-A: Please set |g:neocomplete#force_omni_input_patterns|.  But this completion is
-heavy, so disabled by default.
+A: Please set |g:neocomplete#force_omni_input_patterns|.  But this completion
+is heavy, so disabled by default.
 Note: But you should use |neocomplete-rsense| instead of rubycomplete.
 https://github.com/Shougo/neocomplete-rsense
 >
@@ -1637,7 +1648,8 @@ https://github.com/Shougo/neocomplete-rsense
 	if !exists('g:neocomplete#force_omni_input_patterns')
 	  let g:neocomplete#force_omni_input_patterns = {}
 	endif
-	let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+	let g:neocomplete#force_omni_input_patterns.ruby =
+	\ '[^. *\t]\.\w*\|\h\w*::'
 <
 Q: I want to use jedi omni completion.
 https://github.com/davidhalter/jedi-vim
@@ -1737,13 +1749,15 @@ Q: I want to use vim-nodejs-complete in neocomplete.
 A:
 Note: This settings works but may heavy.
 >
-	let g:neocomplete#sources#omni#functions.javascript = 'nodejscomplete#CompleteJS'
+	let g:neocomplete#sources#omni#functions.javascript =
+	\ 'nodejscomplete#CompleteJS'
 	" Use jscomplete.vim
 	let g:nodejs_complete_config = {
 	\  'js_compl_fn': 'jscomplete#CompleteJS',
 	\  'max_node_compl_len': 15
 	\}
-	let g:neocomplete#sources#omni#input_patterns.javascript = '\h\w*\|[^. \t]\.\w*'
+	let g:neocomplete#sources#omni#input_patterns.javascript =
+	\ '\h\w*\|[^. \t]\.\w*'
 <
 Q: I want to disable sources in certain filetype.
 
@@ -1762,14 +1776,12 @@ A:
 <
 
 ==============================================================================
-TODO						*neocomplete-todo*
-
-==============================================================================
 CHANGELOG					*neocomplete-changelog*
 
 2013-06-04
 - Improved initialization.
 - Added neocomplete#custom#source().
+- Improved documentation.
 
 2013-06-03
 - Fixed syntax source.
