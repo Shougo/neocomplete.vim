@@ -377,11 +377,10 @@ g:neocomplete#force_omni_input_patterns
 		This is appointed in regular expression every file type.
 		If this pattern is not defined or empty pattern, neocomplete
 		does not call 'omnifunc'.
-		Note: If it is a set, neocomplete will call 'omnifunc' or
-		|g:neocomplete#omni_functions| directly.  So almost
-		neocomplete features are disabled.  But all Omni completion
-		works instead of |g:neocomplete#sources#omni#input_patterns|.
-		Note: This feature may change 'omnifunc' value.
+		Note: If it is a set, neocomplete will call 'omnifunc'
+		directly.  So almost neocomplete features are disabled.  But
+		all Omni completion works instead of
+		|g:neocomplete#sources#omni#input_patterns|.
 >
 		if !exists('g:neocomplete#force_omni_input_patterns')
 		  let g:neocomplete#force_omni_input_patterns = {}
@@ -529,16 +528,6 @@ g:neocomplete#use_vimproc			*g:neocomplete#use_vimproc*
 		asynchronously.
 
 		Default value is vimproc auto detection result.
-
-g:neocomplete#omni_functions			*g:neocomplete#omni_functions*
-		This dictionary which appoints omni source call functions.
-		The key is |&filetype|.  The value is omnifunc String or List
-		of omnifunc String.
-		If |g:neocomplete#omni_functions| [|&filetype|] is undefined,
-		omni source calls 'omnifunc'.
-		If the key is "_", used for all filetypes.
-
-		Default value is {}.
 
 				*g:neocomplete#ignore_composite_filetypes*
 g:neocomplete#ignore_composite_filetypes
@@ -733,6 +722,17 @@ g:neocomplete#sources#member#input_patterns
 		Because it is complicated, refer in
 		autoload/neocomplete/sources/buffer.vim for the
 		initial value.
+
+				*g:neocomplete#sources#omni#functions*
+g:neocomplete#sources#omni#functions
+		This dictionary which appoints omni source call functions.
+		The key is |&filetype|.  The value is omnifunc String or List
+		of omnifunc String.
+		If |g:neocomplete#sources#omni#functions| [|&filetype|] is undefined,
+		omni source calls 'omnifunc'.
+		If the key is "_", used for all filetypes.
+
+		Default value is {}.
 
 				*g:neocomplete#sources#omni#input_patterns*
 g:neocomplete#sources#omni#input_patterns
@@ -1554,19 +1554,19 @@ Note: Some patterns are omitted here, (someone should check out those plugin's
 source code's complete function, and find out the omni pattern).
 >
 	" JavaScript (plugin: jscomplete-vim)
-	let g:neocomplete#omni_functions.javascript = 'jscomplete#CompleteJS'
+	let g:neocomplete#sources#omni#functions.javascript = 'jscomplete#CompleteJS'
 	" Go (plugin: gocode)
-	let g:neocomplete#omni_functions.go = 'gocomplete#Complete'
+	let g:neocomplete#sources#omni#functions.go = 'gocomplete#Complete'
 	" Clojure (plugin: vim-clojure)
-	let g:neocomplete#omni_functions.clojure = 'vimclojure#OmniCompletion'
+	let g:neocomplete#sources#omni#functions.clojure = 'vimclojure#OmniCompletion'
 	" SQL
-	let g:neocomplete#omni_functions.sql = 'sqlcomplete#Complete'
+	let g:neocomplete#sources#omni#functions.sql = 'sqlcomplete#Complete'
 	" R (plugin: vim-R-plugin)
 	let g:neocomplete#sources#omni#input_patterns.r = '[[:alnum:].\\]\+'
-	let g:neocomplete#omni_functions.r = 'rcomplete#CompleteR'
+	let g:neocomplete#sources#omni#functions.r = 'rcomplete#CompleteR'
 	" XQuery (plugin: XQuery-indentomnicomplete)
 	let g:neocomplete#sources#omni#input_patterns.xquery = '\k\|:\|\-\|&'
-	let g:neocomplete#omni_functions.xquery = 'xquerycomplete#CompleteXQuery'
+	let g:neocomplete#sources#omni#functions.xquery = 'xquerycomplete#CompleteXQuery'
 <
 
 Q: Does not indent when I input "else" in ruby filetype.
@@ -1722,7 +1722,7 @@ because if_lua has double-free problem.
 	let g:lua_complete_omni = 1
 	let g:lua_complete_dynamic = 0
 	
-	let g:neocomplete#omni_functions.lua =
+	let g:neocomplete#sources#omni#functions.lua =
 	      \ 'xolox#lua#omnifunc'
 	let g:neocomplete#sources#omni#input_patterns.lua =
 	      \ '\w\+[.:]\|require\s*(\?["'']\w*'
@@ -1734,7 +1734,7 @@ Q: I want to use vim-nodejs-complete in neocomplete.
 A:
 Note: This settings works but may heavy.
 >
-	let g:neocomplete#omni_functions.javascript = 'nodejscomplete#CompleteJS'
+	let g:neocomplete#sources#omni#functions.javascript = 'nodejscomplete#CompleteJS'
 	" Use jscomplete.vim
 	let g:nodejs_complete_config = {
 	\  'js_compl_fn': 'jscomplete#CompleteJS',

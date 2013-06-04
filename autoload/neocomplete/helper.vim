@@ -70,8 +70,7 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
   endif
 
   let filetype = neocomplete#get_context_filetype()
-  let omnifunc = get(g:neocomplete#omni_functions,
-        \ filetype, &l:omnifunc)
+  let omnifunc = &l:omnifunc
 
   if neocomplete#helper#check_invalid_omnifunc(omnifunc)
     return 0
@@ -95,9 +94,6 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
   if a:cur_text !~# '\%(' . pattern . '\m\)$'
     return 0
   endif
-
-  " Set omnifunc.
-  let &omnifunc = omnifunc
 
   return 1
 endfunction"}}}

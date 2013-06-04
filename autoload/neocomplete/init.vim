@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -644,12 +644,6 @@ function! neocomplete#init#_variables() "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#tags_filter_patterns', 'c,cpp',
         \'v:val.word !~ ''^[~_]''')
-  "}}}
-
-  " Initialize omni function list. "{{{
-  if !exists('g:neocomplete#omni_functions')
-    let g:neocomplete#omni_functions = {}
-  endif
   "}}}
 
   " Initialize force omni completion patterns. "{{{

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: omni.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,6 +39,12 @@ let s:source = {
 let s:List = vital#of('neocomplete').import('Data.List')
 
 function! s:source.hooks.on_init(context) "{{{
+  " Initialize omni function list. "{{{
+  if !exists('g:neocomplete#sources#omni#functions')
+    let g:neocomplete#sources#omni#functions = {}
+  endif
+  "}}}
+
   " Initialize omni completion pattern. "{{{
   if !exists('g:neocomplete#sources#omni#input_patterns')
     let g:neocomplete#sources#omni#input_patterns = {}
@@ -132,14 +138,8 @@ endfunction"}}}
 function! s:get_omni_funcs(filetype) "{{{
   let funcs = []
   for ft in insert(split(a:filetype, '\.'), '_')
-    if has_key(g:neocomplete#omni_functions, ft)
-      let omnifuncs =
-            \ (type(g:neocomplete#omni_functions[ft]) == type([])) ?
-            \ g:neocomplete#omni_functions[ft] :
-            \ [g:neocomplete#omni_functions[ft]]
-    else
-      let omnifuncs = [&l:omnifunc]
-    endif
+    let omnifuncs = neocomplete#util#convert2list(
+          \ get(g:neocomplete#sources#omni#functions, ft, &l:omnifunc))
 
     for omnifunc in omnifuncs
       if neocomplete#helper#check_invalid_omnifunc(omnifunc)
