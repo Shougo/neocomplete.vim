@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -130,7 +130,7 @@ function! neocomplete#helper#get_source_filetypes(filetype) "{{{
   endif
 
   if exists('g:neocomplete#same_filetypes')
-    for ft in filetypes
+    for ft in copy(filetypes)
       let filetypes += split(get(g:neocomplete#same_filetypes, ft,
             \ get(g:neocomplete#same_filetypes, '_', '')), ',')
     endfor
