@@ -189,7 +189,7 @@ function! neocomplete#is_enabled() "{{{
 endfunction"}}}
 function! neocomplete#is_locked(...) "{{{
   let bufnr = a:0 > 0 ? a:1 : bufnr('%')
-  return !neocomplete#is_enabled() || &paste
+  return !neocomplete#is_enabled() || &paste || !&l:modified
         \ || g:neocomplete#disable_auto_complete
         \ || &l:completefunc == ''
         \ || neocomplete#get_current_neocomplete().lock
