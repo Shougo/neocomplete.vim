@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: variables.vim
+" FILE: custom.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
 " Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
@@ -27,32 +27,26 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#variables#get_frequencies() "{{{
-  if !exists('s:filetype_frequencies')
-    let s:filetype_frequencies = {}
-  endif
-  let filetype = neocomplete#get_context_filetype()
-  if !has_key(s:filetype_frequencies, filetype)
-    let s:filetype_frequencies[filetype] = {}
+function! neocomplete#custom#get() "{{{
+  if !exists('s:custom')
+    let s:custom = {}
+    let s:custom.sources = {}
+    let s:custom.sources._ = {}
   endif
 
-  let frequencies = s:filetype_frequencies[filetype]
-
-  return frequencies
+  return s:custom
 endfunction"}}}
 
-function! neocomplete#variables#get_sources() "{{{
-  if !exists('s:sources')
-    let s:sources = {}
-  endif
-  return s:sources
-endfunction"}}}
+function! neocomplete#custom#source(source_name, option_name, value) "{{{
+  let custom_sources = neocomplete#custom#get().sources
 
-function! neocomplete#variables#get_filters() "{{{
-  if !exists('s:filters')
-    let s:filters = {}
-  endif
-  return s:filters
+  for key in split(a:source_name, '\s*,\s*')
+    if !has_key(custom_sources, key)
+      let custom_sources[key] = {}
+    endif
+
+    let custom_sources[key][a:option_name] = a:value
+  endfor
 endfunction"}}}
 
 let &cpo = s:save_cpo

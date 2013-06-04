@@ -699,7 +699,7 @@ function! neocomplete#init#_source(source) "{{{
   let source = extend(copy(default), a:source)
 
   " Overwritten by user custom.
-  let custom = neocomplete#variables#get_custom().sources
+  let custom = neocomplete#custom#get().sources
   let source = extend(source, get(custom, source.name,
         \ get(custom, '_', {})))
 

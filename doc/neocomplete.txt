@@ -793,8 +793,8 @@ neocomplete#initialize()			*neocomplete#initialize()*
 		User customization for neocomplete must be set before
 		initialization of neocomplete.
 
-neocomplete#custom_source({source-name}, {option-name}, {value})
-						*neocomplete#custom_source()*
+neocomplete#custom#source({source-name}, {option-name}, {value})
+						*neocomplete#custom#source()*
 		Set {source-name} source specialized {option-name}
 		to {value}. You may specify multiple sources with
 		separating "," in {source-name}.
@@ -805,7 +805,10 @@ neocomplete#custom_source({source-name}, {option-name}, {value})
 		|neocomplete-source-attributes|
 		Note: User customization for neocomplete must be set before
 		initialization of neocomplete.
-		
+
+						*neocomplete#custom_source()*
+		neocomplete#custom_source() is used for compatibility.
+
 					*neocomplete#get_context_filetype()*
 neocomplete#get_context_filetype()
 		Get current context filetype of the cursor.  This is smarter
@@ -1095,17 +1098,17 @@ filters are available. "matcher" is to filter candidates by user input.
 
 Default sources are below. But you can create original filters(cf:
 |neocomplete-create-filter|) and set them by
-|neocomplete#custom_source()|.
+|neocomplete#custom#source()|.
 >
-	call neocomplete#custom_source(
+	call neocomplete#custom#source(
 	\ 'buffer', 'converters', [])
 
 	" Change default matcher.
-	call neocomplete#custom_source('_', 'matchers',
+	call neocomplete#custom#source('_', 'matchers',
 	\ ['matcher_head'])
 
 	" Change default sorter.
-	call neocomplete#custom_source('_', 'sorters',
+	call neocomplete#custom#source('_', 'sorters',
 	\ ['sorter_length'])
 <
 					*neocomplete-filter-matcher_default*
@@ -1411,7 +1414,7 @@ FAQ						*neocomplete-faq*
 Q: My customization for neocomplete is invalid. Why?
 
 A: User customization for neocomplete must be set before initialization of
-neocomplete. For example: |neocomplete#custom_source()|
+neocomplete. For example: |neocomplete#custom#source()|
 
 Q: I want to use head match instead of default fuzzy match.
 
@@ -1421,7 +1424,7 @@ A:
 <
 or
 >
-	call neocomplete#custom_source('_', 'matchers',
+	call neocomplete#custom#source('_', 'matchers',
 	\ ['matcher_head'])
 <
 Q: I want to sort candidates by different way.
@@ -1429,7 +1432,7 @@ Q: I want to sort candidates by different way.
 A:
 >
 >
-	call neocomplete#custom_source('_', 'sorters',
+	call neocomplete#custom#source('_', 'sorters',
 	\ ['sorter_length'])
 <
 Q: Is there a way to control the colors used for popup menu using highlight
@@ -1747,7 +1750,7 @@ Q: I want to disable sources in certain filetype.
 A:
 >
 	" Disable dictionary source in python filetype.
-	call neocomplete#custom_source('dictionary',
+	call neocomplete#custom#source('dictionary',
 	\ 'disabled_filetypes', {'python' : 1})
 <
 
@@ -1759,6 +1762,7 @@ CHANGELOG					*neocomplete-changelog*
 
 2013-06-04
 - Improved initialization.
+- Added neocomplete#custom#source().
 
 2013-06-03
 - Fixed syntax source.

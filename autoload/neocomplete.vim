@@ -131,15 +131,7 @@ function! neocomplete#available_sources() "{{{
   return copy(neocomplete#variables#get_sources())
 endfunction"}}}
 function! neocomplete#custom_source(source_name, option_name, value) "{{{
-  let custom_sources = neocomplete#variables#get_custom().sources
-
-  for key in split(a:source_name, '\s*,\s*')
-    if !has_key(custom_sources, key)
-      let custom_sources[key] = {}
-    endif
-
-    let custom_sources[key][a:option_name] = a:value
-  endfor
+  return neocomplete#custom#source(a:source_name, a:option_name, a:value)
 endfunction"}}}
 
 function! neocomplete#is_enabled_source(source_name) "{{{
