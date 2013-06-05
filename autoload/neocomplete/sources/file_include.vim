@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -28,14 +28,10 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Global options definition. "{{{
-let g:neocomplete#sources#include#patterns =
-      \ get(g:, 'neocomplete#sources#include#patterns', {})
-let g:neocomplete#sources#include#exprs =
-      \ get(g:, 'neocomplete#sources#include#exprs', {})
-let g:neocomplete#sources#include#paths =
-      \ get(g:, 'neocomplete#sources#include#paths', {})
-let g:neocomplete#sources#include#suffixes =
-      \ get(g:, 'neocomplete#sources#include#suffixes', {})
+let g:neocomplete#sources#file_include#exprs =
+        \ get(g:, 'neocomplete#sources#file_include#exprs', {})
+let g:neocomplete#sources#file_include#exts =
+      \ get(g:, 'neocomplete#sources#file_include#exts', {})
 "}}}
 
 let s:source = {
@@ -56,10 +52,9 @@ endfunction"}}}
 
 function! s:source.hooks.on_init(context) "{{{
   " Initialize.
+  call neocomplete#sources#include#initialize()
 
   " Initialize filename include expr. "{{{
-  let g:neocomplete#sources#file_include#exprs =
-        \ get(g:, 'neocomplete#sources#file_include#exprs', {})
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#file_include#exprs',
         \ 'perl',
@@ -71,8 +66,6 @@ function! s:source.hooks.on_init(context) "{{{
   "}}}
 
   " Initialize filename include extensions. "{{{
-  let g:neocomplete#sources#file_include#exts =
-        \ get(g:, 'neocomplete#sources#file_include#exts', {})
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#file_include#exts',
         \ 'c', ['h'])

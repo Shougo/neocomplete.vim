@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -52,7 +52,13 @@ function! neocomplete#sources#include#define() "{{{
 endfunction"}}}
 
 function! s:source.hooks.on_init(context) "{{{
-  call s:initialize_variables()
+  let s:include_info = {}
+  let s:include_cache = {}
+  let s:cache_accessed_time = {}
+  let s:async_include_cache = {}
+  let s:cached_pattern = {}
+
+  call neocomplete#sources#include#initialize()
 
   augroup neocomplete
     autocmd BufWritePost * call s:check_buffer('', 0)
@@ -102,6 +108,36 @@ function! s:source.gather_candidates(context) "{{{
   endfor
 
   return keyword_list
+endfunction"}}}
+
+function! neocomplete#sources#include#initialize() "{{{
+  " Initialize include pattern. "{{{
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#include#patterns',
+        \ 'java,haskell', '^\s*\<import')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#include#patterns',
+        \ 'c,cpp', '^\s*#\s*include')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#include#patterns',
+        \ 'cs', '^\s*\<using')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#include#patterns',
+        \ 'ruby', '^\s*\<\%(load\|require\|require_relative\)\>')
+  "}}}
+  " Initialize include suffixes. "{{{
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#include#suffixes',
+        \ 'haskell', '.hs')
+  "}}}
+  " Initialize include functions. "{{{
+  " call neocomplete#util#set_default_dictionary(
+  "       \ 'g:neocomplete#sources#include#functions', 'vim',
+  "       \ 'neocomplete#sources#include#analyze_vim_include_files')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#include#functions', 'ruby',
+        \ 'neocomplete#sources#include#analyze_ruby_include_files')
+  "}}}
 endfunction"}}}
 
 function! neocomplete#sources#include#get_include_files(bufnumber) "{{{
@@ -432,39 +468,6 @@ function! neocomplete#sources#include#analyze_ruby_include_files(lines, path) "{
   endfor
 
   return include_files
-endfunction"}}}
-
-function! s:initialize_variables() "{{{
-  let s:include_info = {}
-  let s:include_cache = {}
-  let s:cache_accessed_time = {}
-  let s:async_include_cache = {}
-  let s:cached_pattern = {}
-
-  " Initialize include pattern. "{{{
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#patterns',
-        \ 'java,haskell', '^\s*\<import')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#patterns',
-        \ 'cs', '^\s*\<using')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#patterns',
-        \ 'ruby', '^\s*\<\%(load\|require\|require_relative\)\>')
-  "}}}
-  " Initialize include suffixes. "{{{
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#suffixes',
-        \ 'haskell', '.hs')
-  "}}}
-  " Initialize include functions. "{{{
-  " call neocomplete#util#set_default_dictionary(
-  "       \ 'g:neocomplete#sources#include#functions', 'vim',
-  "       \ 'neocomplete#sources#include#analyze_vim_include_files')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#functions', 'ruby',
-        \ 'neocomplete#sources#include#analyze_ruby_include_files')
-  "}}}
 endfunction"}}}
 
 if !exists('s:include_info')
