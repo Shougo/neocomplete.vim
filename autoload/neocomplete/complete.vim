@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -78,9 +78,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
     let dict = { 'words' : neocomplete.candidates }
 
     if len(a:base) < g:neocomplete#auto_completion_start_length
-          \   || !empty(filter(copy(neocomplete.candidates),
-          \          "get(v:val, 'neocomplete__refresh', 0)"))
-      " Note: If Vim is less than 7.3.561, it have broken register "." problem.
+          \ || g:neocomplete#enable_refresh_always
       let dict.refresh = 'always'
     endif
 
