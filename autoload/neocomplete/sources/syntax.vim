@@ -41,8 +41,7 @@ let s:source = {
       \}
 
 function! s:source.hooks.on_init(context) "{{{
-  autocmd neocomplete FileType,Syntax *
-        \ call s:make_cache()
+  autocmd neocomplete Syntax * call s:make_cache()
 
   " Create cache directory.
   call neocomplete#cache#make_directory('syntax_cache')
@@ -56,10 +55,6 @@ function! s:source.hooks.on_final(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  if neocomplete#within_comment()
-    return []
-  endif
-
   let list = []
 
   let filetype = neocomplete#get_context_filetype()
