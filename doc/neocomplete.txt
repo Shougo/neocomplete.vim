@@ -1141,6 +1141,9 @@ sorter_rank	Matched rank order sorter.  The higher the matched word is
 					*neocomplete-filter-sorter_length*
 sorter_length	Candidates length order sorter.
 
+					*neocomplete-filter-sorter_word*
+sorter_word	Candidates word order sorter.
+
 					*neocomplete-filter-converter_abbr*
 converter_abbr
 		The converter which abbreviates a candidate's abbr.
@@ -1782,6 +1785,7 @@ CHANGELOG					*neocomplete-changelog*
 - Improved for include sources.
 - Improved neocomplete#within_comment().
 - Fixed syntax source.
+- Added sorter_word.
 
 2013-06-04
 - Improved initialization.
