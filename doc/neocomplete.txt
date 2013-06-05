@@ -1787,6 +1787,7 @@ CHANGELOG					*neocomplete-changelog*
 - Fixed syntax source.
 - Added sorter_word.
 - Improved file and file/include source behavior.
+- Fixed converter_delimiter.
 
 2013-06-04
 - Improved initialization.

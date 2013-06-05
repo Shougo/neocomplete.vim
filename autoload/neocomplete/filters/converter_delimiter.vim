@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_delimiter.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -42,8 +42,7 @@ function! s:converter.filter(context) "{{{
 
   let next_keyword = neocomplete#filters#
         \converter_remove_next_keyword#get_next_keyword(a:context.source_name)
-  for delimiter in ['/'] +
-        \ get(g:neocomplete#delimiter_patterns, filetype, [])
+  for delimiter in get(g:neocomplete#delimiter_patterns, filetype, [])
     " Count match.
     let delim_cnt = 0
     let matchend = matchend(a:context.complete_str, delimiter)
