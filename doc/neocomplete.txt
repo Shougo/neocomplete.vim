@@ -1798,6 +1798,7 @@ CHANGELOG					*neocomplete-changelog*
 - Improved file and file/include source behavior.
 - Fixed converter_delimiter.
 - Added g:neocomplete#enable_refresh_always option.
+- Fixed for longest completeopt.
 
 2013-06-04
 - Improved initialization.

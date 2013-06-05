@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -182,7 +182,8 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   call s:save_foldinfo()
 
   " Set options.
-  set completeopt-=menu,longest
+  set completeopt-=menu
+  set completeopt-=longest
   set completeopt+=menuone
 
   if neocomplete#util#is_complete_select()
