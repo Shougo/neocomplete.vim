@@ -39,8 +39,6 @@ let s:source = {
       \ 'kind' : 'manual',
       \ 'mark' : '[FI]',
       \ 'rank' : 10,
-      \ 'min_pattern_length' :
-      \        g:neocomplete#auto_completion_start_length,
       \ 'hooks' : {},
       \ 'sorters' : 'sorter_filename',
       \ 'is_volatile' : 1,
@@ -122,22 +120,30 @@ function! s:source.get_complete_position(context) "{{{
     let complete_pos = len(a:context.input)
   endif
 
+  if complete_str =~ '/'
+    let complete_pos += strridx(complete_str, '/') + 1
+  endif
+
   return complete_pos
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  return s:get_include_files(a:context.complete_str)
+  let pattern = neocomplete#get_keyword_pattern_end('filename')
+  let [complete_pos, complete_str] =
+        \ neocomplete#match_word(a:context.input, pattern)
+  return s:get_include_files(complete_str)
 endfunction"}}}
 
 function! s:get_include_files(complete_str) "{{{
   let filetype = neocomplete#get_context_filetype()
 
   let path = neocomplete#util#substitute_path_separator(
-        \ get(g:neocomplete#sources#include#paths, filetype, &l:path))
+        \ get(g:neocomplete#sources#include#paths, filetype,
+        \   getbufvar('%', '&path')))
   let pattern = get(g:neocomplete#sources#include#patterns,
-        \ filetype, &l:include)
+        \ filetype, getbufvar('%', '&include'))
   let expr = get(g:neocomplete#sources#include#exprs,
-        \ filetype, &l:includeexpr)
+        \ filetype, getbufvar('%', '&includeexpr'))
   let reverse_expr = get(g:neocomplete#sources#file_include#exprs,
         \ filetype, '')
   let exts = get(g:neocomplete#sources#file_include#exts,
@@ -180,6 +186,14 @@ function! s:get_include_files(complete_str) "{{{
             \ 'action__is_directory' : isdirectory(word)
             \ }
 
+      if reverse_expr != ''
+        " Convert filename.
+        let dict.word = eval(substitute(reverse_expr,
+              \ 'v:fname', string(dict.word), 'g'))
+      endif
+
+      let dict.word = fnamemodify(word, ':t')
+
       let abbr = dict.word
       if dict.action__is_directory
         let abbr .= '/'
@@ -193,16 +207,8 @@ function! s:get_include_files(complete_str) "{{{
       endif
       let dict.abbr = abbr
 
-      if reverse_expr != ''
-        " Convert filename.
-        let dict.word = eval(substitute(reverse_expr,
-              \ 'v:fname', string(dict.word), 'g'))
-        let dict.abbr = eval(substitute(reverse_expr,
-              \ 'v:fname', string(dict.abbr), 'g'))
-      else
-        " Escape word.
-        let dict.word = escape(dict.word, ' ;*?[]"={}''')
-      endif
+      " Escape word.
+      let dict.word = escape(dict.word, ' ;*?[]"={}''')
 
       call add(candidates, dict)
     endfor

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,8 +32,6 @@ let s:source = {
       \ 'kind' : 'manual',
       \ 'mark' : '[F]',
       \ 'rank' : 3,
-      \ 'min_pattern_length' :
-      \        g:neocomplete#auto_completion_start_length,
       \ 'sorters' : 'sorter_filename',
       \ 'is_volatile' : 1,
       \}
@@ -61,11 +59,18 @@ function! s:source.get_complete_position(context) "{{{
     let complete_pos = len(a:context.input)
   endif
 
+  if complete_str =~ '/'
+    let complete_pos += strridx(complete_str, '/') + 1
+  endif
+
   return complete_pos
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  return s:get_glob_files(a:context.complete_str, '')
+  let pattern = neocomplete#get_keyword_pattern_end('filename')
+  let [complete_pos, complete_str] =
+        \ neocomplete#match_word(a:context.input, pattern)
+  return s:get_glob_files(complete_str, '')
 endfunction"}}}
 
 let s:cached_files = {}
@@ -96,58 +101,24 @@ function! s:get_glob_files(complete_str, path) "{{{
     let files = split(substitute(globs, '\\', '/', 'g'), '\n')
   endif
 
-  let files = filter(files, "v:val !~ '/.$'")
-
   let files = map(
         \ files, "{
-        \    'word' : v:val,
-        \    'orig' : v:val,
+        \    'word' : fnamemodify(v:val, ':t'),
         \    'action__is_directory' : isdirectory(v:val),
         \ }")
 
-  if a:complete_str =~ '^\$\h\w*'
-    let env = matchstr(a:complete_str, '^\$\h\w*')
-    let env_ev = eval(env)
-    if neocomplete#is_windows()
-      let env_ev = substitute(env_ev, '\\', '/', 'g')
-    endif
-    let len_env = len(env_ev)
-  else
-    let len_env = 0
-  endif
-
-  let home_pattern = '^'.
-        \ neocomplete#util#substitute_path_separator(
-        \ expand('~')).'/'
   let exts = escape(substitute($PATHEXT, ';', '\\|', 'g'), '.')
 
   let candidates = []
   for dict in files
-    let dict.orig = dict.word
-
-    if len_env != 0 && dict.word[: len_env-1] == env_ev
-      let dict.word = env . dict.word[len_env :]
-    endif
-
     let abbr = dict.word
     if dict.action__is_directory && dict.word !~ '/$'
       let abbr .= '/'
       if g:neocomplete#enable_auto_delimiter
         let dict.word .= '/'
       endif
-    elseif neocomplete#is_windows()
-      if '.'.fnamemodify(dict.word, ':e') =~ exts
-        let abbr .= '*'
-      endif
-    elseif executable(dict.word)
-      let abbr .= '*'
     endif
     let dict.abbr = abbr
-
-    if a:complete_str =~ '^\~/'
-      let dict.word = substitute(dict.word, home_pattern, '\~/', '')
-      let dict.abbr = substitute(dict.abbr, home_pattern, '\~/', '')
-    endif
 
     " Escape word.
     let dict.word = escape(dict.word, ' ;*?[]"={}''')
