@@ -492,12 +492,12 @@ g:neocomplete#sources			*g:neocomplete#sources*
 		let g:neocomplete#sources._ = ['buffer']
 		let g:neocomplete#sources.cpp = ['buffer', 'include']
 <
-b:neocomplete#sources			*b:neocomplete#sources*
+b:neocomplete_sources			*b:neocomplete_sources*
 		It is a list to decide use source names in buffer local.
 >
 		" Examples:
 		" In cmdwin, only use vim source.
-		autocmd CmdwinEnter * let b:neocomplete#sources = ['vim']
+		autocmd CmdwinEnter * let b:neocomplete_sources = ['vim']
 <
 				*g:neocomplete#force_overwrite_completefunc*
 g:neocomplete#force_overwrite_completefunc

@@ -251,8 +251,8 @@ endfunction"}}}
 function! neocomplete#helper#get_sources_list(...) "{{{
   let filetype = neocomplete#get_context_filetype()
 
-  let source_names = exists('b:neocomplete#sources') ?
-        \ b:neocomplete#sources :
+  let source_names = exists('b:neocomplete_sources') ?
+        \ b:neocomplete_sources :
         \ get(a:000, 0,
         \   get(g:neocomplete#sources, filetype,
         \     get(g:neocomplete#sources, '_', ['_'])))
