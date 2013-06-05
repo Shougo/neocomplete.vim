@@ -142,12 +142,12 @@ function! s:make_cache_from_syntax(filetype) "{{{
     if line =~ '^\h\w\+'
       " Change syntax group name.
       let group_name = matchstr(line, '^\S\+')
-      let line = substitute(line, '^\S\s*xxx', '', '')
+      let line = substitute(line, '^\S\+\s*xxx', '', '')
     endif
 
     if line =~ 'Syntax items' || line =~ '^\s*links to' ||
           \ line =~ '^\s*nextgroup=' ||
-          \ strridx(tolower(group_name), filetype_pattern) != 0
+          \ stridx(tolower(group_name), filetype_pattern) != 0
       " Next line.
       continue
     endif
