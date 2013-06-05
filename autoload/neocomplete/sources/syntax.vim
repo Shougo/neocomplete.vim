@@ -136,7 +136,8 @@ function! s:make_cache_from_syntax(filetype) "{{{
   let group_name = ''
   let keyword_pattern = neocomplete#get_keyword_pattern(a:filetype)
 
-  let filetype_pattern = tolower(a:filetype)
+  let filetype_pattern = tolower(substitute(
+        \ a:filetype, '-', '_', 'g'))
 
   let keyword_list = []
   for line in split(syntax_list, '\n')
