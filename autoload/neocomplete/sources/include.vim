@@ -52,12 +52,7 @@ function! neocomplete#sources#include#define() "{{{
 endfunction"}}}
 
 function! s:source.hooks.on_init(context) "{{{
-  let s:include_info = {}
-  let s:include_cache = {}
-  let s:cache_accessed_time = {}
-  let s:async_include_cache = {}
-  let s:cached_pattern = {}
-
+  call s:initialize_variables()
   call neocomplete#sources#include#initialize()
 
   augroup neocomplete
@@ -468,6 +463,14 @@ function! neocomplete#sources#include#analyze_ruby_include_files(lines, path) "{
   endfor
 
   return include_files
+endfunction"}}}
+
+function! s:initialize_variables() "{{{
+  let s:include_info = {}
+  let s:include_cache = {}
+  let s:cache_accessed_time = {}
+  let s:async_include_cache = {}
+  let s:cached_pattern = {}
 endfunction"}}}
 
 if !exists('s:include_info')
