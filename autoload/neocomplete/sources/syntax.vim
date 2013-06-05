@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: syntax.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -41,7 +41,8 @@ let s:source = {
       \}
 
 function! s:source.hooks.on_init(context) "{{{
-  autocmd neocomplete Syntax * call s:make_cache()
+  autocmd neocomplete FileType,Syntax *
+        \ call s:make_cache()
 
   " Create cache directory.
   call neocomplete#cache#make_directory('syntax_cache')
@@ -83,24 +84,23 @@ function! s:make_cache() "{{{
     return
   endif
 
-  for filetype in neocomplete#get_source_filetypes(&filetype)
-    if !has_key(s:syntax_list, filetype)
-      " Check old cache.
-      let cache_name = neocomplete#cache#encode_name(
-            \ 'syntax_cache', &filetype)
-      let syntax_files = split(
-            \ globpath(&runtimepath, 'syntax/'.&filetype.'.vim'), '\n')
-      if getftime(cache_name) < 0 || (!empty(syntax_files)
-            \ && getftime(cache_name) <= getftime(syntax_files[0]))
-        if filetype ==# &filetype
-          " Make cache from syntax list.
-          let s:syntax_list[filetype] = s:make_cache_from_syntax(filetype)
-        endif
-      else
-        let s:syntax_list[filetype] =
-              \ neocomplete#cache#load_from_cache(
-              \      'syntax_cache', filetype, 1)
+  for filetype in filter(neocomplete#get_source_filetypes(&filetype),
+        \ '!has_key(s:syntax_list, v:val)')
+    " Check old cache.
+    let cache_name = neocomplete#cache#encode_name(
+          \ 'syntax_cache', &filetype)
+    let syntax_files = split(
+          \ globpath(&runtimepath, 'syntax/'.&filetype.'.vim'), '\n')
+    if getftime(cache_name) < 0 || (!empty(syntax_files)
+          \ && getftime(cache_name) <= getftime(syntax_files[0]))
+      if filetype ==# &filetype
+        " Make cache from syntax list.
+        let s:syntax_list[filetype] = s:make_cache_from_syntax(filetype)
       endif
+    else
+      let s:syntax_list[filetype] =
+            \ neocomplete#cache#load_from_cache(
+            \      'syntax_cache', filetype, 1)
     endif
   endfor
 endfunction"}}}
