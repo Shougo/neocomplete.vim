@@ -49,6 +49,7 @@ function! s:source.get_complete_position(context) "{{{
   if complete_str =~ '//' ||
         \ (neocomplete#is_auto_complete() &&
         \    (complete_str !~ '/' ||
+        \     len(complete_str) < g:neocomplete#min_keyword_length ||
         \     complete_str =~#
         \          '\\[^ ;*?[]"={}'']\|\.\.\+$\|/c\%[ygdrive/]$'))
     " Not filename pattern.
