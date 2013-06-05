@@ -235,7 +235,8 @@ function! neocomplete#exists_echodoc() "{{{
   return exists('g:loaded_echodoc') && g:loaded_echodoc
 endfunction"}}}
 function! neocomplete#within_comment() "{{{
-  return neocomplete#helper#get_syn_name(1) ==# 'Comment'
+  let neocomplete = neocomplete#get_current_neocomplete()
+  return neocomplete.syn_name ==# 'Comment'
 endfunction"}}}
 function! neocomplete#print_error(string) "{{{
   echohl Error | echomsg a:string | echohl None

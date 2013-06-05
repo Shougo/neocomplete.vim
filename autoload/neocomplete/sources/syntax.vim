@@ -55,15 +55,18 @@ function! s:source.hooks.on_final(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
+  if &filetype == ''
+    return []
+  endif
+
   let list = []
 
-  let filetype = neocomplete#get_context_filetype()
-  if !has_key(s:syntax_list, filetype)
+  if !has_key(s:syntax_list, &filetype)
     call s:make_cache()
   endif
 
   for syntax in neocomplete#get_sources_list(
-        \ s:syntax_list, filetype)
+        \ s:syntax_list, neocomplete#get_context_filetype())
     let list += syntax
   endfor
 
@@ -83,11 +86,10 @@ function! s:make_cache() "{{{
         \ '!has_key(s:syntax_list, v:val)')
     " Check old cache.
     let cache_name = neocomplete#cache#encode_name(
-          \ 'syntax_cache', &filetype)
+          \ 'syntax_cache', filetype)
     let syntax_files = split(
-          \ globpath(&runtimepath, 'syntax/'.&filetype.'.vim'), '\n')
-    if getftime(cache_name) < 0 || (!empty(syntax_files)
-          \ && getftime(cache_name) <= getftime(syntax_files[0]))
+          \ globpath(&runtimepath, 'syntax/'.filetype.'.vim'), '\n')
+    if getftime(cache_name) < 0
       if filetype ==# &filetype
         " Make cache from syntax list.
         let s:syntax_list[filetype] = s:make_cache_from_syntax(filetype)
@@ -120,6 +122,7 @@ endfunction"}}}
 
 function! s:make_cache_from_syntax(filetype) "{{{
   " Get current syntax list.
+  let syntax_list = ''
   redir => syntax_list
   silent! syntax list
   redir END
@@ -310,7 +313,7 @@ endfunction"}}}
 
 " Global options definition. "{{{
 let g:neocomplete#sources#syntax#min_keyword_length =
- \ get(g:, 'neocomplete#sources#syntax#min_keyword_length')
+ \ get(g:, 'neocomplete#sources#syntax#min_keyword_length', 4)
 "}}}
 
 let &cpo = s:save_cpo

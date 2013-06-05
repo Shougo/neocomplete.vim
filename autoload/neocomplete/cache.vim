@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -109,8 +109,11 @@ EOF
 endfunction"}}}
 
 function! neocomplete#cache#save_cache(cache_dir, filename, keyword_list) "{{{
+  " Output cache.
+  let string = substitute(substitute(
+        \ string(a:keyword_list), '^[', '{', ''), ']$', '}', '')
   call neocomplete#cache#writefile(
-        \ a:cache_dir, a:filename, [string(a:keyword_list)])
+        \ a:cache_dir, a:filename, [string])
 endfunction"}}}
 
 " Cache helper.

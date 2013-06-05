@@ -1780,6 +1780,8 @@ CHANGELOG					*neocomplete-changelog*
 
 2013-06-05
 - Improved for include sources.
+- Improved neocomplete#within_comment().
+- Fixed syntax source.
 
 2013-06-04
 - Improved initialization.

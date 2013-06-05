@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 05 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -49,6 +49,7 @@ function! neocomplete#helper#get_cur_text() "{{{
   let filetype = neocomplete#get_context_filetype()
 
   let neocomplete.cur_text = cur_text . complete_str
+  let neocomplete.syn_name = neocomplete#helper#get_syn_name(1)
 
   " Save cur_text.
   return neocomplete.cur_text
