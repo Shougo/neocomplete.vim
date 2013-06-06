@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_abbr.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 06 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -37,6 +37,10 @@ let s:converter = {
       \}
 
 function! s:converter.filter(context) "{{{
+  if g:neocomplete#max_keyword_width < 0
+    return a:context.candidates
+  endif
+
   lua << EOF
 do
   local candidates = vim.eval('a:context.candidates')
@@ -45,7 +49,7 @@ do
     local abbr = candidates[i].abbr == nil and
       candidates[i].word or candidates[i].abbr
     if string.len(abbr) > max then
-      print("foo")
+      print(abbr)
       candidates[i].abbr = abbr
       candidates[i].abbr = vim.eval("neocomplete#util#truncate_smart("..
               "a:context.candidates["..i.."].abbr, g:neocomplete#max_keyword_width," ..

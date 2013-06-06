@@ -120,11 +120,6 @@ function! neocomplete#complete#sources_manual_complete(findstart, base) "{{{
   return candidates
 endfunction"}}}
 
-function! neocomplete#complete#unite_complete(findstart, base) "{{{
-  " Dummy.
-  return a:findstart ? -1 : []
-endfunction"}}}
-
 function! neocomplete#complete#auto_complete(findstart, base) "{{{
   return neocomplete#complete#manual_complete(a:findstart, a:base)
 endfunction"}}}
