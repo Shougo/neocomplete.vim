@@ -88,8 +88,7 @@ in your .vimrc.
 						*neocomplete-RECOMMENDATION*
 
 						*neocomplete-asynchronous*
-With neocomplete Ver.6.0 or later, when you have |vimproc| installed,
-neocomplete creates caches asynchronously.
+When you have |vimproc| installed, neocomplete creates caches asynchronously.
 
 vimproc is distributed at: http://github.com/Shougo/vimproc
 
@@ -1090,8 +1089,6 @@ This section, introduce non default neocomplete sources.
 
 neosnippet				*neocomplete-sources-neosnippet*
 		This source is for snippets completion.
-		Note: This source is not in default sources after
-		neocomplete ver.7.0.
 		https://github.com/Shougo/neosnippet
 
 neco-ghc				*neocomplete-sources-neco-ghc*
