@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Jun 2013.
+" Last Modified: 06 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -293,10 +293,8 @@ function! neocomplete#helper#clear_result() "{{{
   let neocomplete.complete_pos = -1
 
   " Restore completeopt.
-  if neocomplete#util#is_complete_select() &&
-        \ get(neocomplete, 'completeopt', &completeopt)
+  if neocomplete.completeopt !=# &completeopt
     " Restore completeopt.
-          \  !=# &completeopt
     let &completeopt = neocomplete.completeopt
   endif
 

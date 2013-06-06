@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Jun 2013.
+" Last Modified: 06 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -128,7 +128,6 @@ function! neocomplete#init#_others() "{{{
 
   " Save options.
   let s:completefunc_save = &completefunc
-  let s:completeopt_save = &completeopt
 
   " Set completefunc.
   let &completefunc = 'neocomplete#complete#manual_complete'
@@ -628,6 +627,7 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'start_time' : reltime(),
         \ 'linenr' : 0,
         \ 'syn_name' : '',
+        \ 'completeopt' : &completeopt,
         \}
 endfunction"}}}
 
