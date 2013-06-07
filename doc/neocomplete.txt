@@ -85,6 +85,12 @@ In Linux: You must make Vim and enable |if_lua| manually.
 let g:neocomplete#enable_at_startup = 1
 in your .vimrc.
 
+						*neocomplete-migration*
+
+Migration guide from neocomplcache is available(incomplete).
+https://github.com/Shougo/neocomplete.vim/wiki/neocomplete-migration-guide
+
+
 						*neocomplete-RECOMMENDATION*
 
 						*neocomplete-asynchronous*
