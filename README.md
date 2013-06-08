@@ -35,6 +35,7 @@ Screen shots
 Original filename completion.
 -----------
 ![Original filename completion.](https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png)
+![Include filename completion.](https://f.cloud.github.com/assets/214488/623151/284ad86e-cf5b-11e2-828e-257d31bf0572.png)
 
 Omni completion.
 ----------------
@@ -47,6 +48,7 @@ Completion with vimshell(http://github.com/Shougo/vimshell).
 Vim completion
 ------------------------------------------------------------
 ![Vim completion.](https://f.cloud.github.com/assets/41495/622457/fe90ad5e-cf42-11e2-8e03-8f189b5e26e5.png)
+![Vim completion with animation.](https://f.cloud.github.com/assets/214488/623496/94ed19a2-cf68-11e2-8d33-3aad8a39d7c1.gif)
 
 Setting examples
 

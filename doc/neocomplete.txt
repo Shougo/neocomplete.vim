@@ -41,6 +41,7 @@ Create source		|neocomplete-create-source|
 Create filter		|neocomplete-create-filter|
   Filter attributes       |neocomplete-filter-attributes|
 FILTERS			|neocomplete-filters|
+External sources	|neocomplete-external-sources|
 FAQ			|neocomplete-faq|
 Changelog		|neocomplete-changelog|
 
@@ -1420,6 +1421,25 @@ neocomplete
 		imap <C-k>  <Plug>(neocomplete_start_unite_complete)
 		imap <C-q>  <Plug>(neocomplete_start_unite_quick_match)
 <
+==============================================================================
+EXTERNAL SOURCES				*neocomplete-external-sources*
+
+neosnippet source :
+
+https://github.com/Shougo/neosnippet.vim
+
+vimshell source :
+
+https://github.com/Shougo/vimshell.vim
+
+look source :
+
+https://github.com/ujihisa/neco-look
+
+ghc source :
+
+https://github.com/ujihisa/neco-ghc
+
 ==============================================================================
 FAQ						*neocomplete-faq*
 
