@@ -1440,6 +1440,10 @@ ghc source :
 
 https://github.com/ujihisa/neco-ghc
 
+calc source :
+
+https://github.com/hrsh7th/vim-neco-calc
+
 ==============================================================================
 FAQ						*neocomplete-faq*
 
