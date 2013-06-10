@@ -312,6 +312,7 @@ g:neocomplete#enable_fuzzy_completion
 		neocomplete takes an ambiguous searching as an end of the
 		words in it.  For example, neocomplete comes to match it with
 		"public_html" or "PublicHtml" when you input it with "puh".
+		Note: The first letter must be matched.
 
 		Default value is 1.
 
@@ -1819,6 +1820,7 @@ CHANGELOG					*neocomplete-changelog*
 
 2013-06-10
 - Improved matcher behavior.
+- Improved fuzzy match behavior.
 
 2013-06-06
 - Improved for completeopt.

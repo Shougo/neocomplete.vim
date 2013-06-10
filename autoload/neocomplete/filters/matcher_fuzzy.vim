@@ -40,7 +40,7 @@ function! s:matcher.filter(context) "{{{
   if len(a:context.complete_str) > 10
     " Mix fuzzy mode.
     let fuzzy_len = len(a:context.complete_str)/2
-    let pattern = (fuzzy_len > 15  ? '^' : '')
+    let pattern =
           \ neocomplete#filters#escape(
           \     a:context.complete_str[: fuzzy_len-1])  .
           \ neocomplete#filters#fuzzy_escape(
@@ -49,6 +49,9 @@ function! s:matcher.filter(context) "{{{
     let pattern = neocomplete#filters#fuzzy_escape(
           \ a:context.complete_str)
   endif
+
+  " The first letter must be matched.
+  let pattern = '^' . pattern
 
   lua << EOF
 do
