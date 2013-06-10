@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: matcher_head.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 10 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,16 +39,19 @@ let s:matcher = {
 function! s:matcher.filter(context) "{{{
   let pattern = '^' . neocomplete#filters#escape(
         \ a:context.complete_str)
+
   lua << EOF
 do
-  local input = vim.eval('pattern')
+  local pattern = vim.eval('pattern')
+  local input = vim.eval('a:context.complete_str')
   local candidates = vim.eval('a:context.candidates')
+  local len = string.len(input)
   if vim.eval('&ignorecase') ~= 0 then
-    input = string.lower(input)
+    pattern = string.lower(pattern)
     for i = #candidates-1, 0, -1 do
       local word = vim.type(candidates[i]) == 'dict' and
       string.lower(candidates[i].word) or string.lower(candidates[i])
-      if (string.find(word, input, 1) == nil) or word == input then
+      if string.len(word) <= len or string.find(word, pattern, 1) == nil then
         candidates[i] = nil
       end
     end
@@ -56,7 +59,7 @@ do
     for i = #candidates-1, 0, -1 do
       local word = vim.type(candidates[i]) == 'dict' and
       candidates[i].word or candidates[i]
-      if (string.find(word, input, 1) == nil) or word == input then
+      if string.len(word) <= len or string.find(word, pattern, 1) == nil then
         candidates[i] = nil
       end
     end
