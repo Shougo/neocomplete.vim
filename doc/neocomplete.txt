@@ -1818,6 +1818,9 @@ Note: This feature is heavy.
 ==============================================================================
 CHANGELOG					*neocomplete-changelog*
 
+2013-06-11
+- Fixed file source.
+
 2013-06-10
 - Improved matcher behavior.
 - Improved fuzzy match behavior.

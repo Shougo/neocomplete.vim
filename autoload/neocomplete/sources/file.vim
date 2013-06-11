@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Jun 2013.
+" Last Modified: 11 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -48,8 +48,8 @@ function! s:source.get_complete_position(context) "{{{
         \ neocomplete#match_word(a:context.input, pattern)
   if complete_str =~ '//' ||
         \ (neocomplete#is_auto_complete() &&
-        \    (complete_str !~ '/' ||
-        \     len(complete_str) < g:neocomplete#min_keyword_length ||
+        \    (complete_str !~ '/' || len(complete_str) <
+        \          g:neocomplete#auto_completion_start_length ||
         \     complete_str =~#
         \          '\\[^ ;*?[]"={}'']\|\.\.\+$\|/c\%[ygdrive/]$'))
     " Not filename pattern.
