@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: member.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 11 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -75,7 +75,7 @@ function! s:source.hooks.on_init(context) "{{{
   " Initialize member patterns. "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#member#input_patterns',
-        \'default', '\h\w*\%(()\|\[\h\w*\]\)\?')
+        \ '_', '\h\w*\%(()\|\[\h\w*\]\)\?')
   "}}}
 
   " Initialize script variables. "{{{
