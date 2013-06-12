@@ -78,7 +78,13 @@ http://files.kaoriya.net/goto/vim73w64
 In Mac(if_lua enabled MacVim):
 https://github.com/zhaocai/macvim
 
-In Linux: You must make Vim and enable |if_lua| manually.
+In MacVim with homebrew:
+>
+	brew install macvim --with-cscope --with-lua --override-system-vim
+<
+
+In Linux: You should make Vim and enable |if_lua| manually. Distributed
+package is almost old.
 
 1: Extract the file and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
