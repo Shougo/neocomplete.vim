@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Jun 2013.
+" Last Modified: 13 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -572,7 +572,7 @@ function! neocomplete#init#_variables() "{{{
   " Initialize text mode filetypes. "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#text_mode_filetypes',
-        \ 'hybrid,text,help,tex,gitcommit,vcs-commit', 1)
+        \ 'hybrid,text,help,tex,gitcommit,vcs-commit,markdown', 1)
   "}}}
 
   " Initialize tags filter patterns. "{{{
