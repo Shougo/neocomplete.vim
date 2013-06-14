@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Jun 2013.
+" Last Modified: 14 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -342,7 +342,7 @@ function! s:get_buffer_include_files(bufnumber) "{{{
     let &l:suffixesadd = suffixes
   endif
 
-  return include_files
+  return neocomplete#util#uniq(include_files)
 endfunction"}}}
 function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "{{{
   let include_files = []
