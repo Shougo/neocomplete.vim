@@ -12,6 +12,22 @@ features than the Vim's standard completion feature.
 Installation
 ============
 
+** To use neocomplete, you must use Vim 7.3.885 or above with if\_lua feature. **
+
+In Windows:
+http://files.kaoriya.net/goto/vim73w32
+http://files.kaoriya.net/goto/vim73w64
+
+In Mac(if\_lua enabled MacVim):
+https://github.com/zhaocai/macvim
+
+In MacVim with homebrew:
+	brew install macvim --with-cscope --with-lua --override-system-vim
+
+
+In Linux: You should make Vim and enable if\_lua manually. Distributed
+package is almost old.
+
 * Extract the file and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
 * Execute `|:NeoCompleteEnable|` command or
