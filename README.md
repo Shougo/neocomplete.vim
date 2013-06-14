@@ -12,18 +12,19 @@ features than the Vim's standard completion feature.
 Installation
 ============
 
-To use neocomplete, you must use Vim 7.3.885 or above with if\_lua feature
---------------------------------------------------------------------------
+To use neocomplete, you must use Vim 7.3.885 or above with if\_lua feature!
+---------------------------------------------------------------------------
 
 In Windows:
-http://files.kaoriya.net/goto/vim73w32
-http://files.kaoriya.net/goto/vim73w64
 
-In Mac(if\_lua enabled MacVim):
-https://github.com/zhaocai/macvim
+[32bit](http://files.kaoriya.net/goto/vim73w32)
+[64bit](http://files.kaoriya.net/goto/vim73w64)
+
+In Mac:
+[if\_lua enabled MacVim](https://github.com/zhaocai/macvim)
 
 In MacVim with homebrew:
-	brew install macvim --with-cscope --with-lua --override-system-vim
+`brew install macvim --with-cscope --with-lua --override-system-vim`
 
 
 In Linux: You should make Vim and enable if\_lua manually. Distributed
@@ -38,7 +39,7 @@ in your `.vimrc`. Not in `.gvimrc`(`_gvimrc`)!
 Caution
 -------
 
-Snippets feature(snippets\_complete source) was split.
+Snippets feature was split.
 If you used it, please install neosnippet source manually.
 
 https://github.com/Shougo/neosnippet
