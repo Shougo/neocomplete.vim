@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jun 2013.
+" Last Modified: 15 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -41,7 +41,6 @@ let s:source = {
       \ 'rank' : 10,
       \ 'hooks' : {},
       \ 'sorters' : 'sorter_filename',
-      \ 'is_volatile' : 1,
       \}
 
 function! neocomplete#sources#file_include#define() "{{{
