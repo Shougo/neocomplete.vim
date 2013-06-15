@@ -80,6 +80,7 @@ function! s:get_glob_files(complete_str, path) "{{{
 
   let complete_str = neocomplete#util#substitute_path_separator(
         \ substitute(a:complete_str, '\\\(.\)', '\1', 'g'))
+  let complete_str = substitute(complete_str, '[^/]\+$', '', '')
 
   let glob = (complete_str !~ '\*$')?
         \ complete_str . '*' : complete_str

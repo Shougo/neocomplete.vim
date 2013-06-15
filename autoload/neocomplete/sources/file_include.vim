@@ -130,6 +130,7 @@ function! s:source.gather_candidates(context) "{{{
   let pattern = neocomplete#get_keyword_pattern_end('filename')
   let [complete_pos, complete_str] =
         \ neocomplete#match_word(a:context.input, pattern)
+  echomsg complete_str
   return s:get_include_files(complete_str)
 endfunction"}}}
 
@@ -161,6 +162,7 @@ function! s:get_include_files(complete_str) "{{{
           \ substitute(eval(substitute(expr,
           \ 'v:fname', string(complete_str), 'g')), '\.\w*$', '', '')
   endif
+  let complete_str = substitute(complete_str, '[^/]\+$', '', '')
 
   " Path search.
   let glob = (complete_str !~ '\*$')?
