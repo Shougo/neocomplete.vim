@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Jun 2013.
+" Last Modified: 20 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -37,7 +37,7 @@ let s:source = {
 
 function! s:source.get_complete_position(context) "{{{
   let filetype = neocomplete#get_context_filetype()
-  if filetype ==# 'vimshell' || filetype ==# 'unite'
+  if filetype ==# 'vimshell' || filetype ==# 'unite' || filetype ==# 'int-ssh'
     return -1
   endif
 
