@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 16 Jun 2013.
+" Last Modified: 21 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -126,12 +126,6 @@ function! neocomplete#init#_others() "{{{
 
   call neocomplete#commands#_initialize()
 
-  " Save options.
-  let s:completefunc_save = &completefunc
-
-  " Set completefunc.
-  let &completefunc = 'neocomplete#complete#manual_complete'
-
   " For auto complete keymappings.
   call neocomplete#mappings#define_default_mappings()
 
@@ -144,6 +138,9 @@ function! neocomplete#init#_others() "{{{
     call neocomplete#print_error(
           \ 'Detected set paste! Disabled neocomplete.')
   endif
+
+  " Set completefunc.
+  let &completefunc = 'neocomplete#complete#manual_complete'
 
   command! -nargs=0 -bar NeoCompleteDisable
         \ call neocomplete#init#disable()
