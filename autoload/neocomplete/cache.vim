@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Jun 2013.
+" Last Modified: 22 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -80,10 +80,6 @@ function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, 
   for cache in filter(copy(cache_list), 'filereadable(v:val.cachename)')
     let loaded_keywords = neocomplete#cache#load_from_cache(
               \ a:cache_dir, cache.filename, a:is_string)
-    if type(a:keywords) == type([])
-      let a:keywords = loaded_keywords
-      break
-    endif
 
   lua << EOF
 do

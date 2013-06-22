@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: async_cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 May 2013.
+" Last Modified: 22 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -46,8 +46,8 @@ function! s:main(argv) "{{{
 
   " For neocomplete.
   " Output cache.
-  let string = substitute(substitute(
-        \ string(keyword_list), '^[', '{', ''), ']$', '}', '')
+  let string = escape(substitute(substitute(
+        \ string(keyword_list), '^[', '{', ''), ']$', '}', ''), '\\')
   call writefile([string], outputname)
 endfunction"}}}
 

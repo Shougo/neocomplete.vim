@@ -941,7 +941,7 @@ EXAMPLES					*neocomplete-examples*
 	    \ 'default' : '',
 	    \ 'vimshell' : $HOME.'/.vimshell_hist',
 	    \ 'scheme' : $HOME.'/.gosh_completions'
-	        \ }
+	    \ }
 
 	" Define keyword.
 	if !exists('g:neocomplete#keyword_patterns')
