@@ -37,7 +37,9 @@ function! neocomplete#cache#load_from_cache(cache_dir, filename, ...) "{{{
     " Note: For neocomplete.
     let path = neocomplete#cache#encode_name(a:cache_dir, a:filename)
     let list = []
-    lua << EOF
+
+    if is_string
+      lua << EOF
 do
   local ret = vim.eval('list')
   local list = {}
@@ -50,7 +52,12 @@ do
   end
 end
 EOF
-"     echomsg string(list)
+    else
+      let list = eval(get(neocomplete#cache#readfile(
+            \ a:cache_dir, a:filename), 0, '[]'))
+    endif
+
+    "echomsg string(list)
     if !empty(list) && is_string && type(list[0]) != type('')
       " Type check.
       throw 'Type error'
@@ -70,7 +77,30 @@ EOF
 endfunction"}}}
 
 " New cache loader.
-function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, keywords, is_string) "{{{
+function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, keyword_cache, is_string) "{{{
+  if !has_key(a:async_cache_dictionary, a:key)
+    return
+  endif
+
+  let cache_list = a:async_cache_dictionary[a:key]
+
+  for cache in filter(copy(cache_list), 'filereadable(v:val.cachename)')
+    let a:keyword_cache[a:key] = neocomplete#cache#load_from_cache(
+              \ a:cache_dir, cache.filename, a:is_string)
+    break
+  endfor
+
+  call filter(cache_list, '!filereadable(v:val.cachename)')
+
+  if empty(cache_list)
+    " Delete from dictionary.
+    call remove(a:async_cache_dictionary, a:key)
+    return
+  endif
+endfunction"}}}
+
+" For buffer source cache loader.
+function! neocomplete#cache#check_cache_dictionary(cache_dir, key, async_cache_dictionary, keywords, is_string) "{{{
   if !has_key(a:async_cache_dictionary, a:key)
     return
   endif

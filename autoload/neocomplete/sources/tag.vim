@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: tag.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 22 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -36,6 +36,7 @@ endif
 let s:source = {
       \ 'name' : 'tag',
       \ 'kind' : 'keyword',
+      \ 'mark' : '[T]',
       \ 'hooks' : {},
       \}
 
@@ -81,7 +82,7 @@ function! s:initialize_tags(filename) "{{{
   return {
         \ 'filename' : a:filename,
         \ 'cachename' : neocomplete#cache#async_load_from_tags(
-        \              'tags_cache', a:filename, ft, 'T', 0)
+        \              'tags_cache', a:filename, ft, s:source.mark, 0)
         \ }
 endfunction"}}}
 function! neocomplete#sources#tag#make_cache(force) "{{{

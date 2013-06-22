@@ -74,16 +74,14 @@ function! s:source.gather_candidates(context) "{{{
         \ 'text' : neocomplete#get_context_filetype()
   if !has_key(s:dictionary_cache, filetype)
     call s:make_cache()
-    let s:dictionary_cache[filetype] = {}
   endif
 
   for ft in neocomplete#get_source_filetypes(filetype)
-    let dictionary_cache = s:dictionary_cache[filetype]
     call neocomplete#cache#check_cache(
           \ 'dictionary_cache', ft,
-          \ s:async_dictionary_list, dictionary_cache, 1)
+          \ s:async_dictionary_list, s:dictionary_cache, 1)
 
-    let list += keys(dictionary_cache)
+    let list += get(s:dictionary_cache, ft, [])
   endfor
 
   return list
@@ -131,7 +129,6 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
   endif
 
   let s:async_dictionary_list[filetype] = []
-  let s:dictionary_cache[filetype] = {}
 
   let pattern = get(g:neocomplete#sources#dictionary#keyword_patterns,
         \ filetype, neocomplete#get_keyword_pattern(filetype))

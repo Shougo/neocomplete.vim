@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 22 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -90,7 +90,7 @@ function! s:source.gather_candidates(context) "{{{
 
   let keyword_list = []
   for [key, source] in s:get_sources_list()
-    call neocomplete#cache#check_cache('buffer_cache',
+    call neocomplete#cache#check_cache_dictionary('buffer_cache',
           \ source.path, s:async_dictionary_list, source.keyword_cache, 1)
 
     let keyword_list += keys(source.keyword_cache)
@@ -268,7 +268,7 @@ function! s:check_source() "{{{
 
     if has_key(s:buffer_sources, bufnumber)
       let source = s:buffer_sources[bufnumber]
-      call neocomplete#cache#check_cache('buffer_cache',
+      call neocomplete#cache#check_cache_dictionary('buffer_cache',
             \ source.path, s:async_dictionary_list, source.keyword_cache, 1)
     endif
   endfor

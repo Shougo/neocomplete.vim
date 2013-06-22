@@ -35,9 +35,12 @@ function! s:main(argv) "{{{
   if funcname ==# 'load_from_file'
     let keyword_list = s:load_from_file(
           \ filename, pattern_file_name, mark, minlen, fileencoding, 1)
+
+    let string = '{' . escape(string(keyword_list)[1 : -2], '\\') . '}'
   else
     let keyword_list = s:load_from_tags(
           \ filename, pattern_file_name, mark, minlen, fileencoding)
+    let string = string(keyword_list)
   endif
 
   if empty(keyword_list)
@@ -46,8 +49,6 @@ function! s:main(argv) "{{{
 
   " For neocomplete.
   " Output cache.
-  let string = escape(substitute(substitute(
-        \ string(keyword_list), '^[', '{', ''), ']$', '}', ''), '\\')
   call writefile([string], outputname)
 endfunction"}}}
 
@@ -177,7 +178,7 @@ function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencodi
           \'\2 <typedef \1>', 'g')
 
     let keyword = {
-          \ 'word' : tag[0], 'abbr' : abbr,
+          \ 'word' : tag[0], 'abbr' : abbr, 'menu' : a:mark,
           \ 'kind' : option['kind'], 'dup' : 1,
           \ }
     if has_key(option, 'struct')

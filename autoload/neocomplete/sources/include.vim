@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jun 2013.
+" Last Modified: 22 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -38,11 +38,14 @@ let g:neocomplete#sources#include#suffixes =
       \ get(g:, 'neocomplete#sources#include#suffixes', {})
 let g:neocomplete#sources#include#functions =
       \ get(g:, 'neocomplete#sources#include#functions', {})
+let g:neocomplete#sources#include#max_processes =
+      \ get(g:, 'neocomplete#sources#include#max_processes', 20)
 "}}}
 
 let s:source = {
       \ 'name' : 'include',
       \ 'kind' : 'keyword',
+      \ 'mark' : '[I]',
       \ 'rank' : 8,
       \ 'hooks' : {},
       \}
@@ -59,9 +62,6 @@ function! s:source.hooks.on_init(context) "{{{
     autocmd BufWritePost * call s:check_buffer('', 0)
     autocmd CursorHold * call s:check_cache()
   augroup END
-
-  call neocomplete#util#set_default(
-        \ 'g:neocomplete#sources#include#max_processes', 20)
 
   " Create cache directory.
   call neocomplete#cache#make_directory('include_cache')
@@ -95,7 +95,7 @@ function! s:source.gather_candidates(context) "{{{
   for include in s:include_info[bufnr('%')].include_files
     call neocomplete#cache#check_cache(
           \ 'include_cache', include,
-          \ s:async_include_cache, s:include_cache, 1)
+          \ s:async_include_cache, s:include_cache, 0)
     if has_key(s:include_cache, include)
       let s:cache_accessed_time[include] = localtime()
       let keyword_list += s:include_cache[include]
@@ -398,7 +398,7 @@ function! s:initialize_include(filename, filetype) "{{{
   return {
         \ 'filename' : a:filename,
         \ 'cachename' : neocomplete#cache#async_load_from_tags(
-        \              'include_cache', a:filename, a:filetype, 'I', 1)
+        \         'include_cache', a:filename, a:filetype, s:source.mark, 1)
         \ }
 endfunction"}}}
 function! neocomplete#sources#include#make_cache(bufname) "{{{
