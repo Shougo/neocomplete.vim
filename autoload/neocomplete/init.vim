@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Jun 2013.
+" Last Modified: 23 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -519,7 +519,7 @@ function! neocomplete#init#_variables() "{{{
         \ 'lisp,int-clisp', ['/', ':'])
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#delimiter_patterns',
-        \ 'clojure,int-clj', ['/', '\.'])
+        \ 'clojure,int-clj', ['/', '.'])
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#delimiter_patterns',
         \ 'perl,cpp', ['::'])
@@ -530,13 +530,13 @@ function! neocomplete#init#_variables() "{{{
         \ 'g:neocomplete#delimiter_patterns',
         \ 'java,d,javascript,actionscript,'.
         \ 'ruby,eruby,haskell,int-ghci,coffee,zimbu,konoha',
-        \ ['\.'])
+        \ ['.'])
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#delimiter_patterns',
-        \ 'lua', ['\.', ':'])
+        \ 'lua', ['.', ':'])
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#delimiter_patterns',
-        \ 'perl6', ['\.', '::'])
+        \ 'perl6', ['.', '::'])
   "}}}
 
   " Initialize ctags arguments. "{{{

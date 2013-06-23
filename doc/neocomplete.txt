@@ -484,8 +484,8 @@ g:neocomplete#ctags_arguments
 					*g:neocomplete#delimiter_patterns*
 g:neocomplete#delimiter_patterns
 		This variable appoints a delimiter pattern to smart complete a
-		function.  This is appointed in regular expression's string
-		list every file type.
+		function.  This is appointed in string list every file type.
+		Note: This string is not regular expression.
 >
 		" Examples:
 		if !exists('g:neocomplete#delimiter_patterns')

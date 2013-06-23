@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_delimiter.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Jun 2013.
+" Last Modified: 23 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -49,10 +49,11 @@ function! s:converter.filter(context) "{{{
   for delimiter in get(g:neocomplete#delimiter_patterns, filetype, [])
     " Count match.
     let delim_cnt = 0
-    let matchend = matchend(a:context.complete_str, delimiter)
+    let delimiter_vim = neocomplete#util#escape_pattern(delimiter)
+    let matchend = matchend(a:context.complete_str, delimiter_vim)
     while matchend >= 0
       let matchend = matchend(a:context.complete_str,
-            \ delimiter, matchend)
+            \ delimiter_vim, matchend)
       let delim_cnt += 1
     endwhile
 
@@ -64,7 +65,7 @@ function! s:converter.filter(context) "{{{
         if string.find(candidates[i].word, pattern, 1) ~= nil then
           vim.command('call s:process_delimiter('..
             'a:context.candidates['.. i ..
-            '], delimiter, delim_cnt, next_keyword)')
+            '], delimiter_vim, delim_cnt, next_keyword)')
         end
       end
     end
