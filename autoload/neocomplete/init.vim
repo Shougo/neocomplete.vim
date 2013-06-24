@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 23 Jun 2013.
+" Last Modified: 24 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -437,6 +437,9 @@ function! neocomplete#init#_variables() "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#same_filetypes',
         \ 'J6uil_say', 'J6uil')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#same_filetypes',
+        \ 'vimconsole', 'vim')
 
   " Interactive filetypes.
   call neocomplete#util#set_default_dictionary(
