@@ -1,6 +1,6 @@
 *neocomplete.txt*	Next generation of auto completion framework.
 
-Version: 0.0
+Version: 1.0
 Author : Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -72,8 +72,10 @@ Note: To use neocomplete , you must use Vim 7.3.885 or above with
 |if_lua| feature.
 
 In Windows:
-http://files.kaoriya.net/goto/vim73w32
-http://files.kaoriya.net/goto/vim73w64
+For 32bit http://files.kaoriya.net/goto/vim73w32
+For 64bit http://files.kaoriya.net/goto/vim73w64
+
+alternative for 32bit http://tuxproject.de/projects/vim/
 
 In Mac(if_lua enabled MacVim):
 https://github.com/zhaocai/macvim
@@ -1820,57 +1822,6 @@ Note: This feature is heavy.
 >
 	let g:neocomplete#enable_refresh_always = 1
 <
-
-==============================================================================
-CHANGELOG					*neocomplete-changelog*
-
-2013-06-11
-- Fixed file source.
-
-2013-06-10
-- Improved matcher behavior.
-- Improved fuzzy match behavior.
-
-2013-06-06
-- Improved for completeopt.
-
-2013-06-05
-- Improved for include sources.
-- Improved neocomplete#within_comment().
-- Fixed syntax source.
-- Added sorter_word.
-- Improved file and file/include source behavior.
-- Fixed converter_delimiter.
-- Added g:neocomplete#enable_refresh_always option.
-- Fixed for longest completeopt.
-
-2013-06-04
-- Improved initialization.
-- Added neocomplete#custom#source().
-- Improved documentation.
-- Fixed neocomplete#complete_common_string().
-- Fixed completefunc problem.
-
-2013-06-03
-- Fixed syntax source.
-- Refactorred variable names.
-
-2013-05-31
-- Improved clear result timing.
-
-2013-05-30
-- Renamed sources.
-
-2013-05-29
-- Improved file/include source.
-- Fixed fuzzy match problem.
-
-2013-05-28
-- Renamed initial version.
-- Removed obsolete interfaces.
-- Improved for make cache.
-- Supported context_filetype.vim.
-- Improved refresh behavior.
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
