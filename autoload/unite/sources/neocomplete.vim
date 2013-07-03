@@ -28,11 +28,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! unite#sources#neocomplete#define() "{{{
-  if !exists('*unite#version') || unite#version() < 150
-    echoerr 'Your unite.vim is too old.'
-    return []
-  endif
-
   return s:neocomplete_source
 endfunction "}}}
 
