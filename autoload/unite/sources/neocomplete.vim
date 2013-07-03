@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Jun 2013.
+" Last Modified: 03 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -121,9 +121,6 @@ function! s:start_complete(is_quick_match) "{{{
   endif
   if !exists(':Unite')
     echoerr 'unite.vim is not installed.'
-    return ''
-  elseif unite#version() < 300
-    echoerr 'Your unite.vim is too old.'
     return ''
   endif
 
