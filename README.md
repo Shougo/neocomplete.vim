@@ -26,7 +26,7 @@ In Mac:
 
 In MacVim with homebrew:
 
-`brew install macvim --with-cscope --with-lua --override-system-vim`
+`brew install macvim --with-cscope --with-lua --HEAD`
 
 
 In Linux:
