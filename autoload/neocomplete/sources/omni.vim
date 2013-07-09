@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: omni.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Jun 2013.
+" Last Modified: 09 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -65,37 +65,41 @@ function! s:source.hooks.on_init(context) "{{{
   "call neocomplete#util#set_default_dictionary(
         "\'g:neocomplete#sources#omni#input_patterns',
         "\'php',
-        "\'[^. \t]->\h\w*\|\h\w*::')
+        "\'[^. \t]->\h\w*\|\h\w*::\w*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'java',
-        \'\%(\h\w*\|)\)\.')
+        \'\%(\h\w*\|)\)\.\w*')
   "call neocomplete#util#set_default_dictionary(
         "\'g:neocomplete#sources#omni#input_patterns',
         "\'perl',
-        "\'\h\w*->\h\w*\|\h\w*::')
+        "\'\h\w*->\h\w*\|\h\w*::\w*')
   "call neocomplete#util#set_default_dictionary(
         "\'g:neocomplete#sources#omni#input_patterns',
         "\'c',
-        "\'[^.[:digit:] *\t]\%(\.\|->\)'
+        "\'[^.[:digit:] *\t]\%(\.\|->\)\w*'
   "call neocomplete#util#set_default_dictionary(
         "\'g:neocomplete#sources#omni#input_patterns',
         "\'cpp',
-        "\'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::')
+        "\'[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'objc',
-        \'[^.[:digit:] *\t]\%(\.\|->\)')
+        \'[^.[:digit:] *\t]\%(\.\|->\)\w*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'objj',
         \'[\[ \.]\w\+$\|:\w*$')
+  call neocomplete#util#set_default_dictionary(
+        \'g:neocomplete#sources#omni#input_patterns',
+        \'go',
+        \'[^.[:digit:] *\t]\.\w*')
 
   " External language interface check.
   if has('ruby')
     " call neocomplete#util#set_default_dictionary(
           "\'g:neocomplete#sources#omni#input_patterns', 'ruby',
-          "\'[^. *\t]\.\h\w*\|\h\w*::')
+          "\'[^. *\t]\.\h\w*\|\h\w*::\w*')
   endif
   if has('python/dyn') || has('python3/dyn')
         \ || has('python') || has('python3')
