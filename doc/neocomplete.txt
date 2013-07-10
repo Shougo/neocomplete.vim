@@ -1830,6 +1830,13 @@ Note: This feature is heavy.
 	let g:neocomplete#enable_refresh_always = 1
 <
 
+Q: neocomplete auto select feature is not worked. Why?
+A: You should enable refresh always feature.
+>
+	let g:neocomplete#enable_auto_select = 1
+	let g:neocomplete#enable_refresh_always = 1
+<
+
 Q: I want to use PHP omni completion.
 
 A:
