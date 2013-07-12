@@ -79,6 +79,7 @@ alternative for 32bit http://tuxproject.de/projects/vim/
 
 In Mac(if_lua enabled MacVim):
 https://github.com/zhaocai/macvim
+http://code.google.com/p/macvim-kaoriya/
 
 In Mac homebrew. >
 	brew install macvim --with-cscope --with-lua --HEAD
