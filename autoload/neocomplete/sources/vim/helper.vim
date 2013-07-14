@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 14 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -230,17 +230,7 @@ function! neocomplete#sources#vim#helper#command(cur_text, complete_str) "{{{
       let s:global_candidates_list.commands = s:get_cmdlist()
     endif
     if !has_key(s:internal_candidates_list, 'commands')
-      let s:internal_candidates_list.command_prototypes =
-            \ s:make_cache_prototype_from_dict('command_prototypes')
-      let commands = s:make_cache_from_dict('commands', 'c')
-      for command in commands
-        if has_key(s:internal_candidates_list.command_prototypes, command.word)
-          let command.description = command.word .
-                \ s:internal_candidates_list.command_prototypes[command.word]
-        endif
-      endfor
-
-      let s:internal_candidates_list.commands = commands
+      let s:internal_candidates_list.commands = s:make_cache_commands()
     endif
 
     let list = s:internal_candidates_list.commands
@@ -327,7 +317,7 @@ function! neocomplete#sources#vim#helper#expression(cur_text, complete_str) "{{{
 endfunction"}}}
 function! neocomplete#sources#vim#helper#feature(cur_text, complete_str) "{{{
   if !has_key(s:internal_candidates_list, 'features')
-    let s:internal_candidates_list.features = s:make_cache_from_dict('features', '')
+    let s:internal_candidates_list.features = s:make_cache_features()
   endif
   return s:internal_candidates_list.features
 endfunction"}}}
@@ -353,18 +343,7 @@ function! neocomplete#sources#vim#helper#function(cur_text, complete_str) "{{{
     let s:global_candidates_list.functions = s:get_functionlist()
   endif
   if !has_key(s:internal_candidates_list, 'functions')
-    let s:internal_candidates_list.function_prototypes =
-          \ s:make_cache_prototype_from_dict('functions')
-
-    let functions = s:make_cache_from_dict('functions', 'f')
-    for function in functions
-      if has_key(s:internal_candidates_list.function_prototypes, function.word)
-        let function.description = function.word
-              \ . s:internal_candidates_list.function_prototypes[function.word]
-      endif
-    endfor
-
-    let s:internal_candidates_list.functions = functions
+    let s:internal_candidates_list.functions = s:make_cache_functions()
   endif
 
   let script_candidates_list = s:get_cached_script_candidates()
@@ -426,13 +405,7 @@ endfunction"}}}
 function! neocomplete#sources#vim#helper#option(cur_text, complete_str) "{{{
   " Make cache.
   if !has_key(s:internal_candidates_list, 'options')
-    let s:internal_candidates_list.options = s:make_cache_from_dict('options', 'o')
-
-    for keyword in deepcopy(s:internal_candidates_list.options)
-      let keyword.word = 'no' . keyword.word
-      let keyword.abbr = 'no' . keyword.abbr
-      call add(s:internal_candidates_list.options, keyword)
-    endfor
+    let s:internal_candidates_list.options = s:make_cache_options()
   endif
 
   if a:cur_text =~ '\<set\%[local]\s\+\%(filetype\|ft\)='
@@ -654,6 +627,96 @@ function! s:make_cache_prototype_from_dict(dict_name) "{{{
   endfor
 
   return keyword_dict
+endfunction"}}}
+function! s:make_cache_options() "{{{
+  redir => raw
+  silent set all
+  redir END
+  let options = map(filter(split(raw, '\s\{2,}\|\n')[1:], "!empty(v:val)"),
+        \ "substitute(v:val, '^no\\|=\\zs.*$', '', '')")
+  for option in copy(options)
+    if option[-1:] != '='
+      call add(options, 'no'.option)
+    endif
+  endfor
+
+  return map(filter(options, "v:val =~ '^\\h\\w*=\\?'"), "{
+        \ 'word' : substitute(v:val, '=$', '', ''), 'kind' : 'o',
+        \ }")
+endfunction"}}}
+function! s:make_cache_features() "{{{
+  let helpfile = expand(findfile('doc/eval.txt', &runtimepath))
+
+  if !filereadable(helpfile)
+    return []
+  endif
+
+  let features = []
+  let lines = readfile(helpfile)
+  let start = match(lines, '^all_builtin_terms')
+  let end = match(lines, '^x11')
+  for l in lines[start : end]
+    let _ = matchlist(l, '^\(\k\+\)\t\+\(.\+\)$')
+    if !empty(_)
+      call add(features, {
+            \ 'word' : _[1],
+            \ 'menu' : '; ' . _[2],
+            \ })
+    endif
+  endfor
+
+  return features
+endfunction"}}}
+function! s:make_cache_functions() "{{{
+  let helpfile = expand(findfile('doc/eval.txt', &runtimepath))
+  if !filereadable(helpfile)
+    return []
+  endif
+
+  let lines = readfile(helpfile)
+  let functions = []
+  let start = match(lines, '^abs')
+  let end = match(lines, '^abs', start, 2)
+  let desc = ''
+  for i in range(end-1, start, -1)
+    let desc = substitute(lines[i], '^\s\+\ze\S', '', '').' '.desc
+    let _ = matchlist(desc,
+          \'^\s*\(\(\i\+(\).\+)\)\s\+\(\w\+\)\s\+\(.\+[^*]\)$')
+    if !empty(_)
+      call insert(functions, {
+            \ 'word' : _[2],
+            \ 'menu' : '; ' . substitute(_[1], '(\zs\s\+', '', ''),
+            \ })
+      let desc = ''
+    endif
+  endfor
+
+  return functions
+endfunction"}}}
+function! s:make_cache_commands() "{{{
+  let helpfile = expand(findfile('doc/index.txt', &runtimepath))
+  if !filereadable(helpfile)
+    return []
+  endif
+
+  let lines = readfile(helpfile)
+  let commands = []
+  let start = match(lines, '^|:!|')
+  let end = match(lines, '^|:\~|', start)
+  let desc = ''
+  for lnum in range(end, start, -1)
+    let desc = substitute(lines[lnum], '^\s\+\ze', '', 'g') . ' ' . desc
+    let _ = matchlist(desc, '^|:\(.\{-}\)|\s\+\S\+\s\+\(.\+\)$')
+    if !empty(_)
+      call add(commands, {
+            \ 'word' : _[1],
+            \ 'menu' : '; ' . _[2],
+            \ })
+      let desc = ''
+    endif
+  endfor
+
+  return commands
 endfunction"}}}
 
 function! s:get_cmdlist() "{{{
