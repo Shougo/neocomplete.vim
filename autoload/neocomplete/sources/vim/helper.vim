@@ -706,11 +706,10 @@ function! s:make_cache_commands() "{{{
   let desc = ''
   for lnum in range(end, start, -1)
     let desc = substitute(lines[lnum], '^\s\+\ze', '', 'g') . ' ' . desc
-    let _ = matchlist(desc, '^|:\(.\{-}\)|\s\+\S\+\s\+\(.\+\)$')
+    let _ = matchlist(desc, '^|:\(.\{-}\)|\s\+\S\+')
     if !empty(_)
       call add(commands, {
-            \ 'word' : _[1],
-            \ 'menu' : '; ' . _[2],
+            \ 'word' : _[1], 'kind' : 'c',
             \ })
       let desc = ''
     endif

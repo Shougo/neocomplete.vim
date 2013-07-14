@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jul 2013.
+" Last Modified: 14 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -49,7 +49,6 @@ function! neocomplete#helper#get_cur_text() "{{{
   let filetype = neocomplete#get_context_filetype()
 
   let neocomplete.cur_text = cur_text . complete_str
-  let neocomplete.syn_name = neocomplete#helper#get_syn_name(1)
 
   " Save cur_text.
   return neocomplete.cur_text
@@ -74,12 +73,6 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
   let omnifunc = &l:omnifunc
 
   if neocomplete#helper#check_invalid_omnifunc(omnifunc)
-    return 0
-  endif
-
-  let syn_name = neocomplete#helper#get_syn_name(1)
-  if syn_name ==# 'Comment' || syn_name ==# 'String'
-    " Skip omni in string literal.
     return 0
   endif
 
