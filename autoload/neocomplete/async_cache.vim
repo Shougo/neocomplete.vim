@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: async_cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jun 2013.
+" Last Modified: 16 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -259,7 +259,7 @@ if argc() == 7 &&
     call s:main(argv())
   catch
     call writefile([v:throwpoint, v:exception],
-          \     expand('~/async_error_log'))
+          \     expand('~/.neocomplete_async_error_log'))
   endtry
 
   qall!
