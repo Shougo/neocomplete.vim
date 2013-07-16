@@ -238,7 +238,7 @@ function! neocomplete#exists_echodoc() "{{{
 endfunction"}}}
 function! neocomplete#within_comment() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
-  return getline('.') =~ substitute(
+  return getline('.') =~# substitute(
         \ neocomplete#util#escape_pattern(&l:commentstring), '%s', '.*', '')
 endfunction"}}}
 function! neocomplete#print_error(string) "{{{
