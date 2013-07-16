@@ -259,7 +259,7 @@ if argc() == 7 &&
     call s:main(argv())
   catch
     call writefile([v:throwpoint, v:exception],
-          \     expand('~/.neocomplete_async_error_log'))
+          \     fnamemodify(argv(1), ':h:h').'/async_error_log')
   endtry
 
   qall!
