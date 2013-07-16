@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jul 2013.
+" Last Modified: 16 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -238,7 +238,8 @@ function! neocomplete#exists_echodoc() "{{{
 endfunction"}}}
 function! neocomplete#within_comment() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
-  return getline('.') =~ substitute(&l:commentstring, '%s', '.*', '')
+  return getline('.') =~ substitute(
+        \ neocomplete#util#escape_pattern(&l:commentstring), '%s', '.*', '')
 endfunction"}}}
 function! neocomplete#print_error(string) "{{{
   echohl Error | echomsg a:string | echohl None
