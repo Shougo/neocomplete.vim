@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jul 2013.
+" Last Modified: 17 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -622,6 +622,7 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'event' : '',
         \ 'cur_text' : '',
         \ 'old_cur_text' : '',
+        \ 'old_linenr' : line('.'),
         \ 'complete_str' : '',
         \ 'complete_pos' : -1,
         \ 'candidates' : [],

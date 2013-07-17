@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Jun 2013.
+" Last Modified: 17 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -138,6 +138,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   endif
 
   let neocomplete.old_cur_text = cur_text
+  let neocomplete.old_linenr = line('.')
 
   if neocomplete#helper#is_omni(cur_text)
     call feedkeys("\<C-x>\<C-o>\<C-p>", 'n')
@@ -255,7 +256,8 @@ function! s:is_skip_auto_complete(cur_text) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
 
   if a:cur_text =~ '^\s*$\|\s\+$'
-        \ || a:cur_text == neocomplete.old_cur_text
+        \ || (a:cur_text == neocomplete.old_cur_text
+        \     && line('.') == neocomplete.old_linenr)
         \ || (g:neocomplete#lock_iminsert && &l:iminsert)
         \ || (&l:formatoptions =~# '[tc]' && &l:textwidth > 0
         \     && neocomplete#util#wcswidth(a:cur_text) >= &l:textwidth)
@@ -286,6 +288,7 @@ function! s:is_skip_auto_complete(cur_text) "{{{
   let neocomplete.skip_next_complete = 0
   let neocomplete.cur_text = ''
   let neocomplete.old_cur_text = ''
+  let neocomplete.old_linenr = line('.')
 
   return 1
 endfunction"}}}
