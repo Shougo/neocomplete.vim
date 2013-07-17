@@ -48,18 +48,20 @@ Changelog		|neocomplete-changelog|
 ==============================================================================
 INTRODUCTION					*neocomplete-introduction*
 
-*neocomplete* is the next generation of auto completion framework after
-neocomplcache. It provides keyword completion system by maintaining a cache of
-keywords in the current buffer. neocomplete could be customized easily and has
-a lot more features than the Vim's standard completion feature.
+*neocomplete* is the next generation auto completion framework and a superior
+successor of the neocomplcache plug-in. It provides a keyword completion
+system by maintaining a keyword cache of the current buffer. The neocomplete
+framework can be customized easily and has a lot more features than Vim's
+standard completion. 
+
 Note: neocomplete may consume more memory than other plugins.
 
-neocomplete difference from |neocomplcache|:
+Improvements in neocomplete in comparison to |neocomplcache|:
 
 1. Real fuzzy match behavior like |YouCompleteMe| in default.
 2. Refactorred source interface.
 3. Removed legacy interface.
-4. Required |if_lua|.
+4. Requires |if_lua|.
 5. Optimized completion speed.
 6. Changed source names.
 7. Changed variable names.
@@ -68,8 +70,10 @@ neocomplete difference from |neocomplcache|:
 ==============================================================================
 INSTALL						*neocomplete-install*
 
-Note: To use neocomplete , you must use Vim 7.3.885 or above with
-|if_lua| feature.
+Note: In oder to use neocomplete, the following prerequisites have to be met:  
+
+1. Vim version 7.3.885 or above 
+2. Vim build with the |if_lua| feature.
 
 In Windows:
 For 32bit http://files.kaoriya.net/goto/vim73w32
