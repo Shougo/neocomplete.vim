@@ -101,9 +101,20 @@ Or install it with homebrew:
 
 On Linux: 
 
-You should build Vim (make) and enable |if_lua| manually. The packages
-included in distributions are almost all to old. The following steps help you
-to build Vim:
+As almost all Vim packages offered by distributions are too old, you should
+build Vim manually using gnu make and enable |if_lua| in the configuration
+step. The following steps show you the general process on how to build Vim: 
+
+1. Get the source package 
+2. Unpack the sources 
+3. Configure the package (./configure). This step is essential to enable 
+   the Vim features you like to use.  
+4. Build the package with gnu make
+5. Install the package using your distributions package manager
+
+You can find detailed information on ho to configure and build Vim from source
+under following Link: http://vim.wikia.com/wiki/Building_Vim. Or follow the
+guide on: https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
 
 Install the plugin
 
