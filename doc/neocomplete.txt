@@ -49,17 +49,17 @@ Changelog		|neocomplete-changelog|
 INTRODUCTION					*neocomplete-introduction*
 
 *neocomplete* is the next generation auto completion framework and a superior
-successor of the neocomplcache plug-in. It provides a keyword completion
+successor of the neocomplcache plugin. It provides a keyword completion
 system by maintaining a keyword cache of the current buffer. The neocomplete
 framework can be customized easily and has a lot more features than Vim's
 standard completion. 
 
-Note: neocomplete may consume more memory than other plugins.
+Note: neocomplete may consume more memory than other plugins do.
 
 Improvements in neocomplete in comparison to |neocomplcache|:
 
 1. Real fuzzy match behavior like |YouCompleteMe| in default.
-2. Refactorred source interface.
+2. Refactored source interface.
 3. Removed legacy interface.
 4. Requires |if_lua|.
 5. Optimized completion speed.
@@ -70,15 +70,15 @@ Improvements in neocomplete in comparison to |neocomplcache|:
 ==============================================================================
 INSTALL						*neocomplete-install*
 
-Install prerequisites:
+Install prerequisites
 
 In oder to use neocomplete, the following prerequisites have to be met:
 
 1. Vim version 7.3.885 or above
 2. Vim build with the |if_lua| feature
 
-The following notes help you to get a Vim verion *neocomplete* works with for
-your operating system. 
+The following sections describe where to get a Vim version, *neocomplete*
+works with, for your operating system. 
 
 On Windows:
 
@@ -93,7 +93,7 @@ You can get if_lua enabled MacVim versions here:
 https://github.com/zhaocai/macvim
 http://code.google.com/p/macvim-kaoriya/
 
-With homebrew on Mac
+Or install it with homebrew:
 
 <
 	brew install macvim --with-cscope --with-lua --HEAD
@@ -103,19 +103,38 @@ On Linux:
 
 You should build Vim (make) and enable |if_lua| manually. The packages
 included in distributions are almost all to old. The following steps help you
-to build vim:
+to build Vim:
 
-After you have ensured the prerequisites you need to instsall the
-*neocomplete* plugin:
+Install the plugin
 
+After you have installed the right version of Vim, you can go on to install
+the *neocomplete* plugin. You can do this in a more old fashioned, manual way
+or use a plugin manager like pathogen, vundle, neobundle. The second approach
+is the recommended installation method.
 
+Manual:
 
-1. Get the package
-2. Extract the files and put files in your Vim directory
+1. Get the plugin package
+2. Extract the files and put them in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
-3: Execute |:NeoCompleteEnable| command or set
+3. Execute |:NeoCompleteEnable| command or set
 let g:neocomplete#enable_at_startup = 1
 in your .vimrc.
+
+Package manager: 
+
+For instructions on how to set up a Vim package manager see the description of
+the package manager of your choice. For example after the set up of neobundle
+you can install the *neocomplete* plugin by following steps:
+
+1. Let the plugin manger know about the package (.vimrc)  
+
+NeoBundle 'git@github.com:Shougo/neocomplete.vim.git' 
+
+2. Install the plugin with the install command 
+
+:NeoBundleInstall
+
 
 						*neocomplete-migration*
 
