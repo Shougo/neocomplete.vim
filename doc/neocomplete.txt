@@ -70,30 +70,50 @@ Improvements in neocomplete in comparison to |neocomplcache|:
 ==============================================================================
 INSTALL						*neocomplete-install*
 
-Note: In oder to use neocomplete, the following prerequisites have to be met:  
+Install prerequisites:
 
-1. Vim version 7.3.885 or above 
-2. Vim build with the |if_lua| feature.
+In oder to use neocomplete, the following prerequisites have to be met:
 
-In Windows:
+1. Vim version 7.3.885 or above
+2. Vim build with the |if_lua| feature
+
+The following notes help you to get a Vim verion *neocomplete* works with for
+your operating system. 
+
+On Windows:
+
 For 32bit http://files.kaoriya.net/goto/vim73w32
+For 32bit (alternative) http://tuxproject.de/projects/vim/
 For 64bit http://files.kaoriya.net/goto/vim73w64
 
-alternative for 32bit http://tuxproject.de/projects/vim/
+On Mac:
 
-In Mac(if_lua enabled MacVim):
+You can get if_lua enabled MacVim versions here:
+
 https://github.com/zhaocai/macvim
 http://code.google.com/p/macvim-kaoriya/
 
-In Mac homebrew. >
+With homebrew on Mac
+
+<
 	brew install macvim --with-cscope --with-lua --HEAD
+>
 
-In Linux: You should make Vim and enable |if_lua| manually. Distributed
-package is almost old.
+On Linux: 
 
-1: Extract the file and put files in your Vim directory
+You should build Vim (make) and enable |if_lua| manually. The packages
+included in distributions are almost all to old. The following steps help you
+to build vim:
+
+After you have ensured the prerequisites you need to instsall the
+*neocomplete* plugin:
+
+
+
+1. Get the package
+2. Extract the files and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
-2: Execute |:NeoCompleteEnable| command or set
+3: Execute |:NeoCompleteEnable| command or set
 let g:neocomplete#enable_at_startup = 1
 in your .vimrc.
 
