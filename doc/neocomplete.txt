@@ -119,7 +119,7 @@ https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
 Install the plugin
 
 After you have installed the right version of Vim, you can go on to install
-the *neocomplete* plugin. You can do this in a more old fashioned, manual way
+the neocomplete plugin. You can do this in a more old fashioned, manual way
 or use a plugin manager like pathogen, vundle, neobundle. The second approach
 is the recommended installation method.
 
@@ -128,15 +128,15 @@ Manual:
 1. Get the plugin package
 2. Extract the files and put them in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
-3. Execute |:NeoCompleteEnable| command or set >
-	let g:neocomplete#enable_at_startup = 1
-in your .vimrc.
+3. Execute |:NeoCompleteEnable| command or set follwing variable in your vimrc >
+	let g:neocomplete#enable_at_startup = 1 
+<
 
 Package manager:
 
-For instructions on how to set up a Vim package manager see the description of
-the package manager of your choice. For example after the set up of neobundle
-you can install the *neocomplete* plugin by following steps:
+For instructions on how to set up a Vim package manager see the documentation
+of the package manager of your choice. For example after the set up of
+neobundle you can install the neocomplete plugin by following steps:
 
 1. Let the plugin manger know about the package (.vimrc) >
 	NeoBundle 'Shougo/neocomplete.vim'
@@ -147,26 +147,28 @@ you can install the *neocomplete* plugin by following steps:
 
 						*neocomplete-migration*
 
-Migration guide from neocomplcache is available(incomplete).
+In case you are planing to move from neocomplcache to neocomplete there is a
+wiki page that offers a migration guide (incomplete yet).
 https://github.com/Shougo/neocomplete.vim/wiki/neocomplete-migration-guide
-
 
 						*neocomplete-RECOMMENDATION*
 
 						*neocomplete-asynchronous*
-When you have |vimproc| installed, neocomplete creates caches asynchronously.
 
-vimproc is distributed at: http://github.com/Shougo/vimproc
+If you have installed the |vimproc| plugin, neocomplete creates the caches
+asynchronously. You can find vimproc at: http://github.com/Shougo/vimproc.
+The vimproc plugin needs compilation before you can use it. You can find
+further information in the vimproc documentation.
 
-To use vimproc, you must compile it.  Refer to the vimproc documentation.
+						*neocomplete-snippets* 
 
-Note: To use snippets feature (neosnippet source), you must install
-neosnippet.
+If you like to use the snippet feature with neocomplete you need to install
+the neosnippet plugin. You can find it under: https://github.com/Shougo/neosnippet
 
-https://github.com/Shougo/neosnippet
+						*neocomplete-context-filetype*
 
-Note: To enable context filetype feature, you must install
-context_filetype.vim.
+If you like to use the context filetype feature, you need to install the
+context_filetype.vim plugin which you can find under the followind repository:
 https://github.com/Shougo/context_filetype.vim
 
 ==============================================================================
