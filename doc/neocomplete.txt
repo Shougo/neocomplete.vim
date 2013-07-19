@@ -52,7 +52,7 @@ INTRODUCTION					*neocomplete-introduction*
 successor of the neocomplcache plugin. It provides a keyword completion
 system by maintaining a keyword cache of the current buffer. The neocomplete
 framework can be customized easily and has a lot more features than Vim's
-standard completion. 
+standard completion.
 
 Note: neocomplete may consume more memory than other plugins do.
 
@@ -72,13 +72,13 @@ INSTALL						*neocomplete-install*
 
 Install prerequisites
 
-In oder to use neocomplete, the following prerequisites have to be met:
+In order to use neocomplete, the following prerequisites have to be met:
 
 1. Vim version 7.3.885 or above
 2. Vim build with the |if_lua| feature
 
 The following sections describe where to get a Vim version, *neocomplete*
-works with, for your operating system. 
+works with, for your operating system.
 
 On Windows:
 
@@ -94,27 +94,27 @@ https://github.com/zhaocai/macvim
 http://code.google.com/p/macvim-kaoriya/
 
 Or install it with homebrew:
-
-<
-	brew install macvim --with-cscope --with-lua --HEAD
 >
+	brew install macvim --with-cscope --with-lua --HEAD
+<
 
-On Linux: 
+On Linux:
 
 As almost all Vim packages offered by distributions are too old, you should
 build Vim manually using gnu make and enable |if_lua| in the configuration
-step. The following steps show you the general process on how to build Vim: 
+step. The following steps show you the general process on how to build Vim:
 
-1. Get the source package 
-2. Unpack the sources 
-3. Configure the package (./configure). This step is essential to enable 
-   the Vim features you like to use.  
+1. Get the source package
+2. Unpack the sources
+3. Configure the package (./configure). This step is essential to enable
+   the Vim features you like to use.
 4. Build the package with gnu make
 5. Install the package using your distributions package manager
 
 You can find detailed information on ho to configure and build Vim from source
 under following Link: http://vim.wikia.com/wiki/Building_Vim. Or follow the
-guide on: https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
+guide on:
+https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
 
 Install the plugin
 
@@ -128,24 +128,22 @@ Manual:
 1. Get the plugin package
 2. Extract the files and put them in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
-3. Execute |:NeoCompleteEnable| command or set
-let g:neocomplete#enable_at_startup = 1
+3. Execute |:NeoCompleteEnable| command or set >
+	let g:neocomplete#enable_at_startup = 1
 in your .vimrc.
 
-Package manager: 
+Package manager:
 
 For instructions on how to set up a Vim package manager see the description of
 the package manager of your choice. For example after the set up of neobundle
 you can install the *neocomplete* plugin by following steps:
 
-1. Let the plugin manger know about the package (.vimrc)  
-
-NeoBundle 'git@github.com:Shougo/neocomplete.vim.git' 
-
-2. Install the plugin with the install command 
-
-:NeoBundleInstall
-
+1. Let the plugin manger know about the package (.vimrc) >
+	NeoBundle 'Shougo/neocomplete.vim'
+<
+2. Install the plugin with the install command >
+	:NeoBundleInstall
+<
 
 						*neocomplete-migration*
 
