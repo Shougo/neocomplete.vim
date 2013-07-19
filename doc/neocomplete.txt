@@ -49,17 +49,17 @@ Changelog		|neocomplete-changelog|
 INTRODUCTION					*neocomplete-introduction*
 
 *neocomplete* is the next generation auto completion framework and a superior
-successor of the neocomplcache plug-in. It provides a keyword completion
+successor of the neocomplcache plugin. It provides a keyword completion
 system by maintaining a keyword cache of the current buffer. The neocomplete
 framework can be customized easily and has a lot more features than Vim's
 standard completion. 
 
-Note: neocomplete may consume more memory than other plugins.
+Note: neocomplete may consume more memory than other plugins do.
 
 Improvements in neocomplete in comparison to |neocomplcache|:
 
 1. Real fuzzy match behavior like |YouCompleteMe| in default.
-2. Refactorred source interface.
+2. Refactored source interface.
 3. Removed legacy interface.
 4. Requires |if_lua|.
 5. Optimized completion speed.
@@ -70,32 +70,82 @@ Improvements in neocomplete in comparison to |neocomplcache|:
 ==============================================================================
 INSTALL						*neocomplete-install*
 
-Note: In oder to use neocomplete, the following prerequisites have to be met:  
+Install prerequisites
 
-1. Vim version 7.3.885 or above 
-2. Vim build with the |if_lua| feature.
+In oder to use neocomplete, the following prerequisites have to be met:
 
-In Windows:
+1. Vim version 7.3.885 or above
+2. Vim build with the |if_lua| feature
+
+The following sections describe where to get a Vim version, *neocomplete*
+works with, for your operating system. 
+
+On Windows:
+
 For 32bit http://files.kaoriya.net/goto/vim73w32
+For 32bit (alternative) http://tuxproject.de/projects/vim/
 For 64bit http://files.kaoriya.net/goto/vim73w64
 
-alternative for 32bit http://tuxproject.de/projects/vim/
+On Mac:
 
-In Mac(if_lua enabled MacVim):
+You can get if_lua enabled MacVim versions here:
+
 https://github.com/zhaocai/macvim
 http://code.google.com/p/macvim-kaoriya/
 
-In Mac homebrew. >
+Or install it with homebrew:
+
+<
 	brew install macvim --with-cscope --with-lua --HEAD
+>
 
-In Linux: You should make Vim and enable |if_lua| manually. Distributed
-package is almost old.
+On Linux: 
 
-1: Extract the file and put files in your Vim directory
+As almost all Vim packages offered by distributions are too old, you should
+build Vim manually using gnu make and enable |if_lua| in the configuration
+step. The following steps show you the general process on how to build Vim: 
+
+1. Get the source package 
+2. Unpack the sources 
+3. Configure the package (./configure). This step is essential to enable 
+   the Vim features you like to use.  
+4. Build the package with gnu make
+5. Install the package using your distributions package manager
+
+You can find detailed information on ho to configure and build Vim from source
+under following Link: http://vim.wikia.com/wiki/Building_Vim. Or follow the
+guide on: https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
+
+Install the plugin
+
+After you have installed the right version of Vim, you can go on to install
+the *neocomplete* plugin. You can do this in a more old fashioned, manual way
+or use a plugin manager like pathogen, vundle, neobundle. The second approach
+is the recommended installation method.
+
+Manual:
+
+1. Get the plugin package
+2. Extract the files and put them in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
-2: Execute |:NeoCompleteEnable| command or set
+3. Execute |:NeoCompleteEnable| command or set
 let g:neocomplete#enable_at_startup = 1
 in your .vimrc.
+
+Package manager: 
+
+For instructions on how to set up a Vim package manager see the description of
+the package manager of your choice. For example after the set up of neobundle
+you can install the *neocomplete* plugin by following steps:
+
+1. Let the plugin manger know about the package (.vimrc)  
+
+NeoBundle 'git@github.com:Shougo/neocomplete.vim.git' 
+
+2. Install the plugin with the install command 
+
+:NeoBundleInstall
+
 
 						*neocomplete-migration*
 
