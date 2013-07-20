@@ -224,7 +224,8 @@ SOURCES COMMANDS 				*neocomplete-sources-COMMANDS*
 
 :NeoCompleteBufferMakeCache [bufname]		*:NeoCompleteBufferMakeCache*
 		Make a cache based on the buffer with the name [bufname].
-		The command selects the current buffer when you omit [bufname].
+		The command selects the current buffer when you omit
+		[bufname].
 		If [bufname] is not loaded, neocomplete will open
 		[bufname] automatically.
 		Note: It may take time considerably for the big buffer.
@@ -237,7 +238,7 @@ SOURCES COMMANDS 				*neocomplete-sources-COMMANDS*
 :NeoCompleteDictionaryMakeCache [filetype]
 					*:NeoCompleteDictionaryMakeCache*
 		Make a cache from a dictionary file with [filetype].
-		Selects the filetype of the current buffer if [filetype] is 
+		Selects the filetype of the current buffer if [filetype] is
 		omitted.
 
 :NeoCompleteTagMakeCache		*:NeoCompleteTagMakeCache*
@@ -258,12 +259,12 @@ g:neocomplete#enable_at_startup
 		With the default value 0, you cannot use neocomplete
 		unless you start it manually.
 
-		Note: This option has to be set in your .vimrc or _vimrc.  
+		Note: This option has to be set in your .vimrc or _vimrc.
 		NOT IN the .gvimrc nor _gvimrc!
 
 g:neocomplete#max_list				*g:neocomplete#max_list*
 		This variable controls the number of candidates displayed in a
-		pop-up menu. If the list of candidates exceeds the limit not 
+		pop-up menu. If the list of candidates exceeds the limit not
 		all candidates will show up.
 
 		Default value is 100.
@@ -271,7 +272,7 @@ g:neocomplete#max_list				*g:neocomplete#max_list*
 					*g:neocomplete#max_keyword_width*
 g:neocomplete#max_keyword_width
 		This variable controls the indication width of a candidate
-		displayed in a pop-up menu. If the keyword length exceeds 
+		displayed in a pop-up menu. If the keyword length exceeds
 		the length it will be cut down properly.
 
 		Default value is 80.
