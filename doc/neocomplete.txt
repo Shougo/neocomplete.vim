@@ -203,7 +203,7 @@ COMMANDS 					*neocomplete-commands*
 
 
 :NeoCompleteUnlockSource {source-name}	*:NeoCompleteUnlockSource*
-		Unlock the copletion of {source-name}.
+		Unlock the completion of {source-name}.
 
 					*:NeoCompleteAutoCompletionLength*
 :NeoCompleteAutoCompletionLength {length}
