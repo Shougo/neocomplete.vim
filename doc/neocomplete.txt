@@ -179,17 +179,16 @@ COMMANDS 					*neocomplete-commands*
 
 :NeoCompleteEnable				*:NeoCompleteEnable*
 		Validate neocomplete and initialize it.
-		Warning: Conventional cache disappears.
+		Warning: The conventional cache disappears.
 
 :NeoCompleteDisable				*:NeoCompleteDisable*
 		Invalidate neocomplete and clean it up.
 
 :NeoCompleteToggle				*:NeoCompleteToggle*
-		Change a lock state of neocomplete.
+		Change the lock state of neocomplete.
 		While neocomplete is in locking, you cannot use automatic
 		completions.
-		Note: This command enables neocomplete when neocomplete is
-		already disabled.
+		Note: This command enables neocomplete if it is disabled.
 
 :NeoCompleteLock				*:NeoCompleteLock*
 		Lock neocomplete.
@@ -204,47 +203,49 @@ COMMANDS 					*neocomplete-commands*
 
 
 :NeoCompleteUnlockSource {source-name}	*:NeoCompleteUnlockSource*
-		Unlock {source-name} source completion.
+		Unlock the copletion of {source-name}.
 
 					*:NeoCompleteAutoCompletionLength*
 :NeoCompleteAutoCompletionLength {length}
-		Change start length of automatic completion to {length}.
-		Note: This length value is local to each buffer.
+		Change the start length of automatic completion to {length}.
+		Note: The length value is local to each buffer.
 
 :NeoCompleteClean 				*:NeoCompleteClean*
 		Clean files in |g:neocomplete#data_directory|.
 
 :NeoCompleteSetFileType [filetype]		*:NeoCompleteSetFileType*
-		Change filetype to [filetype] in current buffer.
-		This filetype is only used neocomplete.
-		Note: You can get current filetype by
+		Change the filetype to [filetype] in the current buffer.
+		This filetype is only used by neocomplete.
+		Note: You can get the current filetype by
 		|neocomplete#get_context_filetype()|
 
 
 SOURCES COMMANDS 				*neocomplete-sources-COMMANDS*
 
 :NeoCompleteBufferMakeCache [bufname]		*:NeoCompleteBufferMakeCache*
-		Make cache from [bufname] buffer.
-		This selects current buffer when you omitted [bufname].
+		Make a cache based on the buffer with the name [bufname].
+		The command selects the current buffer when you omit [bufname].
 		If [bufname] is not loaded, neocomplete will open
 		[bufname] automatically.
 		Note: It may take time considerably for the big buffer.
 
 :NeoCompleteSyntaxMakeCache [filetype]		*:NeoCompleteSyntaxMakeCache*
-		Make cache from [filetype] syntax file.
-		Selects current buffer filetype when [filetype] is omitted.
+		Make a cache from the syntax file with [filetype]
+		The current buffer's filetype is selected if [filetype]
+		is omitted
 
 :NeoCompleteDictionaryMakeCache [filetype]
 					*:NeoCompleteDictionaryMakeCache*
-		Make cache from [filetype] dictionary file.
-		Selects current buffer filetype when [filetype] is omitted.
+		Make a cache from a dictionary file with [filetype].
+		Selects the filetype of the current buffer if [filetype] is 
+		omitted.
 
 :NeoCompleteTagMakeCache		*:NeoCompleteTagMakeCache*
-		Make cache from tags file in current buffer.
+		Make a cache from a tags file in current buffer.
 
 :NeoCompleteIncludeMakeCache [bufname]		*:NeoCompleteIncludeMakeCache*
-		Make cache from include file in [bufname].
-		Selects current buffer name when [bufname] is omitted.
+		Make a cache from an include file in [bufname].
+		Selects the current buffer name when the [bufname] is omitted.
 
 ------------------------------------------------------------------------------
 VARIABLES 					*neocomplete-variables*
@@ -257,21 +258,21 @@ g:neocomplete#enable_at_startup
 		With the default value 0, you cannot use neocomplete
 		unless you start it manually.
 
-		Note: This option has to be set in .vimrc or _vimrc.  NOT IN
-		.gvimrc nor _gvimrc!
+		Note: This option has to be set in your .vimrc or _vimrc.  
+		NOT IN the .gvimrc nor _gvimrc!
 
 g:neocomplete#max_list				*g:neocomplete#max_list*
 		This variable controls the number of candidates displayed in a
-		pop-up menu.  Candidates more than this value won't be show
-		up.
+		pop-up menu. If the list of candidates exceeds the limit not 
+		all candidates will show up.
 
 		Default value is 100.
 
 					*g:neocomplete#max_keyword_width*
 g:neocomplete#max_keyword_width
 		This variable controls the indication width of a candidate
-		displayed in a pop-up menu.  The case beyond this value is
-		cut down properly.
+		displayed in a pop-up menu. If the keyword length exceeds 
+		the length it will be cut down properly.
 
 		Default value is 80.
 
