@@ -129,7 +129,8 @@ Manual:
 2. Extract the files and put them in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
 3. Execute |:NeoCompleteEnable| command or set >
-	let g:neocomplete#enable_at_startup = 1
+	let g:neocomplete#enable_at_startup = 1 
+<
 in your .vimrc.
 
 Package manager:
