@@ -201,10 +201,6 @@ COMMANDS 					*neocomplete-commands*
 		Unlock neocomplete.
 		Note: This command is disabled when neocomplete is disabled.
 
-
-:NeoCompleteUnlockSource {source-name}	*:NeoCompleteUnlockSource*
-		Unlock the completion of {source-name}.
-
 					*:NeoCompleteAutoCompletionLength*
 :NeoCompleteAutoCompletionLength {length}
 		Change the start length of automatic completion to {length}.
