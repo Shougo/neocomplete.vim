@@ -1095,7 +1095,7 @@ tag						*neocomplete-source-tag*
 		When a huge tag file (above
 		|g:neocomplete#sources#tags#cache_limit_size|) is set,
 		neocomplete does not make cache if you do not execute
-		|:NeoCompleteCachingTags|command.  Because tag is
+		|:NeoCompleteTagMakeCache| command.  Because tag is
 		too slow if tag read a big tags file.  You should use
 		more convenient include completion now.
 
