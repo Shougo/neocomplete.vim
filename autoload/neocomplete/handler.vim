@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Jul 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -33,21 +33,6 @@ function! neocomplete#handler#_on_moved_i() "{{{
     call neocomplete#helper#clear_result()
   endif
   let neocomplete.linenr = line('.')
-
-  " Get cursor word.
-  let cur_text = neocomplete#get_cur_text(1)
-
-  " Make cache.
-  if cur_text =~ '^\s*$\|\s\+$'
-    if neocomplete#is_enabled_source('buffer')
-      " Caching current cache line.
-      call neocomplete#sources#buffer#make_cache_current_line()
-    endif
-    if neocomplete#is_enabled_source('member')
-      " Caching current cache line.
-      call neocomplete#sources#member#make_cache_current_line()
-    endif
-  endif
 
   call s:close_preview_window()
 endfunction"}}}
@@ -131,6 +116,18 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   " Prevent infinity loop.
   if s:is_skip_auto_complete(cur_text)
+    if cur_text =~ '^\s*$\|\s\+$'
+      " Make cache.
+      if neocomplete#is_enabled_source('buffer')
+        " Caching current cache line.
+        call neocomplete#sources#buffer#make_cache_current_line()
+      endif
+      if neocomplete#is_enabled_source('member')
+        " Caching current cache line.
+        call neocomplete#sources#member#make_cache_current_line()
+      endif
+    endif
+
     if g:neocomplete#enable_debug
       echomsg 'Skipped.'
     endif
