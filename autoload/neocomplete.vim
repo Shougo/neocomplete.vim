@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Jul 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -144,8 +144,7 @@ function! neocomplete#dup_filter(list) "{{{
 endfunction"}}}
 
 function! neocomplete#system(...) "{{{
-  let V = vital#of('neocomplete')
-  return call(V.system, a:000)
+  return call(neocomplete#get_vital().system, a:000)
 endfunction"}}}
 function! neocomplete#has_vimproc() "{{{
   return neocomplete#util#has_vimproc()

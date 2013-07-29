@@ -42,7 +42,7 @@ let s:source = {
       \ 'hooks' : {},
       \}
 
-let s:List = vital#of('neocomplete').import('Data.List')
+let s:List = neocomplete#util#get_vital().import('Data.List')
 
 function! s:source.hooks.on_init(context) "{{{
   " Initialize omni completion pattern. "{{{
