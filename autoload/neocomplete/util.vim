@@ -28,12 +28,15 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! neocomplete#util#get_vital() "{{{
-  return vital#of('neocomplete')
+  if !exists('s:V')
+    let s:V = vital#of('neocomplete')
+  endif
+
+  return s:V
 endfunction"}}}
 
-let s:V = neocomplete#util#get_vital()
-let s:List = s:V.import('Data.List')
-let s:String = s:V.import('Data.String')
+let s:List = neocomplete#util#get_vital().import('Data.List')
+let s:String = neocomplete#util#get_vital().import('Data.String')
 
 function! neocomplete#util#truncate_smart(...) "{{{
   return call(s:V.truncate_smart, a:000)
