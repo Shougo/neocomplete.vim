@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: member.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 11 Jun 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -153,7 +153,6 @@ function! s:make_cache_current_buffer(start, end) "{{{
   let member_pattern = s:get_member_pattern(filetype) . '$'
 
   " Cache member pattern.
-  let [line_num, max_lines] = [a:start, a:end]
   for line in getline(a:start, a:end)
     let match = match(line, keyword_pattern)
 
@@ -222,10 +221,6 @@ function! s:initialize_source(srcname) "{{{
     let filename = '[No Name]'
     let path .= '/[No Name]'
   endif
-
-  " Set cache line count.
-  let buflines = getbufline(a:srcname, 1, '$')
-  let end_line = len(buflines)
 
   let ft = getbufvar(a:srcname, '&filetype')
   if ft == ''

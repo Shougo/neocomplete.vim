@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: omni.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jul 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -276,7 +276,6 @@ endfunction"}}}
 function! s:get_candidates(complete_results, complete_pos, complete_str) "{{{
   " Append prefix.
   let candidates = []
-  let len_words = 0
   for [source_name, result] in items(a:complete_results)
     if result.complete_pos > a:complete_pos
       let prefix = a:complete_str[: result.complete_pos

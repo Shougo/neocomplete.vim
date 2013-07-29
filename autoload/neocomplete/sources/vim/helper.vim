@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jul 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -937,20 +937,19 @@ function! s:analyze_variable_line(line, keyword_dict) "{{{
     endif
 endfunction"}}}
 function! s:analyze_dictionary_variable_line(line, keyword_dict, var_name) "{{{
-  let var_pattern = a:var_name.'\.\h\w*\%(()\?\)\?'
   let let_pattern = '\<let\s\+'.a:var_name.'\.\h\w*'
   let call_pattern = '\<call\s\+'.a:var_name.'\.\h\w*()\?'
 
   if a:line =~ let_pattern
     let word = matchstr(a:line, a:var_name.'\zs\.\h\w*')
-    let expression = matchstr(a:line, let_pattern.'\s*=\zs.*$')
     let kind = ''
   elseif a:line =~ call_pattern
     let word = matchstr(a:line, a:var_name.'\zs\.\h\w*()\?')
     let kind = '()'
   else
     let word = matchstr(a:line, a:var_name.'\zs.\h\w*\%(()\?\)\?')
-    let kind = s:get_variable_type(matchstr(a:line, a:var_name.'\.\h\w*\zs.*$'))
+    let kind = s:get_variable_type(
+          \ matchstr(a:line, a:var_name.'\.\h\w*\zs.*$'))
   endif
 
   if !has_key(a:keyword_dict, word)

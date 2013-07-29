@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: syntax.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Jun 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -87,8 +87,6 @@ function! s:make_cache() "{{{
     " Check old cache.
     let cache_name = neocomplete#cache#encode_name(
           \ 'syntax_cache', filetype)
-    let syntax_files = split(
-          \ globpath(&runtimepath, 'syntax/'.filetype.'.vim'), '\n')
     if getftime(cache_name) < 0
       if filetype ==# &filetype
         " Make cache from syntax list.

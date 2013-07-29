@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 20 Jun 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -107,8 +107,6 @@ function! s:get_glob_files(complete_str, path) "{{{
         \    'word' : fnamemodify(v:val, ':t'),
         \    'action__is_directory' : isdirectory(v:val),
         \ }")
-
-  let exts = escape(substitute($PATHEXT, ';', '\\|', 'g'), '.')
 
   let candidates = []
   for dict in files

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jun 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -178,34 +178,6 @@ endfunction"}}}
 
 let s:sdir = neocomplete#util#substitute_path_separator(
       \ fnamemodify(expand('<sfile>'), ':p:h'))
-
-" Async test.
-function! neocomplete#cache#test_async() "{{{
-  if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
-    return neocomplete#cache#encode_name(a:cache_dir, a:filename)
-  endif
-
-  let filename = neocomplete#util#substitute_path_separator(
-        \ fnamemodify(expand('%'), ':p'))
-  let pattern_file_name =
-        \ neocomplete#cache#encode_name('keyword_patterns', 'vim')
-  let cache_name =
-        \ neocomplete#cache#encode_name('test_cache', filename)
-
-  " Create pattern file.
-  call neocomplete#cache#writefile(
-        \ 'keyword_patterns', a:filename, [a:pattern])
-
-  " args: funcname, outputname, filename pattern mark
-  "       minlen maxlen encoding
-  let fileencoding =
-        \ &fileencoding == '' ? &encoding : &fileencoding
-  let argv = [
-        \  'load_from_file', cache_name, filename, pattern_file_name, '[B]',
-        \  g:neocomplete#min_keyword_length, fileencoding
-        \ ]
-  return s:async_load(argv, 'test_cache', filename)
-endfunction"}}}
 
 function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, mark) "{{{
   if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
