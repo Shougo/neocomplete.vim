@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jun 2013.
+" Last Modified: 29 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -112,7 +112,7 @@ endfunction"}}}
 function! neocomplete#sources#buffer#make_cache_current_line() "{{{
   " Make cache from current line.
   return s:make_cache_current_buffer(
-        \ max([1, line('.') - 10]), min([line('.') + 10, line('$')]))
+        \ max([1, line('.') - 5]), min([line('.') + 5, line('$')]))
 endfunction"}}}
 function! s:make_cache_current_block() "{{{
   " Make cache from current block.

@@ -33,6 +33,7 @@ let s:source = {
       \ 'mark' : '[F]',
       \ 'rank' : 3,
       \ 'sorters' : 'sorter_filename',
+      \ 'is_volatile' : 1,
       \}
 
 function! s:source.get_complete_position(context) "{{{
@@ -45,12 +46,13 @@ function! s:source.get_complete_position(context) "{{{
   let pattern = neocomplete#get_keyword_pattern_end('filename')
   let [complete_pos, complete_str] =
         \ neocomplete#match_word(a:context.input, pattern)
-  if complete_str =~ '//' ||
+
+  if (complete_str =~ '//' ||
         \ (neocomplete#is_auto_complete() &&
         \    (complete_str !~ '/' || len(complete_str) <
         \          g:neocomplete#auto_completion_start_length ||
         \     complete_str =~#
-        \          '\\[^ ;*?[]"={}'']\|\.\.\+$\|/c\%[ygdrive/]$'))
+        \          '\\[^ ;*?[]"={}'']\|\.\.\+$\|/c\%[ygdrive/]$')))
     " Not filename pattern.
     return -1
   endif
@@ -70,7 +72,10 @@ function! s:source.gather_candidates(context) "{{{
   let pattern = neocomplete#get_keyword_pattern_end('filename')
   let [complete_pos, complete_str] =
         \ neocomplete#match_word(a:context.input, pattern)
-  return s:get_glob_files(complete_str, '')
+
+  let files = s:get_glob_files(complete_str, '')
+
+  return files
 endfunction"}}}
 
 let s:cached_files = {}
@@ -80,7 +85,7 @@ function! s:get_glob_files(complete_str, path) "{{{
 
   let complete_str = neocomplete#util#substitute_path_separator(
         \ substitute(a:complete_str, '\\\(.\)', '\1', 'g'))
-  let complete_str = substitute(complete_str, '[^/]\+$', '', '')
+  let complete_str = substitute(complete_str, '[^/.]\+$', '', '')
 
   let glob = (complete_str !~ '\*$')?
         \ complete_str . '*' : complete_str
@@ -101,6 +106,8 @@ function! s:get_glob_files(complete_str, path) "{{{
     endtry
     let files = split(substitute(globs, '\\', '/', 'g'), '\n')
   endif
+
+  call filter(files, 'v:val !~ "/\\.\\.\\?$"')
 
   let files = map(
         \ files, "{
