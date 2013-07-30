@@ -144,7 +144,7 @@ function! neocomplete#dup_filter(list) "{{{
 endfunction"}}}
 
 function! neocomplete#system(...) "{{{
-  return call(neocomplete#util#get_vital().system, a:000)
+  return call('neocomplete#util#system', a:000)
 endfunction"}}}
 function! neocomplete#has_vimproc() "{{{
   return neocomplete#util#has_vimproc()
