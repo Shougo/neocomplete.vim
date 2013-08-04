@@ -128,7 +128,7 @@ Manual:
 1. Get the plugin package
 2. Extract the files and put them in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
-3. Execute |:NeoCompleteEnable| command or set follwing variable in your vimrc >
+3. Execute |:NeoCompleteEnable| command or set following variable in your vimrc >
 	let g:neocomplete#enable_at_startup = 1
 
 Package manager:
@@ -168,7 +168,7 @@ https://github.com/Shougo/neosnippet
 						*neocomplete-context-filetype*
 
 If you like to use the context filetype feature, you need to install the
-context_filetype.vim plugin which you can find under the followind repository:
+context_filetype.vim plugin which you can find under the following repository:
 https://github.com/Shougo/context_filetype.vim
 
 ==============================================================================
