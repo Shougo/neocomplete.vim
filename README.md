@@ -48,7 +48,7 @@ If you used it, please install neosnippet source manually.
 
 https://github.com/Shougo/neosnippet
 
-Migration guide from neocomplcache is available(incomplete).
+Migration guide from neocomplcache is available.
 [Migration guide](https://github.com/Shougo/neocomplete.vim/wiki/neocomplete-migration-guide)
 
 Screen shots
