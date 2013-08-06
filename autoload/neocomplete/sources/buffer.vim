@@ -255,21 +255,14 @@ function! s:check_source() "{{{
 
   for bufnumber in filter(range(1, bufnr('$')), 'buflisted(v:val)')
     " Check new buffer.
-    let bufname = fnamemodify(bufname(bufnumber), ':p')
     if (!has_key(s:buffer_sources, bufnumber)
-          \ || s:check_changed_buffer(bufnumber))
+          \ || (bufwinnr(bufnumber) > 0 && s:check_changed_buffer(bufnumber)))
           \ && (!neocomplete#is_locked(bufnumber) ||
           \    g:neocomplete#disable_auto_complete)
           \ && !getwinvar(bufwinnr(bufnumber), '&previewwindow')
-          \ && getfsize(bufname) <
+          \ && getfsize(fnamemodify(bufname(bufnumber), ':p')) <
           \      g:neocomplete#sources#buffer#cache_limit_size
       call s:make_cache(bufnumber)
-    endif
-
-    if has_key(s:buffer_sources, bufnumber)
-      let source = s:buffer_sources[bufnumber]
-      call neocomplete#cache#check_cache_dictionary('buffer_cache',
-            \ source.path, s:async_dictionary_list, source.keyword_cache, 1)
     endif
   endfor
 endfunction"}}}
