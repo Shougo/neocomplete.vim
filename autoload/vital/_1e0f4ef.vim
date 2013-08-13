@@ -87,10 +87,8 @@ function! s:_get_module_path(name)
   endif
   if a:name ==# ''
     let tailpath = printf('autoload/vital/%s.vim', s:self_version)
-  elseif a:name =~# '\v^\u\a*%(\.\u\a*)*$'
+  elseif a:name =~# '\v^\u\w*%(\.\u\w*)*$'
     let target = '/' . substitute(a:name, '\W\+', '/', 'g')
-    let target = substitute(target, '\l\zs\ze\u', '_', 'g') " OrderedSet -> Ordered_Set
-    let target = substitute(target, '[/_]\zs\u', '\l\0', 'g') " Ordered_Set -> ordered_set
     let tailpath = printf('autoload/vital/%s%s.vim', s:self_version, target)
   else
     let tailpath = a:name

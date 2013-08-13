@@ -20,6 +20,15 @@ function! s:unshift(list, val)
   return insert(a:list, a:val)
 endfunction
 
+function! s:cons(x, xs)
+  return [a:x] + a:xs
+endfunction
+
+" TODO spec
+function! s:conj(xs, x)
+  return a:xs + [a:x]
+endfunction
+
 " Removes duplicates from a list.
 function! s:uniq(list, ...)
   let list = a:0 ? map(copy(a:list), printf('[v:val, %s]', a:1)) : copy(a:list)
@@ -55,11 +64,16 @@ function! s:concat(list)
 endfunction
 
 " Flattens a list.
-function! s:flatten(list)
+function! s:flatten(list, ...)
+  let limit = a:0 > 0 ? a:1 : -1
   let list = []
+  if limit == 0
+    return a:list
+  endif
+  let limit -= 1
   for Value in a:list
     if type(Value) == type([])
-      let list += s:flatten(Value)
+      let list += s:flatten(Value, limit)
     else
       call add(list, Value)
     endif
@@ -91,10 +105,15 @@ function! s:sort_by(list, expr)
   \      'a:a[1] ==# a:b[1] ? 0 : a:a[1] ># a:b[1] ? 1 : -1'), 'v:val[0]')
 endfunction
 
+function! s:max(list, expr)
+  echoerr 'Data.List.max() is obsolete. Use its max_by() instead.'
+  return s:max_by(a:list, a:expr)
+endfunction
+
 " Returns a maximum value in {list} through given {expr}.
 " Returns 0 if {list} is empty.
 " v:val is used in {expr}
-function! s:max(list, expr)
+function! s:max_by(list, expr)
   if empty(a:list)
     return 0
   endif
@@ -102,12 +121,17 @@ function! s:max(list, expr)
   return a:list[index(list, max(list))]
 endfunction
 
+function! s:min(list, expr)
+  echoerr 'Data.List.min() is obsolete. Use its min_by() instead.'
+  return s:min_by(a:list, a:expr)
+endfunction
+
 " Returns a minimum value in {list} through given {expr}.
 " Returns 0 if {list} is empty.
 " v:val is used in {expr}
 " FIXME: -0x80000000 == 0x80000000
-function! s:min(list, expr)
-  return s:max(a:list, '-(' . a:expr . ')')
+function! s:min_by(list, expr)
+  return s:max_by(a:list, '-(' . a:expr . ')')
 endfunction
 
 " Returns List of character sequence between [a:from, a:to]
@@ -119,10 +143,10 @@ function! s:char_range(from, to)
   \)
 endfunction
 
-" Returns true if a:list has a:Value.
+" Returns true if a:list has a:value.
 " Returns false otherwise.
-function! s:has(list, Value)
-  return index(a:list, a:Value) isnot -1
+function! s:has(list, value)
+  return index(a:list, a:value) isnot -1
 endfunction
 
 " Returns true if a:list[a:index] exists.
@@ -227,6 +251,41 @@ function! s:zip(...)
   return map(range(min(map(copy(a:000), 'len(v:val)'))), "map(copy(a:000), 'v:val['.v:val.']')")
 endfunction
 
+" similar to zip(), but goes until the longer one.
+function! s:zip_fill(xs, ys, filler)
+  if empty(a:xs) && empty(a:ys)
+    return []
+  elseif empty(a:ys)
+    return s:cons([a:xs[0], a:filler], s:zip_fill(a:xs[1 :], [], a:filler))
+  elseif empty(a:xs)
+    return s:cons([a:filler, a:ys[0]], s:zip_fill([], a:ys[1 :], a:filler))
+  else
+    return s:cons([a:xs[0], a:ys[0]], s:zip_fill(a:xs[1 :], a:ys[1: ], a:filler))
+  endif
+endfunction
+
+" Inspired by Ruby's with_index method.
+function! s:with_index(list, ...)
+  let base = a:0 > 0 ? a:1 : 0
+  return s:zip(a:list, range(base, len(a:list)+base-1))
+endfunction
+
+" similar to Ruby's detect or Haskell's find.
+" TODO spec and doc
+function! s:find(list, default, f)
+  for x in a:list
+    if eval(substitute(a:f, 'v:val', string(x), 'g'))
+      return x
+    endif
+  endfor
+  return a:default
+endfunction
+
+" Return non-zero if a:list1 and a:list2 have any common item(s).
+" Return zero otherwise.
+function! s:has_common_items(list1, list2)
+  return !empty(filter(copy(a:list1), 'index(a:list2, v:val) isnot -1'))
+endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
