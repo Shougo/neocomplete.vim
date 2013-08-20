@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jul 2013.
+" Last Modified: 20 Aug 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -307,11 +307,11 @@ function! neocomplete#helper#call_hook(sources, hook_name, context) "{{{
               \ source.hooks)
       endif
     catch
-      call unite#print_error(v:throwpoint)
-      call unite#print_error(v:exception)
-      call unite#print_error(
+      call neocomplete#print_error(v:throwpoint)
+      call neocomplete#print_error(v:exception)
+      call neocomplete#print_error(
             \ '[unite.vim] Error occured in calling hook "' . a:hook_name . '"!')
-      call unite#print_error(
+      call neocomplete#print_error(
             \ '[unite.vim] Source name is ' . source.name)
     endtry
   endfor
@@ -325,12 +325,12 @@ function! neocomplete#helper#call_filters(filters, source, context) "{{{
     try
       let context.candidates = call(filter.filter, [context], filter)
     catch
-      call unite#print_error(v:throwpoint)
-      call unite#print_error(v:exception)
-      call unite#print_error(
+      call neocomplete#print_error(v:throwpoint)
+      call neocomplete#print_error(v:exception)
+      call neocomplete#print_error(
             \ '[unite.vim] Error occured in calling filter '
             \   . filter.name . '!')
-      call unite#print_error(
+      call neocomplete#print_error(
             \ '[unite.vim] Source name is ' . a:source.name)
     endtry
   endfor
