@@ -672,8 +672,8 @@ g:neocomplete#sources#dictionary#dictionaries
 
 		Default value is {}.
 
-			*g:neoocmplete#sources#dictionary#keyword_patterns*
-g:neoocmplete#sources#dictionary#keyword_patterns
+			*g:neocomplete#sources#dictionary#keyword_patterns*
+g:neocomplete#sources#dictionary#keyword_patterns
 		It is a dictionary to dictionary keyword patterns.  The
 		dictionary's key is filetype and value is keyword pattern.
 		If this variable is empty, neocomplete uses
