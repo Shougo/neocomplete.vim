@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 Jul 2013.
+" Last Modified: 22 Aug 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -99,6 +99,8 @@ let g:neocomplete#force_omni_input_patterns =
       \ get(g:, 'neocomplete#force_omni_input_patterns', {})
 let g:neocomplete#ignore_composite_filetypes =
       \ get(g:, 'neocomplete#ignore_composite_filetypes', {})
+let g:neocomplete#ignore_source_files =
+      \ get(g:, 'neocomplete#ignore_source_files', [])
 "}}}
 
 function! neocomplete#initialize() "{{{

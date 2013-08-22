@@ -860,6 +860,17 @@ g:neocomplete#sources#vim#complete_functions
 		let g:neocomplete#sources#vim#complete_functions.Ref =
 		\ 'ref#complete'
 <
+					 *g:neocomplete#ignore_source_files*
+g:neocomplete#ignore_source_files
+		Ignore source filenames(not full path). You can optimize
+		source initialization.
+
+		Note: You cannot use the sources in ignored source files.
+>
+  let g:neocomplete#ignore_source_files = ['tag.vim']
+<
+		The default value is [].
+
 ------------------------------------------------------------------------------
 FUNCTIONS 					*neocomplete-functions*
 
