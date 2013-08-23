@@ -172,6 +172,11 @@ function! s:get_include_files(complete_str) "{{{
   let candidates = s:get_default_include_files(filetype)
   for subpath in split(path, '[,;]')
     let dir = (subpath == '.') ? bufdirectory : subpath
+
+    if (complete_str[0] == '.' && subpath[0] != '.')
+        continue
+    endif
+
     if !isdirectory(dir)
       continue
     endif
