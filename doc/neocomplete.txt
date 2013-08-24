@@ -385,9 +385,9 @@ g:neocomplete#enable_refresh_always
 
 				*g:neocomplete#lock_buffer_name_pattern*
 g:neocomplete#lock_buffer_name_pattern
-		This variable set a pattern of the buffer name.  If matched it,
+		This variable sets a pattern of the buffer name.  If matched it,
 		neocomplete does not complete automatically.  When it is an
-		empty character string, neocomplete will ignore.
+		empty character string, neocomplete will ignore it.
 
 		Default value is ''.
 
@@ -575,7 +575,7 @@ b:neocomplete_sources			*b:neocomplete_sources*
 <
 				*g:neocomplete#force_overwrite_completefunc*
 g:neocomplete#force_overwrite_completefunc
-		If this variable is 1, neocomplete forces overwrite
+		If this variable is 1, neocomplete forces to overwrite
 		'completefunc' option.  This variable is useful for other
 		plugin overwrite 'completefunc'.  But other plugin's
 		'completefunc' is disabled.
@@ -645,7 +645,7 @@ SOURCES VARIABLES 			*neocomplete-sources-variables*
 
 			*g:neocomplete#sources#buffer#cache_limit_size*
 g:neocomplete#sources#buffer#cache_limit_size
-		This variable set file size to make a cache of a file.  If
+		This variable sets file size to make a cache of a file.  If
 		open file is bigger than this size, neocomplete does not
 		make a cache.
 
@@ -653,7 +653,7 @@ g:neocomplete#sources#buffer#cache_limit_size
 
 			*g:neocomplete#sources#buffer#disabled_pattern*
 g:neocomplete#sources#buffer#disabled_pattern
-		This variable set a pattern of the buffer file path.  If
+		This variable sets a pattern of the buffer file path.  If
 		matched it, neocomplete does not save a cache of the buffer.
 		When it is an empty character string, neocomplete will
 		ignore.
@@ -839,7 +839,7 @@ g:neocomplete#sources#omni#input_patterns
 <
 				*g:neocomplete#sources#tags#cache_limit_size*
 g:neocomplete#sources#tags#cache_limit_size
-		This variable set file size to make a cache of a file in
+		This variable sets file size to make a cache of a file in
 		tag source.  If open file is bigger than this size,
 		neocomplete does not make a tags cache.
 
@@ -952,8 +952,8 @@ neocomplete#cancel_popup()
 				*neocomplete#smart_close_popup()*
 neocomplete#smart_close_popup()
 		Insert candidate and close popup menu for neocomplete.
-		Unlike|neocomplete#close_popup()|, this function changes
-		behavior by|g:neocomplete#enable_auto_select|smart.
+		Unlike |neocomplete#close_popup()|, this function changes
+		behavior by |g:neocomplete#enable_auto_select| smart.
 		Note: This mapping is conflicted with |SuperTab| or |endwise|
 		plugins.
 
@@ -976,14 +976,14 @@ neocomplete#complete_common_string()
 				*<Plug>(neocomplete_start_unite_complete)*
 <Plug>(neocomplete_start_unite_complete)
 		Start completion with |unite|.
-		Note: Required unite.vim Latest ver.3.0 or above.
+		Note: unite.vim Latest ver.3.0 or above is required.
 		Note: In unite interface, uses partial match instead of head
 		match.
 
 				*<Plug>(neocomplete_start_quick_match)*
 <Plug>(neocomplete_start_unite_quick_match)
 		Start completion with |unite| and start quick match mode.
-		Note: Required unite.vim Latest ver.3.0 or above.
+		Note: unite.vim Latest ver.3.0 or above is required.
 
 ==============================================================================
 EXAMPLES					*neocomplete-examples*
@@ -1587,7 +1587,7 @@ Q: Where is snippets set for neocomplete?
 A: https://github.com/Shougo/neosnippet
 
 
-Q: How I can disable python omni complete of neocomplete?:
+Q: How can I disable python omni complete of neocomplete?:
 
 A:
 >
