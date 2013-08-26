@@ -191,7 +191,7 @@ function! neocomplete#is_enabled() "{{{
   return neocomplete#init#is_enabled()
 endfunction"}}}
 function! neocomplete#is_locked(...) "{{{
-  let ignore_filetypes = ['unite', 'fuf', 'ku']
+  let ignore_filetypes = ['fuf', 'ku']
   let bufnr = a:0 > 0 ? a:1 : bufnr('%')
   return !neocomplete#is_enabled() || &paste
         \ || g:neocomplete#disable_auto_complete
