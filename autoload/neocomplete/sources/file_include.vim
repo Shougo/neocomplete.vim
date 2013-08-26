@@ -97,8 +97,8 @@ function! s:source.get_complete_position(context) "{{{
 
   " Check include pattern.
   let pattern = get(g:neocomplete#sources#include#patterns,
-        \ filetype, &l:include) . '\s\+'
-  if pattern == '' || a:context.input !~ pattern
+        \ filetype, &l:include)
+  if pattern == '' || a:context.input !~ pattern . '\s\+'
     return -1
   endif
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Aug 2013.
+" Last Modified: 26 Aug 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,6 +32,8 @@ let g:neocomplete#sources#buffer#cache_limit_size =
       \ get(g:, 'neocomplete#sources#buffer#cache_limit_size', 500000)
 let g:neocomplete#sources#buffer#disabled_pattern =
       \ get(g:, 'neocomplete#sources#buffer#disabled_pattern', '')
+let g:neocomplete#sources#buffer#max_keyword_width =
+      \ get(g:, 'neocomplete#sources#buffer#max_keyword_width', 80)
 "}}}
 
 " Important variables.
@@ -83,6 +85,12 @@ function! s:source.hooks.on_final(context) "{{{
   silent! delcommand NeoCompleteBufferMakeCache
 
   let s:buffer_sources = {}
+endfunction"}}}
+
+function! s:source.hooks.on_post_filter(context) "{{{
+  " Filters too long word.
+  call filter(a:context.candidates,
+        \ 'len(v:val.word) < g:neocomplete#sources#buffer#max_keyword_width')
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
