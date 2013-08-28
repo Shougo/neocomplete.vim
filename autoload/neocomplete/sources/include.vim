@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jun 2013.
+" Last Modified: 28 Aug 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -181,11 +181,9 @@ function! s:doc_dict.search(cur_text) "{{{
   endwhile
 
   for word in reverse(words)
-    let key = tolower(word[: completion_length-1])
-
     for include in filter(copy(s:include_info[bufnr('%')].include_files),
-          \ 'has_key(s:include_cache, v:val) && has_key(s:include_cache[v:val], key)')
-      for matched in filter(values(s:include_cache[include][key]),
+          \ 'has_key(s:include_cache, v:val)')
+      for matched in filter(s:include_cache[include],
             \ 'v:val.word ==# word && has_key(v:val, "kind") && v:val.kind != ""')
         let ret = []
 
