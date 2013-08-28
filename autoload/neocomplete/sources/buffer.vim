@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Aug 2013.
+" Last Modified: 28 Aug 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -217,7 +217,9 @@ endfunction"}}}
 
 function! s:make_cache(srcname) "{{{
   " Initialize source.
-  call s:initialize_source(a:srcname)
+  if !has_key(s:buffer_sources, a:srcname)
+    call s:initialize_source(a:srcname)
+  endif
 
   let source = s:buffer_sources[a:srcname]
 
