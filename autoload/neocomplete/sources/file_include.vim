@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Aug 2013.
+" Last Modified: 02 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -197,7 +197,11 @@ function! s:get_include_files(complete_str) "{{{
               \ 'v:fname', string(dict.word), 'g'))
       endif
 
-      let dict.word = fnamemodify(word, ':t:r')
+      let dict.word = fnamemodify(word, ':t')
+      if &filetype !=# 'c' && &filetype !=# 'cpp'
+        " Remove extension.
+        let dict.word = fnamemodify(word, ':r')
+      endif
 
       let abbr = dict.word
       if dict.action__is_directory
@@ -206,10 +210,11 @@ function! s:get_include_files(complete_str) "{{{
           let dict.word .= '/'
         endif
       elseif !empty(exts) &&
-            \ index(exts, fnamemodify(dict.word, ':e')) < 0
+            \ index(exts, fnamemodify(word, ':e')) < 0
         " Skip.
         continue
       endif
+
       let dict.abbr = abbr
 
       " Escape word.
