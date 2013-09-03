@@ -37,6 +37,7 @@ let s:source = {
       \ 'kind' : 'manual',
       \ 'filetypes' : { 'vim' : 1, 'vimconsole' : 1, },
       \ 'mark' : '[vim]',
+      \ 'is_volatile' : 1,
       \ 'rank' : 300,
       \ 'hooks' : {},
       \}
@@ -115,7 +116,7 @@ function! s:source.gather_candidates(context) "{{{
           \ cur_text, complete_str)
   elseif a:context.complete_str =~# '^&\%([gl]:\)\?'
     " Options.
-    let prefix = matchstr(a:context.complete_str, '&\%([gl]:\)\?')
+    let prefix = matchstr(a:context.complete_str, '^&\%([gl]:\)\?')
     let list = deepcopy(
           \ neocomplete#sources#vim#helper#option(
           \   cur_text, a:context.complete_str))
