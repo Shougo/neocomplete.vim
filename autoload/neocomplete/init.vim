@@ -142,7 +142,9 @@ function! neocomplete#init#_others() "{{{
   " Set completefunc.
   let completefunc_save = &l:completefunc
   let &completefunc = 'neocomplete#complete#manual_complete'
-  let &l:completefunc = completefunc_save
+  if completefunc_save != ''
+    let &l:completefunc = completefunc_save
+  endif
 
   command! -nargs=0 -bar NeoCompleteDisable
         \ call neocomplete#init#disable()
