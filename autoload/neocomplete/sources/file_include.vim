@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Sep 2013.
+" Last Modified: 08 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -60,6 +60,12 @@ function! s:source.hooks.on_init(context) "{{{
         \ 'g:neocomplete#sources#file_include#exprs',
         \ 'ruby,python,java,d',
         \ 'fnamemodify(substitute(v:fname, "/", ".", "g"), ":r")')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#file_include#exprs',
+        \ 'python',
+        \ "substitute(substitute(substitute(v:fname,
+        \ '\\v.*egg%(-info|-link)?$', '', ''),
+        \ '\\v\\.py$|%(\\.[^.]+)?\\.so$', '', ''), '/', '.', 'g')")
   "}}}
 
   " Initialize filename include extensions. "{{{
@@ -195,12 +201,12 @@ function! s:get_include_files(complete_str) "{{{
         " Convert filename.
         let dict.word = eval(substitute(reverse_expr,
               \ 'v:fname', string(dict.word), 'g'))
-      endif
-
-      let dict.word = fnamemodify(word, ':t')
-      if &filetype !=# 'c' && &filetype !=# 'cpp'
-        " Remove extension.
-        let dict.word = fnamemodify(word, ':r')
+      else
+        let dict.word = fnamemodify(word, ':t')
+        if &filetype !=# 'c' && &filetype !=# 'cpp'
+          " Remove extension.
+          let dict.word = fnamemodify(word, ':r')
+        endif
       endif
 
       let abbr = dict.word
