@@ -201,7 +201,7 @@ function! s:get_include_files(complete_str) "{{{
         " Convert filename.
         let dict.word = eval(substitute(reverse_expr,
               \ 'v:fname', string(dict.word), 'g'))
-      else
+      elseif !dict.action__is_directory
         let dict.word = fnamemodify(word, ':t')
         if &filetype !=# 'c' && &filetype !=# 'cpp'
           " Remove extension.
