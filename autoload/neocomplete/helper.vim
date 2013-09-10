@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 20 Aug 2013.
+" Last Modified: 10 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -190,6 +190,7 @@ function! neocomplete#helper#unite_patterns(pattern_var, filetype) "{{{
   let keyword_patterns = []
 
   lua << EOF
+do
   local patterns = vim.eval('keyword_patterns')
   local filetypes = vim.eval("split(a:filetype, '\\.')")
   local pattern_var = vim.eval('a:pattern_var')
@@ -225,6 +226,7 @@ function! neocomplete#helper#unite_patterns(pattern_var, filetype) "{{{
       patterns:add(default)
     end
   end
+end
 EOF
 
   return join(keyword_patterns, '\m\|')
