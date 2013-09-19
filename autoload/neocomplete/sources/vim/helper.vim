@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 Jul 2013.
+" Last Modified: 19 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -304,12 +304,13 @@ function! neocomplete#sources#vim#helper#event(cur_text, complete_str) "{{{
   return []
 endfunction"}}}
 function! neocomplete#sources#vim#helper#execute(cur_text, complete_str) "{{{
-  if a:cur_text =~ '["''][^"'']*$'
+  let candidates = neocomplete#sources#vim#helper#expression(a:cur_text, a:complete_str)
+  if a:cur_text =~ '["''][^"''[:space:]]*$'
     let command = matchstr(a:cur_text, '["'']\zs[^"'']*$')
-    return neocomplete#sources#vim#helper#command(command, a:complete_str)
-  else
-    return neocomplete#sources#vim#helper#expression(a:cur_text, a:complete_str)
+    let candidates += neocomplete#sources#vim#helper#command(command, a:complete_str)
   endif
+
+  return candidates
 endfunction"}}}
 function! neocomplete#sources#vim#helper#expression(cur_text, complete_str) "{{{
   return neocomplete#sources#vim#helper#function(a:cur_text, a:complete_str)
