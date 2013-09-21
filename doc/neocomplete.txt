@@ -147,7 +147,7 @@ neobundle you can install the neocomplete plugin by following steps:
 						*neocomplete-migration*
 
 In case you are planing to move from neocomplcache to neocomplete there is a
-wiki page that offers a migration guide (incomplete yet).
+wiki page that offers a migration guide.
 https://github.com/Shougo/neocomplete.vim/wiki/neocomplete-migration-guide
 
 						*neocomplete-RECOMMENDATION*
@@ -1948,7 +1948,7 @@ https://github.com/Shougo/neocomplete.vim/issues/69
 
 A: You can use |g:neocomplete#sources#buffer#max_keyword_width|.
 
-Q: neocomplete will change external completeopt vaule(longest).
+Q: neocomplete will change external completeopt value(longest).
 https://github.com/Shougo/neocomplcache.vim/issues/453
 
 A: It is feature. Because "longest" completeopt conflicts with auto
