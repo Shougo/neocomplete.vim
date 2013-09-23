@@ -73,7 +73,7 @@ function! s:source.get_complete_position(context) "{{{
   endif
 
   let pattern = '\.\%(\h\w*\)\?$\|' .
-        \ neocomplete#get_keyword_pattern_end('vim', self.keyword_patterns)
+        \ neocomplete#get_keyword_pattern_end('vim', self.name)
   if cur_text != '' && cur_text !~
         \ '^[[:digit:],[:space:][:tab:]$''<>]*\h\w*$'
     let command_completion =
@@ -81,7 +81,7 @@ function! s:source.get_complete_position(context) "{{{
           \   neocomplete#sources#vim#get_command(cur_text))
     if command_completion =~ '\%(dir\|file\|shellcmd\)'
       let pattern = neocomplete#get_keyword_pattern_end(
-            \ 'filename', self.keyword_patterns)
+            \ 'filename', self.name)
     endif
   endif
 

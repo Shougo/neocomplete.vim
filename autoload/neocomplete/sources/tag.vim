@@ -83,6 +83,7 @@ function! s:initialize_tags(filename) "{{{
         \ 'filename' : a:filename,
         \ 'cachename' : neocomplete#cache#async_load_from_tags(
         \              'tags_cache', a:filename, s:source.name,
+        \              neocomplete#get_keyword_pattern(ft, s:source.name),
         \              ft, s:source.mark, 0)
         \ }
 endfunction"}}}

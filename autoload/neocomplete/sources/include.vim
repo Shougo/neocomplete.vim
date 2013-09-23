@@ -397,7 +397,8 @@ function! s:initialize_include(filename, filetype) "{{{
         \ 'filename' : a:filename,
         \ 'cachename' : neocomplete#cache#async_load_from_tags(
         \         'include_cache', a:filename, a:filetype,
-        \         s:source.keyword_pattern, s:source.mark, 1)
+        \         neocomplete#get_keyword_pattern(a:filetype, s:source.name),
+        \         s:source.mark, 1)
         \ }
 endfunction"}}}
 function! neocomplete#sources#include#make_cache(bufname) "{{{
