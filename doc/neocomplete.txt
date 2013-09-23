@@ -1352,7 +1352,12 @@ keyword_patterns
 			Dictionary	(Optional)
 			This dictionary records keyword patterns to
 			completion.
-
+>
+	let keyword_patterns = {}
+	let keyword_patterns.tex = '\\\?\h\w*'
+	call neocomplete#custom#source('dictionary',
+	\ 'keyword_patterns', keyword_patterns)
+<
 			This attribute is optional; if it is not given,
 			|g:neocomplete#keyword_patterns| is used as the
 			default value.
