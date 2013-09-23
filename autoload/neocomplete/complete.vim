@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 12 Sep 2013.
+" Last Modified: 23 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -262,6 +262,7 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
     let source.loaded = 1
   endfor
 
+  let filetype = neocomplete#get_context_filetype()
   let sources = filter(copy(get(a:000, 0,
         \ neocomplete#helper#get_sources_list())), 'v:val.loaded')
 
@@ -277,7 +278,8 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
       let complete_pos =
             \ has_key(source, 'get_complete_position') ?
             \ source.get_complete_position(context) :
-            \ neocomplete#match_word(context.input)[0]
+            \ neocomplete#match_word(context.input,
+            \    neocomplete#get_keyword_pattern_end(filetype, source.name))[0]
     catch
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)
