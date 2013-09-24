@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 12 Sep 2013.
+" Last Modified: 24 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -342,6 +342,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
 
     if !source.is_volatile
           \ && context.prev_complete_pos == context.complete_pos
+          \ && !empty(context.prev_candidates)
       " Use previous candidates.
       let context.candidates = context.prev_candidates
     else
