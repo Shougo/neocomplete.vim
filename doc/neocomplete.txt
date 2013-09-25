@@ -681,12 +681,8 @@ g:neocomplete#sources#dictionary#dictionaries
 
 			*g:neocomplete#sources#dictionary#keyword_patterns*
 g:neocomplete#sources#dictionary#keyword_patterns
-		It is a dictionary to dictionary keyword patterns.  The
-		dictionary's key is filetype and value is keyword pattern.
-		If this variable is empty, neocomplete uses
-		|g:neocomplete#keyword_patterns| option.
-
-		Default value is {}.
+		This option is deleted. You must use
+		|neocomplete-source-attribute-keyword_patterns|.
 
 				*g:neocomplete#sources#file_include#exprs*
 g:neocomplete#sources#file_include#exprs
@@ -1350,6 +1346,21 @@ max_candidates
 			This attribute is optional; if it is not given,
 			0 is used as the default value.  This means
 			maximum number is infinity.
+
+			*neocomplete-source-attribute-keyword_patterns*
+keyword_patterns
+			Dictionary	(Optional)
+			This dictionary records keyword patterns to
+			completion.
+>
+	let keyword_patterns = {}
+	let keyword_patterns.tex = '\\\?\h\w*'
+	call neocomplete#custom#source('dictionary',
+	\ 'keyword_patterns', keyword_patterns)
+<
+			This attribute is optional; if it is not given,
+			|g:neocomplete#keyword_patterns| is used as the
+			default value.
 
 				*neocomplete-source-attribute-is_volatile*
 is_volatile		Number		(Optional)

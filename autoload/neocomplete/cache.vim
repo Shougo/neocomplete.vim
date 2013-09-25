@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 Jul 2013.
+" Last Modified: 23 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -203,7 +203,7 @@ function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, m
         \ ]
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
-function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, mark, is_create_tags) "{{{
+function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, pattern, mark, is_create_tags) "{{{
   if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
     return neocomplete#cache#encode_name(a:cache_dir, a:filename)
   endif
@@ -249,8 +249,7 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
   let filter_pattern =
         \ get(g:neocomplete#tags_filter_patterns, a:filetype, '')
   call neocomplete#cache#writefile('tags_pattens', a:filename,
-        \ [neocomplete#get_keyword_pattern(),
-        \  tags_file_name, filter_pattern, a:filetype])
+        \ [a:pattern, tags_file_name, filter_pattern, a:filetype])
 
   " args: funcname, outputname, filename
   "       pattern mark minlen encoding

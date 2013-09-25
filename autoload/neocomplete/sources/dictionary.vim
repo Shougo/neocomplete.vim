@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: dictionary.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jun 2013.
+" Last Modified: 23 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -30,8 +30,6 @@ set cpo&vim
 " Global options definition. "{{{
 let g:neocomplete#sources#dictionary#dictionaries =
       \ get(g:, 'neocomplete#sources#dictionary#dictionaries', {})
-let g:neocomplete#sources#dictionary#keyword_patterns =
-      \ get(g:, 'neocomplete#sources#dictionary#keyword_patterns', {})
 "}}}
 
 " Important variables.
@@ -130,8 +128,7 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
 
   let s:async_dictionary_list[filetype] = []
 
-  let pattern = get(g:neocomplete#sources#dictionary#keyword_patterns,
-        \ filetype, neocomplete#get_keyword_pattern(filetype))
+  let pattern = neocomplete#get_keyword_pattern(filetype, s:source.name)
   for dictionary in split(dictionaries, ',')
     let dictionary = neocomplete#util#substitute_path_separator(
           \ fnamemodify(dictionary, ':p'))

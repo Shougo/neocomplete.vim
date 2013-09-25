@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Aug 2013.
+" Last Modified: 23 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -167,22 +167,32 @@ function! neocomplete#get_next_keyword() "{{{
 endfunction"}}}
 function! neocomplete#get_keyword_pattern(...) "{{{
   let filetype = a:0 != 0? a:000[0] : neocomplete#get_context_filetype()
+  let keyword_patterns = g:neocomplete#keyword_patterns
+  if a:0 >= 2
+    let source = get(neocomplete#variables#get_sources(), a:2, {})
+    let keyword_patterns = get(source, 'keyword_patterns',
+          \ g:neocomplete#keyword_patterns)
+  endif
 
   return neocomplete#helper#unite_patterns(
         \ g:neocomplete#keyword_patterns, filetype)
 endfunction"}}}
 function! neocomplete#get_next_keyword_pattern(...) "{{{
   let filetype = a:0 != 0? a:000[0] : neocomplete#get_context_filetype()
+  let keyword_patterns = g:neocomplete#keyword_patterns
+  if a:0 >= 2
+    let source = get(neocomplete#variables#get_sources(), a:2, {})
+    let keyword_patterns = get(source, 'keyword_patterns',
+          \ g:neocomplete#keyword_patterns)
+  endif
   let next_pattern = neocomplete#helper#unite_patterns(
-        \ g:neocomplete#next_keyword_patterns, filetype)
+        \ keyword_patterns, filetype)
 
   return (next_pattern == '' ? '' : next_pattern.'\m\|')
-        \ . neocomplete#get_keyword_pattern(filetype)
+        \ . call('neocomplete#get_keyword_pattern', a:000)
 endfunction"}}}
 function! neocomplete#get_keyword_pattern_end(...) "{{{
-  let filetype = a:0 != 0? a:000[0] : neocomplete#get_context_filetype()
-
-  return '\%('.neocomplete#get_keyword_pattern(filetype).'\m\)$'
+  return '\%('.call('neocomplete#get_keyword_pattern', a:000).'\m\)$'
 endfunction"}}}
 function! neocomplete#match_word(...) "{{{
   return call('neocomplete#helper#match_word', a:000)
