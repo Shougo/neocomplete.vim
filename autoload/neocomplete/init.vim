@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 25 Sep 2013.
+" Last Modified: 26 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,6 +32,10 @@ if !exists('s:is_enabled')
 endif
 
 function! neocomplete#init#lazy() "{{{
+  if neocomplete#is_enabled()
+    return
+  endif
+
   if !exists('s:lazy_progress')
     let s:lazy_progress = 0
   endif
