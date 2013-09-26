@@ -180,7 +180,12 @@ function! neocomplete#cache#make_directory(directory) "{{{
   let directory =
         \ neocomplete#get_data_directory() .'/'.a:directory
   if !isdirectory(directory)
-    call mkdir(directory, 'p')
+    if neocomplete#util#is_sudo()
+      call neocomplete#print_error(printf(
+            \ 'Cannot create Directory "%s" in sudo session.', directory))
+    else
+      call mkdir(directory, 'p')
+    endif
   endif
 endfunction"}}}
 

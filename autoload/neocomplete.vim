@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 25 Sep 2013.
+" Last Modified: 26 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -313,7 +313,12 @@ function! neocomplete#get_data_directory() "{{{
   let directory = neocomplete#util#substitute_path_separator(
         \ neocomplete#util#expand(g:neocomplete#data_directory))
   if !isdirectory(directory)
-    call mkdir(directory, 'p')
+    if neocomplete#util#is_sudo()
+      call neocomplete#print_error(printf(
+            \ 'Cannot create Directory "%s" in sudo session.', directory))
+    else
+      call mkdir(directory, 'p')
+    endif
   endif
 
   return directory
