@@ -1642,12 +1642,11 @@ you can check 'path' option or change |g:neocomplete#sources#include#paths|.
 http://github.com/Shougo/vimproc
 
 
-Q: An error occurred in "sudo vim":
+Q: neocomplete cannot create cache files in "sudo vim":
 
-A: neocomplete does not support "sudo vim".  Because neocomplete (and other
-plugins) creates temporary files in super user permission by sudo command.
-You must use sudo.vim or set "Defaults always_set_home" in "/etc/sudoers", or
-must use "sudoedit" command.
+A: Because neocomplete (and other plugins) creates temporary files in super
+user permission by sudo command.  You must use sudo.vim or set "Defaults
+always_set_home" in "/etc/sudoers", or must use "sudoedit" command.
 
 Ubuntu has a command "sudoedit" which can work well with neocomplete.
 I'm not sure if other distros has this command...

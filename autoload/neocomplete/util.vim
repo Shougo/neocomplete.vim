@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Sep 2013.
+" Last Modified: 26 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -105,9 +105,16 @@ endfunction"}}}
 function! neocomplete#util#uniq(...) "{{{
   return call(s:List.uniq, a:000)
 endfunction"}}}
-function! neocomplete#util#sort_by(...)
+function! neocomplete#util#sort_by(...) "{{{
   return call(s:List.sort_by, a:000)
-endfunction
+endfunction"}}}
+
+" Sudo check.
+function! neocomplete#util#is_sudo() "{{{
+  return $SUDO_USER != '' && $USER !=# $SUDO_USER
+      \ && $HOME !=# expand('~'.$USER)
+      \ && $HOME ==# expand('~'.$SUDO_USER)
+endfunction"}}}
 
 function! neocomplete#util#glob(pattern, ...) "{{{
   if a:pattern =~ "'"

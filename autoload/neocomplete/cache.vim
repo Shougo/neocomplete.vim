@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 23 Sep 2013.
+" Last Modified: 26 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -135,6 +135,10 @@ EOF
 endfunction"}}}
 
 function! neocomplete#cache#save_cache(cache_dir, filename, keyword_list) "{{{
+  if neocomplete#util#is_sudo()
+    return
+  endif
+
   " Output cache.
   let string = substitute(substitute(
         \ string(a:keyword_list), '^[', '{', ''), ']$', '}', '')
@@ -156,6 +160,10 @@ function! neocomplete#cache#readfile(cache_dir, filename) "{{{
   return s:Cache.readfile(cache_dir, a:filename)
 endfunction"}}}
 function! neocomplete#cache#writefile(cache_dir, filename, list) "{{{
+  if neocomplete#util#is_sudo()
+    return
+  endif
+
   let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.writefile(cache_dir, a:filename, a:list)
 endfunction"}}}
@@ -181,6 +189,7 @@ let s:sdir = neocomplete#util#substitute_path_separator(
 
 function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, mark) "{{{
   if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
+        \ || neocomplete#util#is_sudo()
     return neocomplete#cache#encode_name(a:cache_dir, a:filename)
   endif
 
@@ -205,6 +214,7 @@ function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, m
 endfunction"}}}
 function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, pattern, mark, is_create_tags) "{{{
   if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
+        \ || neocomplete#util#is_sudo()
     return neocomplete#cache#encode_name(a:cache_dir, a:filename)
   endif
 

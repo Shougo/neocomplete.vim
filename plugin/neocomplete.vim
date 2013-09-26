@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Jun 2013.
+" Last Modified: 26 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,17 +32,7 @@ let g:loaded_neocomplete = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-if $SUDO_USER != '' && $USER !=# $SUDO_USER
-      \ && $HOME !=# expand('~'.$USER)
-      \ && $HOME ==# expand('~'.$SUDO_USER)
-  echohl Error
-  echomsg 'neocomplete disabled: "sudo vim" is detected and $HOME is set to '
-        \.'your user''s home. '
-        \.'You may want to use the sudo.vim plugin, the "-H" option '
-        \.'with "sudo" or set always_set_home in /etc/sudoers instead.'
-  echohl None
-  finish
-elseif !( has('lua') && (v:version > 703 || v:version == 703 && has('patch885')) )
+if !( has('lua') && (v:version > 703 || v:version == 703 && has('patch885')) )
   echomsg 'neocomplete does not work this version of Vim.'
   echomsg 'It requires Vim 7.3.885 or above and "if_lua" enabled Vim.'
 endif
