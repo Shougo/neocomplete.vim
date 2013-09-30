@@ -1350,8 +1350,8 @@ max_candidates
 			*neocomplete-source-attribute-keyword_patterns*
 keyword_patterns
 			Dictionary	(Optional)
-			This dictionary records keyword patterns to
-			completion.
+			This dictionary changes keyword patterns to
+			completion for specific types.
 >
 	let keyword_patterns = {}
 	let keyword_patterns.tex = '\\\?\h\w*'

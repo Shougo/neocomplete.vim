@@ -172,6 +172,11 @@ function! neocomplete#get_keyword_pattern(...) "{{{
     let source = get(neocomplete#variables#get_sources(), a:2, {})
     let keyword_patterns = get(source, 'keyword_patterns',
           \ g:neocomplete#keyword_patterns)
+    if keyword_patterns !=# g:neocomplete#keyword_patterns
+      " Merge default patterns.
+      let keyword_patterns = extend(copy(keyword_patterns),
+            \ g:neocomplete#keyword_patterns, 'keep')
+    endif
   endif
 
   return neocomplete#helper#unite_patterns(keyword_patterns, filetype)
@@ -183,6 +188,11 @@ function! neocomplete#get_next_keyword_pattern(...) "{{{
     let source = get(neocomplete#variables#get_sources(), a:2, {})
     let keyword_patterns = get(source, 'next_keyword_patterns',
           \ g:neocomplete#next_keyword_patterns)
+    if keyword_patterns !=# g:neocomplete#next_keyword_patterns
+      " Merge default patterns.
+      let keyword_patterns = extend(copy(keyword_patterns),
+            \ g:neocomplete#next_keyword_patterns, 'keep')
+    endif
   endif
   let next_pattern = neocomplete#helper#unite_patterns(
         \ keyword_patterns, filetype)
