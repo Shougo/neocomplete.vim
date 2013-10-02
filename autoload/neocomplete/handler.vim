@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Aug 2013.
+" Last Modified: 02 Oct 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -239,7 +239,7 @@ function! s:check_in_do_auto_complete() "{{{
     else
       " Warning.
       redir => output
-      99verbose setl completefunc
+      99verbose setl completefunc?
       redir END
       call neocomplete#print_error(output)
       call neocomplete#print_error(
