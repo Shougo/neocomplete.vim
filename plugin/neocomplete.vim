@@ -35,6 +35,7 @@ set cpo&vim
 if !( has('lua') && (v:version > 703 || v:version == 703 && has('patch885')) )
   echomsg 'neocomplete does not work this version of Vim.'
   echomsg 'It requires Vim 7.3.885 or above and "if_lua" enabled Vim.'
+  finish
 endif
 
 command! -nargs=0 -bar NeoCompleteEnable
