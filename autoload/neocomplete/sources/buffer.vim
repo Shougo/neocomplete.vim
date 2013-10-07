@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 23 Sep 2013.
+" Last Modified: 07 Oct 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -301,15 +301,19 @@ function! s:check_recache() "{{{
 
   let source = s:buffer_sources[bufnr('%')]
 
-  " Check buffer access time.
-  if (source.cached_time > 0 && source.cached_time < release_accessd_time)
-        \  || (neocomplete#util#has_vimproc() && line('$') != source.end_line)
+  " Check if current buffer was changed.
+  if neocomplete#util#has_vimproc() && line('$') != source.end_line
     " Buffer recache.
     if g:neocomplete#enable_debug
       echomsg 'Make cache from buffer: ' . bufname('%')
     endif
 
-    call s:make_cache_current_block()
+    if filereadable(source.path)
+      " Clear current cache.
+      let source.keyword_cache = {}
+    endif
+
+    call s:make_cache(bufnr('%'))
   endif
 endfunction"}}}
 
