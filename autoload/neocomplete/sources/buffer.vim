@@ -103,7 +103,7 @@ function! s:source.gather_candidates(context) "{{{
     if !empty(file_cache)
       let source.file_cache = file_cache
       let source.keyword_cache = extend(
-            \ copy(source.file_cache), keys(source.buffer_cache))
+            \ keys(source.buffer_cache), source.file_cache)
     endif
 
     let keyword_list += source.keyword_cache
@@ -193,7 +193,7 @@ end
 EOF
 
   let source.keyword_cache = extend(
-        \ copy(source.file_cache), keys(source.buffer_cache))
+        \ keys(source.buffer_cache), source.file_cache)
 endfunction"}}}
 
 function! s:get_sources_list() "{{{
