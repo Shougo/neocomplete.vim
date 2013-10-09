@@ -102,7 +102,7 @@ endfunction"}}}
 " For buffer source cache loader.
 function! neocomplete#cache#get_cache_dictionary(cache_dir, key, async_cache_dictionary) "{{{
   if !has_key(a:async_cache_dictionary, a:key)
-    return {}
+    return []
   endif
 
   let cache_list = a:async_cache_dictionary[a:key]
