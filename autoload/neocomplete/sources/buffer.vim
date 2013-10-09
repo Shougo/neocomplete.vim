@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 07 Oct 2013.
+" Last Modified: 09 Oct 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -98,10 +98,15 @@ function! s:source.gather_candidates(context) "{{{
 
   let keyword_list = []
   for [key, source] in s:get_sources_list()
-    call neocomplete#cache#check_cache_dictionary('buffer_cache',
-          \ source.path, s:async_dictionary_list, source.keyword_cache, 1)
+    let file_cache = neocomplete#cache#get_cache_dictionary(
+          \ 'buffer_cache', source.path, s:async_dictionary_list)
+    if !empty(file_cache)
+      let source.file_cache = file_cache
+      let source.keyword_cache = extend(
+            \ copy(source.file_cache), keys(source.buffer_cache))
+    endif
 
-    let keyword_list += keys(source.keyword_cache)
+    let keyword_list += source.keyword_cache
     if key == bufnr('%')
       let source.accessed_time = localtime()
     endif
@@ -138,10 +143,29 @@ function! s:make_cache_current_buffer(start, end) "{{{
 
   lua << EOF
 do
-  local keywords = vim.eval('source.keyword_cache')
+  local keywords = vim.eval('source.buffer_cache')
+  local lines_cache = vim.eval('source.lines_cache')
   local b = vim.buffer()
   local min_length = vim.eval('g:neocomplete#min_keyword_length')
   for linenr = vim.eval('a:start'), vim.eval('a:end') do
+    if lines_cache[linenr] == nil then
+      lines_cache[linenr] = vim.list()
+    end
+
+    local line_cache = lines_cache[linenr]
+
+    -- Clear previous line cache.
+    for i = 0, #line_cache-1 do
+      local keyword = keywords[line_cache[i]]
+      if keywords[line_cache[i]] ~= nil then
+        keywords[line_cache[i]] = keywords[line_cache[i]] - 1
+
+        if keywords[line_cache[i]] < 0 then
+          keywords[line_cache[i]] = nil
+        end
+      end
+    end
+
     local match = 0
     while match >= 0 do
       match = vim.eval('match(getline(' .. linenr ..
@@ -150,9 +174,14 @@ do
         match_end = vim.eval('matchend(getline('..linenr..
           '), keyword_pattern, '..match..')')
         match_str = string.sub(b[linenr], match+1, match_end)
-        if string.len(match_str) >= min_length and
-          keywords[match_str] == nil then
-          keywords[match_str] = ''
+        if string.len(match_str) >= min_length then
+          if keywords[match_str] == nil then
+            keywords[match_str] = 1
+          else
+            keywords[match_str] = keywords[match_str] + 1
+          end
+
+          line_cache:insert(match_str)
         end
 
         -- Next match.
@@ -162,6 +191,9 @@ do
   end
 end
 EOF
+
+  let source.keyword_cache = extend(
+        \ copy(source.file_cache), keys(source.buffer_cache))
 endfunction"}}}
 
 function! s:get_sources_list() "{{{
@@ -203,7 +235,10 @@ function! s:initialize_source(srcname) "{{{
         \ ft, s:source.name)
 
   let s:buffer_sources[a:srcname] = {
-        \ 'keyword_cache' : {},
+        \ 'keyword_cache' : [],
+        \ 'file_cache' : [],
+        \ 'buffer_cache' : {},
+        \ 'lines_cache' : {},
         \ 'frequencies' : {},
         \ 'name' : filename, 'filetype' : ft,
         \ 'keyword_pattern' : keyword_pattern,
@@ -309,8 +344,8 @@ function! s:check_recache() "{{{
     endif
 
     if filereadable(source.path)
-      " Clear current cache.
-      let source.keyword_cache = {}
+      " Clear buffer cache.
+      let source.buffer_cache = {}
     endif
 
     call s:make_cache(bufnr('%'))

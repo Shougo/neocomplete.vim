@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Sep 2013.
+" Last Modified: 09 Oct 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -100,28 +100,17 @@ function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, 
 endfunction"}}}
 
 " For buffer source cache loader.
-function! neocomplete#cache#check_cache_dictionary(cache_dir, key, async_cache_dictionary, keywords, is_string) "{{{
+function! neocomplete#cache#get_cache_dictionary(cache_dir, key, async_cache_dictionary) "{{{
   if !has_key(a:async_cache_dictionary, a:key)
-    return
+    return {}
   endif
 
   let cache_list = a:async_cache_dictionary[a:key]
 
+  let loaded_keywords = []
   for cache in filter(copy(cache_list), 'filereadable(v:val.cachename)')
     let loaded_keywords = neocomplete#cache#load_from_cache(
-              \ a:cache_dir, cache.filename, a:is_string)
-
-  lua << EOF
-do
-    local keywords = vim.eval('a:keywords')
-    local loaded_keywords = vim.eval('loaded_keywords')
-    for i = 0, #loaded_keywords-1 do
-      if keywords[loaded_keywords[i]] == nil then
-        keywords[loaded_keywords[i]] = ''
-      end
-    end
-end
-EOF
+              \ a:cache_dir, cache.filename, 1)
     break
   endfor
 
@@ -130,8 +119,9 @@ EOF
   if empty(cache_list)
     " Delete from dictionary.
     call remove(a:async_cache_dictionary, a:key)
-    return
   endif
+
+  return loaded_keywords
 endfunction"}}}
 
 function! neocomplete#cache#save_cache(cache_dir, filename, keyword_list) "{{{
