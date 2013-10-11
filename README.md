@@ -19,6 +19,7 @@ To use neocomplete, you must use Vim 7.3.885 or above with if\_lua feature.
 In Windows:
 
 [for 32bit Windows](http://files.kaoriya.net/goto/vim73w32) / [for 64bit Windows](http://files.kaoriya.net/goto/vim73w64)
+[Another distribution for Windows1](http://tuxproject.de/projects/vim/) / [Another distribution for Windows2](http://wyw.dcweb.cn/#download)
 
 In Mac:
 
