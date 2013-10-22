@@ -29,6 +29,9 @@ In MacVim with homebrew:
 
 `brew install macvim --with-cscope --with-lua --HEAD`
 
+Vim with homebrew:
+
+`brew install vim --with-lua`
 
 In Linux:
 
