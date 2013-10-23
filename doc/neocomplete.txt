@@ -1939,7 +1939,7 @@ A: neocomplete does not support eclim.  You should use
 	if !exists('g:neocomplete#force_omni_input_patterns')
 	  let g:neocomplete#force_omni_input_patterns = {}
 	endif
-	g:neocomplete#sources#omni#input_patterns.java =
+	g:neocomplete#force_omni_input_patterns.java =
 	\ \'\%(\h\w*\|)\)\.\w*
 
 Q: I want to get quiet messages in auto completion.
