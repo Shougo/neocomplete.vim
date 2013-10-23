@@ -382,7 +382,7 @@ g:neocomplete#enable_refresh_always
 		You can get real fuzzy candidates like |YouCompleteMe|.
 		Note: This feature is heavy.
 
-		Default value is 1.
+		Default value is 0.
 
 				*g:neocomplete#lock_buffer_name_pattern*
 g:neocomplete#lock_buffer_name_pattern
