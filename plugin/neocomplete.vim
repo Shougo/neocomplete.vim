@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Sep 2013.
+" Last Modified: 24 Oct 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -62,7 +62,7 @@ if get(g:, 'neocomplete#enable_at_startup', 0)
   augroup neocomplete
     " Enable startup.
     autocmd CursorHold,CursorMovedI
-          \ * call neocomplete#init#lazy()
+          \ * call neocomplete#init#enable()
   augroup END
 endif"}}}
 
