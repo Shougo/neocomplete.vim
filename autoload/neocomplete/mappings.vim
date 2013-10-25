@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 24 Oct 2013.
+" Last Modified: 25 Oct 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -49,6 +49,7 @@ function! neocomplete#mappings#smart_close_popup() "{{{
   " Don't skip next complete.
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skip_next_complete = 0
+  let neocomplete.old_linenr = 0
 
   return key
 endfunction
