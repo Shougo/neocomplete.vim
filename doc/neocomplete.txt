@@ -346,7 +346,9 @@ g:neocomplete#enable_insert_char_pre
 		|InsertCharPre| event when complete candidates.
 		Note: This option must be set before call
 		|:NeoCompleteEnable|.
-		Note: This option is experimental.
+		Note: If the option is enabled, you cannot continue completion
+		by pressing Backspace. It is Vim's feature.
+		https://github.com/Shougo/neocomplete.vim/issues/106
 
 		Default value is 0.
 
