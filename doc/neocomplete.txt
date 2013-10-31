@@ -1692,9 +1692,6 @@ A: You can add find some already found omni patterns and functions at here.
 Note: Some patterns are omitted here, (someone should check out those plugin's
 source code's complete function, and find out the omni pattern).
 >
-	" JavaScript (plugin: jscomplete-vim)
-	let g:neocomplete#sources#omni#functions.javascript =
-	\ 'jscomplete#CompleteJS'
 	" Go (plugin: gocode)
 	let g:neocomplete#sources#omni#functions.go =
 	\ 'gocomplete#Complete'
@@ -1878,20 +1875,6 @@ because if_lua has double-free problem.
 	      " \ '\w\+[.:]\|require\s*(\?["'']\w*'
 <
 
-Q: I want to use vim-nodejs-complete in neocomplete.
-A:
-Note: This settings works but may heavy.
->
-	let g:neocomplete#sources#omni#functions.javascript =
-	\ 'nodejscomplete#CompleteJS'
-	" Use jscomplete.vim
-	let g:nodejs_complete_config = {
-	\  'js_compl_fn': 'jscomplete#CompleteJS',
-	\  'max_node_compl_len': 15
-	\}
-	let g:neocomplete#sources#omni#input_patterns.javascript =
-	\ '\h\w*\|[^. \t]\.\w*'
-<
 Q: I want to disable sources in certain filetype.
 
 A:
