@@ -54,7 +54,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
 
     if complete_pos >= 0
       " Pre gather candidates for skip completion.
-      let base = cur_text[: complete_pos]
+      let base = cur_text[complete_pos :]
 
       let neocomplete.candidates = neocomplete#complete#_get_words(
             \ neocomplete.complete_sources, complete_pos, base)
