@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 Oct 2013.
+" Last Modified: 06 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -52,6 +52,20 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
           \ neocomplete#complete#_get_complete_pos(
           \ neocomplete.complete_sources)
 
+    if complete_pos >= 0
+      " Pre gather candidates for skip completion.
+      let base = cur_text[: complete_pos]
+
+      let neocomplete.candidates = neocomplete#complete#_get_words(
+            \ neocomplete.complete_sources, complete_pos, base)
+      let neocomplete.complete_str = base
+
+      if empty(neocomplete.candidates)
+        " Nothing candidates.
+        let complete_pos = -1
+      endif
+    endif
+
     if complete_pos < 0
       let neocomplete = neocomplete#get_current_neocomplete()
       let complete_pos = (neocomplete#is_prefetch() ||
@@ -66,12 +80,6 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
       " Restore completeopt.
       let &completeopt = neocomplete.completeopt
     endif
-
-    let complete_pos = neocomplete#complete#_get_complete_pos(
-          \ neocomplete.complete_sources)
-    let neocomplete.candidates = neocomplete#complete#_get_words(
-          \ neocomplete.complete_sources, complete_pos, a:base)
-    let neocomplete.complete_str = a:base
 
     let dict = { 'words' : neocomplete.candidates }
 
