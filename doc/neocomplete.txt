@@ -957,11 +957,13 @@ neocomplete#cancel_popup()
 <
 				*neocomplete#smart_close_popup()*
 neocomplete#smart_close_popup()
-		Insert candidate and close popup menu for neocomplete.
+		Insert candidate and re-generate popup menu for neocomplete.
 		Unlike |neocomplete#close_popup()|, this function changes
 		behavior by |g:neocomplete#enable_auto_select| smart.
 		Note: This mapping is conflicted with |SuperTab| or |endwise|
 		plugins.
+		Note: This key mapping is for <C-h> or <BS> keymappings.
+		You should not use it for <CR>.
 
 				*neocomplete#undo_completion()*
 neocomplete#undo_completion()
@@ -1027,7 +1029,7 @@ EXAMPLES					*neocomplete-examples*
 	" <CR>: close popup and save indent.
 	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 	function! s:my_cr_function()
-	  return neocomplete#smart_close_popup() . "\<CR>"
+	  return neocomplete#close_popup() . "\<CR>"
 	  " For no inserting <CR> key.
 	  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 	endfunction
@@ -1732,7 +1734,7 @@ A: Please try below settings.
 	" <CR>: close popup and save indent.
 	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 	function! s:my_cr_function()
-	  return neocomplete#smart_close_popup() . "\<CR>"
+	  return neocomplete#close_popup() . "\<CR>"
 	  " For no inserting <CR> key.
 	  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 	endfunction
