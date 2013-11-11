@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Sep 2013.
+" Last Modified: 11 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -167,8 +167,7 @@ function! neocomplete#sources#vim#helper#autocmd_args(cur_text, complete_str) "{
     let s:global_candidates_list.augroups = s:get_augrouplist()
   endif
   if !has_key(s:internal_candidates_list, 'autocmds')
-    let s:internal_candidates_list.autocmds =
-          \ s:make_cache_from_dict('autocmds', '')
+    let s:internal_candidates_list.autocmds = s:make_cache_autocmds()
   endif
 
   let list = []
@@ -717,6 +716,28 @@ function! s:make_cache_commands() "{{{
   endfor
 
   return commands
+endfunction"}}}
+function! s:make_cache_autocmds() "{{{
+  let helpfile = expand(findfile('doc/autocmd.txt', &runtimepath))
+  if !filereadable(helpfile)
+    return []
+  endif
+
+  let lines = readfile(helpfile)
+  let autocmds = []
+  let start = match(lines, '^|BufNewFile|')
+  let end = match(lines, '^|User|', start)
+  let desc = ''
+  for lnum in range(end, start, -1)
+    let desc = substitute(lines[lnum], '^\s\+\ze', '', 'g') . ' ' . desc
+    let _ = matchlist(desc, '^|\(.\{-}\)|\s\+\S\+')
+    if !empty(_)
+      call add(autocmds, { 'word' : _[1], })
+      let desc = ''
+    endif
+  endfor
+
+  return autocmds
 endfunction"}}}
 
 function! s:get_cmdlist() "{{{
