@@ -305,8 +305,11 @@ function! s:get_buffer_include_files(bufnumber) "{{{
     call neocomplete#util#set_default_dictionary(
           \ 'g:neocomplete#sources#include#paths', 'cpp',
           \ getbufvar(a:bufnumber, '&path') .
-          \ ','.join(split(glob('/usr/include/c++/*'), '\n') +
-          \          split(glob('/usr/include/*/c++/*'), '\n'), ','))
+          \ ','.join(filter(
+          \       split(glob('/usr/include/c++/*'), '\n') +
+          \       split(glob('/usr/include/*/c++/*'), '\n') +
+          \       split(glob('/usr/include/*/'), '\n'),
+          \     'isdirectory(v:val)'), ','))
   endif
 
   let pattern = get(g:neocomplete#sources#include#patterns, filetype,
