@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 23 Sep 2013.
+" Last Modified: 13 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -305,7 +305,8 @@ function! s:get_buffer_include_files(bufnumber) "{{{
     call neocomplete#util#set_default_dictionary(
           \ 'g:neocomplete#sources#include#paths', 'cpp',
           \ getbufvar(a:bufnumber, '&path') .
-          \ ','.join(split(glob('/usr/include/c++/*'), '\n'), ','))
+          \ ','.join(split(glob('/usr/include/c++/*'), '\n') +
+          \          split(glob('/usr/include/*/c++/*'), '\n'), ','))
   endif
 
   let pattern = get(g:neocomplete#sources#include#patterns, filetype,
