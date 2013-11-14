@@ -1971,5 +1971,22 @@ A: It is autoclose mappings problem. I cannot fix it. You should use
 auto-pairs plugin instead of it.
 https://github.com/jiangmiao/auto-pairs
 
+Q: I want to move to cursor by arrow key.
+https://github.com/Shougo/neocomplete.vim/issues/114
+
+A: First, I don't recommend to move cursor by arrow key. It is not Vim's
+theory. But if you want to move cursor forcely, you can config it by following
+settings. >
+
+	" For cursor moving in insert mode(Not recommended)
+	"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+	"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+	"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+	"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+	" Or set this.
+	"let g:neocomplete#enable_cursor_hold_i = 1
+	" Or set this.
+	"let g:neocomplete#enable_insert_char_pre = 1
+
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
