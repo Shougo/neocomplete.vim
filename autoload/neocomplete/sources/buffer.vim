@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 Oct 2013.
+" Last Modified: 20 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -209,7 +209,7 @@ function! s:get_sources_list() "{{{
     if has_key(filetypes_dict, source.filetype)
           \ || has_key(filetypes_dict, '_')
           \ || bufnr('%') == key
-          \ || (source.name ==# '[Command Line]' && bufnr('#') == key)
+          \ || (bufname('%') ==# '[Command Line]' && bufwinnr('#') == key)
       call add(sources_list, [key, source])
     endif
   endfor
