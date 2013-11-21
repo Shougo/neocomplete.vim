@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: omni.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 Jul 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -94,6 +94,10 @@ function! s:source.hooks.on_init(context) "{{{
         \'g:neocomplete#sources#omni#input_patterns',
         \'go',
         \'[^.[:digit:] *\t]\.\w*')
+  call neocomplete#util#set_default_dictionary(
+        \'g:neocomplete#sources#omni#input_patterns',
+        \'erl',
+        \'\<[[:digit:][:alnum:]_-]\+:[[:digit:][:alnum:]_-]*')
 
   " External language interface check.
   if has('ruby')
