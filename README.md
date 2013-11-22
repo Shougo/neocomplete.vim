@@ -1,82 +1,89 @@
+neocomplete
+===========
 [![Stories in Ready](http://badge.waffle.io/Shougo/neocomplete.vim.png)](http://waffle.io/Shougo/neocomplete.vim)  
-**neocomplete**
-=================
-
-Description
------------
 
 neocomplete is the abbreviation of "neo-completion with cache". It
 provides keyword completion system by maintaining a cache of keywords in the
-current buffer. neocomplete could be customized easily and has a lot more
-features than the Vim's standard completion feature.
+current buffer. neocomplete can be customized easily and has many more
+features than Vim's built-in completion.
 
-Installation
-============
+## Installation
 
-To use neocomplete, you must use Vim 7.3.885 or above with if\_lua feature.
----------------------------------------------------------------------------
+**Note:** neocomplete requires Vim 7.3.885+ with Lua enabled. 
+See [requirements](#requirements) if you aren't sure whether you have this.
 
-In Windows:
+1. Extract the files and put them in your Vim directory
+   (usually `~/.vim/` or `Program Files/Vim/vimfiles` on Windows).
+2. Execute the `:NeoCompleteEnable` command or set `let g:neocomplete#enable_at_startup = 1`
+   in your `.vimrc` (**not** in `.gvimrc` or `_gvimrc`!)
 
-[for 32bit Windows](http://files.kaoriya.net/goto/vim73w32) / [for 64bit Windows](http://files.kaoriya.net/goto/vim73w64)
-[Another distribution for Windows1](http://tuxproject.de/projects/vim/) / [Another distribution for Windows2](http://wyw.dcweb.cn/#download)
+## Requirements
 
-In Mac:
+neocomplete requires Vim 7.3.885+ compiled with [if\_lua](http://vimdoc.sourceforge.net/htmldoc/if_lua.html). 
+If `:echo has("lua")` returns `1`, then you're done; otherwise, see below.
 
-[if\_lua enabled MacVim](https://github.com/zhaocai/macvim)
+### Vim builds for Windows
 
-In MacVim with homebrew:
+* [Vim 32bit](http://files.kaoriya.net/goto/vim73w32)
+* [Vim 64bit](http://files.kaoriya.net/goto/vim73w64)
+* [Vim 32bit alternative](http://tuxproject.de/projects/vim/)
+* [Another alternative](http://wyw.dcweb.cn/#download)
 
-`brew install macvim --with-cscope --with-lua --HEAD`
+**Note:** the Vim build may not include the Lua DLL. In that case, 
+[download Lua](http://lua-users.org/wiki/LuaBinaries) and put the `lua52.dll`
+file in the same directory as `gvim.exe`.
 
-Vim with homebrew:
+### Vim for Mac OS X:
 
-`brew install vim --with-lua`
+[MacVim with `if\_lua`](https://github.com/zhaocai/macvim)
 
-In Linux:
+Or, you can install MacVim with homebrew:
 
-You should make Vim and enable if\_lua manually. Distributed package is almost
-old.
+    brew install macvim --with-cscope --with-lua --HEAD
 
-* Extract the file and put files in your Vim directory
-   (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
-* Execute `|:NeoCompleteEnable|` command or
-`let g:neocomplete#enable_at_startup = 1`
-in your `.vimrc`. Not in `.gvimrc`(`_gvimrc`)!
+To install Vim (as opposed to MacVim) with homebrew:
 
-Caution
--------
+    brew install vim --with-lua
 
-Snippets feature was split.
-If you used it, please install neosnippet source manually.
+### Vim for Linux:
 
-https://github.com/Shougo/neosnippet
+On Linux, your distribution's package manager may have a fairly outdated
+Vim build (for example, Ubuntu 12.04 ships Vim 7.3.429).
+However, [building Vim](http://vim.wikia.com/wiki/Building_Vim) on Linux is not difficult.
+Remember to specify `--with-lua` (or `--with-features=huge`).
 
-Migration guide from neocomplcache is available.
+
+## Snippets
+
+The Snippets feature of neocomplcache was split into a 
+[separate plugin](https://github.com/Shougo/neosnippet).
+
+A migration guide for existing users of neocomplcache is available: 
 [Migration guide](https://github.com/Shougo/neocomplete.vim/wiki/neocomplete-migration-guide)
 
-Screen shots
-============
 
-Original filename completion.
------------
+## Screenshots
+
+### Original filename completion
+
 ![Original filename completion.](https://f.cloud.github.com/assets/41495/622454/f519f6b8-cf42-11e2-921e-6e34dba148a6.png)
 ![Include filename completion.](https://f.cloud.github.com/assets/214488/623151/284ad86e-cf5b-11e2-828e-257d31bf0572.png)
 
-Omni completion.
-----------------
+### Omni completion
+
 ![Omni completion.](https://f.cloud.github.com/assets/41495/622456/fb2cc0bc-cf42-11e2-94e8-403cdcf5427e.png)
 
-Completion with vimshell(http://github.com/Shougo/vimshell).
-------------------------------------------------------------
+### Completion with [vimshell](http://github.com/Shougo/vimshell)
+
 ![Completion with vimshell(http://github.com/Shougo/vimshell).](https://f.cloud.github.com/assets/41495/622458/01dbc660-cf43-11e2-85f1-326e7432b0a1.png)
 
-Vim completion
-------------------------------------------------------------
+### Vim completion
+
 ![Vim completion.](https://f.cloud.github.com/assets/41495/622457/fe90ad5e-cf42-11e2-8e03-8f189b5e26e5.png)
 ![Vim completion with animation.](https://f.cloud.github.com/assets/214488/623496/94ed19a2-cf68-11e2-8d33-3aad8a39d7c1.gif)
 
-Setting examples
+
+## Configuration Examples
 
 ```vim
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
