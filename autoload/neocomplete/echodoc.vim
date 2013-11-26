@@ -41,9 +41,9 @@ function! s:doc_dict.search(cur_text) "{{{
 
   let ret = []
 
-  let match = match(item.abbr, neocomplete#escape_match(item.word))
   let abbr = (has_key(item, 'abbr') && item.word !=# item.abbr) ?
         \ item.abbr : split(item.info, '\n')[0]
+  let match = match(abbr, neocomplete#escape_match(item.word))
   if match > 0
     call add(ret, { 'text' : abbr[ : match-1] })
   endif

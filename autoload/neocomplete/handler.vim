@@ -87,6 +87,7 @@ function! neocomplete#handler#_on_complete_done() "{{{
         \   "v:val.word ==# complete_str &&
         \    (has_key(v:val, 'abbr') && v:val.word !=# v:val.abbr) ||
         \     get(v:val, 'info', '') != ''")
+  echomsg string(candidates)
   if !empty(candidates)
     let neocomplete.completed_item = candidates[0]
   endif
