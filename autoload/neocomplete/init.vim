@@ -359,6 +359,10 @@ function! neocomplete#init#_variables() "{{{
         \'g:neocomplete#keyword_patterns',
         \'nyaos,int-nyaos',
         \'\h\w*')
+  call neocomplete#util#set_default_dictionary(
+        \'g:neocomplete#keyword_patterns',
+        \'go',
+        \'\h\w*(\?')
   "}}}
 
   " Initialize next keyword patterns. "{{{
