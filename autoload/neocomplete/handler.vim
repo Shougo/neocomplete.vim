@@ -84,8 +84,11 @@ function! neocomplete#handler#_on_complete_done() "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let candidates = filter(copy(neocomplete.candidates),
-        \   'v:val.word ==# complete_str')
-  let neocomplete.completed_item = get(candidates, 0, {})
+        \   "v:val.word ==# complete_str &&
+        \    has_key(v:val, 'abbr') && v:val.word !=# v:val.abbr")
+  if !empty(candidates)
+    let neocomplete.completed_item = candidates[0]
+  endif
 
   let frequencies = neocomplete#variables#get_frequencies()
   if !has_key(frequencies, complete_str)

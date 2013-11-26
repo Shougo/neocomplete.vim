@@ -35,7 +35,7 @@ let s:doc_dict = {
 function! s:doc_dict.search(cur_text) "{{{
   let item = neocomplete#get_current_neocomplete().completed_item
 
-  if empty(item) || !has_key(item, 'abbr') || item.word ==# item.abbr
+  if empty(item)
     return []
   endif
 
