@@ -148,7 +148,7 @@ function! neocomplete#sources#vim#helper#augroup(cur_text, complete_str) "{{{
     let s:global_candidates_list.augroups = s:get_augrouplist()
   endif
 
-  return s:global_candidates_list.augroups
+  return copy(s:global_candidates_list.augroups)
 endfunction"}}}
 function! neocomplete#sources#vim#helper#buffer(cur_text, complete_str) "{{{
   return []
@@ -236,7 +236,7 @@ function! neocomplete#sources#vim#helper#environment(cur_text, complete_str) "{{
     let s:global_candidates_list.environments = s:get_envlist()
   endif
 
-  return s:global_candidates_list.environments
+  return copy(s:global_candidates_list.environments)
 endfunction"}}}
 function! neocomplete#sources#vim#helper#event(cur_text, complete_str) "{{{
   return []
@@ -258,7 +258,7 @@ function! neocomplete#sources#vim#helper#feature(cur_text, complete_str) "{{{
   if !has_key(s:internal_candidates_list, 'features')
     let s:internal_candidates_list.features = s:make_cache_features()
   endif
-  return s:internal_candidates_list.features
+  return copy(s:internal_candidates_list.features)
 endfunction"}}}
 function! neocomplete#sources#vim#helper#file(cur_text, complete_str) "{{{
   " Todo.
@@ -274,7 +274,7 @@ function! neocomplete#sources#vim#helper#filetype(cur_text, complete_str) "{{{
           \ , "matchstr(fnamemodify(v:val, ':t:r'), '^[[:alnum:]-]*')"), '')
   endif
 
-  return s:internal_candidates_list.filetypes
+  return copy(s:internal_candidates_list.filetypes)
 endfunction"}}}
 function! neocomplete#sources#vim#helper#function(cur_text, complete_str) "{{{
   " Make cache.
@@ -350,7 +350,7 @@ function! neocomplete#sources#vim#helper#option(cur_text, complete_str) "{{{
   if a:cur_text =~ '\<set\%[local]\s\+\%(filetype\|ft\)='
     return neocomplete#sources#vim#helper#filetype(a:cur_text, a:complete_str)
   else
-    return s:internal_candidates_list.options
+    return copy(s:internal_candidates_list.options)
   endif
 endfunction"}}}
 function! neocomplete#sources#vim#helper#shellcmd(cur_text, complete_str) "{{{
