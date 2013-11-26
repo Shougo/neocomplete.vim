@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 13 Nov 2013.
+" Last Modified: 26 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -65,18 +65,10 @@ function! s:source.hooks.on_init(context) "{{{
 
   " Create cache directory.
   call neocomplete#cache#make_directory('include_cache')
-
-  if neocomplete#exists_echodoc()
-    call echodoc#register('include', s:doc_dict)
-  endif
 endfunction"}}}
 
 function! s:source.hooks.on_final(context) "{{{
   silent! delcommand NeoCompleteIncludeMakeCache
-
-  if neocomplete#exists_echodoc()
-    call echodoc#unregister('include')
-  endif
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
@@ -154,57 +146,6 @@ endfunction"}}}
 function! neocomplete#sources#include#get_current_include_files() "{{{
   return s:get_buffer_include_files(bufnr('%'))
 endfunction"}}}
-
-" For echodoc. "{{{
-let s:doc_dict = {
-      \ 'name' : 'include',
-      \ 'rank' : 5,
-      \ 'filetypes' : {},
-      \ }
-function! s:doc_dict.search(cur_text) "{{{
-  if &filetype ==# 'vim' || !has_key(s:include_info, bufnr('%'))
-    return []
-  endif
-
-  let completion_length = 2
-
-  " Collect words.
-  let words = []
-  let i = 0
-  while i >= 0
-    let word = matchstr(a:cur_text, '\k\+', i)
-    if len(word) >= completion_length
-      call add(words, word)
-    endif
-
-    let i = matchend(a:cur_text, '\k\+', i)
-  endwhile
-
-  for word in reverse(words)
-    for include in filter(copy(s:include_info[bufnr('%')].include_files),
-          \ 'has_key(s:include_cache, v:val)')
-      for matched in filter(s:include_cache[include],
-            \ 'v:val.word ==# word && has_key(v:val, "kind") && v:val.kind != ""')
-        let ret = []
-
-        let match = match(matched.abbr, neocomplete#escape_match(word))
-        if match > 0
-          call add(ret, { 'text' : matched.abbr[ : match-1] })
-        endif
-
-        call add(ret, { 'text' : word, 'highlight' : 'Identifier' })
-        call add(ret, { 'text' : matched.abbr[match+len(word) :] })
-
-        if match > 0 || len(ret[-1].text) > 0
-          return ret
-        endif
-      endfor
-    endfor
-  endfor
-
-  return []
-endfunction"}}}
-"}}}
 
 function! s:check_buffer(bufnumber, is_force) "{{{
   if !neocomplete#is_enabled_source('include')
