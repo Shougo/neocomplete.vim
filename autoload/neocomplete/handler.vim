@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Nov 2013.
+" Last Modified: 27 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -85,7 +85,8 @@ function! neocomplete#handler#_on_complete_done() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let candidates = filter(copy(neocomplete.candidates),
         \   "v:val.word ==# complete_str &&
-        \    has_key(v:val, 'abbr') && v:val.word !=# v:val.abbr")
+        \    (has_key(v:val, 'abbr') && v:val.word !=# v:val.abbr) ||
+        \     get(v:val, 'info', '') != ''")
   if !empty(candidates)
     let neocomplete.completed_item = candidates[0]
   endif
