@@ -76,8 +76,8 @@ function! neocomplete#handler#_on_write_post() "{{{
 endfunction"}}}
 function! neocomplete#handler#_on_complete_done() "{{{
   " Get cursor word.
-  let [_, complete_str] = neocomplete#match_word(
-        \ neocomplete#get_cur_text(1))
+  let complete_str = matchstr(neocomplete#get_cur_text(1),
+        \ '\%('.neocomplete#get_next_keyword_pattern().'\m\)$')
   if complete_str == ''
     return
   endif

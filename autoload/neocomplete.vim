@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 01 Oct 2013.
+" Last Modified: 26 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -182,8 +182,8 @@ function! neocomplete#get_keyword_pattern(...) "{{{
   return neocomplete#helper#unite_patterns(keyword_patterns, filetype)
 endfunction"}}}
 function! neocomplete#get_next_keyword_pattern(...) "{{{
-  let filetype = a:0 != 0? a:000[0] : neocomplete#get_context_filetype()
-  let keyword_patterns = g:neocomplete#keyword_patterns
+  let filetype = (a:0 != 0) ? a:000[0] : neocomplete#get_context_filetype()
+  let keyword_patterns = g:neocomplete#next_keyword_patterns
   if a:0 >= 2
     let source = get(neocomplete#variables#get_sources(), a:2, {})
     let keyword_patterns = get(source, 'next_keyword_patterns',

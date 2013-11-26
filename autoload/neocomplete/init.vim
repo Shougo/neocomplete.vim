@@ -362,22 +362,23 @@ function! neocomplete#init#_variables() "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'go',
-        \'\h\w*(\?')
+        \'\h\w*')
   "}}}
 
   " Initialize next keyword patterns. "{{{
   call neocomplete#util#set_default_dictionary(
+        \'g:neocomplete#next_keyword_patterns',
+        \'python,go,cs,java,lua,zimbu',
+        \'\w*()\?')
+  call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#next_keyword_patterns', 'perl',
-        \'\h\w*>')
+        \'\w*()\?\|\h\w*>')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#next_keyword_patterns', 'perl6',
-        \'\h\w*>')
+        \'\w*()\?\|\h\w*>')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#next_keyword_patterns', 'vim,help',
         \'\w*()\?\|\w*:\]\|[[:alnum:]_-]*[)>=]')
-  call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete#next_keyword_patterns', 'python',
-        \'\w*()\?')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#next_keyword_patterns', 'tex',
         \'[[:alnum:]:_]\+[*[{}]')
