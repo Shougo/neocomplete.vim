@@ -87,7 +87,7 @@ function! neocomplete#handler#_on_complete_done() "{{{
     let complete_str = v:completed_item.word
     if (v:completed_item.abbr != ''
           \ && v:completed_item.word !=# v:completed_item.abbr
-          \ && v:completed_item.abbr !~ '\~$') || v:completed_item.info != ''
+          \ && v:completed_item.abbr[-1] != '~') || v:completed_item.info != ''
       let neocomplete.completed_item = v:completed_item
     endif
   else
@@ -99,8 +99,8 @@ function! neocomplete#handler#_on_complete_done() "{{{
 
     let candidates = filter(copy(neocomplete.candidates),
           \   "v:val.word ==# complete_str &&
-          \    (has_key(v:val, 'abbr') &&
-          \     v:val.word !=# v:val.abbr && v:val.abbr !~ '\~$') ||
+          \    (get(v:val, 'abbr', '') != '' &&
+          \     v:val.word !=# v:val.abbr && v:val.abbr[-1] != '~') ||
           \     get(v:val, 'info', '') != ''")
     if !empty(candidates)
       let neocomplete.completed_item = candidates[0]
