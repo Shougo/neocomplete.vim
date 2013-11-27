@@ -75,21 +75,36 @@ function! neocomplete#handler#_on_write_post() "{{{
   endfor
 endfunction"}}}
 function! neocomplete#handler#_on_complete_done() "{{{
-  " Get cursor word.
-  let complete_str = matchstr(neocomplete#get_cur_text(1),
-        \ '\%('.neocomplete#get_next_keyword_pattern().'\m\)$')
-  if complete_str == ''
-    return
-  endif
-
   let neocomplete = neocomplete#get_current_neocomplete()
-  let candidates = filter(copy(neocomplete.candidates),
-        \   "v:val.word ==# complete_str &&
-        \    (has_key(v:val, 'abbr') &&
-        \     v:val.word !=# v:val.abbr && v:val.abbr !~ '~$') ||
-        \     get(v:val, 'info', '') != ''")
-  if !empty(candidates)
-    let neocomplete.completed_item = candidates[0]
+
+  " Get cursor word.
+  if exists('v:completed_item')
+    " Use v:completed_item feature.
+
+    if type(v:completed_item) != type({}) || empty(v:completed_item)
+      return
+    endif
+
+    let complete_str = v:completed_item.word
+    if (v:completed_item.word !=# v:completed_item.abbr
+          \ && v:completed_item.abbr !~ '\~$') || v:completed_item.info != ''
+      let neocomplete.completed_item = v:completed_item
+    endif
+  else
+    let complete_str = matchstr(neocomplete#get_cur_text(1),
+          \ '\%('.neocomplete#get_next_keyword_pattern().'\m\)$')
+    if complete_str == ''
+      return
+    endif
+
+    let candidates = filter(copy(neocomplete.candidates),
+          \   "v:val.word ==# complete_str &&
+          \    (has_key(v:val, 'abbr') &&
+          \     v:val.word !=# v:val.abbr && v:val.abbr !~ '\~$') ||
+          \     get(v:val, 'info', '') != ''")
+    if !empty(candidates)
+      let neocomplete.completed_item = candidates[0]
+    endif
   endif
 
   let frequencies = neocomplete#variables#get_frequencies()
