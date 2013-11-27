@@ -80,13 +80,13 @@ function! neocomplete#handler#_on_complete_done() "{{{
   " Get cursor word.
   if exists('v:completed_item')
     " Use v:completed_item feature.
-
-    if type(v:completed_item) != type({}) || empty(v:completed_item)
+    if empty(v:completed_item)
       return
     endif
 
     let complete_str = v:completed_item.word
-    if (v:completed_item.word !=# v:completed_item.abbr
+    if (v:completed_item.abbr != ''
+          \ && v:completed_item.word !=# v:completed_item.abbr
           \ && v:completed_item.abbr !~ '\~$') || v:completed_item.info != ''
       let neocomplete.completed_item = v:completed_item
     endif
