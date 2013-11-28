@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Nov 2013.
+" Last Modified: 28 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -209,7 +209,7 @@ function! neocomplete#init#_variables() "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'cpp',
-        \'^\s*#\s*\h\w*\|\h\w*\%(::\w*\)*')
+        \'^\s*#\s*\h\w*\|\h\w*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'objc',
@@ -217,7 +217,7 @@ function! neocomplete#init#_variables() "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'objcpp',
-        \'^\s*#\s*\h\w*\|\h\w*\%(::\w*\)*\|@\h\w*')
+        \'^\s*#\s*\h\w*\|\h\w*\|@\h\w*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'objj',
