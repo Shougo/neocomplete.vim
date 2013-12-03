@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Oct 2013.
+" Last Modified: 03 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -202,24 +202,28 @@ function! s:get_include_files(complete_str) "{{{
         " Convert filename.
         let dict.word = eval(substitute(reverse_expr,
               \ 'v:fname', string(dict.word), 'g'))
-      elseif !dict.action__is_directory
+      else
         let dict.word = fnamemodify(word, ':t')
-        if &filetype !=# 'c' && &filetype !=# 'cpp'
+        if !dict.action__is_directory &&
+              \ &filetype !=# 'c' && &filetype !=# 'cpp'
           " Remove extension.
           let dict.word = fnamemodify(word, ':r')
         endif
       endif
 
-      let abbr = dict.word
       if dict.action__is_directory
-        let abbr .= '/'
+        let abbr = reverse_expr != '' ?
+              \ eval(substitute(reverse_expr,
+              \ 'v:fname', string(dict.word.'/'), 'g')) : dict.word . '/'
         if g:neocomplete#enable_auto_delimiter
-          let dict.word .= '/'
+          let dict.word = abbr
         endif
       elseif !empty(exts) &&
             \ index(exts, fnamemodify(word, ':e')) < 0
         " Skip.
         continue
+      else
+        let abbr = dict.word
       endif
 
       let dict.abbr = abbr
