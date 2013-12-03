@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Dec 2013.
+" Last Modified: 04 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -38,7 +38,7 @@ let s:source = {
       \ 'name' : 'file/include',
       \ 'kind' : 'manual',
       \ 'mark' : '[FI]',
-      \ 'rank' : 10,
+      \ 'rank' : 150,
       \ 'hooks' : {},
       \ 'sorters' : 'sorter_filename',
       \}
@@ -125,8 +125,9 @@ function! s:source.get_complete_position(context) "{{{
     let complete_pos = len(a:context.input)
   endif
 
-  if complete_str =~ '/'
-    let complete_pos += strridx(complete_str, '/') + 1
+  let delimiter = (&filetype ==# 'c' || &filetype ==# 'cpp') ? '/' : '.'
+  if strridx(complete_str, delimiter) > 0
+    let complete_pos += strridx(complete_str, delimiter) + 1
   endif
 
   return complete_pos
