@@ -41,6 +41,7 @@ let s:source = {
       \ 'rank' : 150,
       \ 'hooks' : {},
       \ 'sorters' : 'sorter_filename',
+      \ 'converters' : ['converter_remove_next_keyword', 'converter_abbr'],
       \}
 
 function! neocomplete#sources#file_include#define() "{{{
@@ -55,17 +56,16 @@ function! s:source.hooks.on_init(context) "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#file_include#exprs',
         \ 'perl',
-        \ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")')
+        \ 'substitute(v:fname, "/", "::", "g")')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#file_include#exprs',
         \ 'ruby,java,d',
-        \ 'fnamemodify(substitute(v:fname, "/", ".", "g"), ":r")')
+        \ 'substitute(v:fname, "/", ".", "g")')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#file_include#exprs',
         \ 'python',
-        \ "substitute(substitute(substitute(v:fname,
-        \ '\\v.*egg%(-info|-link)?$', '', ''),
-        \ '\\v\\.py$|%(\\.[^.]+)?\\.so$', '', ''), '/', '.', 'g')")
+        \ "substitute(substitute(v:fname,
+        \ '\\v.*egg%(-info|-link)?$', '', ''), '/', '.', 'g')")
   "}}}
 
   " Initialize filename include extensions. "{{{
@@ -126,7 +126,7 @@ function! s:source.get_complete_position(context) "{{{
   endif
 
   let delimiter = (&filetype ==# 'c' || &filetype ==# 'cpp') ? '/' : '.'
-  if strridx(complete_str, delimiter) > 0
+  if strridx(complete_str, delimiter) >= 0
     let complete_pos += strridx(complete_str, delimiter) + 1
   endif
 
@@ -134,14 +134,10 @@ function! s:source.get_complete_position(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  let pattern = neocomplete#get_keyword_pattern_end(
-        \ 'filename', self.name)
-  let [complete_pos, complete_str] =
-        \ neocomplete#match_word(a:context.input, pattern)
-  return s:get_include_files(complete_str)
+  return s:get_include_files()
 endfunction"}}}
 
-function! s:get_include_files(complete_str) "{{{
+function! s:get_include_files() "{{{
   let filetype = neocomplete#get_context_filetype()
 
   let path = neocomplete#util#substitute_path_separator(
@@ -169,7 +165,7 @@ function! s:get_include_files(complete_str) "{{{
           \ substitute(eval(substitute(expr,
           \ 'v:fname', string(complete_str), 'g')), '\.\w*$', '', '')
   endif
-  let complete_str = substitute(complete_str, '[^/]\+$', '', '')
+  let delimiter = (&filetype ==# 'c' || &filetype ==# 'cpp') ? '/' : '.'
 
   " Path search.
   let glob = (complete_str !~ '\*$')?
@@ -194,6 +190,12 @@ function! s:get_include_files(complete_str) "{{{
     for word in split(
           \ neocomplete#util#substitute_path_separator(
           \   glob(glob)), '\n')
+      if !empty(exts) &&
+            \ index(exts, fnamemodify(word, ':e')) < 0
+        " Skip.
+        continue
+      endif
+
       let dict = {
             \ 'word' : word,
             \ 'action__is_directory' : isdirectory(word)
@@ -203,28 +205,24 @@ function! s:get_include_files(complete_str) "{{{
         " Convert filename.
         let dict.word = eval(substitute(reverse_expr,
               \ 'v:fname', string(dict.word), 'g'))
-      else
-        let dict.word = fnamemodify(word, ':t')
-        if !dict.action__is_directory &&
-              \ &filetype !=# 'c' && &filetype !=# 'cpp'
-          " Remove extension.
-          let dict.word = fnamemodify(word, ':r')
-        endif
       endif
 
+      if !dict.action__is_directory && delimiter != '/'
+        " Remove extension.
+        let dict.word = fnamemodify(dict.word, ':r')
+      endif
+
+      " Remove before delimiter.
+      if strridx(dict.word, delimiter) >= 0
+        let dict.word = dict.word[strridx(dict.word, delimiter)+1: ]
+      endif
+
+      let abbr = dict.word
       if dict.action__is_directory
-        let abbr = reverse_expr != '' ?
-              \ eval(substitute(reverse_expr,
-              \ 'v:fname', string(dict.word.'/'), 'g')) : dict.word . '/'
+        let abbr .= delimiter
         if g:neocomplete#enable_auto_delimiter
-          let dict.word = abbr
+          let dict.word .= delimiter
         endif
-      elseif !empty(exts) &&
-            \ index(exts, fnamemodify(word, ':e')) < 0
-        " Skip.
-        continue
-      else
-        let abbr = dict.word
       endif
 
       let dict.abbr = abbr
