@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Dec 2013.
+" Last Modified: 05 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,6 +32,8 @@ let g:neocomplete#sources#file_include#exprs =
         \ get(g:, 'neocomplete#sources#file_include#exprs', {})
 let g:neocomplete#sources#file_include#exts =
       \ get(g:, 'neocomplete#sources#file_include#exts', {})
+let g:neocomplete#sources#file_include#delimiters =
+      \ get(g:, 'neocomplete#sources#file_include#delimiters', {})
 "}}}
 
 let s:source = {
@@ -59,8 +61,12 @@ function! s:source.hooks.on_init(context) "{{{
         \ 'substitute(v:fname, "/", "::", "g")')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#file_include#exprs',
-        \ 'ruby,java,d',
+        \ 'java,d',
         \ 'substitute(v:fname, "/", ".", "g")')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#file_include#exprs',
+        \ 'ruby',
+        \ 'substitute(v:fname, "\.rb$", "", "")')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#file_include#exprs',
         \ 'python',
@@ -81,6 +87,18 @@ function! s:source.hooks.on_init(context) "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#file_include#exts',
         \ 'java', ['java'])
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#file_include#exts',
+        \ 'ruby', ['rb'])
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#file_include#exts',
+        \ 'python', ['py', 'py3'])
+  "}}}
+
+  " Initialize filename include delimiter. "{{{
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#file_include#delimiters',
+        \ 'c,cpp,ruby', '/')
   "}}}
 endfunction"}}}
 
@@ -125,7 +143,8 @@ function! s:source.get_complete_position(context) "{{{
     let complete_pos = len(a:context.input)
   endif
 
-  let delimiter = (&filetype ==# 'c' || &filetype ==# 'cpp') ? '/' : '.'
+  let delimiter = get(g:neocomplete#sources#file_include#delimiters,
+        \ &filetype, '.')
   if strridx(complete_str, delimiter) >= 0
     let complete_pos += strridx(complete_str, delimiter) + 1
   endif
@@ -165,7 +184,8 @@ function! s:get_include_files() "{{{
           \ substitute(eval(substitute(expr,
           \ 'v:fname', string(complete_str), 'g')), '\.\w*$', '', '')
   endif
-  let delimiter = (&filetype ==# 'c' || &filetype ==# 'cpp') ? '/' : '.'
+  let delimiter = get(g:neocomplete#sources#file_include#delimiters,
+        \ &filetype, '.')
 
   " Path search.
   let glob = (complete_str !~ '\*$')?
@@ -190,8 +210,8 @@ function! s:get_include_files() "{{{
     for word in split(
           \ neocomplete#util#substitute_path_separator(
           \   glob(glob)), '\n')
-      if !empty(exts) &&
-            \ index(exts, fnamemodify(word, ':e')) < 0
+      if !isdirectory(word) &&
+            \ !empty(exts) && index(exts, fnamemodify(word, ':e')) < 0
         " Skip.
         continue
       endif

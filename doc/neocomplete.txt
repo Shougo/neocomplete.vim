@@ -720,6 +720,16 @@ g:neocomplete#sources#file_include#exts
 		autoload/neocomplete/sources/file.vim for the
 		initial value.
 
+				*g:neocomplete#sources#file_include#delimiters*
+g:neocomplete#sources#file_include#delimiters
+		It is the delimiter character of include path.  When there is
+		not it, "." is used.  It is the dictionary of the string that
+		assumed file type a key.
+
+		Because it is complicated, refer to s:source.initialize() in
+		autoload/neocomplete/sources/file.vim for the
+		initial value.
+
 					*g:neocomplete#sources#include#paths*
 g:neocomplete#sources#include#paths
 		It is the variable to enumerate path of the include file
