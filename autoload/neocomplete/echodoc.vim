@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: echodoc.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Nov 2013.
+" Last Modified: 05 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -43,6 +43,11 @@ function! s:doc_dict.search(cur_text) "{{{
 
   let abbr = (has_key(item, 'abbr') && item.word !=# item.abbr) ?
         \ item.abbr : split(item.info, '\n')[0]
+  " Skip
+  if len(abbr) < len(item.word) + 2
+    return []
+  endif
+
   let match = match(abbr, neocomplete#escape_match(item.word))
   if match > 0
     call add(ret, { 'text' : abbr[ : match-1] })

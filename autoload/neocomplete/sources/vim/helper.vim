@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Nov 2013.
+" Last Modified: 05 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -624,7 +624,7 @@ function! s:make_cache_functions() "{{{
     if !empty(_)
       call insert(functions, {
             \ 'word' : _[2],
-            \ 'abbr' : substitute(_[1], '(\zs\s\+', '', ''),
+            \ 'abbr' : substitute(_[0], '(\zs\s\+', '', ''),
             \ })
       let desc = ''
     endif
@@ -650,7 +650,6 @@ function! s:make_cache_commands() "{{{
       call add(commands, {
             \ 'word' : _[1], 'kind' : 'c',
             \ })
-      let desc = ''
     endif
   endfor
 
