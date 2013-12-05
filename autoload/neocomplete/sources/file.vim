@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Dec 2013.
+" Last Modified: 06 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -48,7 +48,7 @@ function! s:source.get_complete_position(context) "{{{
   let [complete_pos, complete_str] =
         \ neocomplete#match_word(a:context.input, pattern)
 
-  if (complete_str =~ '//' ||
+  if (complete_str =~ '//' || complete_str == '/' ||
         \ (neocomplete#is_auto_complete() &&
         \    (complete_str !~ '/' || len(complete_str) <
         \          g:neocomplete#auto_completion_start_length ||
