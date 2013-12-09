@@ -33,7 +33,6 @@ function! neocomplete#helper#get_cur_text() "{{{
         \      getline('.') :
         \      matchstr(getline('.'),
         \         '^.*\%' . col('.') . 'c' . (mode() ==# 'i' ? '' : '.'))
-  echomsg cur_text
 
   if cur_text =~ '^.\{-}\ze\S\+$'
     let complete_str = matchstr(cur_text, '\S\+$')
