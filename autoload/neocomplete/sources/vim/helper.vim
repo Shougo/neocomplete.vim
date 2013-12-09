@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Dec 2013.
+" Last Modified: 09 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -571,7 +571,8 @@ function! s:make_cache_options() "{{{
   redir => raw
   silent set all
   redir END
-  let options = map(filter(split(raw, '\s\{2,}\|\n')[1:], "!empty(v:val)"),
+  let options = map(filter(split(raw, '\s\{2,}\|\n')[1:],
+        \ "!empty(v:val) && v:val =~ '^\\h\\w*=\\?'"),
         \ "substitute(v:val, '^no\\|=\\zs.*$', '', '')")
   for option in copy(options)
     if option[-1:] != '='
