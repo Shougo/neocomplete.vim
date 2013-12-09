@@ -114,13 +114,13 @@ function! s:get_glob_files(complete_str, path) "{{{
   let files = map(
         \ files, "{
         \    'word' : fnamemodify(v:val, ':t'),
-        \    'action__is_directory' : isdirectory(v:val),
+        \    'kind' : (isdirectory(v:val) ? 'dir' : 'file'),
         \ }")
 
   let candidates = []
   for dict in files
     let abbr = dict.word
-    if dict.action__is_directory && dict.word !~ '/$'
+    if dict.kind ==# 'dir' && dict.word !~ '/$'
       let abbr .= '/'
       if g:neocomplete#enable_auto_delimiter
         let dict.word .= '/'

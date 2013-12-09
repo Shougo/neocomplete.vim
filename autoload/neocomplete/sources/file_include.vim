@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Dec 2013.
+" Last Modified: 10 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -218,7 +218,7 @@ function! s:get_include_files() "{{{
 
       let dict = {
             \ 'word' : word,
-            \ 'action__is_directory' : isdirectory(word)
+            \ 'kind' : (isdirectory(word) ? 'dir' : 'file'),
             \ }
 
       if reverse_expr != ''
@@ -227,7 +227,7 @@ function! s:get_include_files() "{{{
               \ 'v:fname', string(dict.word), 'g'))
       endif
 
-      if !dict.action__is_directory && delimiter != '/'
+      if dict.kind ==# 'file' && delimiter != '/'
         " Remove extension.
         let dict.word = fnamemodify(dict.word, ':r')
       endif
@@ -238,7 +238,7 @@ function! s:get_include_files() "{{{
       endif
 
       let abbr = dict.word
-      if dict.action__is_directory
+      if dict.kind ==# 'dir'
         let abbr .= delimiter
         if g:neocomplete#enable_auto_delimiter
           let dict.word .= delimiter
@@ -267,8 +267,8 @@ function! s:get_default_include_files(filetype) "{{{
 
   return map(files, "{
         \ 'word' : v:val,
-        \ 'action__is_directory' : isdirectory(v:val) }
-        \")
+        \ 'kind' : (isdirectory(v:val) ? 'dir' : 'file'),
+        \}")
 endfunction"}}}
 
 let &cpo = s:save_cpo
