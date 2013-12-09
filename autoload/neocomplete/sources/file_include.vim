@@ -218,8 +218,9 @@ function! s:get_include_files() "{{{
 
       let dict = {
             \ 'word' : word,
-            \ 'kind' : (isdirectory(word) ? 'dir' : 'file'),
+            \ 'action__is_directory' : isdirectory(word),
             \ }
+      let dict.kind = (dict.action__is_directory) ? 'dir' : 'file'
 
       if reverse_expr != ''
         " Convert filename.
@@ -227,7 +228,7 @@ function! s:get_include_files() "{{{
               \ 'v:fname', string(dict.word), 'g'))
       endif
 
-      if dict.kind ==# 'file' && delimiter != '/'
+      if !dict.action__is_directory && delimiter != '/'
         " Remove extension.
         let dict.word = fnamemodify(dict.word, ':r')
       endif
@@ -238,7 +239,7 @@ function! s:get_include_files() "{{{
       endif
 
       let abbr = dict.word
-      if dict.kind ==# 'dir'
+      if dict.action__is_directory
         let abbr .= delimiter
         if g:neocomplete#enable_auto_delimiter
           let dict.word .= delimiter
@@ -267,6 +268,7 @@ function! s:get_default_include_files(filetype) "{{{
 
   return map(files, "{
         \ 'word' : v:val,
+        \ 'action__is_directory' : isdirectory(v:val),
         \ 'kind' : (isdirectory(v:val) ? 'dir' : 'file'),
         \}")
 endfunction"}}}
