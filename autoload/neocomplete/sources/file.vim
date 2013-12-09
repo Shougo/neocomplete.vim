@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Dec 2013.
+" Last Modified: 10 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -31,7 +31,7 @@ let s:source = {
       \ 'name' : 'file',
       \ 'kind' : 'manual',
       \ 'mark' : '[F]',
-      \ 'rank' : 3,
+      \ 'rank' : 10,
       \ 'sorters' : 'sorter_filename',
       \ 'converters' : ['converter_remove_next_keyword', 'converter_abbr'],
       \ 'is_volatile' : 1,
