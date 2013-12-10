@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Dec 2013.
+" Last Modified: 11 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -107,7 +107,7 @@ function! s:source.get_complete_position(context) "{{{
   if filetype ==# 'java'
     " Cannot complete include path.
     " You should use omnifunc plugins..
-    return []
+    return -1
   endif
 
   " Not Filename pattern.
