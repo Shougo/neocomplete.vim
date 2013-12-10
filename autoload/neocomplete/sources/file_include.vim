@@ -104,6 +104,10 @@ endfunction"}}}
 
 function! s:source.get_complete_position(context) "{{{
   let filetype = neocomplete#get_context_filetype()
+  if filetype ==# 'java'
+    " Cannot complete.
+    return []
+  endif
 
   " Not Filename pattern.
   if exists('g:neocomplete#sources#include#patterns')
