@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_remove_next_keyword.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Jun 2013.
+" Last Modified: 10 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -76,7 +76,7 @@ function! neocomplete#filters#converter_remove_next_keyword#get_next_keyword(sou
         \   neocomplete#get_next_keyword_pattern()) . '\m\)'
 
   let next_keyword = matchstr('a'.
-        \ getline('.')[len(neocomplete#get_cur_text(1)) :], pattern)[1:]
+        \ getline('.')[len(neocomplete#get_cur_text(1))+1 :], pattern)[1:]
   return next_keyword
 endfunction"}}}
 

@@ -28,11 +28,15 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! neocomplete#helper#get_cur_text() "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+
   let cur_text =
         \ (mode() ==# 'i' ? (col('.')-1) : col('.')) >= len(getline('.')) ?
         \      getline('.') :
         \      matchstr(getline('.'),
-        \         '^.*\%' . col('.') . 'c' . (mode() ==# 'i' ? '' : '.'))
+        \         '^.*\%' . (mode() ==# 'i' && neocomplete.event != '' ?
+        \                    col('.') : col('.') - 1)
+        \         . 'c' . (mode() ==# 'i' ? '' : '.'))
 
   if cur_text =~ '^.\{-}\ze\S\+$'
     let complete_str = matchstr(cur_text, '\S\+$')
@@ -41,7 +45,6 @@ function! neocomplete#helper#get_cur_text() "{{{
     let complete_str = ''
   endif
 
-  let neocomplete = neocomplete#get_current_neocomplete()
   if neocomplete.event ==# 'InsertCharPre'
     let complete_str .= v:char
   endif
