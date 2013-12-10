@@ -270,9 +270,10 @@ EOF
 
   " Check dup and set icase.
   let icase = g:neocomplete#enable_ignore_case &&
-        \!(g:neocomplete#enable_smart_case && a:complete_str =~ '\u')
+        \!((g:neocomplete#enable_smart_case
+        \  || g:neocomplete#enable_camel_case) && a:complete_str =~ '\u')
   for candidate in candidates
-    let candidate.icase = icase
+    let candidate.icase = 1
   endfor
 
   if neocomplete#complete_check()
@@ -362,9 +363,8 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
 
     if neocomplete#is_text_mode()
       let &ignorecase = 1
-    elseif g:neocomplete#enable_smart_case
-          \ && context.complete_str =~ '\u'
-      let &ignorecase = 0
+    elseif g:neocomplete#enable_smart_case || g:neocomplete#enable_camel_case
+      let &ignorecase = context.complete_str !~ '\u'
     else
       let &ignorecase = g:neocomplete#enable_ignore_case
     endif

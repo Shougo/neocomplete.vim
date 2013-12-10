@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Nov 2013.
+" Last Modified: 10 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -108,8 +108,8 @@ function! neocomplete#mappings#complete_common_string() "{{{
 
   if neocomplete#is_text_mode()
     let &ignorecase = 1
-  elseif g:neocomplete#enable_smart_case && complete_str =~ '\u'
-    let &ignorecase = 0
+  elseif g:neocomplete#enable_smart_case || g:neocomplete#enable_camel_case
+    let &ignorecase = complete_str !~ '\u'
   else
     let &ignorecase = g:neocomplete#enable_ignore_case
   endif

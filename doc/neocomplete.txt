@@ -316,6 +316,16 @@ g:neocomplete#enable_smart_case
 
 		Default value is 'infercase'.
 
+					*g:neocomplete#enable_camel_case*
+g:neocomplete#enable_camel_case
+		When a capital letter is matched with the uppercase, but a
+		lower letter is matched with the upper- and lowercase.
+		Ex: "foB" is matched with "FooBar" not "foobar".
+		Note: This feature is only available in
+		|neocomplete-filter-matcher_fuzzy|.
+
+		Default value is 0.
+
 					*g:neocomplete#disable_auto_complete*
 g:neocomplete#disable_auto_complete
 		This variable controls whether you invalidate automatic

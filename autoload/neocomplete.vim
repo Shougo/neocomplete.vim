@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Nov 2013.
+" Last Modified: 10 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -46,6 +46,8 @@ let g:neocomplete#enable_ignore_case =
       \ get(g:, 'neocomplete#enable_ignore_case', &ignorecase)
 let g:neocomplete#enable_smart_case =
       \ get(g:, 'neocomplete#enable_smart_case', &infercase)
+let g:neocomplete#enable_camel_case =
+      \ get(g:, 'neocomplete#enable_camel_case', 0)
 let g:neocomplete#disable_auto_complete =
       \ get(g:, 'neocomplete#disable_auto_complete', 0)
 let g:neocomplete#enable_fuzzy_completion =
