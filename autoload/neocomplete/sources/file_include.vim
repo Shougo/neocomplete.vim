@@ -199,67 +199,46 @@ function! s:get_include_files() "{{{
   let bufdirectory = neocomplete#util#substitute_path_separator(
         \ fnamemodify(expand('%'), ':p:h'))
   let candidates = s:get_default_include_files(filetype)
-  for subpath in split(path, '[,;]')
-    let dir = (subpath == '.') ? bufdirectory : subpath
+  let path = join(map(split(path, ',\+'),
+        \ "v:val == '.' ? bufdirectory : v:val"), ',')
+  for word in filter(split(
+        \ neocomplete#util#substitute_path_separator(
+        \   globpath(path, glob, 1)), '\n'),"
+        \  isdirectory(v:val) || empty(exts) ||
+        \  index(exts, fnamemodify(v:val, ':e')) >= 0")
 
-    if (complete_str != '' && complete_str[0] == '.' && subpath[0] != '.')
-        continue
+    let dict = {
+          \ 'word' : word,
+          \ 'action__is_directory' : isdirectory(word),
+          \ 'kind' : (isdirectory(word) ? 'dir' : 'file'),
+          \ }
+
+    if reverse_expr != ''
+      " Convert filename.
+      let dict.word = eval(substitute(reverse_expr,
+            \ 'v:fname', string(dict.word), 'g'))
     endif
 
-    if !isdirectory(dir)
-      continue
+    if !dict.action__is_directory && delimiter != '/'
+      " Remove extension.
+      let dict.word = fnamemodify(dict.word, ':r')
     endif
 
-    execute 'lcd' fnameescape(dir)
+    " Remove before delimiter.
+    if strridx(dict.word, delimiter) >= 0
+      let dict.word = dict.word[strridx(dict.word, delimiter)+1: ]
+    endif
 
-    for word in split(
-          \ neocomplete#util#substitute_path_separator(
-          \   glob(glob)), '\n')
-      if !isdirectory(word) &&
-            \ !empty(exts) && index(exts, fnamemodify(word, ':e')) < 0
-        " Skip.
-        continue
+    let dict.abbr = dict.word
+    if dict.action__is_directory
+      let dict.abbr .= delimiter
+      if g:neocomplete#enable_auto_delimiter
+        let dict.word .= delimiter
       endif
+    endif
 
-      let dict = {
-            \ 'word' : word,
-            \ 'action__is_directory' : isdirectory(word),
-            \ }
-      let dict.kind = (dict.action__is_directory) ? 'dir' : 'file'
-
-      if reverse_expr != ''
-        " Convert filename.
-        let dict.word = eval(substitute(reverse_expr,
-              \ 'v:fname', string(dict.word), 'g'))
-      endif
-
-      if !dict.action__is_directory && delimiter != '/'
-        " Remove extension.
-        let dict.word = fnamemodify(dict.word, ':r')
-      endif
-
-      " Remove before delimiter.
-      if strridx(dict.word, delimiter) >= 0
-        let dict.word = dict.word[strridx(dict.word, delimiter)+1: ]
-      endif
-
-      let abbr = dict.word
-      if dict.action__is_directory
-        let abbr .= delimiter
-        if g:neocomplete#enable_auto_delimiter
-          let dict.word .= delimiter
-        endif
-      endif
-
-      let dict.abbr = abbr
-
-      " Escape word.
-      let dict.word = escape(dict.word, ' ;*?[]"={}''')
-
-      call add(candidates, dict)
-    endfor
+    call add(candidates, dict)
   endfor
-  execute 'lcd' fnameescape(cwd)
 
   return candidates
 endfunction"}}}
