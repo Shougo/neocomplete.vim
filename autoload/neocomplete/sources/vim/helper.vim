@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 09 Dec 2013.
+" Last Modified: 15 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -111,8 +111,8 @@ function! neocomplete#sources#vim#helper#autocmd_args(cur_text, complete_str) "{
 
   let list = []
   if len(args) == 2
-    let list += s:global_candidates_list.augroups +
-          \ s:internal_candidates_list.autocmds
+    let list += copy(s:global_candidates_list.augroups) +
+          \ copy(s:internal_candidates_list.autocmds)
   elseif len(args) == 3
     if args[1] ==# 'FileType'
       " Filetype completion.
@@ -171,8 +171,8 @@ function! neocomplete#sources#vim#helper#command(cur_text, complete_str) "{{{
       let s:internal_candidates_list.commands = s:make_cache_commands()
     endif
 
-    let list = s:internal_candidates_list.commands
-          \ + s:global_candidates_list.commands
+    let list = copy(s:internal_candidates_list.commands)
+          \ + copy(s:global_candidates_list.commands)
   else
     " Commands args.
     let command = neocomplete#sources#vim#get_command(a:cur_text)
@@ -296,8 +296,8 @@ function! neocomplete#sources#vim#helper#function(cur_text, complete_str) "{{{
     endfor
     let list = functions
   else
-    let list = s:internal_candidates_list.functions
-          \ + s:global_candidates_list.functions
+    let list = copy(s:internal_candidates_list.functions)
+          \ + copy(s:global_candidates_list.functions)
   endif
 
   return list
@@ -327,7 +327,8 @@ function! neocomplete#sources#vim#helper#mapping(cur_text, complete_str) "{{{
     let s:internal_candidates_list.mappings = s:make_cache_from_dict('mappings', '')
   endif
 
-  let list = s:internal_candidates_list.mappings + s:global_candidates_list.mappings
+  let list = copy(s:internal_candidates_list.mappings) +
+        \ copy(s:global_candidates_list.mappings)
 
   if a:cur_text =~ '<expr>'
     let list += neocomplete#sources#vim#helper#expression(a:cur_text, a:complete_str)
@@ -390,7 +391,7 @@ function! neocomplete#sources#vim#helper#var(cur_text, complete_str) "{{{
       let list += s:get_variablelist(eval(prefix), prefix)
     endif
   elseif a:complete_str =~ '^[vg]:'
-    let list = s:global_candidates_list.variables
+    let list = copy(s:global_candidates_list.variables)
   else
     let list = s:get_local_variables()
   endif
