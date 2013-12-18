@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Dec 2013.
+" Last Modified: 19 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -544,7 +544,7 @@ function! neocomplete#init#_variables() "{{{
         \ '_', '')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#ctags_arguments', 'vim',
-        \ '--extra=fq --fields=afmiKlnsStz ' .
+        \ '--language-force=vim --extra=fq --fields=afmiKlnsStz ' .
         \ "--regex-vim='/function!? ([a-z#:_0-9A-Z]+)/\\1/function/'")
   if neocomplete#util#is_mac()
     call neocomplete#util#set_default_dictionary(
