@@ -120,7 +120,7 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
   endif
 
   if dictionaries == ''
-    if filetype != &filetype &&
+    if filetype == &filetype &&
           \ &l:dictionary != '' && &l:dictionary !=# &g:dictionary
       let dictionaries = &l:dictionary
     endif
