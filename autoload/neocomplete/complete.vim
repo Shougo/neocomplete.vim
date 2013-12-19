@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Dec 2013.
+" Last Modified: 19 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -269,12 +269,15 @@ EOF
   endif
 
   " Check dup and set icase.
-  let icase = g:neocomplete#enable_ignore_case &&
+  let icase = !neocomplete#is_text_mode() && !neocomplete#within_comment() &&
+        \ g:neocomplete#enable_ignore_case &&
         \!((g:neocomplete#enable_smart_case
         \  || g:neocomplete#enable_camel_case) && a:complete_str =~ '\u')
-  for candidate in candidates
-    let candidate.icase = 1
-  endfor
+  if icase
+    for candidate in candidates
+      let candidate.icase = 1
+    endfor
+  endif
 
   if neocomplete#complete_check()
     return []
