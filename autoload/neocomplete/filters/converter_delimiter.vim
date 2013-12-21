@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_delimiter.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Dec 2013.
+" Last Modified: 21 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -80,7 +80,7 @@ function! s:process_delimiter(context, candidate, delimiter, delim_cnt, next_key
 
   let split_list = split(candidate.word, a:delimiter.'\ze.', 1)
   let delimiter_sub = substitute(
-        \ a:delimiter, '\\\([.^$]\)', '\1', 'g')
+        \ a:delimiter, '\\\(.\)', '\1', 'g')
   let candidate.abbr = join(
         \ split(get(candidate, 'abbr', candidate.word),
         \             a:delimiter.'\ze.', 1)[ : a:delim_cnt],
