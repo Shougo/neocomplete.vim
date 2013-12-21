@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Dec 2013.
+" Last Modified: 21 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -364,9 +364,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
 
     let context = source.neocomplete__context
 
-    if neocomplete#is_text_mode()
-      let &ignorecase = 1
-    elseif g:neocomplete#enable_smart_case || g:neocomplete#enable_camel_case
+    if g:neocomplete#enable_smart_case || g:neocomplete#enable_camel_case
       let &ignorecase = context.complete_str !~ '\u'
     else
       let &ignorecase = g:neocomplete#enable_ignore_case
