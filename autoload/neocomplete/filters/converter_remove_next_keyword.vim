@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_remove_next_keyword.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Dec 2013.
+" Last Modified: 24 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -52,16 +52,18 @@ function! s:converter.filter(context) "{{{
   let ignorecase_save = &ignorecase
   let &ignorecase = 0
   try
-    for r in a:context.candidates
-      let pos = match(r.word, next_keyword)
-      if pos >= 0
-        if !has_key(r, 'abbr')
-          let r.abbr = r.word
-        endif
+    let a:context.candidates = filter(a:context.candidates,
+          \ 'v:val.word =~# next_keyword')
 
-        let r.word = r.word[: pos-1]
+    for r in a:context.candidates
+      if !has_key(r, 'abbr')
+        let r.abbr = r.word
       endif
+      let r.word = r.word[: match(r.word, next_keyword)-1]
     endfor
+
+    let a:context.candidates = filter(a:context.candidates,
+          \ 'v:val.word !=# a:context.complete_str')
   finally
     let &ignorecase = ignorecase_save
   endtry

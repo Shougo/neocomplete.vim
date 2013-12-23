@@ -1282,7 +1282,8 @@ converter_delimiter
 			*neocomplete-filter-converter_remove_next_keyword*
 converter_remove_next_keyword
 		The converter which removes matched next keyword part in a
-		candidate's word.
+		candidate's word and removes candidates which is not matched
+		next keyword.
 		(cf: |g:neocomplete#next_keyword_patterns|)
 
 ==============================================================================
