@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: commands.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jun 2013.
+" Last Modified: 24 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -67,7 +67,7 @@ endfunction"}}}
 
 function! neocomplete#commands#_set_file_type(filetype) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
-  let neocomplete.filetype = a:filetype
+  let neocomplete.context_filetype = a:filetype
 endfunction"}}}
 
 function! s:rand(max) "{{{
