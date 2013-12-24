@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Dec 2013.
+" Last Modified: 24 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -328,8 +328,7 @@ endfunction"}}}
 function! neocomplete#helper#call_filters(filters, source, context) "{{{
   let context = extend(a:source.neocomplete__context, a:context)
   let _ = []
-  for filter in neocomplete#init#_filters(
-        \ neocomplete#util#convert2list(a:filters))
+  for filter in a:filters
     try
       let context.candidates = call(filter.filter, [context], filter)
     catch

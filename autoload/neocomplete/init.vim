@@ -731,6 +731,13 @@ function! neocomplete#init#_source(source) "{{{
           \ g:neocomplete#auto_completion_start_length : 0
   endif
 
+  let source.neocomplete__matchers = neocomplete#init#_filters(
+        \ neocomplete#util#convert2list(source.matchers))
+  let source.neocomplete__sorters = neocomplete#init#_filters(
+        \ neocomplete#util#convert2list(source.sorters))
+  let source.neocomplete__converters = neocomplete#init#_filters(
+        \ neocomplete#util#convert2list(source.converters))
+
   let source.neocomplete__context.source_name = source.name
 
   return source

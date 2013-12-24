@@ -212,7 +212,7 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
 EOF
 
     let words = neocomplete#helper#call_filters(
-          \ source.sorters, source, {})
+          \ source.neocomplete__sorters, source, {})
 
     if source.max_candidates > 0
       let words = words[: len(source.max_candidates)-1]
@@ -232,7 +232,7 @@ EOF
 EOF
 
     let words = neocomplete#helper#call_filters(
-          \ source.converters, source, {})
+          \ source.neocomplete__converters, source, {})
 
     let candidates += words
     let len_words += len(words)
@@ -354,21 +354,20 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
 endfunction"}}}
 function! neocomplete#complete#_set_results_words(sources) "{{{
   " Try source completion.
+
+  " Save options.
+  let ignorecase_save = &ignorecase
+
   for source in a:sources
     if neocomplete#complete_check()
       return
     endif
 
-    " Save options.
-    let ignorecase_save = &ignorecase
-
     let context = source.neocomplete__context
 
-    if g:neocomplete#enable_smart_case || g:neocomplete#enable_camel_case
-      let &ignorecase = context.complete_str !~ '\u'
-    else
-      let &ignorecase = g:neocomplete#enable_ignore_case
-    endif
+    let &ignorecase = (g:neocomplete#enable_smart_case
+          \ || g:neocomplete#enable_camel_case) ?
+          \   context.complete_str !~ '\u' : g:neocomplete#enable_ignore_case
 
     let pos = winsaveview()
 
@@ -387,6 +386,8 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
               \ 'Source name is ' . source.name)
         call neocomplete#print_error(
               \ 'Error occured in source''s gather_candidates()!')
+
+        let &ignorecase = ignorecase_save
         return
       finally
         if winsaveview() != pos
@@ -398,15 +399,17 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
     let context.prev_candidates = copy(context.candidates)
     let context.prev_complete_pos = context.complete_pos
 
-    let context.candidates = neocomplete#helper#call_filters(
-          \ source.matchers, source, {})
+    if !empty(context.candidates)
+      let context.candidates = neocomplete#helper#call_filters(
+            \ source.neocomplete__matchers, source, {})
+    endif
 
     if g:neocomplete#enable_debug
       echomsg source.name
     endif
-
-    let &ignorecase = ignorecase_save
   endfor
+
+  let &ignorecase = ignorecase_save
 endfunction"}}}
 
 " Source rank order. "{{{
