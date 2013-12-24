@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: member.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 Nov 2013.
+" Last Modified: 24 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -232,8 +232,7 @@ function! s:initialize_source(srcname) "{{{
 
   let s:member_sources[a:srcname] = {
         \ 'member_cache' : {}, 'filetype' : ft,
-        \ 'keyword_pattern' : neocomplete#get_keyword_pattern(
-        \                ft, s:source.name),
+        \ 'keyword_pattern' : neocomplete#get_keyword_pattern(ft, s:source),
         \}
 endfunction"}}}
 

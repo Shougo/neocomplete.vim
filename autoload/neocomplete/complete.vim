@@ -312,7 +312,7 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
             \ has_key(source, 'get_complete_position') ?
             \ source.get_complete_position(context) :
             \ neocomplete#helper#match_word(context.input,
-            \    neocomplete#get_keyword_pattern_end(filetype, source.name))[0]
+            \    neocomplete#get_keyword_pattern_end(filetype, source))[0]
     catch
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)

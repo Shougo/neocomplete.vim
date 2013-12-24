@@ -171,7 +171,7 @@ function! neocomplete#get_keyword_pattern(...) "{{{
   let filetype = a:0 != 0? a:000[0] : neocomplete#get_context_filetype()
   let keyword_patterns = g:neocomplete#keyword_patterns
   if a:0 >= 2
-    let source = get(neocomplete#variables#get_sources(), a:2, {})
+    let source = a:2
     let keyword_patterns = get(source, 'keyword_patterns',
           \ g:neocomplete#keyword_patterns)
     if keyword_patterns !=# g:neocomplete#keyword_patterns

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Dec 2013.
+" Last Modified: 24 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -342,7 +342,7 @@ function! s:initialize_include(filename, filetype) "{{{
         \ 'filename' : a:filename,
         \ 'cachename' : neocomplete#cache#async_load_from_tags(
         \         'include_cache', a:filename, a:filetype,
-        \         neocomplete#get_keyword_pattern(a:filetype, s:source.name),
+        \         neocomplete#get_keyword_pattern(a:filetype, s:source),
         \         s:source.mark, 1)
         \ }
 endfunction"}}}

@@ -44,7 +44,7 @@ function! s:source.get_complete_position(context) "{{{
   endif
 
   " Filename pattern.
-  let pattern = neocomplete#get_keyword_pattern_end('filename', self.name)
+  let pattern = neocomplete#get_keyword_pattern_end('filename', self)
   let [complete_pos, complete_str] =
         \ neocomplete#helper#match_word(a:context.input, pattern)
 
@@ -70,8 +70,7 @@ function! s:source.get_complete_position(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  let pattern = neocomplete#get_keyword_pattern_end(
-        \ 'filename', self.name)
+  let pattern = neocomplete#get_keyword_pattern_end('filename', self)
   let [complete_pos, complete_str] =
         \ neocomplete#helper#match_word(a:context.input, pattern)
 
