@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 18 Dec 2013.
+" Last Modified: 24 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -283,11 +283,8 @@ function! neocomplete#escape_match(str) "{{{
   return escape(a:str, '~"*\.^$[]')
 endfunction"}}}
 function! neocomplete#get_context_filetype(...) "{{{
-  if !neocomplete#is_enabled()
-    return &filetype
-  endif
-
-  let neocomplete = neocomplete#get_current_neocomplete()
+  let neocomplete = exists('b:neocomplete') ?
+        \ b:neocomplete : neocomplete#get_current_neocomplete()
 
   if a:0 != 0 || mode() !=# 'i' ||
         \ neocomplete.context_filetype == ''
