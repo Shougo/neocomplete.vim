@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Dec 2013.
+" Last Modified: 24 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -46,7 +46,7 @@ function! s:source.get_complete_position(context) "{{{
   " Filename pattern.
   let pattern = neocomplete#get_keyword_pattern_end('filename', self.name)
   let [complete_pos, complete_str] =
-        \ neocomplete#match_word(a:context.input, pattern)
+        \ neocomplete#helper#match_word(a:context.input, pattern)
 
   if (complete_str =~ '//' || complete_str == '/' ||
         \ (neocomplete#is_auto_complete() &&
@@ -73,7 +73,7 @@ function! s:source.gather_candidates(context) "{{{
   let pattern = neocomplete#get_keyword_pattern_end(
         \ 'filename', self.name)
   let [complete_pos, complete_str] =
-        \ neocomplete#match_word(a:context.input, pattern)
+        \ neocomplete#helper#match_word(a:context.input, pattern)
 
   let files = s:get_glob_files(complete_str, '')
 

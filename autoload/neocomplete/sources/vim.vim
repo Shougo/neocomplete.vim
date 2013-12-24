@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: vim.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Nov 2013.
+" Last Modified: 24 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -82,11 +82,11 @@ function! s:source.get_complete_position(context) "{{{
   endif
 
   let [complete_pos, complete_str] =
-        \ neocomplete#match_word(a:context.input, pattern)
+        \ neocomplete#helper#match_word(a:context.input, pattern)
   if complete_pos < 0
     " Use args pattern.
     let [complete_pos, complete_str] =
-          \ neocomplete#match_word(a:context.input, '\S\+$')
+          \ neocomplete#helper#match_word(a:context.input, '\S\+$')
   endif
 
   if a:context.input !~ '\.\%(\h\w*\)\?$' && neocomplete#is_auto_complete()
