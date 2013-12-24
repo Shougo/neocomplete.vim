@@ -52,15 +52,19 @@ function! s:converter.filter(context) "{{{
   let ignorecase_save = &ignorecase
   let &ignorecase = 0
   try
-    let a:context.candidates = filter(a:context.candidates,
+    let candidates = filter(copy(a:context.candidates),
           \ 'v:val.word =~# next_keyword')
 
-    for r in a:context.candidates
+    for r in candidates
       if !has_key(r, 'abbr')
         let r.abbr = r.word
       endif
       let r.word = r.word[: match(r.word, next_keyword)-1]
     endfor
+
+    if neocomplete#is_auto_complete()
+      let a:context.candidates = candidates
+    endif
 
     let a:context.candidates = filter(a:context.candidates,
           \ 'v:val.word !=# a:context.complete_str')
