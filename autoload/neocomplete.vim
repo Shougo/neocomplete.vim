@@ -140,9 +140,6 @@ function! neocomplete#custom_source(source_name, option_name, value) "{{{
   return neocomplete#custom#source(a:source_name, a:option_name, a:value)
 endfunction"}}}
 
-function! neocomplete#is_enabled_source(source_name) "{{{
-  return neocomplete#helper#is_enabled_source(a:source_name)
-endfunction"}}}
 function! neocomplete#dup_filter(list) "{{{
   return neocomplete#util#dup_filter(a:list)
 endfunction"}}}

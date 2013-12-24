@@ -95,15 +95,15 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
   return 1
 endfunction"}}}
 
-function! neocomplete#helper#is_enabled_source(source_name) "{{{
-  let neocomplete = neocomplete#get_current_neocomplete()
-  let source = get(neocomplete#variables#get_sources(), a:source_name, {})
+function! neocomplete#helper#is_enabled_source(source, filetype) "{{{
+  let source = type(a:source) == type('') ?
+        \ get(neocomplete#variables#get_sources(), a:source, {})
+        \ : a:source
 
   return !empty(source) && (empty(source.filetypes) ||
-        \     get(source.filetypes, neocomplete.context_filetype, 0))
+        \     get(source.filetypes, a:filetype, 0))
         \  && (!get(source.disabled_filetypes, '_', 0) &&
-        \      !get(source.disabled_filetypes,
-        \           neocomplete.context_filetype, 0))
+        \      !get(source.disabled_filetypes, a:filetype, 0))
 endfunction"}}}
 
 function! neocomplete#helper#get_source_filetypes(filetype) "{{{
@@ -281,6 +281,7 @@ function! neocomplete#helper#get_sources_list(...) "{{{
   let neocomplete.sources = filter(sources, "
         \   (empty(v:val.filetypes) ||
         \    get(v:val.filetypes, neocomplete.context_filetype, 0))")
+  let neocomplete.sources_filetype = neocomplete.context_filetype
 
   return neocomplete.sources
 endfunction"}}}

@@ -148,7 +148,8 @@ function! neocomplete#sources#include#get_current_include_files() "{{{
 endfunction"}}}
 
 function! s:check_buffer(bufnumber, is_force) "{{{
-  if !neocomplete#is_enabled_source('include')
+  if !neocomplete#helper#is_enabled_source('include',
+        \ neocomplete#get_context_filetype())
     return
   endif
 
@@ -322,7 +323,8 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "
 endfunction"}}}
 
 function! s:check_cache() "{{{
-  if !neocomplete#is_enabled_source('include')
+  if !neocomplete#helper#is_enabled_source('include',
+        \ neocomplete#get_context_filetype())
     return
   endif
 

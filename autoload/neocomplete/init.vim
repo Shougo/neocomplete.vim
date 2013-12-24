@@ -629,6 +629,8 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'linenr' : 0,
         \ 'completeopt' : &completeopt,
         \ 'completed_item' : {},
+        \ 'sources' : [],
+        \ 'sources_filetype' : '',
         \}
 endfunction"}}}
 

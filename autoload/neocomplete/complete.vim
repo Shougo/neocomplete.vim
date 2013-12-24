@@ -288,24 +288,25 @@ endfunction"}}}
 function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
   " Initialize sources.
   let neocomplete = neocomplete#get_current_neocomplete()
-  for source in filter(values(neocomplete#variables#get_sources()),
-        \ '!v:val.loaded
-        \  && neocomplete#helper#is_enabled_source(v:val.name)')
-    call neocomplete#helper#call_hook(source, 'on_init', {})
-    let source.loaded = 1
-  endfor
 
   let filetype = neocomplete#get_context_filetype()
-  let sources = filter(copy(get(a:000, 0,
-        \ neocomplete#helper#get_sources_list())), 'v:val.loaded')
+  let sources = (a:0 > 0) ? a:1 :
+        \ (filetype ==# neocomplete.sources_filetype) ?
+        \ neocomplete.sources : neocomplete#helper#get_sources_list()
+
+  let pos = winsaveview()
 
   " Try source completion. "{{{
   let complete_sources = []
-  for source in values(sources)
+  for source in filter(values(sources),
+        \ 'neocomplete#helper#is_enabled_source(v:val, filetype)')
+    if !source.loaded
+      call neocomplete#helper#call_hook(source, 'on_init', {})
+      let source.loaded = 1
+    endif
+
     let context = source.neocomplete__context
     let context.input = a:cur_text
-
-    let pos = winsaveview()
 
     try
       let complete_pos =
@@ -328,9 +329,8 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
     endtry
 
     if complete_pos < 0
-      let source.neocomplete__context =
-            \ neocomplete#init#_context(
-            \    source.neocomplete__context)
+      let context.complete_pos = -1
+      let context.complete_str = ''
       continue
     endif
 
@@ -338,9 +338,8 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
     if neocomplete#is_auto_complete() &&
           \ len(complete_str) < source.min_pattern_length
       " Skip.
-      let source.neocomplete__context =
-            \ neocomplete#init#_context(
-            \    source.neocomplete__context)
+      let context.complete_pos = -1
+      let context.complete_str = ''
       continue
     endif
 
@@ -357,6 +356,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
 
   " Save options.
   let ignorecase_save = &ignorecase
+  let pos = winsaveview()
 
   for source in a:sources
     if neocomplete#complete_check()
@@ -368,8 +368,6 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
     let &ignorecase = (g:neocomplete#enable_smart_case
           \ || g:neocomplete#enable_camel_case) ?
           \   context.complete_str !~ '\u' : g:neocomplete#enable_ignore_case
-
-    let pos = winsaveview()
 
     if !source.is_volatile
           \ && context.prev_complete_pos == context.complete_pos
