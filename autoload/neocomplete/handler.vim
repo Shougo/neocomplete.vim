@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 24 Dec 2013.
+" Last Modified: 31 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -58,8 +58,6 @@ function! neocomplete#handler#_on_insert_leave() "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.cur_text = ''
-  let neocomplete.old_cur_text = ''
-  let neocomplete.old_linenr = -1
   let neocomplete.completed_item = {}
 endfunction"}}}
 function! neocomplete#handler#_on_write_post() "{{{
@@ -151,6 +149,9 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   " Prevent infinity loop.
   if s:is_skip_auto_complete(cur_text)
+    let neocomplete.old_cur_text = cur_text
+    let neocomplete.old_linenr = line('.')
+
     if cur_text =~ '^\s*$\|\s\+$'
       " Make cache.
       if neocomplete#helper#is_enabled_source('buffer',
