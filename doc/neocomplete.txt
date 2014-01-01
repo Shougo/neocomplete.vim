@@ -452,8 +452,8 @@ g:neocomplete#keyword_patterns
 					*g:neocomplete#next_keyword_patterns*
 g:neocomplete#next_keyword_patterns
 		This dictionary records regular expression to recognize a
-		keyword pattern of the next than a cursor.  The form is the
-		same as |g:neocomplete#keyword_patterns|.
+		keyword pattern of the word next to the cursor.  The form is
+		the same as |g:neocomplete#keyword_patterns|.
 
 		Because it is complicated, refer to
 		neocomplete#init#_variables() in
