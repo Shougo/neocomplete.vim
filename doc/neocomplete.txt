@@ -1234,6 +1234,11 @@ Default sources are below. But you can create original filters(cf:
 	" Change default sorter.
 	call neocomplete#custom#source('_', 'sorters',
 	\ ['sorter_length'])
+
+	" Change default converter.
+	call neocomplete#custom#source('_', 'converters',
+	\ ['converter_remove_next_keyword', 'converter_remove_last_paren',
+        \  'converter_delimiter', 'converter_case', 'converter_abbr'])
 <
 					*neocomplete-filter-matcher_default*
 Default matchers:
@@ -1287,6 +1292,11 @@ converter_remove_next_keyword
 		next keyword(it is in auto completion only).
 		(cf: |g:neocomplete#next_keyword_patterns|)
 
+			*neocomplete-filter-converter_remove_last_paren*
+converter_remove_last_paren
+		The converter which removes last parentheses in a
+		candidate's word. It is useful if you use auto closing
+		parentheses plugins.
 ==============================================================================
 CREATE SOURCE					*neocomplete-create-source*
 
