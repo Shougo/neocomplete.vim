@@ -260,6 +260,7 @@ function! s:make_cache(srcname) "{{{
 
   if !filereadable(source.path)
         \ || getbufvar(a:srcname, '&buftype') =~ 'nofile'
+    call s:make_cache_current_buffer(1, line('$'))
     return
   endif
 
@@ -385,7 +386,6 @@ function! neocomplete#sources#buffer#make_cache(name) "{{{
   endif
 
   call s:make_cache(number)
-  call s:make_cache_current_buffer(1, line('$'))
 endfunction"}}}
 "}}}
 
