@@ -124,8 +124,10 @@ function! neocomplete#sources#buffer#get_frequencies() "{{{
 endfunction"}}}
 function! neocomplete#sources#buffer#make_cache_current_line() "{{{
   " Make cache from current line.
-  return s:make_cache_current_buffer(
-        \ max([1, line('.') - 5]), min([line('.') + 5, line('$')]))
+  let [start, end] = line('.') == line('$') ?
+        \ [max([1, line('.') - 10]), line('$')] :
+        \ [max([1, line('.') - 5]), min([line('.') + 5, line('$')])]
+  return s:make_cache_current_buffer(start, end)
 endfunction"}}}
 function! s:make_cache_current_block() "{{{
   " Make cache from current block.
