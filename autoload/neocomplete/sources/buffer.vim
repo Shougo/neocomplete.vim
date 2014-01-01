@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 24 Dec 2013.
+" Last Modified: 01 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -231,7 +231,7 @@ function! s:initialize_source(srcname) "{{{
   endif
 
   let buflines = getbufline(a:srcname, 1, '$')
-  let keyword_pattern = neocomplete#get_keyword_pattern(ft, s:source)
+  let keyword_pattern = neocomplete#get_keyword_pattern(ft, s:source.name)
 
   let s:buffer_sources[a:srcname] = {
         \ 'keyword_cache' : [],

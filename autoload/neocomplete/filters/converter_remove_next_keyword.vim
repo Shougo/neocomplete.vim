@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_remove_next_keyword.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 24 Dec 2013.
+" Last Modified: 01 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -78,8 +78,10 @@ endfunction"}}}
 function! neocomplete#filters#converter_remove_next_keyword#get_next_keyword(source_name) "{{{
   let pattern = '^\%(' .
         \ ((a:source_name ==# 'file' || a:source_name ==# 'file/include') ?
-        \   neocomplete#get_next_keyword_pattern('filename') :
-        \   neocomplete#get_next_keyword_pattern()) . '\m\)'
+        \   neocomplete#get_next_keyword_pattern(
+        \             'filename', a:source_name) :
+        \   neocomplete#get_next_keyword_pattern(
+        \             neocomplete#get_context_filetype(), a:source_name)) . '\m\)'
 
   let next_keyword = matchstr('a'.
         \ getline('.')[len(neocomplete#get_cur_text(1))+1 :], pattern)[1:]
