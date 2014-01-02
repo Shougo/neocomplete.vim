@@ -48,13 +48,16 @@ function! neocomplete#helper#get_cur_text() "{{{
   if neocomplete.event ==# 'InsertCharPre'
     let complete_str .= v:char
   endif
-  let start = reltime()
-  let neocomplete.within_comment =
-        \ neocomplete#helper#get_syn_name(1) ==# 'Comment'
 
   let filetype = neocomplete#get_context_filetype()
 
   let neocomplete.cur_text = cur_text . complete_str
+
+  if neocomplete.cur_text !=# neocomplete.old_cur_text
+    " Comment check.
+    let neocomplete.within_comment =
+          \ neocomplete#helper#get_syn_name(1) ==# 'Comment'
+  endif
 
   " Save cur_text.
   return neocomplete.cur_text
