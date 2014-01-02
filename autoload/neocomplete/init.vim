@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 01 Jan 2014.
+" Last Modified: 02 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -631,6 +631,7 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'completed_item' : {},
         \ 'sources' : [],
         \ 'sources_filetype' : '',
+        \ 'within_comment' : 0,
         \}
 endfunction"}}}
 
