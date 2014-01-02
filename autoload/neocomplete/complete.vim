@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 01 Jan 2014.
+" Last Modified: 02 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -142,6 +142,10 @@ function! neocomplete#complete#_get_results(cur_text, ...) "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.start_time = reltime()
+
+  " Comment check.
+  let neocomplete.within_comment =
+        \ neocomplete#helper#get_syn_name(1) ==# 'Comment'
 
   let complete_sources = call(
         \ 'neocomplete#complete#_set_results_pos', [a:cur_text] + a:000)
