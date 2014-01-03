@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 Dec 2013.
+" Last Modified: 03 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -87,6 +87,10 @@ function! neocomplete#handler#_on_complete_done() "{{{
     endif
 
     let complete_str = v:completed_item.word
+    if complete_str == ''
+      return
+    endif
+
     if (v:completed_item.abbr != ''
           \ && len(v:completed_item.word) < len(v:completed_item.abbr))
           \ || v:completed_item.info != ''
