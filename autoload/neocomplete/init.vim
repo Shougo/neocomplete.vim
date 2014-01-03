@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Jan 2014.
+" Last Modified: 03 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -49,9 +49,7 @@ endfunction"}}}
 
 function! neocomplete#init#disable() "{{{
   if !neocomplete#is_enabled()
-    call neocomplete#print_warning(
-          \ 'neocomplete is disabled! This command is ignored.')
-    return
+    call neocomplete#init#enable()
   endif
 
   let s:is_enabled = 0
