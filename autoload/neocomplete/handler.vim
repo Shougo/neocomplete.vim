@@ -180,7 +180,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   let neocomplete.old_linenr = line('.')
 
   if neocomplete#helper#is_omni(cur_text)
-    call feedkeys("\<C-x>\<C-o>\<C-p>", 'n')
+    call feedkeys("\<Plug>(neocomplete_start_omni_complete)")
     return
   endif
 
