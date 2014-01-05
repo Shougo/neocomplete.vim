@@ -175,7 +175,6 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
   " Append prefix.
   let candidates = []
   let len_words = 0
-  let sources_len = 0
   for source in sort(filter(copy(a:sources),
         \ '!empty(v:val.neocomplete__context.candidates)'),
         \  's:compare_source_rank')
@@ -240,7 +239,6 @@ EOF
 
     let candidates += words
     let len_words += len(words)
-    let sources_len += 1
 
     if g:neocomplete#max_list > 0
           \ && len_words > g:neocomplete#max_list
@@ -254,22 +252,6 @@ EOF
 
   if g:neocomplete#max_list > 0
     let candidates = candidates[: g:neocomplete#max_list]
-  endif
-
-  if sources_len == 1
-    " Remove default menu.
-    lua << EOF
-    do
-      local candidates = vim.eval('candidates')
-      local mark = vim.eval('mark')
-      local sources_len = vim.eval('sources_len')
-      for i = 0, #candidates-1 do
-        if candidates[i].menu == mark then
-          candidates[i].menu = nil
-        end
-      end
-    end
-EOF
   endif
 
   " Check dup and set icase.
