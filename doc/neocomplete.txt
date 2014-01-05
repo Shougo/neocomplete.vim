@@ -1229,7 +1229,7 @@ Default sources are below. But you can create original filters(cf:
 
 	" Change default matcher.
 	call neocomplete#custom#source('_', 'matchers',
-	\ ['matcher_head'])
+	\ ['matcher_head', 'matcher_length'])
 
 	" Change default sorter.
 	call neocomplete#custom#source('_', 'sorters',
@@ -1243,9 +1243,9 @@ Default sources are below. But you can create original filters(cf:
 					*neocomplete-filter-matcher_default*
 Default matchers:
 	if |g:neocomplete#enable_fuzzy_completion| :
-		['matcher_head']
+		['matcher_head', 'matcher_length']
 	else :
-		['matcher_fuzzy']
+		['matcher_fuzzy', 'matcher_length']
 
 					*neocomplete-filter-sorter_default*
 Default sorters: ['sorter_rank'].
@@ -1259,6 +1259,10 @@ matcher_head	Head matching matcher.
 
 					*neocomplete-filter-matcher_fuzzy*
 matcher_fuzzy	Fuzzy matching matcher.
+
+					*neocomplete-filter-matcher_length*
+matcher_length	Input keyword length matcher. It removes candidates which is
+		less than input keyword length.
 
 					*neocomplete-filter-sorter_rank*
 sorter_rank	Matched rank order sorter.  The higher the matched word is
@@ -1597,7 +1601,7 @@ A:
 or
 >
 	call neocomplete#custom#source('_', 'matchers',
-	\ ['matcher_head'])
+	\ ['matcher_head', 'matcher_length'])
 <
 Q: I want to sort candidates by different way.
 

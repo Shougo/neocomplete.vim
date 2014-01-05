@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: matcher_head.vim
+" FILE: matcher_length.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
 " Last Modified: 05 Jan 2014.
 " License: MIT license  {{{
@@ -27,45 +27,35 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#matcher_head#define() "{{{
+function! neocomplete#filters#matcher_length#define() "{{{
   return s:matcher
 endfunction"}}}
 
 let s:matcher = {
-      \ 'name' : 'matcher_head',
-      \ 'description' : 'head matcher',
+      \ 'name' : 'matcher_length',
+      \ 'description' : 'input length matcher',
       \}
 
 function! s:matcher.filter(context) "{{{
-  let pattern = '^' . neocomplete#filters#escape(
-        \ a:context.complete_str)
+  if empty(a:context.candidates)
+    return []
+  endif
 
   lua << EOF
 do
-  local pattern = vim.eval('pattern')
-  local input = vim.eval('a:context.complete_str')
   local candidates = vim.eval('a:context.candidates')
-  if vim.eval('&ignorecase') ~= 0 then
-    pattern = string.lower(pattern)
-    for i = #candidates-1, 0, -1 do
-      local word = vim.type(candidates[i]) == 'dict' and
-      string.lower(candidates[i].word) or string.lower(candidates[i])
-      if string.find(word, pattern, 1) == nil then
-        candidates[i] = nil
-      end
-    end
-  else
-    for i = #candidates-1, 0, -1 do
-      local word = vim.type(candidates[i]) == 'dict' and
-      candidates[i].word or candidates[i]
-      if string.find(word, pattern, 1) == nil then
-        candidates[i] = nil
-      end
+  local len = string.len(vim.eval('a:context.complete_str'))
+  for i = #candidates-1, 0, -1 do
+    local word = vim.type(candidates[i]) == 'dict' and
+    candidates[i].word or candidates[i]
+    if string.len(word) <= len then
+      candidates[i] = nil
     end
   end
 end
 EOF
 
+  echomsg string(a:context.candidates)
   return a:context.candidates
 endfunction"}}}
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jan 2014.
+" Last Modified: 05 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -689,8 +689,10 @@ function! neocomplete#init#_source(source) "{{{
         \ 'disabled_filetypes' : {},
         \ 'hooks' : {},
         \ 'mark' : '',
-        \ 'matchers' : g:neocomplete#enable_fuzzy_completion ?
-        \        ['matcher_fuzzy'] : ['matcher_head'],
+        \ 'matchers' :
+        \        (g:neocomplete#enable_fuzzy_completion ?
+        \          ['matcher_fuzzy'] : ['matcher_head'])
+        \      + ['matcher_length'],
         \ 'sorters' : ['sorter_rank'],
         \ 'converters' : [
         \      'converter_remove_next_keyword',
