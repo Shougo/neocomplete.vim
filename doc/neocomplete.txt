@@ -1733,7 +1733,7 @@ source code's complete function, and find out the omni pattern).
 >
 	" Go (plugin: gocode)
 	let g:neocomplete#sources#omni#functions.go =
-	\ 'gocomplete#Complete'
+	\ 'go#complete#Complete'
 	" Clojure (plugin: vim-clojure)
 	let g:neocomplete#sources#omni#functions.clojure =
 	\ 'vimclojure#OmniCompletion'
