@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_remove_next_keyword.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 01 Jan 2014.
+" Last Modified: 09 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -38,14 +38,16 @@ let s:converter = {
 
 function! s:converter.filter(context) "{{{
   " Remove next keyword.
-  let next_keyword = neocomplete#filters#
+  let default_next_keyword = neocomplete#filters#
+        \converter_remove_next_keyword#get_next_keyword('')
+  let source_next_keyword = neocomplete#filters#
         \converter_remove_next_keyword#get_next_keyword(a:context.source_name)
-  if next_keyword == ''
+  if default_next_keyword == '' && source_next_keyword == ''
     return a:context.candidates
   endif
 
-  let next_keyword = substitute(
-        \ substitute(escape(next_keyword,
+  let source_next_keyword = substitute(
+        \ substitute(escape(source_next_keyword,
         \ '~" \.^$*[]'), "'", "''", 'g'), ')$', '', '').'$'
 
   " No ignorecase.
@@ -53,13 +55,25 @@ function! s:converter.filter(context) "{{{
   let &ignorecase = 0
   try
     let candidates = filter(copy(a:context.candidates),
-          \ 'v:val.word =~# next_keyword')
+          \ 'v:val.word =~# default_next_keyword
+          \  || v:val.word =~# source_next_keyword')
 
     for r in candidates
-      if !has_key(r, 'abbr')
-        let r.abbr = r.word
+      let match = -1
+      if default_next_keyword != ''
+        let match = match(r.word, default_next_keyword)
       endif
-      let r.word = r.word[: match(r.word, next_keyword)-1]
+      if match < 0 && source_next_keyword != ''
+        let match = match(r.word, source_next_keyword)
+      endif
+
+      if match >= 0
+        if !has_key(r, 'abbr')
+          let r.abbr = r.word
+        endif
+
+        let r.word = r.word[: match-1]
+      endif
     endfor
 
     if neocomplete#is_auto_complete()
@@ -76,7 +90,8 @@ function! s:converter.filter(context) "{{{
 endfunction"}}}
 
 function! neocomplete#filters#converter_remove_next_keyword#get_next_keyword(source_name) "{{{
-  let pattern = '^\%(' .
+  let pattern = (a:source_name == '') ? '\h\w*' :
+        \ '^\%(' .
         \ ((a:source_name ==# 'file' || a:source_name ==# 'file/include') ?
         \   neocomplete#get_next_keyword_pattern(
         \             'filename', a:source_name) :
