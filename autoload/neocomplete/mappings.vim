@@ -168,7 +168,8 @@ function! neocomplete#mappings#start_manual_complete(...) "{{{
   let &l:completefunc = 'neocomplete#complete#sources_manual_complete'
 
   " Start complete.
-  return "\<C-x>\<C-u>" . (g:neocomplete#enable_auto_select ? "" : "\<C-p>")
+  return "\<C-x>\<C-u>\<C-p>"
+        \ . (g:neocomplete#enable_auto_select ? "\<Down>" : "")
 endfunction"}}}
 
 function! neocomplete#mappings#start_manual_complete_list(complete_pos, complete_str, candidates) "{{{
@@ -181,7 +182,8 @@ function! neocomplete#mappings#start_manual_complete_list(complete_pos, complete
   let &l:completefunc = 'neocomplete#complete#auto_complete'
 
   " Start complete.
-  return "\<C-x>\<C-u>" . (g:neocomplete#enable_auto_select ? "" : "\<C-p>")
+  return "\<C-x>\<C-u>\<C-p>"
+        \ . (g:neocomplete#enable_auto_select ? "\<Down>" : "")
 endfunction"}}}
 
 let &cpo = s:save_cpo
