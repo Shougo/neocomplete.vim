@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Dec 2013.
+" Last Modified: 11 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -622,7 +622,7 @@ function! s:make_cache_functions() "{{{
   for i in range(end-1, start, -1)
     let desc = substitute(lines[i], '^\s\+\ze\S', '', '').' '.desc
     let _ = matchlist(desc,
-          \'^\s*\(\(\i\+(\).\+)\)\s\+\(\w\+\)\s\+\(.\+[^*]\)$')
+          \'^\s*\(\(\i\+(\).*)\)\s\+\(\w*\)\s\+\(.\+[^*]\)$')
     if !empty(_)
       call insert(functions, {
             \ 'word' : _[2],
