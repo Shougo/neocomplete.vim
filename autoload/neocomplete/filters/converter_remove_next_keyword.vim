@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_remove_next_keyword.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 09 Jan 2014.
+" Last Modified: 11 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -46,6 +46,7 @@ function! s:converter.filter(context) "{{{
     return a:context.candidates
   endif
 
+  let default_next_keyword .= '$'
   let source_next_keyword = substitute(
         \ substitute(escape(source_next_keyword,
         \ '~" \.^$*[]'), "'", "''", 'g'), ')$', '', '').'$'
@@ -73,6 +74,7 @@ function! s:converter.filter(context) "{{{
         endif
 
         let r.word = r.word[: match-1]
+        echomsg string(r)
       endif
     endfor
 
