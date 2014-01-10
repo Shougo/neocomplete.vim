@@ -74,7 +74,6 @@ function! s:converter.filter(context) "{{{
         endif
 
         let r.word = r.word[: match-1]
-        echomsg string(r)
       endif
     endfor
 
