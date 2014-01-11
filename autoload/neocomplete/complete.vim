@@ -73,7 +73,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
       let neocomplete = neocomplete#get_current_neocomplete()
       let complete_pos = (neocomplete#is_prefetch() ||
             \ g:neocomplete#enable_insert_char_pre ||
-            \ || !neocomplete#is_auto_complete()
+            \ !neocomplete#is_auto_complete() ||
             \ neocomplete#get_current_neocomplete().skipped) ?  -1 : -3
       let neocomplete.skipped = 0
     endif
