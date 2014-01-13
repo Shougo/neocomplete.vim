@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 11 Jan 2014.
+" Last Modified: 13 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -89,6 +89,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
 
     if len(a:base) < g:neocomplete#auto_completion_start_length
           \ || g:neocomplete#enable_refresh_always
+          \ || g:neocomplete#enable_cursor_hold_i
       let dict.refresh = 'always'
     endif
 
