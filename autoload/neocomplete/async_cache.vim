@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: async_cache.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 11 Dec 2013.
+" Last Modified: 15 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -182,7 +182,7 @@ function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencodi
 
     let keyword = {
           \ 'word' : tag[0], 'abbr' : abbr, 'menu' : a:mark,
-          \ 'kind' : option['kind'], 'dup' : 1,
+          \ 'kind' : option['kind'],
           \ }
     if has_key(option, 'struct')
       let keyword.menu = option.struct
