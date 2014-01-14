@@ -701,8 +701,8 @@ function! neocomplete#init#_source(source) "{{{
         \      'converter_case',
         \      'converter_abbr',
         \ ],
-        \ 'keyword_patterns' : {},
-        \ 'next_keyword_patterns' : {},
+        \ 'keyword_patterns' : g:neocomplete#keyword_patterns,
+        \ 'next_keyword_patterns' : g:neocomplete#next_keyword_patterns,
         \ 'neocomplete__context' : neocomplete#init#_context({}),
         \ }
 
@@ -735,12 +735,6 @@ function! neocomplete#init#_source(source) "{{{
     let source.min_pattern_length = (source.kind ==# 'keyword') ?
           \ g:neocomplete#auto_completion_start_length : 0
   endif
-
-  " Merge default patterns.
-  call extend(source.keyword_patterns,
-        \ g:neocomplete#keyword_patterns, 'keep')
-  call extend(source.next_keyword_patterns,
-        \ g:neocomplete#next_keyword_patterns, 'keep')
 
   let source.neocomplete__matchers = neocomplete#init#_filters(
         \ neocomplete#util#convert2list(source.matchers))
