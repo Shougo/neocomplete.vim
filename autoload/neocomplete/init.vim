@@ -36,9 +36,9 @@ function! neocomplete#init#enable() "{{{
     return
   endif
 
+  call neocomplete#init#_current_neocomplete()
   call neocomplete#init#_autocmds()
   call neocomplete#init#_others()
-  call neocomplete#init#_current_neocomplete()
 
   call neocomplete#init#_sources(get(g:neocomplete#sources,
         \ neocomplete#get_context_filetype(), ['_']))
