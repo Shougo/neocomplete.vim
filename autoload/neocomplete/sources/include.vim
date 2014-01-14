@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 01 Jan 2014.
+" Last Modified: 15 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -305,7 +305,8 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "
       if filereadable(filename)
         call add(include_files, filename)
 
-        if (a:filetype == 'c' || a:filetype == 'cpp') && a:nestlevel < 1
+        if a:nestlevel < 1
+          " Nested include files.
           let include_files += s:get_include_files(
                 \ a:nestlevel + 1, readfile(filename)[:100],
                 \ a:filetype, a:pattern, a:path, a:expr)
