@@ -708,6 +708,9 @@ g:neocomplete#sources#file_include#exprs
 
 		Example: Perl
 >
+		if !exists('g:neocomplete#sources#file_include#exprs')
+		  let g:neocomplete#sources#file_include#exprs = {}
+		endif
 		let g:neocomplete#sources#file_include#exprs.perl =
 		\ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")'
 <
@@ -724,6 +727,9 @@ g:neocomplete#sources#file_include#exts
 
 		Example: C++
 >
+		if !exists('g:neocomplete#sources#file_include#exts')
+		  let g:neocomplete#sources#file_include#exts = {}
+		endif
 		let g:neocomplete#sources#file_include#exts.cpp =
 		\ ['', 'h', 'hpp', 'hxx']
 <
