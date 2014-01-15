@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: converter_abbr.vim
+" FILE: converter_disable_abbr.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
 " Last Modified: 15 Jan 2014.
 " License: MIT license  {{{
@@ -27,36 +27,19 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_abbr#define() "{{{
+function! neocomplete#filters#converter_disable_abbr#define() "{{{
   return s:converter
 endfunction"}}}
 
 let s:converter = {
-      \ 'name' : 'converter_abbr',
-      \ 'description' : 'abbreviate abbr converter',
+      \ 'name' : 'converter_disable_abbr',
+      \ 'description' : 'disable abbr converter',
       \}
 
 function! s:converter.filter(context) "{{{
-  if g:neocomplete#max_keyword_width < 0
-    return a:context.candidates
-  endif
-
-  lua << EOF
-do
-  local candidates = vim.eval('a:context.candidates')
-  local max = vim.eval('g:neocomplete#max_keyword_width')
-  for i = 0, #candidates-1 do
-    local abbr = candidates[i].abbr == nil and
-      candidates[i].word or candidates[i].abbr
-    if string.len(abbr) > max then
-      vim.command("let a:context.candidates[".. i .."].abbr = neocomplete#util#truncate_smart("..
-              "get(a:context.candidates[".. i .."], 'abbr', " ..
-              "a:context.candidates[".. i .."].word), g:neocomplete#max_keyword_width," ..
-              "g:neocomplete#max_keyword_width/2, '..')")
-    end
-  end
-end
-EOF
+  for candidate in a:context.candidates
+    let candidate.abbr = candidate.word
+  endfor
 
   return a:context.candidates
 endfunction"}}}
