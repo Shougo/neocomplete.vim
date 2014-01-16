@@ -723,7 +723,10 @@ g:neocomplete#sources#file_include#exprs
 g:neocomplete#sources#file_include#exts
 		It is the list of include file name extensions.  When there
 		is not it, all file name is used.  It is the dictionary of
-		the list that assumed file type a key.
+		the list that assumed file type a key.  In order to use this
+		feature you have to initialize
+		'g:neocomplete#sources#file_include#exts' as shown in the
+		following example.
 
 		Example: C++
 >
@@ -921,7 +924,7 @@ neocomplete#custom#source({source-name}, {option-name}, {value})
 		separating "," in {source-name}.
 		If {source-name} is "_", sources default option will be
 		change.
-		
+
 		These options below are available:
 		|neocomplete-source-attributes|
 		Note: User customization for neocomplete must be set before
@@ -1918,7 +1921,7 @@ because if_lua has double-free problem.
 	let g:lua_check_syntax = 0
 	let g:lua_complete_omni = 1
 	let g:lua_complete_dynamic = 0
-	
+
 	let g:neocomplete#sources#omni#functions.lua =
 	      \ 'xolox#lua#omnifunc'
 	let g:neocomplete#sources#omni#input_patterns.lua =
