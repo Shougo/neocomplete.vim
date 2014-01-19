@@ -1345,12 +1345,14 @@ kind			String			(Optional)
 			Source kind.
 			Following values are available.
 			"manual"  : This source decides complete position
-			            manually.
-			            Note: "complfunc" or "ftplugin" are old
-				    values.
+				manually.
+				Note: "complfunc" or "ftplugin" are old
+				values.
 			"keyword" : This source decides complete position by
-			           |g:neocomplete#keyword_patterns|.
-			            Note: "plugin" is old value.
+				|g:neocomplete#keyword_patterns|.
+				Note: "plugin" is old value.
+				Note: The candidates are filtered by
+				|g:neocomplete#keyword_patterns|.
 
 				*neocomplete-source-attribute-filetypes*
 filetypes		Dictionary		(Optional)
@@ -1466,6 +1468,10 @@ get_complete_position	Function	(Optional)
 			source is called(|neocomplete-notation-{context}|).
 			If you omit it, neocomplete will use the position
 			using |g:neocomplete#keyword_patterns|.
+			Note: If the source returns candidates which are not
+			matched |g:neocomplete#keyword_patterns|, you must
+			define
+			|neocomplete-source-attribute-get_complete_position|.
 
 			*neocomplete-source-attribute-gather_candidates*
 gather_candidates	Function	(Required)
