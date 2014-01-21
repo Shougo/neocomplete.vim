@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_remove_next_keyword.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 11 Jan 2014.
+" Last Modified: 22 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -42,6 +42,7 @@ function! s:converter.filter(context) "{{{
         \converter_remove_next_keyword#get_next_keyword('')
   let source_next_keyword = neocomplete#filters#
         \converter_remove_next_keyword#get_next_keyword(a:context.source_name)
+  echomsg string(source_next_keyword)
   if default_next_keyword == '' && source_next_keyword == ''
     return a:context.candidates
   endif
@@ -61,10 +62,10 @@ function! s:converter.filter(context) "{{{
 
     for r in candidates
       let match = -1
-      if default_next_keyword != ''
+      if default_next_keyword != '$'
         let match = match(r.word, default_next_keyword)
       endif
-      if match < 0 && source_next_keyword != ''
+      if match < 0 && source_next_keyword != '$'
         let match = match(r.word, source_next_keyword)
       endif
 
