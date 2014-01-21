@@ -42,7 +42,6 @@ function! s:converter.filter(context) "{{{
         \converter_remove_next_keyword#get_next_keyword('')
   let source_next_keyword = neocomplete#filters#
         \converter_remove_next_keyword#get_next_keyword(a:context.source_name)
-  echomsg string(source_next_keyword)
   if default_next_keyword == '' && source_next_keyword == ''
     return a:context.candidates
   endif
