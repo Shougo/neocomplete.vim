@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jan 2014.
+" Last Modified: 22 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -364,28 +364,6 @@ function! neocomplete#init#_variables() "{{{
         \'\h\w*')
   "}}}
 
-  " Initialize next keyword patterns. "{{{
-  call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete#next_keyword_patterns',
-        \'python,go,cs,java,lua,zimbu,php',
-        \'\w*()\?')
-  call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete#next_keyword_patterns', 'perl',
-        \'\w*()\?\|\h\w*>')
-  call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete#next_keyword_patterns', 'perl6',
-        \'\w*()\?\|\h\w*>')
-  call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete#next_keyword_patterns', 'vim,help',
-        \'\w*()\?\|\w*:\]\|[[:alnum:]_-]*[)>=]')
-  call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete#next_keyword_patterns', 'tex',
-        \'[[:alnum:]:_]\+[*[{}]')
-  call neocomplete#util#set_default_dictionary(
-        \'g:neocomplete#next_keyword_patterns', 'html,xhtml,xml,mkd',
-        \'[^"]*"\|[[:alnum:]_:-]*>')
-  "}}}
-
   " Initialize same file types. "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#same_filetypes',
@@ -628,6 +606,7 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'linenr' : 0,
         \ 'completeopt' : &completeopt,
         \ 'completed_item' : {},
+        \ 'overlapped_items' : {},
         \ 'sources' : [],
         \ 'sources_filetype' : '',
         \ 'within_comment' : 0,
@@ -696,13 +675,12 @@ function! neocomplete#init#_source(source) "{{{
         \      + ['matcher_length'],
         \ 'sorters' : ['sorter_rank'],
         \ 'converters' : [
-        \      'converter_remove_next_keyword',
+        \      'converter_remove_overlap',
         \      'converter_delimiter',
         \      'converter_case',
         \      'converter_abbr',
         \ ],
         \ 'keyword_patterns' : g:neocomplete#keyword_patterns,
-        \ 'next_keyword_patterns' : g:neocomplete#next_keyword_patterns,
         \ 'neocomplete__context' : neocomplete#init#_context({}),
         \ }
 

@@ -449,16 +449,6 @@ g:neocomplete#keyword_patterns
 		endif
 		let g:neocomplete#keyword_patterns._ = '\h\w*'
 <
-					*g:neocomplete#next_keyword_patterns*
-g:neocomplete#next_keyword_patterns
-		This dictionary records regular expression to recognize a
-		keyword pattern of the word next to the cursor.  The form is
-		the same as |g:neocomplete#keyword_patterns|.
-
-		Because it is complicated, refer to
-		neocomplete#init#_variables() in
-		autoload/neocomplete/init.vim for the initial value.
-
 				*g:neocomplete#force_omni_input_patterns*
 g:neocomplete#force_omni_input_patterns
 		This dictionary records keyword patterns to Omni completion.
@@ -1246,7 +1236,7 @@ Default sources are below. But you can create original filters(cf:
 
 	" Change default converter.
 	call neocomplete#custom#source('_', 'converters',
-	\ ['converter_remove_next_keyword', 'converter_remove_last_paren',
+	\ ['converter_remove_overlap', 'converter_remove_last_paren',
         \  'converter_delimiter', 'converter_case', 'converter_abbr'])
 <
 					*neocomplete-filter-matcher_default*
@@ -1260,7 +1250,7 @@ Default matchers:
 Default sorters: ['sorter_rank'].
 
 					*neocomplete-filter-converter_default*
-Default converters: ['converter_remove_next_keyword',
+Default converters: ['converter_remove_overlap',
         \      'converter_delimiter', 'converter_case', 'converter_abbr'].
 
 					*neocomplete-filter-matcher_head*
@@ -1303,11 +1293,14 @@ converter_delimiter
 
 			*neocomplete-filter-converter_remove_next_keyword*
 converter_remove_next_keyword
-		The converter which removes matched next keyword part in a
-		candidate's word.
-		Note: It removes candidates which is not matched
-		next keyword(it is in auto completion only).
-		(cf: |g:neocomplete#next_keyword_patterns|)
+		Note: It is deprecated.
+
+			*neocomplete-filter-converter_remove_overlap*
+converter_remove_overlap
+		The converter which removes overlapped text in a candidate's
+		word.
+		Note: It removes candidates which is not overlapped
+		(it is in auto completion only).
 
 			*neocomplete-filter-converter_remove_last_paren*
 converter_remove_last_paren
@@ -2089,7 +2082,7 @@ https://github.com/Shougo/neocomplete.vim/issues/158
 
 A: >
 	call neocomplete#custom#source('tags', 'converters',
-	\ ['converter_remove_next_keyword', 'converter_remove_last_paren',
+	\ ['converter_remove_overlap', 'converter_remove_last_paren',
 	\  'converter_delimiter', 'converter_case',
 	\ 'converter_disable_abbr', 'converter_abbr'])
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jan 2014.
+" Last Modified: 22 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -85,8 +85,6 @@ let g:neocomplete#sources =
       \ get(g:, 'neocomplete#sources', {})
 let g:neocomplete#keyword_patterns =
       \ get(g:, 'neocomplete#keyword_patterns', {})
-let g:neocomplete#next_keyword_patterns =
-      \ get(g:, 'neocomplete#next_keyword_patterns', {})
 let g:neocomplete#same_filetypes =
       \ get(g:, 'neocomplete#same_filetypes', {})
 let g:neocomplete#delimiter_patterns =
@@ -158,12 +156,6 @@ function! neocomplete#get_cur_text(...) "{{{
         \  neocomplete.cur_text != '') ?
         \ neocomplete.cur_text : neocomplete#helper#get_cur_text()
 endfunction"}}}
-function! neocomplete#get_next_keyword() "{{{
-  " Get next keyword.
-  let pattern = '^\%(' . neocomplete#get_next_keyword_pattern() . '\m\)'
-
-  return matchstr('a'.getline('.')[len(neocomplete#get_cur_text()) :], pattern)[1:]
-endfunction"}}}
 function! neocomplete#get_keyword_pattern(...) "{{{
   let filetype = a:0 != 0? a:1 : neocomplete#get_context_filetype()
   if a:0 < 2
@@ -182,17 +174,6 @@ function! neocomplete#get_keyword_pattern(...) "{{{
   endif
 
   return source.neocomplete__keyword_patterns[filetype]
-endfunction"}}}
-function! neocomplete#get_next_keyword_pattern(...) "{{{
-  let filetype = a:0 != 0? a:1 : neocomplete#get_context_filetype()
-  let keyword_patterns = (a:0 >= 2) ?
-        \ neocomplete#variables#get_source(a:2).next_keyword_patterns :
-        \ g:neocomplete#next_keyword_patterns
-  let next_pattern = neocomplete#helper#unite_patterns(
-        \ keyword_patterns, filetype)
-
-  return (next_pattern == '' ? '' : next_pattern.'\m\|')
-        \ . call('neocomplete#get_keyword_pattern', a:000)
 endfunction"}}}
 function! neocomplete#get_keyword_pattern_end(...) "{{{
   return '\%('.call('neocomplete#get_keyword_pattern', a:000).'\m\)$'

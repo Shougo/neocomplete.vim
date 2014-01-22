@@ -45,6 +45,17 @@ Context types
     ShouldEqual neocomplete#filters#matcher_fuzzy#define().filter(
           \ {'complete_str' : 'ae', 'candidates' : ['~/~']}), []
   End
+
+  It tests overlap.
+    ShouldEqual neocomplete#filters#converter_remove_overlap#
+          \length('foo bar', 'bar baz'), 3
+    ShouldEqual neocomplete#filters#converter_remove_overlap#
+          \length('foobar', 'barbaz'), 3
+    ShouldEqual neocomplete#filters#converter_remove_overlap#
+          \length('foob', 'baz'), 1
+    ShouldEqual neocomplete#filters#converter_remove_overlap#
+          \length('foobar', 'foobar'), 6
+  End
 End
 
 Fin

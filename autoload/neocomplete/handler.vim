@@ -59,6 +59,7 @@ function! neocomplete#handler#_on_insert_leave() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.cur_text = ''
   let neocomplete.completed_item = {}
+  let neocomplete.overlapped_items = {}
 endfunction"}}}
 function! neocomplete#handler#_on_write_post() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
@@ -97,8 +98,9 @@ function! neocomplete#handler#_on_complete_done() "{{{
       let neocomplete.completed_item = v:completed_item
     endif
   else
-    let complete_str = matchstr(neocomplete#get_cur_text(1),
-          \ '\%('.neocomplete#get_next_keyword_pattern().'\m\)$')
+    let [_, complete_str] =
+          \ neocomplete#helper#match_word(
+          \   matchstr(getline('.'), '^.*\%'.col('.').'c'))
     if complete_str == ''
       return
     endif
@@ -111,6 +113,15 @@ function! neocomplete#handler#_on_complete_done() "{{{
     if !empty(candidates)
       let neocomplete.completed_item = candidates[0]
     endif
+  endif
+
+  " Restore overlapped item
+  if has_key(neocomplete.overlapped_items, complete_str)
+    " Move cursor
+    call cursor(0, col('.') - len(complete_str) +
+          \ len(neocomplete.overlapped_items[complete_str]))
+
+    let complete_str = neocomplete.overlapped_items[complete_str]
   endif
 
   let frequencies = neocomplete#variables#get_frequencies()
