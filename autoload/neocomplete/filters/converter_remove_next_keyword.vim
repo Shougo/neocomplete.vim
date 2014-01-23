@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_remove_next_keyword.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jan 2014.
+" Last Modified: 23 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -28,7 +28,9 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! neocomplete#filters#converter_remove_next_keyword#define() "{{{
-  return neocomplete#filters#converter_remove_overlap#define()
+  let source = deepcopy(neocomplete#filters#converter_remove_overlap#define())
+  let source.name = 'converter_remove_next_keyword'
+  return source
 endfunction"}}}
 
 let &cpo = s:save_cpo
