@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: complete.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 13 Jan 2014.
+" Last Modified: 26 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -76,6 +76,7 @@ function! neocomplete#complete#manual_complete(findstart, base) "{{{
             \ !neocomplete#is_auto_complete() ||
             \ neocomplete#get_current_neocomplete().skipped) ?  -1 : -3
       let neocomplete.skipped = 0
+      let neocomplete.overlapped_items = {}
     endif
 
     return complete_pos
