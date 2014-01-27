@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: matcher_fuzzy.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Jan 2014.
+" Last Modified: 27 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,7 +39,8 @@ let s:matcher = {
 function! s:matcher.filter(context) "{{{
   if len(a:context.complete_str) > 10
     " Mix fuzzy mode.
-    let fuzzy_len = len(a:context.complete_str)/2
+    let len = len(a:context.complete_str)
+    let fuzzy_len = len > 40 ? len/2 : 1 + len/10
     let pattern =
           \ neocomplete#filters#escape(
           \     a:context.complete_str[: fuzzy_len-1])  .
