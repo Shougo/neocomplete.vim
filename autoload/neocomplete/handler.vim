@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: handler.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Jan 2014.
+" Last Modified: 29 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -116,7 +116,8 @@ function! neocomplete#handler#_on_complete_done() "{{{
   endif
 
   " Restore overlapped item
-  if has_key(neocomplete.overlapped_items, complete_str)
+  if exists('v:completed_item') &&
+        \ has_key(neocomplete.overlapped_items, complete_str)
     " Move cursor
     call cursor(0, col('.') - len(complete_str) +
           \ len(neocomplete.overlapped_items[complete_str]))
