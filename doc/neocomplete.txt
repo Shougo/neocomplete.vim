@@ -1234,6 +1234,9 @@ Default sources are below. But you can create original filters(cf:
 	call neocomplete#custom#source('_', 'sorters',
 	\ ['sorter_length'])
 
+	" Disable sort.
+	call neocomplete#custom#source('_', 'sorters', [])
+
 	" Change default converter.
 	call neocomplete#custom#source('_', 'converters',
 	\ ['converter_remove_overlap', 'converter_remove_last_paren',
