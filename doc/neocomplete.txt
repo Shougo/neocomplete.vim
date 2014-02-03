@@ -1,6 +1,6 @@
 *neocomplete.txt*	Next generation of auto completion framework.
 
-Version: 1.0
+Version: 1.1
 Author : Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -430,7 +430,7 @@ g:neocomplete#data_directory		*g:neocomplete#data_directory*
 		buffer.vim stores cache of the keyword in this
 		'buffer_cache' sub directory.
 
-		Default value is '~/.neocomplete'.
+		Default value is '~/.cache/neocomplete'.
 
 					*g:neocomplete#keyword_patterns*
 g:neocomplete#keyword_patterns
