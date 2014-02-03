@@ -54,9 +54,6 @@ command! -nargs=0 -bar NeoCompleteClean
       \ call neocomplete#commands#_clean()
 
 " Global options definition. "{{{
-let g:neocomplete#data_directory =
-      \ get(g:, 'neocomplete#data_directory',
-      \ expand('~/.cache/neocomplete'))
 let g:neocomplete#enable_debug =
       \ get(g:, 'neocomplete#enable_debug', 0)
 if get(g:, 'neocomplete#enable_at_startup', 0)

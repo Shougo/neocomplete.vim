@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jan 2014.
+" Last Modified: 04 Feb 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -290,6 +290,8 @@ function! neocomplete#print_debug(expr) "{{{
   endif
 endfunction"}}}
 function! neocomplete#get_data_directory() "{{{
+  let g:neocomplete#data_directory =
+        \ get(g:, 'neocomplete#data_directory', '~/.cache/neocomplete')
   let directory = neocomplete#util#substitute_path_separator(
         \ neocomplete#util#expand(g:neocomplete#data_directory))
   if !isdirectory(directory)
