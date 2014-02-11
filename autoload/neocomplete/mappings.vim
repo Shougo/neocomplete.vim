@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 11 Jan 2014.
+" Last Modified: 11 Feb 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -105,8 +105,11 @@ function! neocomplete#mappings#complete_common_string() "{{{
   let ignorecase_save = &ignorecase
 
   " Get cursor word.
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let neocomplete.event = 'mapping'
   let [complete_pos, complete_str] =
         \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))
+  let neocomplete.event = ''
 
   if neocomplete#is_text_mode()
     let &ignorecase = 1
@@ -116,7 +119,6 @@ function! neocomplete#mappings#complete_common_string() "{{{
     let &ignorecase = g:neocomplete#enable_ignore_case
   endif
 
-  let neocomplete = neocomplete#get_current_neocomplete()
   let candidates = neocomplete#filters#matcher_head#define().filter(
         \ { 'candidates' : copy(neocomplete.candidates),
         \   'complete_str' : complete_str})
