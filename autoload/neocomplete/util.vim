@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Sep 2013.
+" Last Modified: 15 Feb 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,36 +32,57 @@ let s:V = vital#of('neocomplete')
 function! neocomplete#util#get_vital() "{{{
   return s:V
 endfunction"}}}
-
-let s:List = neocomplete#util#get_vital().import('Data.List')
-let s:String = neocomplete#util#get_vital().import('Data.String')
+function! s:get_prelude() "{{{
+  if !exists('s:Prelude')
+    let s:Prelude = neocomplete#util#get_vital().import('Prelude')
+  endif
+  return s:Prelude
+endfunction"}}}
+function! s:get_list() "{{{
+  if !exists('s:List')
+    let s:List = neocomplete#util#get_vital().import('Data.List')
+  endif
+  return s:List
+endfunction"}}}
+function! s:get_string() "{{{
+  if !exists('s:String')
+    let s:String = neocomplete#util#get_vital().import('Data.String')
+  endif
+  return s:String
+endfunction"}}}
+function! s:get_process() "{{{
+  if !exists('s:Process')
+    let s:Process = neocomplete#util#get_vital().import('Process')
+  endif
+  return s:Process
+endfunction"}}}
 
 function! neocomplete#util#truncate_smart(...) "{{{
-  return call(s:V.truncate_skipping, a:000)
+  return call(s:get_prelude().truncate_skipping, a:000)
 endfunction"}}}
 
 function! neocomplete#util#truncate(...) "{{{
-  return call(s:V.truncate, a:000)
+  return call(s:get_prelude().truncate, a:000)
 endfunction"}}}
 
 function! neocomplete#util#strchars(...) "{{{
-  return call(s:String.strchars, a:000)
+  return call(s:get_string().strchars, a:000)
 endfunction"}}}
 function! neocomplete#util#wcswidth(...) "{{{
-  return call(s:V.wcswidth, a:000)
+  return call(s:get_prelude().wcswidth, a:000)
 endfunction"}}}
 function! neocomplete#util#strwidthpart(...) "{{{
-  return call(s:V.strwidthpart, a:000)
+  return call(s:get_prelude().strwidthpart, a:000)
 endfunction"}}}
 function! neocomplete#util#strwidthpart_reverse(...) "{{{
-  return call(s:V.strwidthpart_reverse, a:000)
+  return call(s:get_prelude().strwidthpart_reverse, a:000)
 endfunction"}}}
 
 function! neocomplete#util#substitute_path_separator(...) "{{{
-  return call(s:V.substitute_path_separator, a:000)
+  return call(s:get_prelude().substitute_path_separator, a:000)
 endfunction"}}}
 function! neocomplete#util#mb_strlen(...) "{{{
-  return call(s:String.strchars, a:000)
+  return call(s:get_string().strchars, a:000)
 endfunction"}}}
 function! neocomplete#util#uniq(list) "{{{
   let dict = {}
@@ -74,10 +95,10 @@ function! neocomplete#util#uniq(list) "{{{
   return values(dict)
 endfunction"}}}
 function! neocomplete#util#system(...) "{{{
-  return call(s:V.system, a:000)
+  return call(s:get_process().system, a:000)
 endfunction"}}}
 function! neocomplete#util#has_vimproc(...) "{{{
-  return call(s:V.has_vimproc, a:000)
+  return call(s:get_process().has_vimproc, a:000)
 endfunction"}}}
 function! neocomplete#util#has_lua() "{{{
   " Note: Disabled if_lua feature if less than 7.3.885.
@@ -85,28 +106,28 @@ function! neocomplete#util#has_lua() "{{{
   return has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
 endfunction"}}}
 function! neocomplete#util#is_windows(...) "{{{
-  return call(s:V.is_windows, a:000)
+  return call(s:get_prelude().is_windows, a:000)
 endfunction"}}}
 function! neocomplete#util#is_mac(...) "{{{
-  return call(s:V.is_mac, a:000)
+  return call(s:get_prelude().is_mac, a:000)
 endfunction"}}}
 function! neocomplete#util#is_complete_select() "{{{
   return get(g:, 'neocomplete#enable_complete_select', 0)
 endfunction"}}}
 function! neocomplete#util#get_last_status(...) "{{{
-  return call(s:V.get_last_status, a:000)
+  return call(s:get_process().get_last_status, a:000)
 endfunction"}}}
 function! neocomplete#util#escape_pattern(...) "{{{
-  return call(s:V.escape_pattern, a:000)
+  return call(s:get_prelude().escape_pattern, a:000)
 endfunction"}}}
 function! neocomplete#util#iconv(...) "{{{
-  return call(s:V.iconv, a:000)
+  return call(s:get_process().iconv, a:000)
 endfunction"}}}
 function! neocomplete#util#uniq(...) "{{{
-  return call(s:List.uniq, a:000)
+  return call(s:get_list().uniq, a:000)
 endfunction"}}}
 function! neocomplete#util#sort_by(...) "{{{
-  return call(s:List.sort_by, a:000)
+  return call(s:get_list().sort_by, a:000)
 endfunction"}}}
 
 " Sudo check.
@@ -162,7 +183,7 @@ function! neocomplete#util#set_default(var, val, ...)  "{{{
   endif
 endfunction"}}}
 function! neocomplete#util#set_dictionary_helper(...) "{{{
-  return call(s:V.set_dictionary_helper, a:000)
+  return call(s:get_prelude().set_dictionary_helper, a:000)
 endfunction"}}}
 
 function! neocomplete#util#set_default_dictionary(variable, keys, value) "{{{
