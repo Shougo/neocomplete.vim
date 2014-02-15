@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: helper.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Jan 2014.
+" Last Modified: 15 Feb 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,14 +27,15 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#helper#get_cur_text() "{{{
+function! neocomplete#helper#get_cur_text(...) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
+  let is_skip_char = get(a:000, 0, 0)
 
   let cur_text =
         \ (mode() ==# 'i' ? (col('.')-1) : col('.')) >= len(getline('.')) ?
         \      getline('.') :
         \      matchstr(getline('.'),
-        \         '^.*\%' . (mode() ==# 'i' && neocomplete.event != '' ?
+        \         '^.*\%' . (mode() ==# 'i' && !is_skip_char ?
         \                    col('.') : col('.') - 1)
         \         . 'c' . (mode() ==# 'i' ? '' : '.'))
 
