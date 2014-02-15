@@ -1297,10 +1297,6 @@ converter_delimiter
 		The converter which abbreviates a candidate's delimiter.
 		(cf: |g:neocomplete#delimiter_patterns|)
 
-			*neocomplete-filter-converter_remove_next_keyword*
-converter_remove_next_keyword
-		Note: It is deprecated.
-
 			*neocomplete-filter-converter_remove_overlap*
 converter_remove_overlap
 		The converter which removes overlapped text in a candidate's
