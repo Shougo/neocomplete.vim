@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: converter_case.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Jun 2013.
+" Last Modified: 18 Feb 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -41,14 +41,14 @@ function! s:converter.filter(context) "{{{
     return a:context.candidates
   endif
 
-  if a:context.complete_str =~ '^\l\+$'
+  if a:context.complete_str =~ '^\l\{2}$'
     for candidate in s:get_convert_candidates(a:context.candidates)
       let candidate.word = tolower(candidate.word)
       if has_key(candidate, 'abbr')
         let candidate.abbr = tolower(candidate.abbr)
       endif
     endfor
-  elseif a:context.complete_str =~ '^\u\+$'
+  elseif a:context.complete_str =~ '^\u\{2}$'
     for candidate in s:get_convert_candidates(a:context.candidates)
       let candidate.word = toupper(candidate.word)
       if has_key(candidate, 'abbr')
@@ -58,7 +58,7 @@ function! s:converter.filter(context) "{{{
   elseif a:context.complete_str =~ '^\u\l\+$'
     for candidate in s:get_convert_candidates(a:context.candidates)
       let candidate.word = toupper(candidate.word[0]).
-            \ tolower(candidate.word[1:])
+            \ candidate.word[1:]
       if has_key(candidate, 'abbr')
         let candidate.abbr = toupper(candidate.abbr[0]).
               \ tolower(candidate.abbr[1:])
