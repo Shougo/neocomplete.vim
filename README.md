@@ -52,6 +52,30 @@ Vim build (for example, Ubuntu 12.04 ships Vim 7.3.429).
 However, [building Vim](http://vim.wikia.com/wiki/Building_Vim) on Linux is not difficult.
 Remember to specify `--with-lua` (or `--with-features=huge`).
 
+### Vim for Cygwin:
+
+In a cygwin environment, first uninstall the vim binary and install the vim sources.
+Also install the lua interpreter and libncurses.
+
+You also need gcc and make.
+
+When everything is prepared, untar the source and execute these commands.
+
+    $ cd /usr/src
+    $ tar jxf vim-7.4.tar.bz2
+    $ cd /vim/vim74/
+    $ ./configure --enable-luainterp --with-lua-prefix --enable-gui=no --without-x --enable-multibyte --prefix=/usr
+    $ make && make install
+
+To check if everything was successfull enter the following
+
+    $ vim --version
+
+You should see 
+
+    +lua
+
+in the list of features.
 
 ## Snippets
 
