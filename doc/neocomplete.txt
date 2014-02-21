@@ -1210,9 +1210,9 @@ neosnippet				*neocomplete-sources-neosnippet*
 		https://github.com/Shougo/neosnippet
 
 neco-ghc				*neocomplete-sources-neco-ghc*
-		https://github.com/ujihisa/neco-ghc
-		eagletmt originally implemented and now ujihisa is maintaining
-		this source.  It completes a source file written in Haskell.
+		https://github.com/eagletmt/neco-ghc
+		eagletmt originally implemented and ujihisa added some new
+		features. It completes a source file written in Haskell.
 		It requires ghc-mod <http://www.mew.org/~kazu/proj/ghc-mod/>.
 
 ==============================================================================
@@ -1593,7 +1593,7 @@ https://github.com/ujihisa/neco-look
 
 ghc source :
 
-https://github.com/ujihisa/neco-ghc
+https://github.com/eagletmt/neco-ghc
 
 calc source :
 
