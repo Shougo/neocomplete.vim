@@ -55,7 +55,7 @@ Remember to specify `--with-lua` (or `--with-features=huge`).
 ### Vim for Cygwin:
 
 In a cygwin environment, first uninstall the vim binary and install the vim sources.
-Also install the lua interpreter and libncurses.
+Also install the lua interpreter (binary and source) and libncurses.
 
 You also need gcc and make.
 
@@ -63,8 +63,9 @@ When everything is prepared, execute these commands.
 
     cd /usr/src
     tar jxf vim-7.4.tar.bz2
-    cd /vim/vim74/
-    ./configure --enable-luainterp --with-lua-prefix --enable-gui=no \
+    tar xvfz lua-5.1.5.tar.gz
+    cd /vim74/
+    ./configure --enable-luainterp --enable-gui=no \
     --without-x --enable-multibyte --prefix=/usr
     make && make install
 
