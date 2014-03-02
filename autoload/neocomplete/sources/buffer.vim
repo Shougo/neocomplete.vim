@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Jan 2014.
+" Last Modified: 03 Mar 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -142,6 +142,9 @@ function! s:make_cache_current_buffer(start, end) "{{{
 
   let source = s:buffer_sources[bufnr('%')]
   let keyword_pattern = source.keyword_pattern
+  if keyword_pattern == ''
+    return
+  endif
 
   lua << EOF
 do
