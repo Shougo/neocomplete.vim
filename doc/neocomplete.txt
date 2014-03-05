@@ -1337,10 +1337,10 @@ name			String		(Required)
 
 					*neocomplete-source-attribute-kind*
 kind			String			(Optional)
-			Source kind.
+			Source kind.  It decides to complete position behavior.
 			Following values are available.
 			"manual"  : This source decides complete position
-				manually.
+				manually by "get_complete_position" attribute.
 				Note: "complfunc" or "ftplugin" are old
 				values.
 			"keyword" : This source decides complete position by
