@@ -1326,9 +1326,8 @@ can use |neocomplete#define_source()|.
 SOURCE ATTRIBUTES			*neocomplete-source-attributes*
 
 					*neocomplete-source-attribute-name*
-name			String		(Required)
-			The name of a source.  It must consist of the
-			following characters:
+name			String				(Required)
+			The name of a source.  Allowed characters are:
 			- a-z
 			- 0-9
 			- _
@@ -1336,21 +1335,26 @@ name			String		(Required)
 			- - (Not head)
 
 					*neocomplete-source-attribute-kind*
-kind			String			(Optional)
-			Source kind.  It decides to complete position behavior.
-			Following values are available.
-			"manual"  : This source decides complete position
-				manually by "get_complete_position" attribute.
-				Note: "complfunc" or "ftplugin" are old
-				values.
-			"keyword" : This source decides complete position by
-				|g:neocomplete#keyword_patterns|.
-				Note: "plugin" is old value.
-				Note: The candidates are filtered by
-				|g:neocomplete#keyword_patterns|.
+kind			String				(Optional)
+			The kind of the source.  It decides the behaviour of
+			the complete position.  The following values are
+			available:
+
+			"manual" : The source decides the complete position
+				manually with the "get_complete_position"
+				attribute.  See also:
+				|neocomplete-source-attribute-get_complete_position|
+
+			"keyword": The source decides the complete position
+				with |g:neocomplete#keyword_patterns|.  This
+				pattern is also used to filter the candidates.
+
+			Note that "plugin", "complfunc" and "ftplugin" are old
+			values that are no longer accepted.
+
 
 				*neocomplete-source-attribute-filetypes*
-filetypes		Dictionary		(Optional)
+filetypes		Dictionary			(Optional)
 			Available filetype dictionary.
 
 			For example:
@@ -1373,7 +1377,7 @@ disabled_filetypes		Dictionary		(Optional)
 			sources.
 
 					*neocomplete-source-attribute-rank*
-rank			Number		(Optional)
+rank			Number				(Optional)
 			Source priority.
 
 			If you omit it, it is set below value.
@@ -1383,7 +1387,7 @@ rank			Number		(Optional)
 
 			*neocomplete-source-attribute-min_pattern_length*
 min_pattern_length
-			Number		(Optional)
+			Number				(Optional)
 			Required pattern length for completion.
 
 			If you omit it, it is set below value.
