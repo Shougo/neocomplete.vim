@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jan 2014.
+" Last Modified: 24 Mar 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -127,7 +127,7 @@ function! s:source.get_complete_position(context) "{{{
   " Check include pattern.
   let pattern = get(g:neocomplete#sources#include#patterns,
         \ filetype, &l:include)
-  if pattern == '' || a:context.input !~ pattern . '\s\+'
+  if pattern == '' || a:context.input !~ pattern
     return -1
   endif
 
