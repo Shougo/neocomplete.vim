@@ -217,6 +217,17 @@ function! s:check_buffer(bufnumber, is_force) "{{{
     endif
   endfor
 endfunction"}}}
+
+function! s:set_python_include_files(python_bin) "{{{
+  let python_sys_path_cmd = a:python_bin .
+        \ ' -c "import sys;sys.stdout.write(\",\".join(sys.path))"'
+  let path = neocomplete#system(python_sys_path_cmd)
+  let path = join(neocomplete#util#uniq(filter(
+        \ split(path, ',', 1), "v:val != ''")), ',')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#include#paths', a:python_bin, path)
+endfunction"}}}
+
 function! s:get_buffer_include_files(bufnumber) "{{{
   let filetype = getbufvar(a:bufnumber, '&filetype')
   if filetype == ''
@@ -226,22 +237,12 @@ function! s:get_buffer_include_files(bufnumber) "{{{
   if (filetype ==# 'python' || filetype ==# 'python3')
         \ && (executable('python') || executable('python3'))
     " Initialize python path pattern.
-
-    let path = ''
     if executable('python3')
-      let path .= ',' . neocomplete#system('python3 -',
-          \ 'import sys;sys.stdout.write(",".join(sys.path))')
-      call neocomplete#util#set_default_dictionary(
-            \ 'g:neocomplete#sources#include#paths', 'python3', path)
+      call s:set_python_include_files('python3')
     endif
     if executable('python')
-      let path .= ',' . neocomplete#system('python -',
-          \ 'import sys;sys.stdout.write(",".join(sys.path))')
+      call s:set_python_include_files('python')
     endif
-    let path = join(neocomplete#util#uniq(filter(
-          \ split(path, ',', 1), "v:val != ''")), ',')
-    call neocomplete#util#set_default_dictionary(
-          \ 'g:neocomplete#sources#include#paths', 'python', path)
   elseif filetype ==# 'cpp' && isdirectory('/usr/include/c++')
     " Add cpp path.
     call neocomplete#util#set_default_dictionary(
