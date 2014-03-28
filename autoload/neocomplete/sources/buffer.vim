@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 24 Mar 2014.
+" Last Modified: 29 Mar 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -297,12 +297,15 @@ function! s:check_changed_buffer() "{{{
 endfunction"}}}
 
 function! s:check_source() "{{{
-  if !s:exists_current_source()
+  let current_buffer_size = getfsize(fnamemodify(bufname(bufnr('%')), ':p'))
+  if !s:exists_current_source() && current_buffer_size <
+        \        g:neocomplete#sources#buffer#cache_limit_size
     call s:make_cache_current_block()
     return
   endif
 
-  if s:check_changed_buffer()
+  if s:check_changed_buffer() && current_buffer_size <
+        \        g:neocomplete#sources#buffer#cache_limit_size
     call s:make_cache(bufnr('%'))
   endif
 
