@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: include.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 May 2013.
 "=============================================================================
 
 if exists('g:loaded_neocomplete_include')
