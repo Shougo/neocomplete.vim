@@ -297,15 +297,16 @@ endfunction"}}}
 
 function! s:check_source() "{{{
   let current_buffer_size = getfsize(fnamemodify(bufname(bufnr('%')), ':p'))
-  if !s:exists_current_source() && current_buffer_size <
+  if current_buffer_size <
         \        g:neocomplete#sources#buffer#cache_limit_size
-    call s:make_cache_current_block()
-    return
-  endif
+    if !s:exists_current_source()
+      call s:make_cache_current_block()
+      return
+    endif
 
-  if s:check_changed_buffer() && current_buffer_size <
-        \        g:neocomplete#sources#buffer#cache_limit_size
-    call s:make_cache(bufnr('%'))
+    if s:check_changed_buffer()
+      call s:make_cache(bufnr('%'))
+    endif
   endif
 
   " Check new buffer.
