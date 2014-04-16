@@ -226,13 +226,9 @@ function! s:set_complete_results_words(complete_results) "{{{
 
     let pos = getpos('.')
 
-    " Note: For rubycomplete problem.
-    let complete_str =
-          \ (omnifunc == 'rubycomplete#Complete') ?
-          \ '' : result.complete_str
-
     try
-      let list = call(omnifunc, [0, complete_str])
+      call cursor(0, result.complete_pos)
+      let list = call(omnifunc, [0, result.complete_str])
     catch
       call neocomplete#print_error(
             \ 'Error occured calling omnifunction: ' . omnifunc)
@@ -240,9 +236,7 @@ function! s:set_complete_results_words(complete_results) "{{{
       call neocomplete#print_error(v:exception)
       let list = []
     finally
-      if getpos('.') != pos
-        call setpos('.', pos)
-      endif
+      call setpos('.', pos)
     endtry
 
     if type(list) != type([])
