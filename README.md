@@ -47,7 +47,24 @@ To install Vim (as opposed to MacVim) with homebrew:
 
 ### Vim for Linux:
 
-On Linux, your distribution's package manager may have a fairly outdated
+#### Debian (or Ubuntu) 
+
+Make sure you have any of these packages:
+* vim-nox
+* vim-gtk
+* vim-gnome
+* vim-athena
+
+Which package depends on your graphical environment (except vim-nox which is for vim with no GUI).
+
+#### Fedora 
+
+The latest version of vim includes lua.
+As of 2014-04-16 you need to (download the rmp)[http://koji.fedoraproject.org/koji/packageinfo?packageID=216].
+
+#### Misc
+
+Be aware, your distribution's package manager may have a fairly outdated
 Vim build (for example, Ubuntu 12.04 ships Vim 7.3.429).
 However, [building Vim](http://vim.wikia.com/wiki/Building_Vim) on Linux is not difficult.
 Remember to specify `--with-lua` (or `--with-features=huge`).
