@@ -39,7 +39,7 @@ function! s:matcher.filter(context) "{{{
   if len(a:context.complete_str) > 10
     " Mix fuzzy mode.
     let len = len(a:context.complete_str)
-    let fuzzy_len = len > 40 ? len/2 : 1 + len/10
+    let fuzzy_len = len - len/(1 + len/10)
     let pattern =
           \ neocomplete#filters#escape(
           \     a:context.complete_str[: fuzzy_len-1])  .
