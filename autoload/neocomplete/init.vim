@@ -711,6 +711,11 @@ function! neocomplete#init#_source(source) "{{{
           \ empty(source.filetypes) ? 10 : 100
   endif
 
+  if !has_key(source.keyword_patterns, '_')
+    " Set default keyword pattern.
+    let source.keyword_patterns['_'] = g:neocomplete#keyword_patterns['_']
+  endif
+
   if !has_key(source, 'min_pattern_length')
     " Set min_pattern_length.
     let source.min_pattern_length = (source.kind ==# 'keyword') ?
