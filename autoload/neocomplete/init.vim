@@ -144,7 +144,7 @@ function! neocomplete#init#_variables() "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'_',
-        \'\k\+')
+        \'\h\w*')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#keyword_patterns',
         \'filename',
