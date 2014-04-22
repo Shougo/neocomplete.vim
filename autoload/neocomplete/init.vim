@@ -713,7 +713,8 @@ function! neocomplete#init#_source(source) "{{{
 
   if !has_key(source.keyword_patterns, '_')
     " Set default keyword pattern.
-    let source.keyword_patterns['_'] = g:neocomplete#keyword_patterns['_']
+    let source.keyword_patterns['_'] =
+          \ get(g:neocomplete#keyword_patterns, '_', '\h\w*')
   endif
 
   if !has_key(source, 'min_pattern_length')
