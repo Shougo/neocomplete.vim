@@ -90,7 +90,7 @@ To check if everything was successfull enter the following `vim --version`. You 
 
 ## Snippets
 
-The Snippets feature of neocomplcache was split into a 
+The Snippets feature of neocomplete was split into a 
 [separate plugin](https://github.com/Shougo/neosnippet).
 
 A migration guide for existing users of neocomplcache is available: 
