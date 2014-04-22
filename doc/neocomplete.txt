@@ -1881,6 +1881,7 @@ your Vim initialization.
 Q: neocomplete conflicts when multibyte input in GVim.
 
 A: Because Vim multibyte IME integration is incomplete.
+You should use "fcitx" instead of "ibus".
 If you set |g:neocomplete#lock_iminsert| is non-zero, it may be fixed.
 
 Q: Freeze for a while and close opened folding when I begin to insert.
