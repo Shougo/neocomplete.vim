@@ -347,56 +347,57 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
   let ignorecase_save = &ignorecase
   let pos = winsaveview()
 
-  for source in a:sources
-    if neocomplete#complete_check()
-      return
-    endif
-
-    let context = source.neocomplete__context
-
-    let &ignorecase = (g:neocomplete#enable_smart_case
-          \ || g:neocomplete#enable_camel_case) ?
-          \   context.complete_str !~ '\u' : g:neocomplete#enable_ignore_case
-
-    if !source.is_volatile
-          \ && context.prev_complete_pos == context.complete_pos
-          \ && !empty(context.prev_candidates)
-      " Use previous candidates.
-      let context.candidates = context.prev_candidates
-    else
-      try
-        let context.candidates = source.gather_candidates(context)
-      catch
-        call neocomplete#print_error(v:throwpoint)
-        call neocomplete#print_error(v:exception)
-        call neocomplete#print_error(
-              \ 'Source name is ' . source.name)
-        call neocomplete#print_error(
-              \ 'Error occured in source''s gather_candidates()!')
-
-        let &ignorecase = ignorecase_save
+  try
+    for source in a:sources
+      if neocomplete#complete_check()
         return
-      finally
-        if winsaveview() != pos
-          call winrestview(pos)
-        endif
-      endtry
-    endif
+      endif
 
-    let context.prev_candidates = copy(context.candidates)
-    let context.prev_complete_pos = context.complete_pos
+      let context = source.neocomplete__context
 
-    if !empty(context.candidates)
-      let context.candidates = neocomplete#helper#call_filters(
-            \ source.neocomplete__matchers, source, {})
-    endif
+      let &ignorecase = (g:neocomplete#enable_smart_case
+            \ || g:neocomplete#enable_camel_case) ?
+            \   context.complete_str !~ '\u' : g:neocomplete#enable_ignore_case
 
-    if g:neocomplete#enable_debug
-      echomsg source.name
-    endif
-  endfor
+      if !source.is_volatile
+            \ && context.prev_complete_pos == context.complete_pos
+            \ && !empty(context.prev_candidates)
+        " Use previous candidates.
+        let context.candidates = context.prev_candidates
+      else
+        try
+          let context.candidates = source.gather_candidates(context)
+        catch
+          call neocomplete#print_error(v:throwpoint)
+          call neocomplete#print_error(v:exception)
+          call neocomplete#print_error(
+                \ 'Source name is ' . source.name)
+          call neocomplete#print_error(
+                \ 'Error occured in source''s gather_candidates()!')
 
-  let &ignorecase = ignorecase_save
+          return
+        finally
+          if winsaveview() != pos
+            call winrestview(pos)
+          endif
+        endtry
+      endif
+
+      let context.prev_candidates = copy(context.candidates)
+      let context.prev_complete_pos = context.complete_pos
+
+      if !empty(context.candidates)
+        let context.candidates = neocomplete#helper#call_filters(
+              \ source.neocomplete__matchers, source, {})
+      endif
+
+      if g:neocomplete#enable_debug
+        echomsg source.name
+      endif
+    endfor
+  finally
+    let &ignorecase = ignorecase_save
+  endtry
 endfunction"}}}
 
 " Source rank order. "{{{
