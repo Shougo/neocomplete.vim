@@ -74,7 +74,7 @@ endfunction
 function! neocomplete#mappings#popup_post() "{{{
   return  !pumvisible() ? "" :
         \ g:neocomplete#enable_auto_select ? "\<C-p>\<Down>" :
-        \ "\<C-p>"
+        \ neocomplete#is_auto_complete() ? "\<C-p>" : ""
 endfunction"}}}
 
 function! neocomplete#mappings#undo_completion() "{{{
