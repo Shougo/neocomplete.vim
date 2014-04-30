@@ -349,6 +349,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
 
   for source in a:sources
     if neocomplete#complete_check()
+      let &ignorecase = ignorecase_save
       return
     endif
 
