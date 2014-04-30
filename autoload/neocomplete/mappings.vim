@@ -141,7 +141,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
     let &ignorecase = ignorecase_save
   endtry
 
-  if common_str == ''
+  if common_str == '' || complete_str ==# common_str
     return ''
   endif
 

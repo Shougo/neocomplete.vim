@@ -1003,6 +1003,10 @@ neocomplete#complete_common_string()
 		have long common string.
 >
 		inoremap <expr><C-l>     neocomplete#complete_common_string()
+		inoremap <expr><Tab>
+		\ neocomplete#complete_common_string() != '' ?
+		\   neocomplete#complete_common_string() :
+		\ pumvisible() ? "\<C-n>" : "\<Tab>"
 <
 				*<Plug>(neocomplete_start_unite_complete)*
 <Plug>(neocomplete_start_unite_complete)
