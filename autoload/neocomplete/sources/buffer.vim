@@ -133,8 +133,29 @@ function! s:make_cache_current_block() "{{{
   return s:make_cache_current_buffer(
           \ max([1, line('.') - 500]), min([line('.') + 500, line('$')]))
 endfunction"}}}
+
+function! s:should_create_cache() " {{{
+  let filepath = fnamemodify(bufname('%'), ':p')
+  return getfsize(filepath) < g:neocomplete#sources#buffer#cache_limit_size &&
+          \ filepath !~# g:neocomplete#sources#buffer#disabled_pattern
+endfunction"}}}
+
 function! s:make_cache_current_buffer(start, end) "{{{
   " Make cache from current buffer.
+
+  if !s:should_create_cache()
+      let filepath = fnamemodify(bufname('%'), ':p')
+      if g:neocomplete#enable_debug
+        try
+          throw ''
+        catch
+          echomsg 'NeoCompleteStopCache: ' . filepath . ' start: ' . a:start . ' end: ' . a:end . ' getfsize(filepath): ' . getfsize(filepath)
+          echomsg '  call_stack: ' . v:throwpoint
+        endtry
+      endif
+      return
+  endif
+
   if !s:exists_current_source()
     call s:make_cache(bufnr('%'))
   endif
