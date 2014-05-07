@@ -149,7 +149,9 @@ function! s:make_cache_current_buffer(start, end) "{{{
         try
           throw ''
         catch
-          echomsg 'NeoCompleteStopCache: ' . filepath . ' start: ' . a:start . ' end: ' . a:end . ' getfsize(filepath): ' . getfsize(filepath)
+          echomsg '[neocomplete] Stopped make buffer cache in ' . filepath
+                \ . ' start: ' . a:start . ' end: ' . a:end
+                \ . ' getfsize(filepath): ' . getfsize(filepath)
           echomsg '  call_stack: ' . v:throwpoint
         endtry
       endif
