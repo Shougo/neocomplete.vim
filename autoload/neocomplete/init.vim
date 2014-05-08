@@ -600,6 +600,7 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'cur_text' : '',
         \ 'old_cur_text' : '',
         \ 'old_linenr' : line('.'),
+        \ 'old_complete_pos' : -1,
         \ 'complete_str' : '',
         \ 'complete_pos' : -1,
         \ 'candidates' : [],
