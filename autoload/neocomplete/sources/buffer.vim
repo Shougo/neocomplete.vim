@@ -137,7 +137,8 @@ endfunction"}}}
 function! s:should_create_cache() " {{{
   let filepath = fnamemodify(bufname('%'), ':p')
   return getfsize(filepath) < g:neocomplete#sources#buffer#cache_limit_size &&
-          \ filepath !~# g:neocomplete#sources#buffer#disabled_pattern
+          \ (g:neocomplete#sources#buffer#disabled_pattern == '' ||
+          \  filepath !~# g:neocomplete#sources#buffer#disabled_pattern)
 endfunction"}}}
 
 function! s:make_cache_current_buffer(start, end) "{{{
