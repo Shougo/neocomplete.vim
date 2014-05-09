@@ -343,7 +343,7 @@ function! s:is_skip_auto_complete(cur_text) "{{{
   let is_delimiter = 0
   let filetype = neocomplete#get_context_filetype()
 
-  for delimiter in ['/', '\.'] +
+  for delimiter in ['/', '.'] +
         \ get(g:neocomplete#delimiter_patterns, filetype, [])
     if stridx(a:cur_text, delimiter,
           \ len(a:cur_text) - len(delimiter))
