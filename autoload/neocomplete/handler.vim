@@ -345,7 +345,8 @@ function! s:is_skip_auto_complete(cur_text) "{{{
 
   for delimiter in ['/', '\.'] +
         \ get(g:neocomplete#delimiter_patterns, filetype, [])
-    if a:cur_text =~ delimiter . '$'
+    if stridx(a:cur_text, delimiter,
+          \ len(a:cur_text) - len(delimiter))
       let is_delimiter = 1
       break
     endif
