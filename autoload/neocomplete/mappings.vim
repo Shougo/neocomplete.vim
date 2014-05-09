@@ -141,7 +141,9 @@ function! neocomplete#mappings#complete_common_string() "{{{
     let &ignorecase = ignorecase_save
   endtry
 
-  if common_str == '' || complete_str ==# common_str
+  if common_str == ''
+        \ || complete_str ==# common_str
+        \ || len(common_str) == len(candidates[0].word)
     return ''
   endif
 
