@@ -331,6 +331,7 @@ function! s:is_skip_auto_complete(cur_text) "{{{
         \ || (g:neocomplete#lock_iminsert && &l:iminsert)
         \ || (&l:formatoptions =~# '[tc]' && &l:textwidth > 0
         \     && neocomplete#util#wcswidth(a:cur_text) >= &l:textwidth)
+    let neocomplete.skip_next_complete = 0
     return 1
   endif
 
