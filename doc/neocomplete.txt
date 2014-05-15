@@ -1387,17 +1387,17 @@ disabled_filetypes		Dictionary		(Optional)
 
 					*neocomplete-source-attribute-rank*
 rank			Number				(Optional)
-			Source priority.
-
-      Higher values imply higher priority.
+			Source priority.  Higher values imply higher priority.
 			If you omit it, it is set below value.
+			Note: It is high priority than match position.
+
 			If kind attribute is "keyword" : 5
 			If filetype attribute is empty : 10
 			Else : 100
 
-      For example, to change vim source default rank value
-      of 300:
+      Example:
 >
+      " Change vim source default rank value of 300.
       call neocomplete#custom#source('ultisnips', 'rank', 1000)
 <
 			*neocomplete-source-attribute-min_pattern_length*
