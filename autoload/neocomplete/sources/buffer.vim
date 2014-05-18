@@ -199,9 +199,9 @@ do
       match = vim.eval('match(getline(' .. linenr ..
         '), keyword_pattern, ' .. match .. ')')
       if match >= 0 then
-        match_end = vim.eval('matchend(getline('..linenr..
+        local match_end = vim.eval('matchend(getline('..linenr..
           '), keyword_pattern, '..match..')')
-        match_str = string.sub(b[linenr], match+1, match_end)
+        local match_str = string.sub(b[linenr], match+1, match_end)
         if string.len(match_str) >= min_length then
           if keywords[match_str] == nil then
             keywords[match_str] = 1
