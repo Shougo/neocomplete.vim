@@ -329,7 +329,7 @@ function! s:is_skip_auto_complete(cur_text) "{{{
         \ || (a:cur_text == neocomplete.old_cur_text
         \     && line('.') == neocomplete.old_linenr)
         \ || (g:neocomplete#lock_iminsert && &l:iminsert)
-        \ || (&l:formatoptions =~# '[tc]' && &l:textwidth > 0
+        \ || (&l:formatoptions =~# '[tca]' && &l:textwidth > 0
         \     && neocomplete#util#wcswidth(a:cur_text) >= &l:textwidth)
     let neocomplete.skip_next_complete = 0
     return 1
