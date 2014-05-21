@@ -1755,9 +1755,9 @@ A: Please try below settings.
 	let g:neocomplete#force_omni_input_patterns.cpp =
 	      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 	let g:neocomplete#force_omni_input_patterns.objc =
-	      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+	      \ '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)'
 	let g:neocomplete#force_omni_input_patterns.objcpp =
-	      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+	      \ '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)\|\h\w*::\w*'
 	let g:clang_complete_auto = 0
 	let g:clang_auto_select = 0
 	"let g:clang_use_library = 1
