@@ -19,7 +19,7 @@ See [requirements](#requirements) if you aren't sure whether you have this.
 
 ## Requirements
 
-neocomplete requires Vim 7.3.885+ compiled with [if\_lua](http://vimdoc.sourceforge.net/htmldoc/if_lua.html). 
+neocomplete requires Vim 7.3.885+ compiled with [if\_lua](http://vimdoc.sourceforge.net/htmldoc/if_lua.html).
 If `:echo has("lua")` returns `1`, then you're done; otherwise, see below.
 
 ### Vim builds for Windows
@@ -71,10 +71,9 @@ Remember to specify `--with-lua` (or `--with-features=huge`).
 
 ### Vim for Cygwin:
 
-In a cygwin environment, first uninstall the vim binary and install the vim sources.
-Also install the lua interpreter (binary and source) and libncurses.
+In a cygwin environment, Lua interface is supported by default.
 
-You also need gcc and make.
+If you want to make manually, you also need gcc and make.
 
 When everything is prepared, execute these commands.
 
