@@ -142,6 +142,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
   endtry
 
   if common_str == ''
+        \ || complete_str == ''
         \ || complete_str ==# common_str
         \ || len(common_str) == len(candidates[0].word)
     return ''
