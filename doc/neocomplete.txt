@@ -1,7 +1,7 @@
 *neocomplete.txt*	Next generation of auto completion framework.
 
 Version: 1.1
-Author : Shougo <Shougo.Matsu@gmail.com>
+Author: Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the
@@ -1256,9 +1256,9 @@ Default sources are below. But you can create original filters(cf:
 <
 					*neocomplete-filter-matcher_default*
 Default matchers:
-	if |g:neocomplete#enable_fuzzy_completion| :
+	If |g:neocomplete#enable_fuzzy_completion|:
 		['matcher_head', 'matcher_length']
-	else :
+	Otherwise:
 		['matcher_fuzzy', 'matcher_length']
 
 					*neocomplete-filter-sorter_default*
@@ -1349,7 +1349,7 @@ kind			String				(Optional)
 			the complete position.  The following values are
 			available:
 
-			"manual" : The source decides the complete position
+			"manual": The source decides the complete position
 				manually with the "get_complete_position"
 				attribute.  See also:
 				|neocomplete-source-attribute-get_complete_position|
@@ -1391,9 +1391,9 @@ rank			Number				(Optional)
 			If you omit it, it is set below value.
 			Note: It is high priority than match position.
 
-			If kind attribute is "keyword" : 5
-			If filetype attribute is empty : 10
-			Else : 100
+			If kind attribute is "keyword": 5
+			If filetype attribute is empty: 10
+			Otherwise: 100
 
       Example:
 >
@@ -1406,9 +1406,9 @@ min_pattern_length
 			Required pattern length for completion.
 
 			If you omit it, it is set below value.
-			If kind attribute is "keyword" :
+			If kind attribute is "keyword":
 			    |g:neocomplete#auto_completion_start_length|
-			Else : 0
+			Otherwise: 0
 
 			*neocomplete-source-attribute-max_candidates*
 max_candidates
@@ -1598,27 +1598,27 @@ neocomplete
 ==============================================================================
 EXTERNAL SOURCES				*neocomplete-external-sources*
 
-neosnippet source :
+neosnippet source:
 
 https://github.com/Shougo/neosnippet.vim
 
-UltiSnips source :
+UltiSnips source:
 
 https://github.com/SirVer/ultisnips
 
-vimshell source :
+vimshell source:
 
 https://github.com/Shougo/vimshell.vim
 
-look source :
+look source:
 
 https://github.com/ujihisa/neco-look
 
-ghc source :
+ghc source:
 
 https://github.com/eagletmt/neco-ghc
 
-calc source :
+calc source:
 
 https://github.com/hrsh7th/vim-neco-calc
 
@@ -1696,7 +1696,7 @@ A:
 	let g:neocomplete#sources#omni#input_patterns.python = ''
 <
 
-Q: Can I enable quick match? :
+Q: Can I enable quick match?:
 
 A: Quick match feature had been removed in latest neocomplete
 because quick match turned into hard to implement.
@@ -1706,7 +1706,7 @@ But you can use |unite.vim| instead to use quick match.
 	    \ "\<Plug>(neocomplete_start_unite_quick_match)" : '-'
 <
 
-Q: How can I change the order of candidates? :
+Q: How can I change the order of candidates?:
 
 A: Todo.
 
