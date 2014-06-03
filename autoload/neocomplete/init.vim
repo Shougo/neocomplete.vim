@@ -45,11 +45,12 @@ function! neocomplete#init#enable() "{{{
         \ neocomplete#get_context_filetype(), ['_']))
 
   let modeline_save = &modeline
-  set nomodeline
-
-  doautocmd neocomplete InsertEnter
-
-  let &modeline = modeline_save
+  try
+    set nomodeline
+    doautocmd neocomplete InsertEnter
+  finally
+    let &modeline = modeline_save
+  endtry
 
   let s:is_enabled = 1
 endfunction"}}}
