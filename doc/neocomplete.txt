@@ -2011,10 +2011,15 @@ A: neocomplete does not support eclim.  You should use
 Q: I want to get quiet messages in auto completion.
 https://github.com/Shougo/neocomplcache.vim/issues/448
 
-A: It is impossible. Because it is Vim's feature.
-Vim is not intended for auto completion.
-
-But you can configure it by below settings.
+A: Before 7.4 patch 314 it was not possible because of vim's default
+behavior. If you are using a recent version of vim you can disable the 
+messages through the 'shortmess' option.
+>
+	if has("patch-7.4.314")
+	  set shortmess+=c
+	endif
+<
+For earlier vim versions you can try to hide them by using the settings below
 >
 	autocmd VimEnter *
 	\ highlight ModeMsg guifg=bg guibg=bg | highlight WarningMsg guifg=bg
