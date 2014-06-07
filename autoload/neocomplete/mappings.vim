@@ -100,9 +100,6 @@ function! neocomplete#mappings#complete_common_string() "{{{
     return ''
   endif
 
-  " Save options.
-  let ignorecase_save = &ignorecase
-
   " Get cursor word.
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.event = 'mapping'
@@ -111,29 +108,32 @@ function! neocomplete#mappings#complete_common_string() "{{{
   let neocomplete.event = ''
 
   if complete_str == ''
-    let &ignorecase = ignorecase_save
     return ''
   endif
 
-  if neocomplete#is_text_mode()
-    let &ignorecase = 1
-  elseif g:neocomplete#enable_smart_case || g:neocomplete#enable_camel_case
-    let &ignorecase = complete_str !~ '\u'
-  else
-    let &ignorecase = g:neocomplete#enable_ignore_case
-  endif
+  " Save options.
+  let ignorecase_save = &ignorecase
 
-  let candidates = neocomplete#filters#matcher_head#define().filter(
-        \ { 'candidates' : copy(neocomplete.candidates),
-        \   'complete_str' : complete_str})
-
-  if empty(candidates)
-    let &ignorecase = ignorecase_save
-    return ''
-  endif
-
-  let common_str = candidates[0].word
   try
+    if neocomplete#is_text_mode()
+      let &ignorecase = 1
+    elseif g:neocomplete#enable_smart_case
+          \ || g:neocomplete#enable_camel_case
+      let &ignorecase = complete_str !~ '\u'
+    else
+      let &ignorecase = g:neocomplete#enable_ignore_case
+    endif
+
+    let candidates = neocomplete#filters#matcher_head#define().filter(
+          \ { 'candidates' : copy(neocomplete.candidates),
+          \   'complete_str' : complete_str})
+
+    if empty(candidates)
+      let &ignorecase = ignorecase_save
+      return ''
+    endif
+
+    let common_str = candidates[0].word
     for keyword in candidates[1:]
       while !neocomplete#head_match(keyword.word, common_str)
         let common_str = common_str[: -2]
