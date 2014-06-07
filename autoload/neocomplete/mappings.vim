@@ -111,6 +111,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
   let neocomplete.event = ''
 
   if complete_str == ''
+    let &ignorecase = ignorecase_save
     return ''
   endif
 
@@ -127,6 +128,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
         \   'complete_str' : complete_str})
 
   if empty(candidates)
+    let &ignorecase = ignorecase_save
     return ''
   endif
 
