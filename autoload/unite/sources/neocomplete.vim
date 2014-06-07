@@ -71,7 +71,7 @@ endfunction"}}}
 
 function! s:neocomplete_source.gather_candidates(args, context) "{{{
   let keyword_pos = a:context.source__complete_pos
-  let list = []
+  let candidates = []
   for keyword in a:context.source__candidates
     let dict = {
         \   'word' : keyword.word,
@@ -94,10 +94,10 @@ function! s:neocomplete_source.gather_candidates(args, context) "{{{
       endif
     endif
 
-    call add(list, dict)
+    call add(candidates, dict)
   endfor
 
-  return list
+  return candidates
 endfunction "}}}
 
 function! unite#sources#neocomplete#start_complete() "{{{
@@ -117,9 +117,16 @@ function! s:start_complete(is_quick_match) "{{{
     return ''
   endif
 
+  let cur_text = neocomplete#get_cur_text(1)
+  let complete_sources = neocomplete#complete#_set_results_pos(cur_text)
+  if empty(complete_sources)
+    return ''
+  endif
+
   return unite#start_complete(['neocomplete'], {
         \ 'auto_preview' : 1, 'quick_match' : a:is_quick_match,
-        \ 'input' : neocomplete#get_cur_text(1),
+        \ 'input' : cur_text[neocomplete#complete#_get_complete_pos(
+        \        complete_sources) :],
         \ })
 endfunction"}}}
 

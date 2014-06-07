@@ -1,7 +1,7 @@
 *neocomplete.txt*	Next generation of auto completion framework.
 
 Version: 1.1
-Author : Shougo <Shougo.Matsu@gmail.com>
+Author: Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the
@@ -1003,6 +1003,10 @@ neocomplete#complete_common_string()
 		have long common string.
 >
 		inoremap <expr><C-l>     neocomplete#complete_common_string()
+		inoremap <expr><Tab>
+		\ neocomplete#complete_common_string() != '' ?
+		\   neocomplete#complete_common_string() :
+		\ pumvisible() ? "\<C-n>" : "\<Tab>"
 <
 				*<Plug>(neocomplete_start_unite_complete)*
 <Plug>(neocomplete_start_unite_complete)
@@ -1252,9 +1256,9 @@ Default sources are below. But you can create original filters(cf:
 <
 					*neocomplete-filter-matcher_default*
 Default matchers:
-	if |g:neocomplete#enable_fuzzy_completion| :
+	If |g:neocomplete#enable_fuzzy_completion|:
 		['matcher_head', 'matcher_length']
-	else :
+	Otherwise:
 		['matcher_fuzzy', 'matcher_length']
 
 					*neocomplete-filter-sorter_default*
@@ -1345,7 +1349,7 @@ kind			String				(Optional)
 			the complete position.  The following values are
 			available:
 
-			"manual" : The source decides the complete position
+			"manual": The source decides the complete position
 				manually with the "get_complete_position"
 				attribute.  See also:
 				|neocomplete-source-attribute-get_complete_position|
@@ -1383,22 +1387,28 @@ disabled_filetypes		Dictionary		(Optional)
 
 					*neocomplete-source-attribute-rank*
 rank			Number				(Optional)
-			Source priority.
-
+			Source priority.  Higher values imply higher priority.
 			If you omit it, it is set below value.
-			If kind attribute is "keyword" : 5
-			If filetype attribute is empty : 10
-			Else : 100
+			Note: It is high priority than match position.
 
+			If kind attribute is "keyword": 5
+			If filetype attribute is empty: 10
+			Otherwise: 100
+
+      Example:
+>
+      " Change vim source default rank value of 300.
+      call neocomplete#custom#source('ultisnips', 'rank', 1000)
+<
 			*neocomplete-source-attribute-min_pattern_length*
 min_pattern_length
 			Number				(Optional)
 			Required pattern length for completion.
 
 			If you omit it, it is set below value.
-			If kind attribute is "keyword" :
+			If kind attribute is "keyword":
 			    |g:neocomplete#auto_completion_start_length|
-			Else : 0
+			Otherwise: 0
 
 			*neocomplete-source-attribute-max_candidates*
 max_candidates
@@ -1588,27 +1598,27 @@ neocomplete
 ==============================================================================
 EXTERNAL SOURCES				*neocomplete-external-sources*
 
-neosnippet source :
+neosnippet source:
 
 https://github.com/Shougo/neosnippet.vim
 
-UltiSnips source :
+UltiSnips source:
 
 https://github.com/SirVer/ultisnips
 
-vimshell source :
+vimshell source:
 
 https://github.com/Shougo/vimshell.vim
 
-look source :
+look source:
 
 https://github.com/ujihisa/neco-look
 
-ghc source :
+ghc source:
 
 https://github.com/eagletmt/neco-ghc
 
-calc source :
+calc source:
 
 https://github.com/hrsh7th/vim-neco-calc
 
@@ -1686,7 +1696,7 @@ A:
 	let g:neocomplete#sources#omni#input_patterns.python = ''
 <
 
-Q: Can I enable quick match? :
+Q: Can I enable quick match?:
 
 A: Quick match feature had been removed in latest neocomplete
 because quick match turned into hard to implement.
@@ -1696,7 +1706,7 @@ But you can use |unite.vim| instead to use quick match.
 	    \ "\<Plug>(neocomplete_start_unite_quick_match)" : '-'
 <
 
-Q: How can I change the order of candidates? :
+Q: How can I change the order of candidates?:
 
 A: Todo.
 
@@ -1745,9 +1755,9 @@ A: Please try below settings.
 	let g:neocomplete#force_omni_input_patterns.cpp =
 	      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 	let g:neocomplete#force_omni_input_patterns.objc =
-	      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+	      \ '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)'
 	let g:neocomplete#force_omni_input_patterns.objcpp =
-	      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+	      \ '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)\|\h\w*::\w*'
 	let g:clang_complete_auto = 0
 	let g:clang_auto_select = 0
 	"let g:clang_use_library = 1
@@ -2001,10 +2011,15 @@ A: neocomplete does not support eclim.  You should use
 Q: I want to get quiet messages in auto completion.
 https://github.com/Shougo/neocomplcache.vim/issues/448
 
-A: It is impossible. Because it is Vim's feature.
-Vim is not intended for auto completion.
-
-But you can configure it by below settings.
+A: Before 7.4 patch 314 it was not possible because of vim's default
+behavior. If you are using a recent version of vim you can disable the 
+messages through the 'shortmess' option.
+>
+	if has("patch-7.4.314")
+	  set shortmess+=c
+	endif
+<
+For earlier vim versions you can try to hide them by using the settings below
 >
 	autocmd VimEnter *
 	\ highlight ModeMsg guifg=bg guibg=bg | highlight WarningMsg guifg=bg

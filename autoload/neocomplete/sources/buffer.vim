@@ -133,8 +133,32 @@ function! s:make_cache_current_block() "{{{
   return s:make_cache_current_buffer(
           \ max([1, line('.') - 500]), min([line('.') + 500, line('$')]))
 endfunction"}}}
+
+function! s:should_create_cache() " {{{
+  let filepath = fnamemodify(bufname('%'), ':p')
+  return getfsize(filepath) < g:neocomplete#sources#buffer#cache_limit_size &&
+          \ (g:neocomplete#sources#buffer#disabled_pattern == '' ||
+          \  filepath !~# g:neocomplete#sources#buffer#disabled_pattern)
+endfunction"}}}
+
 function! s:make_cache_current_buffer(start, end) "{{{
   " Make cache from current buffer.
+
+  if !s:should_create_cache()
+      let filepath = fnamemodify(bufname('%'), ':p')
+      if g:neocomplete#enable_debug
+        try
+          throw ''
+        catch
+          echomsg '[neocomplete] Stopped make buffer cache in ' . filepath
+                \ . ' start: ' . a:start . ' end: ' . a:end
+                \ . ' getfsize(filepath): ' . getfsize(filepath)
+          echomsg '  call_stack: ' . v:throwpoint
+        endtry
+      endif
+      return
+  endif
+
   if !s:exists_current_source()
     call s:make_cache(bufnr('%'))
   endif
@@ -175,9 +199,9 @@ do
       match = vim.eval('match(getline(' .. linenr ..
         '), keyword_pattern, ' .. match .. ')')
       if match >= 0 then
-        match_end = vim.eval('matchend(getline('..linenr..
+        local match_end = vim.eval('matchend(getline('..linenr..
           '), keyword_pattern, '..match..')')
-        match_str = string.sub(b[linenr], match+1, match_end)
+        local match_str = string.sub(b[linenr], match+1, match_end)
         if string.len(match_str) >= min_length then
           if keywords[match_str] == nil then
             keywords[match_str] = 1

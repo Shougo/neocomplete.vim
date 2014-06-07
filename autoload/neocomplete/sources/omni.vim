@@ -93,6 +93,10 @@ function! s:source.hooks.on_init(context) "{{{
         \'g:neocomplete#sources#omni#input_patterns',
         \'go',
         \'[^.[:digit:] *\t]\.\w*')
+  call neocomplete#util#set_default_dictionary(
+        \'g:neocomplete#sources#omni#input_patterns',
+        \'clojure',
+        \'\%(([^)]\+\)\|\*[[:alnum:]_-]\+')
 
   " External language interface check.
   if has('ruby')
@@ -179,7 +183,7 @@ function! s:set_complete_results_pos(funcs, cur_text) "{{{
   let complete_results = {}
   for [omnifunc, pattern] in a:funcs
     if neocomplete#is_auto_complete()
-          \ && a:cur_text !~ '\%(' . pattern . '\m\)$'
+          \ && a:cur_text !~# '\%(' . pattern . '\m\)$'
       continue
     endif
 
@@ -228,7 +232,8 @@ function! s:set_complete_results_words(complete_results) "{{{
 
     try
       call cursor(0, result.complete_pos)
-      let list = call(omnifunc, [0, result.complete_str])
+      let ret = call(omnifunc, [0, result.complete_str])
+      let list = type(ret) == type([]) ? ret : ret.words
     catch
       call neocomplete#print_error(
             \ 'Error occured calling omnifunction: ' . omnifunc)
@@ -238,11 +243,6 @@ function! s:set_complete_results_words(complete_results) "{{{
     finally
       call setpos('.', pos)
     endtry
-
-    if type(list) != type([])
-      " Error.
-      return a:complete_results
-    endif
 
     let list = s:get_omni_list(list)
 

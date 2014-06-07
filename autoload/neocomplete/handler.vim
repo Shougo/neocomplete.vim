@@ -215,6 +215,18 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     return
   endif
 
+  " Check previous position
+  let complete_pos = neocomplete#complete#_get_complete_pos(complete_sources)
+  if neocomplete.skip_next_complete
+        \ && complete_pos == neocomplete.old_complete_pos
+        \ && len(cur_text) >= len(neocomplete.cur_text)
+    " Same position.
+    return
+  endif
+
+  let neocomplete.skip_next_complete = 0
+  let neocomplete.old_complete_pos = complete_pos
+
   let &l:completefunc = 'neocomplete#complete#auto_complete'
 
   if neocomplete#is_prefetch()
@@ -246,6 +258,12 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     else
       set completeopt+=noinsert,noselect
     endif
+  endif
+
+  " Do not display completion messages
+  " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
+  if v:version > 704 || (v:version == 703 && has('patch314'))
+    set shortmess+=c
   endif
 
   " Start auto complete.
@@ -317,8 +335,9 @@ function! s:is_skip_auto_complete(cur_text) "{{{
         \ || (a:cur_text == neocomplete.old_cur_text
         \     && line('.') == neocomplete.old_linenr)
         \ || (g:neocomplete#lock_iminsert && &l:iminsert)
-        \ || (&l:formatoptions =~# '[tc]' && &l:textwidth > 0
+        \ || (&l:formatoptions =~# '[tca]' && &l:textwidth > 0
         \     && neocomplete#util#wcswidth(a:cur_text) >= &l:textwidth)
+    let neocomplete.skip_next_complete = 0
     return 1
   endif
 
@@ -330,9 +349,10 @@ function! s:is_skip_auto_complete(cur_text) "{{{
   let is_delimiter = 0
   let filetype = neocomplete#get_context_filetype()
 
-  for delimiter in ['/', '\.'] +
+  for delimiter in ['/', '.'] +
         \ get(g:neocomplete#delimiter_patterns, filetype, [])
-    if a:cur_text =~ delimiter . '$'
+    if stridx(a:cur_text, delimiter,
+          \ len(a:cur_text) - len(delimiter))
       let is_delimiter = 1
       break
     endif
@@ -340,12 +360,9 @@ function! s:is_skip_auto_complete(cur_text) "{{{
 
   if is_delimiter && neocomplete.skip_next_complete == 2
     let neocomplete.skip_next_complete = 0
-    return 0
   endif
 
-  let neocomplete.skip_next_complete = 0
-
-  return 1
+  return 0
 endfunction"}}}
 function! s:close_preview_window() "{{{
   if g:neocomplete#enable_auto_close_preview &&
