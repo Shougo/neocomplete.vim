@@ -270,7 +270,7 @@ function! neocomplete#init#_variables() "{{{
         \'^\s*-\h\w*\|\%(\h\w*:\)*\h\w*\|\h[[:alnum:]_@]*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
-        \'html,xhtml,xml,markdown,eruby',
+        \'html,xhtml,xml,markdown,mkd,eruby',
         \'</\?\%([[:alnum:]_:-]\+\s*\)\?\%(/\?>\)\?\|&\h\%(\w*;\)\?'.
         \'\|\h[[:alnum:]_-]*="\%([^"]*"\?\)\?\|\h[[:alnum:]_:-]*')
   call neocomplete#util#set_default_dictionary(
