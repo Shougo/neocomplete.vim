@@ -44,7 +44,7 @@ function! neocomplete#init#enable() "{{{
   call neocomplete#init#_sources(get(g:neocomplete#sources,
         \ neocomplete#get_context_filetype(), ['_']))
 
-  doautocmd neocomplete InsertEnter
+  doautocmd <nomodeline> neocomplete InsertEnter
 
   let s:is_enabled = 1
 endfunction"}}}
