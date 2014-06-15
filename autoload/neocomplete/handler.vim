@@ -262,7 +262,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   " Do not display completion messages
   " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
-  if v:version > 704 || (v:version == 703 && has('patch314'))
+  if has('patch-7.4.314')
     set shortmess+=c
   endif
 
