@@ -209,6 +209,7 @@ function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, m
 endfunction"}}}
 function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, pattern, mark, is_create_tags) "{{{
   if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
+        \ || !neocomplete#cache#check_old_cache('tags_output', a:filename)
         \ || neocomplete#util#is_sudo()
     return neocomplete#cache#encode_name(a:cache_dir, a:filename)
   endif
