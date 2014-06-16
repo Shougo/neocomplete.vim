@@ -227,6 +227,24 @@ function! s:set_python_include_files(python_bin) "{{{
         \ 'g:neocomplete#sources#include#paths', a:python_bin, path)
 endfunction"}}}
 
+function! s:set_cpp_include_files(bufnumber) "{{{
+  if exists('*vimproc#readdir')
+    let files = vimproc#readdir('/usr/include/')
+          \ + vimproc#readdir('/usr/include/c++/')
+  else
+    let files = split(glob('/usr/include/*'), '\n')
+          \ + split(glob('/usr/include/c++/*'), '\n')
+  endif
+  let files += split(glob('/usr/include/*/c++/*'), '\n')
+  call filter(files, 'isdirectory(v:val)')
+
+  " Add cpp path.
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#include#paths', 'cpp',
+        \ getbufvar(a:bufnumber, '&path') .
+        \ ','.join(files, ','))
+endfunction"}}}
+
 function! s:get_buffer_include_files(bufnumber) "{{{
   let filetype = getbufvar(a:bufnumber, '&filetype')
   if filetype == ''
@@ -243,15 +261,8 @@ function! s:get_buffer_include_files(bufnumber) "{{{
       call s:set_python_include_files('python')
     endif
   elseif filetype ==# 'cpp' && isdirectory('/usr/include/c++')
-    " Add cpp path.
-    call neocomplete#util#set_default_dictionary(
-          \ 'g:neocomplete#sources#include#paths', 'cpp',
-          \ getbufvar(a:bufnumber, '&path') .
-          \ ','.join(filter(
-          \       split(glob('/usr/include/c++/*'), '\n') +
-          \       split(glob('/usr/include/*/c++/*'), '\n') +
-          \       split(glob('/usr/include/*/'), '\n'),
-          \     'isdirectory(v:val)'), ','))
+        \ && !has_key(g:neocomplete#sources#include#paths, 'cpp')
+    call s:set_cpp_include_files(a:bufnumber)
   endif
 
   let pattern = get(g:neocomplete#sources#include#patterns, filetype,
