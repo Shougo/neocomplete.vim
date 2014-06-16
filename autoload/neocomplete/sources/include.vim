@@ -231,11 +231,15 @@ function! s:set_cpp_include_files(bufnumber) "{{{
   if exists('*vimproc#readdir')
     let files = vimproc#readdir('/usr/include/')
           \ + vimproc#readdir('/usr/include/c++/')
+    for directory in filter(split(glob(
+          \ '/usr/include/*/c++'), '\n'), 'isdirectory(v:val)')
+      let files += vimproc#readdir(directory)
+    endfor
   else
     let files = split(glob('/usr/include/*'), '\n')
           \ + split(glob('/usr/include/c++/*'), '\n')
+          \ + split(glob('/usr/include/*/c++/*'), '\n')
   endif
-  let files += split(glob('/usr/include/*/c++/*'), '\n')
   call filter(files, 'isdirectory(v:val)')
 
   " Add cpp path.
