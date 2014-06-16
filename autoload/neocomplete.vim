@@ -121,7 +121,10 @@ endfunction"}}}
 function! neocomplete#define_source(source) "{{{
   let sources = neocomplete#variables#get_sources()
   for source in neocomplete#util#convert2list(a:source)
-    let sources[source.name] = neocomplete#init#_source(source)
+    let source = neocomplete#init#_source(source)
+    if !source.disabled
+      let sources[source.name] = source
+    endif
   endfor
 endfunction"}}}
 function! neocomplete#define_filter(filter) "{{{

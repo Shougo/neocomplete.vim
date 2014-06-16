@@ -668,6 +668,7 @@ function! neocomplete#init#_source(source) "{{{
         \ 'is_volatile' : 0,
         \ 'max_candidates' : 0,
         \ 'filetypes' : {},
+        \ 'disabled' : 0,
         \ 'disabled_filetypes' : {},
         \ 'hooks' : {},
         \ 'mark' : '',
