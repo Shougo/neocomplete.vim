@@ -187,9 +187,6 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     return
   endif
 
-  let neocomplete.old_cur_text = cur_text
-  let neocomplete.old_linenr = line('.')
-
   if neocomplete#helper#is_omni(cur_text)
     call feedkeys("\<Plug>(neocomplete_start_omni_complete)")
     return
@@ -219,11 +216,13 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   let complete_pos = neocomplete#complete#_get_complete_pos(complete_sources)
   if neocomplete.skip_next_complete
         \ && complete_pos == neocomplete.old_complete_pos
-        \ && len(cur_text) >= len(neocomplete.cur_text)
+        \ && stridx(cur_text, neocomplete.old_cur_text) == 0
     " Same position.
     return
   endif
 
+  let neocomplete.old_cur_text = cur_text
+  let neocomplete.old_linenr = line('.')
   let neocomplete.skip_next_complete = 0
   let neocomplete.old_complete_pos = complete_pos
 
