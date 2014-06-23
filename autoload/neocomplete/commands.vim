@@ -32,6 +32,11 @@ function! neocomplete#commands#_initialize() "{{{
 endfunction"}}}
 
 function! neocomplete#commands#_toggle_lock() "{{{
+  if !neocomplete#is_enabled()
+    call neocomplete#init#enable()
+    return
+  endif
+
   if neocomplete#get_current_neocomplete().lock
     echo 'neocomplete is unlocked!'
     call neocomplete#commands#_unlock()
