@@ -56,10 +56,8 @@ function! s:source.hooks.on_init(context) "{{{
 
   augroup neocomplete "{{{
     " Make cache events
-    autocmd BufEnter,BufRead,BufWinEnter *
+    autocmd BufEnter,BufRead,BufWinEnter,BufWritePost *
           \ call s:check_source()
-    autocmd BufWritePost *
-          \ call s:check_recache()
     autocmd InsertEnter,InsertLeave *
           \ call neocomplete#sources#buffer#make_cache_current_line()
   augroup END"}}}
@@ -342,31 +340,6 @@ function! s:check_source() "{{{
         \ && getfsize(fnamemodify(bufname(v:val), ':p')) <
         \      g:neocomplete#sources#buffer#cache_limit_size
         \ "), 's:make_cache(v:val)')
-endfunction"}}}
-function! s:check_recache() "{{{
-  if !s:exists_current_source()
-    return
-  endif
-
-  let release_accessd_time =
-        \ localtime() - g:neocomplete#release_cache_time
-
-  let source = s:buffer_sources[bufnr('%')]
-
-  " Check if current buffer was changed.
-  if neocomplete#util#has_vimproc() && line('$') != source.end_line
-    " Buffer recache.
-    if g:neocomplete#enable_debug
-      echomsg 'Make cache from buffer: ' . bufname('%')
-    endif
-
-    if filereadable(source.path)
-      " Clear buffer cache.
-      let source.buffer_cache = {}
-    endif
-
-    call s:make_cache(bufnr('%'))
-  endif
 endfunction"}}}
 
 function! s:exists_current_source() "{{{
