@@ -102,9 +102,6 @@ function! s:source.gather_candidates(context) "{{{
     endif
 
     let keyword_list += source.keyword_cache
-    if key == bufnr('%')
-      let source.accessed_time = localtime()
-    endif
   endfor
 
   return keyword_list
@@ -130,17 +127,18 @@ function! s:make_cache_current_block() "{{{
           \ max([1, line('.') - 500]), min([line('.') + 500, line('$')]))
 endfunction"}}}
 
-function! s:should_create_cache() " {{{
-  let filepath = fnamemodify(bufname('%'), ':p')
-  return getfsize(filepath) < g:neocomplete#sources#buffer#cache_limit_size &&
-          \ (g:neocomplete#sources#buffer#disabled_pattern == '' ||
-          \  filepath !~# g:neocomplete#sources#buffer#disabled_pattern)
+function! s:should_create_cache(bufnr) " {{{
+  let filepath = fnamemodify(bufname(a:bufnr), ':p')
+  return getfsize(filepath) < g:neocomplete#sources#buffer#cache_limit_size
+        \ && !getwinvar(bufwinnr(a:bufnr), '&previewwindow')
+        \ && (g:neocomplete#sources#buffer#disabled_pattern == ''
+        \  || filepath !~# g:neocomplete#sources#buffer#disabled_pattern)
 endfunction"}}}
 
 function! s:make_cache_current_buffer(start, end) "{{{
   " Make cache from current buffer.
 
-  if !s:should_create_cache()
+  if !s:should_create_cache(bufnr('%'))
       let filepath = fnamemodify(bufname('%'), ':p')
       if g:neocomplete#enable_debug
         try
@@ -266,7 +264,6 @@ function! s:initialize_source(srcname) "{{{
         \ 'name' : filename, 'filetype' : ft,
         \ 'keyword_pattern' : keyword_pattern,
         \ 'end_line' : len(buflines),
-        \ 'accessed_time' : 0,
         \ 'cached_time' : 0,
         \ 'path' : path, 'loaded_cache' : 0,
         \ 'cache_name' : neocomplete#cache#encode_name(
@@ -331,14 +328,13 @@ function! s:check_source() "{{{
 
   " Check new buffer.
   call map(filter(range(1, bufnr('$')), "
-        \ !has_key(s:buffer_sources, v:val) && buflisted(v:val)
+        \ (!has_key(s:buffer_sources, v:val) && buflisted(v:val)
+        \ || (has_key(s:buffer_sources, v:val) &&
+        \   s:buffer_sources[v:val].cached_time
+        \      < getftime(s:buffer_sources[v:val].path)))
         \ && (!neocomplete#is_locked(v:val) ||
         \    g:neocomplete#disable_auto_complete)
-        \ && fnamemodify(bufname(v:val), ':p') !~#
-        \      g:neocomplete#sources#buffer#disabled_pattern
-        \ && !getwinvar(bufwinnr(v:val), '&previewwindow')
-        \ && getfsize(fnamemodify(bufname(v:val), ':p')) <
-        \      g:neocomplete#sources#buffer#cache_limit_size
+        \ && s:should_create_cache(v:val)
         \ "), 's:make_cache(v:val)')
 endfunction"}}}
 
