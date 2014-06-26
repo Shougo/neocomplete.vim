@@ -64,7 +64,7 @@ function! s:source.gather_candidates(context) "{{{
     call s:make_cache()
   endif
 
-  for syntax in neocomplete#get_sources_list(
+  for syntax in neocomplete#helper#ftdictionary2list(
         \ s:syntax_list, neocomplete#get_context_filetype())
     let list += syntax
   endfor

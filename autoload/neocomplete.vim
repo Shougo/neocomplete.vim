@@ -251,9 +251,6 @@ endfunction"}}}
 function! neocomplete#get_source_filetypes(filetype) "{{{
   return neocomplete#helper#get_source_filetypes(a:filetype)
 endfunction"}}}
-function! neocomplete#get_sources_list(dictionary, filetype) "{{{
-  return neocomplete#helper#ftdictionary2list(a:dictionary, a:filetype)
-endfunction"}}}
 function! neocomplete#escape_match(str) "{{{
   return escape(a:str, '~"*\.^$[]')
 endfunction"}}}
