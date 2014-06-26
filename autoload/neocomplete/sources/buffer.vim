@@ -58,8 +58,6 @@ function! s:source.hooks.on_init(context) "{{{
     " Make cache events
     autocmd BufEnter,BufRead,BufWinEnter *
           \ call s:check_source()
-    autocmd CursorHold,CursorHoldI *
-          \ call s:check_cache()
     autocmd BufWritePost *
           \ call s:check_recache()
     autocmd InsertEnter,InsertLeave *
@@ -344,20 +342,6 @@ function! s:check_source() "{{{
         \ && getfsize(fnamemodify(bufname(v:val), ':p')) <
         \      g:neocomplete#sources#buffer#cache_limit_size
         \ "), 's:make_cache(v:val)')
-endfunction"}}}
-function! s:check_cache() "{{{
-  let release_accessd_time =
-        \ localtime() - g:neocomplete#release_cache_time
-
-  for [key, source] in items(s:buffer_sources)
-    " Check deleted buffer and access time.
-    if !bufloaded(str2nr(key))
-          \ || (source.accessed_time > 0 &&
-          \ source.accessed_time < release_accessd_time)
-      " Remove item.
-      call remove(s:buffer_sources, key)
-    endif
-  endfor
 endfunction"}}}
 function! s:check_recache() "{{{
   if !s:exists_current_source()
