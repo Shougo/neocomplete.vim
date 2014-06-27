@@ -290,7 +290,9 @@ function! neocomplete#print_debug(expr) "{{{
 endfunction"}}}
 function! neocomplete#get_data_directory() "{{{
   let g:neocomplete#data_directory =
-        \ get(g:, 'neocomplete#data_directory', '~/.cache/neocomplete')
+        \ get(g:, 'neocomplete#data_directory',
+        \  ($XDG_CACHE_DIR != '' ?
+        \   $XDG_CACHE_DIR . '/neocomplete' : '~/.cache/neocomplete'))
   let directory = neocomplete#util#substitute_path_separator(
         \ neocomplete#util#expand(g:neocomplete#data_directory))
   if !isdirectory(directory)

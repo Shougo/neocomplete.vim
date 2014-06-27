@@ -433,7 +433,8 @@ g:neocomplete#data_directory		*g:neocomplete#data_directory*
 		buffer.vim stores cache of the keyword in this
 		'buffer_cache' sub directory.
 
-		Default value is '~/.cache/neocomplete'.
+		Default value is "$XDG_CACHE_DIR/neocomplete" or
+		expand("~/.cache/neocomplete"); the absolute path of it.
 
 					*g:neocomplete#keyword_patterns*
 g:neocomplete#keyword_patterns
