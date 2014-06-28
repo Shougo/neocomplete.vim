@@ -94,24 +94,9 @@ function! s:source.gather_candidates(context) "{{{
   call s:check_source()
 
   let keyword_list = []
-  for [key, source] in s:get_sources_list()
-    if has_key(s:async_dictionary_list, source.path)
-      " Load from cache.
-      let [loaded, file_cache] = neocomplete#cache#get_cache_list(
-            \ 'buffer_cache', s:async_dictionary_list[source.path])
-      if loaded
-        let source.words = file_cache
-      endif
-
-      if empty(s:async_dictionary_list[source.path])
-        call remove(s:async_dictionary_list, source.path)
-      endif
-      " echomsg string(file_cache)
-    endif
-
+  for source in s:get_sources_list()
     let keyword_list += source.words
   endfor
-
   return keyword_list
 endfunction"}}}
 
@@ -138,24 +123,17 @@ function! s:should_create_cache(bufnr) " {{{
 endfunction"}}}
 
 function! s:get_sources_list() "{{{
-  let sources_list = []
-
   let filetypes_dict = {}
   for filetype in neocomplete#get_source_filetypes(
         \ neocomplete#get_context_filetype())
     let filetypes_dict[filetype] = 1
   endfor
 
-  for [key, source] in items(s:buffer_sources)
-    if has_key(filetypes_dict, source.filetype)
-          \ || has_key(filetypes_dict, '_')
-          \ || bufnr('%') == key
-          \ || (bufname('%') ==# '[Command Line]' && bufwinnr('#') == key)
-      call add(sources_list, [key, source])
-    endif
-  endfor
-
-  return sources_list
+  return values(filter(copy(s:buffer_sources),
+        \ "has_key(filetypes_dict, v:val.filetype)
+        \ || has_key(filetypes_dict, '_')
+        \ || bufnr('%') == v:key
+        \ || (bufname('%') ==# '[Command Line]' && bufwinnr('#') == v:key)"))
 endfunction"}}}
 
 function! s:initialize_source(srcname) "{{{
@@ -276,6 +254,11 @@ function! s:check_source() "{{{
         \    g:neocomplete#disable_auto_complete)
         \ && s:should_create_cache(v:val)
         \ "), 's:make_cache_file(v:val)')
+
+  call s:check_async_cache()
+
+  " Remove unlisted buffers.
+  call filter(s:buffer_sources, 'buflisted(str2nr(v:key))')
 endfunction"}}}
 
 function! s:exists_current_source() "{{{
@@ -312,7 +295,7 @@ do
     local match = (string.find(b[linenr], '[[:^space:]]'))
     while match ~= nil and match >= 0 do
       match = vim.eval('match(getline(' .. linenr ..
-        '), keyword_pattern, ' .. match .. ')')
+        '), keyword_pattern, ' .. match-1 .. ')')
       if match >= 0 then
         local match_end = vim.eval('matchend(getline('..linenr..
           '), keyword_pattern, '..match..')')
@@ -324,7 +307,7 @@ do
         end
 
         -- Next match.
-        match = match_end
+        match = match_end + 1
       end
     end
   end
@@ -332,6 +315,23 @@ end
 EOF
 
   let source.words = words
+  let source.changedtick = b:changedtick
+endfunction"}}}
+
+function! s:check_async_cache() "{{{
+  for source in filter(s:get_sources_list(),
+        \ 'has_key(s:async_dictionary_list, v:val.path)')
+    " Load from cache.
+    let [loaded, file_cache] = neocomplete#cache#get_cache_list(
+          \ 'buffer_cache', s:async_dictionary_list[source.path])
+    if loaded
+      let source.words = file_cache
+    endif
+
+    if empty(s:async_dictionary_list[source.path])
+      call remove(s:async_dictionary_list, source.path)
+    endif
+  endfor
 endfunction"}}}
 
 " Command functions. "{{{
