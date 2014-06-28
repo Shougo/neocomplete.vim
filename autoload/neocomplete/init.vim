@@ -82,6 +82,8 @@ function! neocomplete#init#_autocmds() "{{{
           \ call neocomplete#handler#_on_moved_i()
     autocmd BufWritePost *
           \ call neocomplete#handler#_on_write_post()
+    autocmd VimLeavePre *
+          \ call neocomplete#init#disable()
   augroup END
 
   if g:neocomplete#enable_insert_char_pre

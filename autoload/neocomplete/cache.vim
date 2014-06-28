@@ -56,7 +56,6 @@ EOF
             \ a:cache_dir, a:filename), 0, '[]'))
     endif
 
-    "echomsg string(list)
     if !empty(list) && is_string && type(list[0]) != type('')
       " Type check.
       throw 'Type error'
@@ -64,6 +63,9 @@ EOF
 
     return list
   catch
+    " echomsg string(v:errmsg)
+    " echomsg string(v:exception)
+
     " Delete old cache file.
     let cache_name =
           \ neocomplete#cache#encode_name(a:cache_dir, a:filename)
@@ -99,28 +101,20 @@ function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, 
 endfunction"}}}
 
 " For buffer source cache loader.
-function! neocomplete#cache#get_cache_dictionary(cache_dir, key, async_cache_dictionary) "{{{
-  if !has_key(a:async_cache_dictionary, a:key)
-    return []
-  endif
-
-  let cache_list = a:async_cache_dictionary[a:key]
+function! neocomplete#cache#get_cache_list(cache_dir, async_cache_list) "{{{
+  let cache_list = a:async_cache_list
 
   let loaded_keywords = []
+  let loaded = 0
   for cache in filter(copy(cache_list), 'filereadable(v:val.cachename)')
+    let loaded = 1
     let loaded_keywords = neocomplete#cache#load_from_cache(
               \ a:cache_dir, cache.filename, 1)
-    break
   endfor
 
   call filter(cache_list, '!filereadable(v:val.cachename)')
 
-  if empty(cache_list)
-    " Delete from dictionary.
-    call remove(a:async_cache_dictionary, a:key)
-  endif
-
-  return loaded_keywords
+  return [loaded, loaded_keywords]
 endfunction"}}}
 
 function! neocomplete#cache#save_cache(cache_dir, filename, keyword_list) "{{{
@@ -267,8 +261,8 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
 function! s:async_load(argv, cache_dir, filename) "{{{
-  " if 0
-  if neocomplete#has_vimproc()
+  if 0
+  " if neocomplete#has_vimproc()
     let paths = vimproc#get_command_name(v:progname, $PATH, -1)
     if empty(paths)
       if has('gui_macvim')
