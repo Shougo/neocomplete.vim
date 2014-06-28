@@ -57,19 +57,21 @@ function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencodi
     return []
   endif
 
-  let lines = map(readfile(a:filename),
-        \ 's:iconv(v:val, a:fileencoding, &encoding)')
+  let lines = readfile(a:filename)
+  if a:fileencoding !=# &encoding
+    let lines = map(lines, 's:iconv(v:val, a:fileencoding, &encoding)')
+  endif
 
   let pattern = get(readfile(a:pattern_file_name), 0, '\h\w*')
+  let pattern2 = '^\%('.pattern.'\m\)'
 
   let keyword_list = []
   let dup_check = {}
-  let keyword_pattern2 = '^\%('.pattern.'\m\)'
 
   for line in lines "{{{
     let match = match(line, pattern)
     while match >= 0 "{{{
-      let match_str = matchstr(line, keyword_pattern2, match)
+      let match_str = matchstr(line, pattern2, match)
 
       if !has_key(dup_check, match_str) && len(match_str) >= a:minlen
         " Append list.

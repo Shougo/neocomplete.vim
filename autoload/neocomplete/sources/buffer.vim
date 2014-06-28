@@ -55,11 +55,9 @@ function! s:source.hooks.on_init(context) "{{{
   let s:buffer_sources = {}
 
   augroup neocomplete "{{{
-    " Make cache events
-    autocmd BufEnter,BufRead,BufWinEnter,BufWritePost *
+    autocmd BufEnter,BufRead,BufWinEnter,
+          \BufWritePost,InsertEnter,InsertLeave *
           \ call s:check_source()
-    autocmd InsertEnter,InsertLeave *
-          \ call neocomplete#sources#buffer#make_cache_current_line()
   augroup END"}}}
 
   " Create cache directory.
@@ -68,8 +66,6 @@ function! s:source.hooks.on_init(context) "{{{
 
   " Initialize script variables. "{{{
   let s:buffer_sources = {}
-  let s:cache_line_count = 70
-  let s:rank_cache_count = 1
   let s:async_dictionary_list = {}
   "}}}
 
