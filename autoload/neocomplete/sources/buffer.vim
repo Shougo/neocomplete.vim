@@ -294,7 +294,7 @@ do
   local b = vim.buffer()
   local min_length = vim.eval('g:neocomplete#min_keyword_length')
   for linenr = 1, #b do
-    local match = (string.find(b[linenr], '[[:^space:]]'))
+    local match = (string.find(b[linenr], '[^%s]'))
     while match ~= nil and match >= 0 do
       match = vim.eval('match(getline(' .. linenr ..
         '), keyword_pattern, ' .. match-1 .. ')')
