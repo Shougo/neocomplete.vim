@@ -246,10 +246,11 @@ function! s:check_source() "{{{
 
   " Check new buffer.
   call map(filter(range(1, bufnr('$')), "
-        \ (!has_key(s:buffer_sources, v:val) && buflisted(v:val)
-        \ || (has_key(s:buffer_sources, v:val) &&
-        \   s:buffer_sources[v:val].cached_time
-        \      < getftime(s:buffer_sources[v:val].path)))
+        \ v:val != bufnr('%')
+        \ && (!has_key(s:buffer_sources, v:val) && buflisted(v:val)
+        \   || (has_key(s:buffer_sources, v:val) &&
+        \     s:buffer_sources[v:val].cached_time
+        \         < getftime(s:buffer_sources[v:val].path)))
         \ && (!neocomplete#is_locked(v:val) ||
         \    g:neocomplete#disable_auto_complete)
         \ && s:should_create_cache(v:val)

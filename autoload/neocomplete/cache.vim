@@ -261,8 +261,8 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
 function! s:async_load(argv, cache_dir, filename) "{{{
-  if 0
-  " if neocomplete#has_vimproc()
+  " if 0
+  if neocomplete#has_vimproc()
     let paths = vimproc#get_command_name(v:progname, $PATH, -1)
     if empty(paths)
       if has('gui_macvim')
