@@ -55,8 +55,7 @@ function! s:source.hooks.on_init(context) "{{{
   let s:buffer_sources = {}
 
   augroup neocomplete "{{{
-    autocmd BufEnter,BufRead,BufWinEnter,
-          \BufWritePost,InsertEnter,InsertLeave *
+    autocmd BufEnter,BufRead,BufWinEnter,BufWritePost *
           \ call s:check_source()
   augroup END"}}}
 
