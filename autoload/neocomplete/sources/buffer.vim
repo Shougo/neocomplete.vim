@@ -171,6 +171,7 @@ function! s:make_cache_file(srcname) "{{{
   let source = s:buffer_sources[a:srcname]
 
   if !filereadable(source.path)
+        \ || getbufvar(a:srcname, '&modified')
         \ || getbufvar(a:srcname, '&buftype') =~ 'nofile\|acwrite'
     call s:make_cache_buffer(a:srcname)
     return
