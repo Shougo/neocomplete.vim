@@ -259,7 +259,8 @@ function! s:check_source() "{{{
   call s:check_async_cache()
 
   " Remove unlisted buffers.
-  call filter(s:buffer_sources, 'buflisted(str2nr(v:key))')
+  call filter(s:buffer_sources,
+        \ "v:key == bufnr('%') || buflisted(str2nr(v:key))")
 endfunction"}}}
 
 function! s:exists_current_source() "{{{
