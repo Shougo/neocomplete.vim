@@ -124,15 +124,9 @@ function! neocomplete#sources#buffer#get_frequencies() "{{{
 endfunction"}}}
 
 function! neocomplete#sources#buffer#make_cache_current_line() "{{{
-  let save_vimproc = neocomplete#util#has_vimproc()
-  try
-    let g:neocomplete#use_vimproc = 0
-
-    " Does not use async
-    call s:make_cache_buffer(bufnr('%'))
-  finally
-    let g:neocomplete#use_vimproc = save_vimproc
-  endtry
+  let start = reltime()
+  call s:make_cache_current_buffer()
+  echomsg reltimestr(reltime(start))
 endfunction"}}}
 
 function! s:should_create_cache(bufnr) " {{{
@@ -286,6 +280,58 @@ endfunction"}}}
 
 function! s:exists_current_source() "{{{
   return has_key(s:buffer_sources, bufnr('%'))
+endfunction"}}}
+
+function! s:make_cache_current_buffer() "{{{
+  let srcname = bufnr('%')
+
+  " Make cache from current buffer.
+  if !s:should_create_cache(srcname)
+    return
+  endif
+
+  if !s:exists_current_source()
+    call s:initialize_source(srcname)
+  endif
+
+  let source = s:buffer_sources[srcname]
+  let keyword_pattern = source.keyword_pattern
+  if keyword_pattern == ''
+    return
+  endif
+
+  let words = []
+
+  lua << EOF
+do
+  local words = vim.eval('words')
+  local dup = {}
+  local b = vim.buffer()
+  local min_length = vim.eval('g:neocomplete#min_keyword_length')
+  for linenr = 1, #b do
+    local match = (string.find(b[linenr], '[[:^space:]]'))
+    while match ~= nil and match >= 0 do
+      match = vim.eval('match(getline(' .. linenr ..
+        '), keyword_pattern, ' .. match .. ')')
+      if match >= 0 then
+        local match_end = vim.eval('matchend(getline('..linenr..
+          '), keyword_pattern, '..match..')')
+        local match_str = string.sub(b[linenr], match+1, match_end)
+        if dup[match_str] == nil
+              and string.len(match_str) >= min_length then
+          dup[match_str] = 1
+          words:add(match_str)
+        end
+
+        -- Next match.
+        match = match_end
+      end
+    end
+  end
+end
+EOF
+
+  let source.words = words
 endfunction"}}}
 
 " Command functions. "{{{

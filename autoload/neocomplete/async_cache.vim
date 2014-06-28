@@ -64,7 +64,6 @@ function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencodi
 
   let pattern = get(readfile(a:pattern_file_name), 0, '\h\w*')
   let pattern2 = '^\%('.pattern.'\m\)'
-
   let keyword_list = []
   let dup_check = {}
 
@@ -75,9 +74,7 @@ function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencodi
 
       if !has_key(dup_check, match_str) && len(match_str) >= a:minlen
         " Append list.
-        call add(keyword_list, (a:is_string ?
-              \ match_str : { 'word' : match_str }))
-
+        call add(keyword_list, match_str)
         let dup_check[match_str] = 1
       endif
 
@@ -86,6 +83,10 @@ function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencodi
       let match = match(line, pattern, match)
     endwhile"}}}
   endfor"}}}
+
+  if !a:is_string
+    call map(keyword_list, "{'word' : match_str}")
+  endif
 
   return keyword_list
 endfunction"}}}
