@@ -108,9 +108,9 @@ function! neocomplete#sources#buffer#get_frequencies() "{{{
 endfunction"}}}
 
 function! neocomplete#sources#buffer#make_cache_current_line() "{{{
-  let start = reltime()
+  " let start = reltime()
   call s:make_cache_current_buffer()
-  echomsg reltimestr(reltime(start))
+  " echomsg reltimestr(reltime(start))
 endfunction"}}}
 
 function! s:should_create_cache(bufnr) " {{{
