@@ -74,8 +74,8 @@ Install prerequisites
 
 In order to use neocomplete, the following prerequisites have to be met:
 
-1. Vim version 7.3.885 or above
-2. Vim build with the |if_lua| feature
+1. Vim build with the |if_lua| feature
+2. Vim version 7.3.885 or above
 
 The following sections describe where to get a Vim version, neocomplete
 works with, for your operating system.
