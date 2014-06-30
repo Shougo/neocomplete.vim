@@ -34,7 +34,6 @@ function! neocomplete#cache#load_from_cache(cache_dir, filename, ...) "{{{
 
   try
     " Note: For neocomplete.
-    let path = neocomplete#cache#encode_name(a:cache_dir, a:filename)
     let list = []
 
     if is_string
@@ -42,7 +41,8 @@ function! neocomplete#cache#load_from_cache(cache_dir, filename, ...) "{{{
 do
   local ret = vim.eval('list')
   local list = {}
-  for line in io.lines(vim.eval('path')) do
+  for line in io.lines(vim.eval(
+      'neocomplete#cache#encode_name(a:cache_dir, a:filename)')) do
     list = loadstring('return ' .. line)()
   end
 
@@ -290,11 +290,11 @@ function! s:async_load(argv, cache_dir, filename) "{{{
 
       let vim_path = base_path .
             \ (neocomplete#util#is_windows() ? '/vim.exe' : '/vim')
-    endif
 
-    if !executable(vim_path) && neocomplete#util#is_mac()
-      " Note: Search "Vim" instead of vim.
-      let vim_path = base_path. '/Vim'
+      if !executable(vim_path) && neocomplete#util#is_mac()
+        " Note: Search "Vim" instead of vim.
+        let vim_path = base_path. '/Vim'
+      endif
     endif
 
     if !executable(vim_path)

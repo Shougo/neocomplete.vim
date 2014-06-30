@@ -85,8 +85,8 @@ function! neocomplete#mappings#undo_completion() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
 
   " Get cursor word.
-  let [complete_pos, complete_str] =
-        \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))
+  let complete_str =
+        \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))[1]
   let old_keyword_str = neocomplete.complete_str
   let neocomplete.complete_str = complete_str
 
@@ -103,8 +103,8 @@ function! neocomplete#mappings#complete_common_string() "{{{
   " Get cursor word.
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.event = 'mapping'
-  let [complete_pos, complete_str] =
-        \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))
+  let complete_str =
+        \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))[1]
   let neocomplete.event = ''
 
   if complete_str == ''

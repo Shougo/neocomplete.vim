@@ -36,12 +36,10 @@ let s:matcher = {
       \}
 
 function! s:matcher.filter(context) "{{{
-  let pattern = '^' . neocomplete#filters#escape(
-        \ a:context.complete_str)
-
   lua << EOF
 do
-  local pattern = vim.eval('pattern')
+  local pattern = vim.eval(
+      "'^' . neocomplete#filters#escape(a:context.complete_str)")
   local input = vim.eval('a:context.complete_str')
   local candidates = vim.eval('a:context.candidates')
   if vim.eval('&ignorecase') ~= 0 then

@@ -18,9 +18,9 @@ Context types
   End
 
   It tests sort functions.
-    let candidates = []
-    for i in range(1, 1000)
-      call add(candidates, { 'word' : i, 'rank' : i })
+    let g:candidates = []
+    for g:i in range(1, 1000)
+      call add(g:candidates, { 'word' : g:i, 'rank' : g:i })
     endfor
     function! CompareRank(i1, i2)
       let diff = (get(a:i2, 'rank', 0) - get(a:i1, 'rank', 0))
@@ -28,17 +28,17 @@ Context types
     endfunction"
 
     " Benchmark.
-    let start = reltime()
-    call sort(copy(candidates), 'CompareRank')
-    echomsg reltimestr(reltime(start))
-    let start = reltime()
+    let g:start = reltime()
+    call sort(copy(g:candidates), 'CompareRank')
+    echomsg reltimestr(reltime(g:start))
+    let g:start = reltime()
     call neocomplete#filters#sorter_rank#define().filter(
-          \   {'candidates' : copy(candidates), 'input' : '' })
-    echomsg reltimestr(reltime(start))
+          \   {'candidates' : copy(g:candidates), 'input' : '' })
+    echomsg reltimestr(reltime(g:start))
 
     ShouldEqual sort(copy(candidates), 'CompareRank'),
           \ neocomplete#filters#sorter_rank#define().filter(
-          \   {'candidates' : copy(candidates), 'input' : '' })
+          \   {'candidates' : copy(g:candidates), 'input' : '' })
   End
 
   It tests fuzzy matcher.

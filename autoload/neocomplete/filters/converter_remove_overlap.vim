@@ -81,9 +81,11 @@ function! neocomplete#filters#converter_remove_overlap#length(left, right) "{{{
     return 0
   endif
 
+  let ret = 0
+
   lua << EOF
 do
-  local ret = 0
+  local ret = vim.eval('ret')
   local left = vim.eval('a:left')
   local right = vim.eval('a:right')
   local left_len = string.len(left)

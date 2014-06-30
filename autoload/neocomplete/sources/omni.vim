@@ -268,7 +268,7 @@ endfunction"}}}
 function! s:get_candidates(complete_results, complete_pos, complete_str) "{{{
   " Append prefix.
   let candidates = []
-  for [source_name, result] in items(a:complete_results)
+  for result in values(a:complete_results)
     if result.complete_pos > a:complete_pos
       let prefix = a:complete_str[: result.complete_pos
             \                            - a:complete_pos - 1]

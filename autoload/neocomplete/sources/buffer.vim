@@ -148,7 +148,6 @@ function! s:initialize_source(srcname) "{{{
     let ft = 'nothing'
   endif
 
-  let buflines = getbufline(a:srcname, 1, '$')
   let keyword_pattern = neocomplete#get_keyword_pattern(ft, s:source.name)
 
   let s:buffer_sources[a:srcname] = {

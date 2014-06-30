@@ -61,8 +61,6 @@ function! neocomplete#handler#_on_insert_leave() "{{{
   let neocomplete.overlapped_items = {}
 endfunction"}}}
 function! neocomplete#handler#_on_write_post() "{{{
-  let neocomplete = neocomplete#get_current_neocomplete()
-
   " Restore foldinfo.
   for winnr in filter(range(1, winnr('$')),
         \ "!empty(getwinvar(v:val, 'neocomplete_foldinfo'))")
@@ -81,6 +79,7 @@ function! neocomplete#handler#_on_complete_done() "{{{
 
   " Get cursor word.
   if exists('v:completed_item')
+    " @vimlint(EVL102, 0, v:completed_item)
     " Use v:completed_item feature.
     if empty(v:completed_item)
       return
@@ -96,10 +95,11 @@ function! neocomplete#handler#_on_complete_done() "{{{
           \ || v:completed_item.info != ''
       let neocomplete.completed_item = v:completed_item
     endif
+    " @vimlint(EVL102, 1, v:completed_item)
   else
-    let [_, complete_str] =
+    let complete_str =
           \ neocomplete#helper#match_word(
-          \   matchstr(getline('.'), '^.*\%'.col('.').'c'))
+          \   matchstr(getline('.'), '^.*\%'.col('.').'c'))[1]
     if complete_str == ''
       return
     endif

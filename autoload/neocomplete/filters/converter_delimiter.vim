@@ -45,7 +45,9 @@ function! s:converter.filter(context) "{{{
 
   for delimiter in get(g:neocomplete#delimiter_patterns, filetype, [])
     " Count match.
+    " @vimlint(EVL102, 0, l:delim_cnt)
     let delim_cnt = 0
+    " @vimlint(EVL102, 1, l:delim_cnt)
     let delimiter_vim = neocomplete#util#escape_pattern(delimiter)
     let matchend = matchend(a:context.complete_str, delimiter_vim)
     while matchend >= 0

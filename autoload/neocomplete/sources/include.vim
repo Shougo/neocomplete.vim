@@ -278,9 +278,7 @@ function! s:get_buffer_include_files(bufnumber) "{{{
         \ getbufvar(a:bufnumber, '&path'))
   let expr = get(g:neocomplete#sources#include#exprs, filetype,
         \ getbufvar(a:bufnumber, '&includeexpr'))
-  if has_key(g:neocomplete#sources#include#suffixes, filetype)
-    let suffixes = &l:suffixesadd
-  endif
+  let suffixes = &l:suffixesadd
 
   " Change current directory.
   let cwd_save = getcwd()

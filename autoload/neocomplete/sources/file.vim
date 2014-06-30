@@ -70,8 +70,8 @@ endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
   let pattern = neocomplete#get_keyword_pattern_end('filename', self.name)
-  let [complete_pos, complete_str] =
-        \ neocomplete#helper#match_word(a:context.input, pattern)
+  let complete_str =
+        \ neocomplete#helper#match_word(a:context.input, pattern)[1]
   if neocomplete#is_windows() && complete_str =~ '^[\\/]'
     return []
   endif
