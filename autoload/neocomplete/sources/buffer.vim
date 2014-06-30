@@ -175,6 +175,8 @@ function! s:make_cache_file(srcname) "{{{
     return
   endif
 
+  call neocomplete#print_debug('make_cache_buffer: ' . source.path)
+
   let source.cache_name =
         \ neocomplete#cache#async_load_from_file(
         \     'buffer_cache', source.path,
@@ -192,6 +194,8 @@ function! s:make_cache_buffer(srcname) "{{{
   if !s:should_create_cache(a:srcname)
     return
   endif
+
+  call neocomplete#print_debug('make_cache_buffer: ' . a:srcname)
 
   if !s:exists_current_source()
     call s:initialize_source(a:srcname)
