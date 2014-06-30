@@ -139,9 +139,7 @@ function! neocomplete#complete#auto_complete(findstart, base) "{{{
 endfunction"}}}
 
 function! neocomplete#complete#_get_results(cur_text, ...) "{{{
-  if g:neocomplete#enable_debug
-    echomsg 'start get_complete_sources'
-  endif
+  call neocomplete#print_debug('start get_complete_sources')
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.start_time = reltime()
@@ -391,9 +389,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
               \ source.neocomplete__matchers, source, {})
       endif
 
-      if g:neocomplete#enable_debug
-        echomsg source.name
-      endif
+      call neocomplete#print_debug(source.name)
     endfor
   finally
     let &ignorecase = ignorecase_save

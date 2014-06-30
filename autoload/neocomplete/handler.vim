@@ -158,9 +158,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   let cur_text = neocomplete#get_cur_text(1)
 
-  if g:neocomplete#enable_debug
-    echomsg 'cur_text = ' . cur_text
-  endif
+  call neocomplete#print_debug('cur_text = ' . cur_text)
 
   " Prevent infinity loop.
   if s:is_skip_auto_complete(cur_text)
@@ -181,9 +179,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
       endif
     endif
 
-    if g:neocomplete#enable_debug
-      echomsg 'Skipped.'
-    endif
+    call neocomplete#print_debug('Skipped.')
     return
   endif
 
@@ -195,9 +191,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   " Check multibyte input or eskk.
   if neocomplete#is_eskk_enabled()
         \ || neocomplete#is_multibyte_input(cur_text)
-    if g:neocomplete#enable_debug
-      echomsg 'Skipped.'
-    endif
+    call neocomplete#print_debug('Skipped.')
 
     return
   endif
@@ -205,9 +199,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   " Check complete position.
   let complete_sources = neocomplete#complete#_set_results_pos(cur_text)
   if empty(complete_sources)
-    if g:neocomplete#enable_debug
-      echomsg 'Skipped.'
-    endif
+    call neocomplete#print_debug('Skipped.')
 
     return
   endif
@@ -234,9 +226,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
           \ neocomplete#complete#_get_results(cur_text)
 
     if empty(neocomplete.complete_sources)
-      if g:neocomplete#enable_debug
-        echomsg 'Skipped.'
-      endif
+      call neocomplete#print_debug('Skipped.')
       return
     endif
   endif
