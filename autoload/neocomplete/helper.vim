@@ -146,6 +146,7 @@ function! neocomplete#helper#complete_check() "{{{
   if ret
     let neocomplete = neocomplete#get_current_neocomplete()
     let neocomplete.skipped = 1
+
     call neocomplete#print_debug('Skipped.')
   endif
 

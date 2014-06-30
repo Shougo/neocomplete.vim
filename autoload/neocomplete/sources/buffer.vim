@@ -116,6 +116,7 @@ endfunction"}}}
 function! s:should_create_cache(bufnr) " {{{
   let filepath = fnamemodify(bufname(a:bufnr), ':p')
   return getfsize(filepath) < g:neocomplete#sources#buffer#cache_limit_size
+        \ && getbufvar(a:bufnr, '&modifiable')
         \ && !getwinvar(bufwinnr(a:bufnr), '&previewwindow')
         \ && (g:neocomplete#sources#buffer#disabled_pattern == ''
         \  || filepath !~# g:neocomplete#sources#buffer#disabled_pattern)
