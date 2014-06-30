@@ -321,8 +321,11 @@ EOF
 endfunction"}}}
 
 function! s:check_async_cache() "{{{
-  for source in filter(s:get_sources_list(),
-        \ 'has_key(s:async_dictionary_list, v:val.path)')
+  for source in s:get_sources_list()
+    if !has_key(s:async_dictionary_list, source.path)
+      continue
+    endif
+
     " Load from cache.
     let [loaded, file_cache] = neocomplete#cache#get_cache_list(
           \ 'buffer_cache', s:async_dictionary_list[source.path])
