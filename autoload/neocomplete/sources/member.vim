@@ -187,7 +187,7 @@ endfunction"}}}
 function! s:get_member_list(cur_text, var_name) "{{{
   let keyword_list = []
   for source in filter(s:get_sources_list(),
-        \ 'has_key(v:val[1].member_cache, a:var_name)')
+        \ 'has_key(v:val.member_cache, a:var_name)')
     let keyword_list +=
           \ values(source.member_cache[a:var_name])
   endfor
