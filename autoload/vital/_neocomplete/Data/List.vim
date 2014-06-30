@@ -198,6 +198,18 @@ function! s:or(xs)
   return s:any('v:val', a:xs)
 endfunction
 
+function! s:map_accum(expr, xs, init)
+  let memo = []
+  let init = a:init
+  for x in a:xs
+    let expr = substitute(a:expr, 'v:memo', init, 'g')
+    let expr = substitute(expr, 'v:val', x, 'g')
+    let [tmp, init] = eval(expr)
+    call add(memo, tmp)
+  endfor
+  return memo
+endfunction
+
 " similar to Haskell's Prelude.foldl
 function! s:foldl(f, init, xs)
   let memo = a:init
