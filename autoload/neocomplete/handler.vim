@@ -74,12 +74,12 @@ function! neocomplete#handler#_on_write_post() "{{{
           \ 'neocomplete_foldinfo', {})
   endfor
 endfunction"}}}
+" @vimlint(EVL102, 1, v:completed_item)
 function! neocomplete#handler#_on_complete_done() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
 
   " Get cursor word.
   if exists('v:completed_item')
-    " @vimlint(EVL102, 0, v:completed_item)
     " Use v:completed_item feature.
     if empty(v:completed_item)
       return
@@ -95,7 +95,6 @@ function! neocomplete#handler#_on_complete_done() "{{{
           \ || v:completed_item.info != ''
       let neocomplete.completed_item = v:completed_item
     endif
-    " @vimlint(EVL102, 1, v:completed_item)
   else
     let complete_str =
           \ neocomplete#helper#match_word(
@@ -131,6 +130,7 @@ function! neocomplete#handler#_on_complete_done() "{{{
     let frequencies[complete_str] += 20
   endif
 endfunction"}}}
+" @vimlint(EVL102, 0, v:completed_item)
 function! neocomplete#handler#_change_update_time() "{{{
   if &updatetime > g:neocomplete#cursor_hold_i_time
     " Change updatetime.

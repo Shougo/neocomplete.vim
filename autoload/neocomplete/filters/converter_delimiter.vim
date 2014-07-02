@@ -35,6 +35,7 @@ let s:converter = {
       \ 'description' : 'delimiter converter',
       \}
 
+" @vimlint(EVL102, 1, l:delim_cnt)
 function! s:converter.filter(context) "{{{
   if g:neocomplete#max_keyword_width < 0
     return a:context.candidates
@@ -45,9 +46,7 @@ function! s:converter.filter(context) "{{{
 
   for delimiter in get(g:neocomplete#delimiter_patterns, filetype, [])
     " Count match.
-    " @vimlint(EVL102, 0, l:delim_cnt)
     let delim_cnt = 0
-    " @vimlint(EVL102, 1, l:delim_cnt)
     let delimiter_vim = neocomplete#util#escape_pattern(delimiter)
     let matchend = matchend(a:context.complete_str, delimiter_vim)
     while matchend >= 0
@@ -73,6 +72,7 @@ EOF
 
   return a:context.candidates
 endfunction"}}}
+" @vimlint(EVL102, 0, l:delim_cnt)
 
 function! s:process_delimiter(context, candidate, delimiter, delim_cnt)
   let candidate = a:candidate
