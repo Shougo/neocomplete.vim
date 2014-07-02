@@ -216,6 +216,9 @@ function! s:make_cache_buffer(srcname) "{{{
   let source.changedtick = getbufvar(a:srcname, 'changedtick')
   let source.cached_time = localtime()
   let source.filetype = getbufvar(a:srcname, '&filetype')
+  if source.filetype == ''
+    let source.filetype = 'nothing'
+  endif
   let s:async_dictionary_list[source.path] = [{
         \ 'filename' : temp,
         \ 'cachename' : source.cache_name,
