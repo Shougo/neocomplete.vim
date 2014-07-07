@@ -363,6 +363,10 @@ function! s:initialize_include(filename, filetype) "{{{
         \ }
 endfunction"}}}
 function! neocomplete#sources#include#make_cache(bufname) "{{{
+  if !neocomplete#is_enabled()
+    call neocomplete#initialize()
+  endif
+
   let bufnumber = (a:bufname == '') ? bufnr('%') : bufnr(a:bufname)
   if has_key(s:async_include_cache, bufnumber)
         \ && filereadable(s:async_include_cache[bufnumber].cache_name)

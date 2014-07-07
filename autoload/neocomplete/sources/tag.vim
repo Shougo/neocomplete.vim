@@ -87,6 +87,10 @@ function! s:initialize_tags(filename) "{{{
         \ }
 endfunction"}}}
 function! neocomplete#sources#tag#make_cache(force) "{{{
+  if !neocomplete#is_enabled()
+    call neocomplete#initialize()
+  endif
+
   let bufnumber = bufnr('%')
 
   let s:async_tags_list[bufnumber] = []

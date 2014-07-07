@@ -348,6 +348,10 @@ endfunction"}}}
 
 " Command functions. "{{{
 function! neocomplete#sources#buffer#make_cache(name) "{{{
+  if !neocomplete#is_enabled()
+    call neocomplete#initialize()
+  endif
+
   if a:name == ''
     let number = bufnr('%')
   else

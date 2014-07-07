@@ -128,6 +128,10 @@ function! neocomplete#sources#member#make_cache_current_line() "{{{
   return s:make_cache_current_buffer(line('.')-1, line('.')+1)
 endfunction"}}}
 function! neocomplete#sources#member#make_cache_current_buffer() "{{{
+  if !neocomplete#is_enabled()
+    call neocomplete#initialize()
+  endif
+
   " Make cache from current buffer.
   return s:make_cache_current_buffer(1, line('$'))
 endfunction"}}}

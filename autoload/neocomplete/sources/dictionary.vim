@@ -90,7 +90,7 @@ function! s:make_cache(filetype) "{{{
 endfunction"}}}
 
 function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
-  if !exists('g:neocomplete#sources#dictionary#dictionaries')
+  if !neocomplete#is_enabled()
     call neocomplete#initialize()
   endif
 
