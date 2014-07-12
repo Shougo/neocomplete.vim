@@ -99,21 +99,8 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
     let filetype = neocomplete#get_context_filetype(1)
   endif
 
-  " Make cache.
-  let dictionaries = get(
-        \ g:neocomplete#sources#dictionary#dictionaries, filetype, '')
-  if has_key(g:neocomplete#sources#dictionary#dictionaries, '_')
-    " Load global dictionaries.
-    let dictionaries .= ',' .
-          \ g:neocomplete#sources#dictionary#dictionaries['_']
-  endif
-
-  if dictionaries == ''
-    if filetype == &filetype &&
-          \ &l:dictionary != '' && &l:dictionary !=# &g:dictionary
-      let dictionaries = &l:dictionary
-    endif
-  endif
+  let dictionaries =
+        \ neocomplete#sources#dictionary#get_dictionaries(filetype)
 
   let s:async_dictionary_list[filetype] = []
 
@@ -130,6 +117,31 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
             \ })
     endif
   endfor
+endfunction"}}}
+
+function! neocomplete#sources#dictionary#get_dictionaries(filetype) "{{{
+  let filetype = a:filetype
+  if filetype == ''
+    let filetype = neocomplete#get_context_filetype(1)
+  endif
+
+  " Make cache.
+  let dictionaries = get(
+        \ g:neocomplete#sources#dictionary#dictionaries, filetype, '')
+  if has_key(g:neocomplete#sources#dictionary#dictionaries, '_')
+    " Load global dictionaries.
+    let dictionaries .= ',' .
+          \ g:neocomplete#sources#dictionary#dictionaries['_']
+  endif
+
+  if dictionaries == ''
+    if filetype == &filetype &&
+          \ &l:dictionary != '' && &l:dictionary !=# &g:dictionary
+      let dictionaries = &l:dictionary
+    endif
+  endif
+
+  return dictionaries
 endfunction"}}}
 
 let &cpo = s:save_cpo
