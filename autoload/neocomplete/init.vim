@@ -99,8 +99,10 @@ function! neocomplete#init#_autocmds() "{{{
             \ call neocomplete#handler#_restore_update_time()
     augroup END
   else
-    autocmd neocomplete InsertEnter,CursorMovedI *
+    autocmd neocomplete CursorMovedI *
           \ call neocomplete#handler#_do_auto_complete('CursorMovedI')
+    autocmd neocomplete InsertEnter *
+          \ call neocomplete#handler#_do_auto_complete('InsertEnter')
   endif
 
   autocmd neocomplete CompleteDone *

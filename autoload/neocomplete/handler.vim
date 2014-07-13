@@ -165,7 +165,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     let neocomplete.old_cur_text = cur_text
     let neocomplete.old_linenr = line('.')
 
-    if cur_text =~ '^\s*$\|\s\+$'
+    if cur_text =~ '^\s*$\|\s\+$' && a:event !=# 'InsertEnter'
       " Make cache.
       if neocomplete#helper#is_enabled_source('buffer',
             \ neocomplete.context_filetype)
