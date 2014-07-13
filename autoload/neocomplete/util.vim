@@ -96,11 +96,6 @@ endfunction"}}}
 function! neocomplete#util#system(...) "{{{
   return call(s:get_process().system, a:000)
 endfunction"}}}
-function! neocomplete#util#has_lua() "{{{
-  " Note: Disabled if_lua feature if less than 7.3.885.
-  " Because if_lua has double free problem.
-  return has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
-endfunction"}}}
 function! neocomplete#util#is_windows(...) "{{{
   return call(s:get_prelude().is_windows, a:000)
 endfunction"}}}
