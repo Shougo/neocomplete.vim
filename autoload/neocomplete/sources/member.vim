@@ -150,7 +150,6 @@ function! s:make_cache_current_buffer(start, end) "{{{
     call s:initialize_source(bufnr('%'), filetype)
   endif
 
-  let source = s:member_sources[bufnr('%')]
   call s:make_cache_lines(bufnr('%'), filetype, getline(a:start, a:end))
 endfunction"}}}
 function! s:make_cache_lines(srcname, filetype, lines) "{{{
