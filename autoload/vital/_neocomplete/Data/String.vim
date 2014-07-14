@@ -53,6 +53,15 @@ function! s:common_head(strs)
   return pat == '' ? '' : matchstr(strs[-1], '^\%[' . pat . ']')
 endfunction
 
+" Split to two elements of List. ([left, right])
+" e.g.: s:split3('neocomplcache', 'compl') returns ['neo', 'compl', 'cache']
+" @vimlint(EVL102, 1, l:_)
+function! s:split_leftright(expr, pattern)
+  let [left, _, right] = s:split3(a:expr, a:pattern)
+  return [left, right]
+endfunction
+" @vimlint(EVL102, 0, l:_)
+
 function! s:split3(expr, pattern)
   let ERROR = ['', '', '']
   if a:expr ==# '' || a:pattern ==# ''
