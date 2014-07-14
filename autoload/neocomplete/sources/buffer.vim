@@ -109,11 +109,7 @@ endfunction"}}}
 
 function! neocomplete#sources#buffer#make_cache_current_line() "{{{
   " let start = reltime()
-  if line('$') > 1500
-    if neocomplete#util#has_vimproc()
-      call s:make_cache_buffer(bufnr('%'))
-    endif
-  else
+  if line('$') < 1500
     call s:make_cache_current_buffer()
   endif
   " echomsg reltimestr(reltime(start))
