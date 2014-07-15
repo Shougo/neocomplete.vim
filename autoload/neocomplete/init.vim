@@ -84,6 +84,8 @@ function! neocomplete#init#_autocmds() "{{{
           \ call neocomplete#handler#_on_write_post()
     autocmd VimLeavePre *
           \ call neocomplete#init#disable()
+    autocmd InsertCharPre *
+          \ call neocomplete#handler#_on_insert_char_pre()
   augroup END
 
   if g:neocomplete#enable_insert_char_pre
@@ -603,6 +605,7 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'old_cur_text' : '',
         \ 'old_linenr' : line('.'),
         \ 'old_complete_pos' : -1,
+        \ 'old_char' : '',
         \ 'complete_str' : '',
         \ 'complete_pos' : -1,
         \ 'candidates' : [],

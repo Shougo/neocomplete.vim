@@ -146,6 +146,24 @@ function! neocomplete#handler#_restore_update_time() "{{{
     let &updatetime = neocomplete.update_time_save
   endif
 endfunction"}}}
+function! neocomplete#handler#_on_insert_char_pre() "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  if neocomplete.old_char != ' ' && v:char == ' '
+    " Make cache.
+    if neocomplete#helper#is_enabled_source('buffer',
+          \ neocomplete.context_filetype)
+      " Caching current cache line.
+      call neocomplete#sources#buffer#make_cache_current_line()
+    endif
+    if neocomplete#helper#is_enabled_source('member',
+          \ neocomplete.context_filetype)
+      " Caching current cache line.
+      call neocomplete#sources#member#make_cache_current_line()
+    endif
+  endif
+
+  let neocomplete.old_char = v:char
+endfunction"}}}
 
 function! neocomplete#handler#_do_auto_complete(event) "{{{
   if s:check_in_do_auto_complete()
@@ -164,20 +182,6 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   if s:is_skip_auto_complete(cur_text)
     let neocomplete.old_cur_text = cur_text
     let neocomplete.old_linenr = line('.')
-
-    if cur_text =~ '^\s*$\|\s\+$' && a:event !=# 'InsertEnter'
-      " Make cache.
-      if neocomplete#helper#is_enabled_source('buffer',
-            \ neocomplete.context_filetype)
-        " Caching current cache line.
-        call neocomplete#sources#buffer#make_cache_current_line()
-      endif
-      if neocomplete#helper#is_enabled_source('member',
-            \ neocomplete.context_filetype)
-        " Caching current cache line.
-        call neocomplete#sources#member#make_cache_current_line()
-      endif
-    endif
 
     call neocomplete#print_debug('Skipped.')
     return
