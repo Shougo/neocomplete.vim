@@ -90,7 +90,7 @@ function! s:source.hooks.on_post_filter(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  call s:check_source()
+  call s:check_async_cache()
 
   let keyword_list = []
   for source in s:get_sources_list()
