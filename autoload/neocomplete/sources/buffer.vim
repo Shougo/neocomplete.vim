@@ -200,11 +200,14 @@ function! s:make_cache_buffer(srcname) "{{{
 
   call neocomplete#print_debug('make_cache_buffer: ' . a:srcname)
 
-  if !s:exists_current_source() && a:srcname ==# bufnr('%')
-    " Force sync cache
+  if !s:exists_current_source() 
     call s:initialize_source(a:srcname)
-    call s:make_cache_current_buffer()
-    return
+
+    if a:srcname ==# bufnr('%')
+      " Force sync cache
+      call s:make_cache_current_buffer()
+      return
+    endif
   endif
 
   let source = s:buffer_sources[a:srcname]
