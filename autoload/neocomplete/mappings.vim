@@ -60,14 +60,16 @@ function! neocomplete#mappings#close_popup() "{{{
   let neocomplete.complete_str = ''
   let neocomplete.skip_next_complete = 2
 
-  return pumvisible() ? "\<C-y>" : ''
+  return pumvisible() ? "\<C-y>"
+        \ . (&l:indentexpr != '' ? "\<C-f>" : '') : ''
 endfunction
 "}}}
 function! neocomplete#mappings#cancel_popup() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skip_next_complete = 1
 
-  return pumvisible() ? "\<C-e>" : ''
+  return pumvisible() ? "\<C-e>"
+        \ . (&l:indentexpr != '' ? "\<C-f>" : '') : ''
 endfunction
 "}}}
 
