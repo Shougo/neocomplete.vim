@@ -263,41 +263,12 @@ endfunction"}}}
 function! s:async_load(argv, cache_dir, filename) "{{{
   " if 0
   if neocomplete#has_vimproc()
-    let paths = vimproc#get_command_name(v:progname, $PATH, -1)
-    if empty(paths)
-      if has('gui_macvim')
-        " MacVim check.
-        if !executable('/Applications/MacVim.app/Contents/MacOS/Vim')
-          call neocomplete#print_error(
-                \ 'You installed MacVim in not default directory!'.
-                \ ' You must add MacVim installed path in $PATH.')
-          let g:neocomplete#use_vimproc = 0
-          return
-        endif
+    let vim_path = s:search_vim_path()
 
-        let vim_path = '/Applications/MacVim.app/Contents/MacOS/Vim'
-      else
-        call neocomplete#print_error(
-              \ printf('Vim path : "%s" is not found.'.
-              \        ' You must add "%s" installed path in $PATH.',
-              \        v:progname, v:progname))
-        let g:neocomplete#use_vimproc = 0
-        return
-      endif
-    else
-      let base_path = neocomplete#util#substitute_path_separator(
-            \ fnamemodify(paths[0], ':p:h'))
-
-      let vim_path = base_path .
-            \ (neocomplete#util#is_windows() ? '/vim.exe' : '/vim')
-
-      if !executable(vim_path) && neocomplete#util#is_mac()
-        " Note: Search "Vim" instead of vim.
-        let vim_path = base_path. '/Vim'
-      endif
-    endif
-
-    if !executable(vim_path)
+    if vim_path == ''
+      " Error
+      return
+    elseif !executable(vim_path)
       call neocomplete#print_error(
             \ printf('Vim path : "%s" is not executable.', vim_path))
       let g:neocomplete#use_vimproc = 0
@@ -315,6 +286,43 @@ function! s:async_load(argv, cache_dir, filename) "{{{
   endif
 
   return neocomplete#cache#encode_name(a:cache_dir, a:filename)
+endfunction"}}}
+function! s:search_vim_path() "{{{
+  let paths = vimproc#get_command_name(v:progname, $PATH, -1)
+  if empty(paths)
+    if has('gui_macvim')
+      " MacVim check.
+      if !executable('/Applications/MacVim.app/Contents/MacOS/Vim')
+        call neocomplete#print_error(
+              \ 'You installed MacVim in not default directory!'.
+              \ ' You must add MacVim installed path in $PATH.')
+        let g:neocomplete#use_vimproc = 0
+        return ''
+      endif
+
+      let vim_path = '/Applications/MacVim.app/Contents/MacOS/Vim'
+    else
+      call neocomplete#print_error(
+            \ printf('Vim path : "%s" is not found.'.
+            \        ' You must add "%s" installed path in $PATH.',
+            \        v:progname, v:progname))
+      let g:neocomplete#use_vimproc = 0
+      return ''
+    endif
+  else
+    let base_path = neocomplete#util#substitute_path_separator(
+          \ fnamemodify(paths[0], ':p:h'))
+
+    let vim_path = base_path .
+          \ (neocomplete#util#is_windows() ? '/vim.exe' : '/vim')
+
+    if !executable(vim_path) && neocomplete#util#is_mac()
+      " Note: Search "Vim" instead of vim.
+      let vim_path = base_path. '/Vim'
+    endif
+  endif
+
+  return vim_path
 endfunction"}}}
 
 let &cpo = s:save_cpo
