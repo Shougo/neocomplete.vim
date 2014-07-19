@@ -147,6 +147,10 @@ function! neocomplete#handler#_restore_update_time() "{{{
   endif
 endfunction"}}}
 function! neocomplete#handler#_on_insert_char_pre() "{{{
+  if neocomplete#is_locked()
+    return
+  endif
+
   let neocomplete = neocomplete#get_current_neocomplete()
   if neocomplete.old_char != ' ' && v:char == ' '
     " Make cache.
