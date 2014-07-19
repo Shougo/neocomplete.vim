@@ -109,9 +109,9 @@ endfunction"}}}
 
 function! neocomplete#sources#buffer#make_cache_current_line() "{{{
   " let start = reltime()
-  if line('$') < 1500
-    call s:make_cache_current_buffer()
-  endif
+  call s:make_cache_current_buffer(
+        \ max([1, line('.')-10]),
+        \ min([line('$'), line('.') + 10]))
   " echomsg reltimestr(reltime(start))
 endfunction"}}}
 
@@ -200,12 +200,12 @@ function! s:make_cache_buffer(srcname) "{{{
 
   call neocomplete#print_debug('make_cache_buffer: ' . a:srcname)
 
-  if !s:exists_current_source() 
+  if !s:exists_current_source()
     call s:initialize_source(a:srcname)
 
     if a:srcname ==# bufnr('%')
       " Force sync cache
-      call s:make_cache_current_buffer()
+      call s:make_cache_current_buffer(1, line('$'))
       return
     endif
   endif
@@ -282,7 +282,7 @@ function! s:exists_current_source() "{{{
   return has_key(s:buffer_sources, bufnr('%'))
 endfunction"}}}
 
-function! s:make_cache_current_buffer() "{{{
+function! s:make_cache_current_buffer(start, end) "{{{
   let srcname = bufnr('%')
 
   " Make cache from current buffer.
@@ -308,7 +308,7 @@ do
   local dup = {}
   local b = vim.buffer()
   local min_length = vim.eval('g:neocomplete#min_keyword_length')
-  for linenr = 1, #b do
+  for linenr = vim.eval('a:start'), vim.eval('a:end') do
     local match = (string.find(b[linenr], '[^%s]'))
     while match ~= nil and match >= 0 do
       match = vim.eval('match(getline(' .. linenr ..
@@ -331,7 +331,7 @@ do
 end
 EOF
 
-  let source.words = words
+  let source.words = neocomplete#util#uniq(source.words + words)
   let source.changedtick = b:changedtick
 endfunction"}}}
 
