@@ -96,7 +96,7 @@ function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencodi
   let dup_check = {}
 
   let [tags_file_name, filter_pattern] =
-        \ readfile(a:pattern_file_name)[1 : 3]
+        \ readfile(a:pattern_file_name)[1 : 2]
   if tags_file_name !=# '$dummy$'
     " Check output.
     let tags_list = []
