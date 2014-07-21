@@ -679,10 +679,11 @@ g:neocomplete#sources#buffer#max_keyword_width
 g:neocomplete#sources#dictionary#dictionaries
 		It is a dictionary to connect a dictionary file with file
 		type.  The dictionary's key is filetype and comma-separated
-		multiple value is a path to a dictionary file.  If this
-		variable is empty, neocomplete uses 'dictionary' option.
-		When you set "text" key, you will appoint dictionary files in
-		text mode.  If the key is "_", it is loaded in every filetype.
+		multiple value is a path to a dictionary file.  If the
+		variable is unset or has an empty key, the native 'dictionary'
+		option will be inherited.  When you set "text"
+		key, you will appoint dictionary files in text mode.  If the
+		key is "_", it is loaded in every filetype.
 		Note: Global 'dictionary' file is not loaded automatically.
 
 		Default value is {}.
