@@ -134,13 +134,6 @@ function! neocomplete#sources#include#get_include_files(bufnumber) "{{{
   endif
 endfunction"}}}
 
-function! neocomplete#sources#include#get_include_tags(bufnumber) "{{{
-  return filter(map(
-        \ neocomplete#sources#include#get_include_files(a:bufnumber),
-        \ "neocomplete#cache#encode_name('tags_output', v:val)"),
-        \ 'filereadable(v:val)')
-endfunction"}}}
-
 " For Debug.
 function! neocomplete#sources#include#get_current_include_files() "{{{
   return s:get_buffer_include_files(bufnr('%'))
