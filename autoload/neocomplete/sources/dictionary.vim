@@ -102,7 +102,9 @@ function! neocomplete#sources#dictionary#remake_cache(filetype) "{{{
   let dictionaries =
         \ neocomplete#sources#dictionary#get_dictionaries(filetype)
 
-  let s:async_dictionary_list[filetype] = []
+  if !has_key(s:async_dictionary_list, filetype)
+    let s:async_dictionary_list[filetype] = []
+  endif
 
   let pattern = neocomplete#get_keyword_pattern(filetype, s:source.name)
   for dictionary in split(dictionaries, ',')
