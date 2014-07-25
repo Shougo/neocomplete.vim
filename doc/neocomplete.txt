@@ -688,11 +688,6 @@ g:neocomplete#sources#dictionary#dictionaries
 
 		Default value is {}.
 
-			*g:neocomplete#sources#dictionary#keyword_patterns*
-g:neocomplete#sources#dictionary#keyword_patterns
-		This option is deleted. You must use
-		|neocomplete-source-attribute-keyword_patterns|.
-
 				*g:neocomplete#sources#file_include#exprs*
 g:neocomplete#sources#file_include#exprs
 		It is the expression string of the line analysis to perform
