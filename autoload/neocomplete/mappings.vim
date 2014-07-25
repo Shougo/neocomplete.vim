@@ -181,19 +181,6 @@ function! neocomplete#mappings#start_manual_complete(...) "{{{
   return "\<C-x>\<C-u>\<C-r>=neocomplete#mappings#popup_post()\<CR>"
 endfunction"}}}
 
-function! neocomplete#mappings#start_manual_complete_list(complete_pos, complete_str, candidates) "{{{
-  let neocomplete = neocomplete#get_current_neocomplete()
-  let [neocomplete.complete_pos,
-        \ neocomplete.complete_str, neocomplete.candidates] =
-        \ [a:complete_pos, a:complete_str, a:candidates]
-
-  " Set function.
-  let &l:completefunc = 'neocomplete#complete#auto_complete'
-
-  " Start complete.
-  return "\<C-x>\<C-u>\<C-r>=neocomplete#mappings#popup_post()\<CR>"
-endfunction"}}}
-
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
