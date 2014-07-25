@@ -129,6 +129,14 @@ function! neocomplete#handler#_on_complete_done() "{{{
   else
     let frequencies[complete_str] += 20
   endif
+
+  " indent line matched by indentkeys
+  for word in filter(map(split(&l:indentkeys, ','),
+        \ "matchstr(v:val, '.*=\\zs.*')"), "v:val != ''")
+    if stridx(complete_str, word) == 0
+      call neocomplete#helper#indent_current_line()
+    endif
+  endfor
 endfunction"}}}
 " @vimlint(EVL102, 0, v:completed_item)
 function! neocomplete#handler#_change_update_time() "{{{

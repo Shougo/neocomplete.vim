@@ -357,6 +357,18 @@ function! neocomplete#helper#check_invalid_omnifunc(omnifunc) "{{{
   return a:omnifunc == '' || (a:omnifunc !~ '#' && !exists('*' . a:omnifunc))
 endfunction"}}}
 
+function! neocomplete#helper#indent_current_line() "{{{
+  let pos = getpos('.')
+  let equalprg = &l:equalprg
+  try
+    setlocal equalprg=
+    silent normal! ==
+  finally
+    let &l:equalprg = equalprg
+    call setpos('.', pos)
+  endtry
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
