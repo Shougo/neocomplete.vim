@@ -100,7 +100,7 @@ function! s:source.get_complete_position(context) "{{{
   let member = s:get_member_pattern(filetype)
   let prefix = g:neocomplete#sources#member#prefix_patterns[filetype]
   let complete_pos = matchend(a:context.input,
-        \ '\%(' . member . '\%(' . prefix . '\m\)\)\+\ze\w*$')
+        \ member . '\m\%(' . prefix . '\m\)\ze\w*$')
   return complete_pos
 endfunction"}}}
 
@@ -114,8 +114,8 @@ function! s:source.gather_candidates(context) "{{{
   call neocomplete#sources#member#remake_cache(filetype)
 
   let var_name = matchstr(a:context.input,
-        \ '\%(' . s:get_member_pattern(filetype) . '\%(' .
-        \ g:neocomplete#sources#member#prefix_patterns[filetype] . '\m\)\)\+\ze\w*$')
+        \ s:get_member_pattern(filetype) . '\m\%(' .
+        \ g:neocomplete#sources#member#prefix_patterns[filetype] . '\m\)\ze\w*$')
   if var_name == ''
     return []
   endif
@@ -164,9 +164,9 @@ function! s:make_cache_lines(srcname, filetype, lines) "{{{
 
   let source = s:member_sources[a:srcname]
   let keyword_pattern =
-        \ '\%(' . s:get_member_pattern(filetype) . '\%('
+        \ s:get_member_pattern(filetype) . '\m\%('
         \ . g:neocomplete#sources#member#prefix_patterns[filetype]
-        \ . '\m\)\)\+' . s:get_member_pattern(filetype)
+        \ . '\m\)' . s:get_member_pattern(filetype)
   let keyword_pattern2 = '^'.keyword_pattern
   let member_pattern = s:get_member_pattern(filetype) . '$'
 
