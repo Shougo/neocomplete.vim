@@ -43,7 +43,6 @@ Create filter		|neocomplete-create-filter|
 FILTERS			|neocomplete-filters|
 External sources	|neocomplete-external-sources|
 FAQ			|neocomplete-faq|
-Changelog		|neocomplete-changelog|
 
 ==============================================================================
 INTRODUCTION					*neocomplete-introduction*
