@@ -466,7 +466,7 @@ function! neocomplete#init#_variables() "{{{
         \ 'int-ocaml', 'ocaml')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#same_filetypes',
-        \ 'int-clj', 'clojure')
+        \ 'int-clj,int-lein', 'clojure')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#same_filetypes',
         \ 'int-sml,int-smlsharp', 'sml')
