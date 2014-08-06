@@ -251,14 +251,6 @@ function! s:check_changed_buffer(bufnr) "{{{
 endfunction"}}}
 
 function! s:check_source() "{{{
-  let current_buffer_size = getfsize(fnamemodify(bufname(bufnr('%')), ':p'))
-  if current_buffer_size <
-        \        g:neocomplete#sources#buffer#cache_limit_size
-    if !s:exists_current_source() || s:check_changed_buffer(bufnr('%'))
-      call s:make_cache_buffer(bufnr('%'))
-    endif
-  endif
-
   " Check new buffer.
   call map(filter(range(1, bufnr('$')), "
         \ v:val != bufnr('%')
@@ -279,7 +271,8 @@ function! s:check_source() "{{{
 endfunction"}}}
 
 function! s:exists_current_source() "{{{
-  return has_key(s:buffer_sources, bufnr('%'))
+  return has_key(s:buffer_sources, bufnr('%')) &&
+        \ !s:check_changed_buffer(bufnr('%'))
 endfunction"}}}
 
 function! s:make_cache_current_buffer(start, end) "{{{
