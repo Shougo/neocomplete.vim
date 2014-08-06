@@ -370,9 +370,10 @@ function! s:is_skip_auto_complete(cur_text) "{{{
   return 0
 endfunction"}}}
 function! s:close_preview_window() "{{{
-  if g:neocomplete#enable_auto_close_preview &&
-        \ bufname('%') !=# '[Command Line]' &&
-        \ winnr('$') != 1 && !&l:previewwindow
+  if g:neocomplete#enable_auto_close_preview
+        \ && bufname('%') !=# '[Command Line]'
+        \ && winnr('$') != 1 && !&l:previewwindow
+        \ && !s:check_in_do_auto_complete()
     " Close preview window.
     pclose!
   endif
