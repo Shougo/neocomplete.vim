@@ -605,6 +605,17 @@ function! s:make_cache_features() "{{{
     endif
   endfor
 
+  call add(features, {
+        \ 'word' : 'patch',
+        \ 'menu' : '; Included patches Ex: patch123',
+        \ })
+  if has('patch-7.4.237')
+    call add(features, {
+          \ 'word' : 'patch-',
+          \ 'menu' : '; Version and patches Ex: patch-7.4.237'
+          \ })
+  endif
+
   return features
 endfunction"}}}
 function! s:make_cache_functions() "{{{
