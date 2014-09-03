@@ -190,47 +190,46 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   call neocomplete#print_debug('cur_text = ' . cur_text)
 
-  " Prevent infinity loop.
-  if s:is_skip_auto_complete(cur_text)
+  try
+    " Prevent infinity loop.
+    if s:is_skip_auto_complete(cur_text)
+      call neocomplete#print_debug('Skipped.')
+      return
+    endif
+
+    if neocomplete#helper#is_omni(cur_text)
+          \ && neocomplete.old_cur_text !=# cur_text
+      call feedkeys("\<Plug>(neocomplete_start_omni_complete)")
+      return
+    endif
+
+    " Check multibyte input or eskk.
+    if neocomplete#is_eskk_enabled()
+          \ || neocomplete#is_multibyte_input(cur_text)
+      call neocomplete#print_debug('Skipped.')
+      return
+    endif
+
+    " Check complete position.
+    let complete_sources = neocomplete#complete#_set_results_pos(cur_text)
+    if empty(complete_sources)
+      call neocomplete#print_debug('Skipped.')
+      return
+    endif
+
+    " Check previous position
+    let complete_pos = neocomplete#complete#_get_complete_pos(complete_sources)
+    if neocomplete.skip_next_complete
+          \ && complete_pos == neocomplete.old_complete_pos
+          \ && stridx(cur_text, neocomplete.old_cur_text) == 0
+      " Same position.
+      return
+    endif
+  finally
     let neocomplete.old_cur_text = cur_text
     let neocomplete.old_linenr = line('.')
+  endtry
 
-    call neocomplete#print_debug('Skipped.')
-    return
-  endif
-
-  if neocomplete#helper#is_omni(cur_text)
-    call feedkeys("\<Plug>(neocomplete_start_omni_complete)")
-    return
-  endif
-
-  " Check multibyte input or eskk.
-  if neocomplete#is_eskk_enabled()
-        \ || neocomplete#is_multibyte_input(cur_text)
-    call neocomplete#print_debug('Skipped.')
-
-    return
-  endif
-
-  " Check complete position.
-  let complete_sources = neocomplete#complete#_set_results_pos(cur_text)
-  if empty(complete_sources)
-    call neocomplete#print_debug('Skipped.')
-
-    return
-  endif
-
-  " Check previous position
-  let complete_pos = neocomplete#complete#_get_complete_pos(complete_sources)
-  if neocomplete.skip_next_complete
-        \ && complete_pos == neocomplete.old_complete_pos
-        \ && stridx(cur_text, neocomplete.old_cur_text) == 0
-    " Same position.
-    return
-  endif
-
-  let neocomplete.old_cur_text = cur_text
-  let neocomplete.old_linenr = line('.')
   let neocomplete.skip_next_complete = 0
   let neocomplete.old_complete_pos = complete_pos
 
