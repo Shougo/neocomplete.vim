@@ -54,6 +54,7 @@ function! neocomplete#handler#_on_insert_leave() "{{{
   call neocomplete#helper#clear_result()
 
   call s:close_preview_window()
+  call s:make_cache_current_line()
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.cur_text = ''
@@ -161,17 +162,7 @@ function! neocomplete#handler#_on_insert_char_pre() "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   if neocomplete.old_char != ' ' && v:char == ' '
-    " Make cache.
-    if neocomplete#helper#is_enabled_source('buffer',
-          \ neocomplete.context_filetype)
-      " Caching current cache line.
-      call neocomplete#sources#buffer#make_cache_current_line()
-    endif
-    if neocomplete#helper#is_enabled_source('member',
-          \ neocomplete.context_filetype)
-      " Caching current cache line.
-      call neocomplete#sources#member#make_cache_current_line()
-    endif
+    call s:make_cache_current_line()
   endif
 
   let neocomplete.old_char = v:char
@@ -375,6 +366,19 @@ function! s:close_preview_window() "{{{
         \ && !s:check_in_do_auto_complete()
     " Close preview window.
     pclose!
+  endif
+endfunction"}}}
+function! s:make_cache_current_line() "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  if neocomplete#helper#is_enabled_source('buffer',
+        \ neocomplete.context_filetype)
+    " Caching current cache line.
+    call neocomplete#sources#buffer#make_cache_current_line()
+  endif
+  if neocomplete#helper#is_enabled_source('member',
+        \ neocomplete.context_filetype)
+    " Caching current cache line.
+    call neocomplete#sources#member#make_cache_current_line()
   endif
 endfunction"}}}
 
