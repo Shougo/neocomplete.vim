@@ -90,6 +90,9 @@ function! s:get_glob_files(complete_str, path) "{{{
         \ substitute(a:complete_str, '\\\(.\)', '\1', 'g'))
   let complete_str = substitute(complete_str, '[^/.]\+$', '', '')
 
+  " Note: Support ${env}
+  let complete_str = substitute(complete_str, '\${\(\w\+\)}', '$\1', 'g')
+
   let glob = (complete_str !~ '\*$')?
         \ complete_str . '*' : complete_str
 

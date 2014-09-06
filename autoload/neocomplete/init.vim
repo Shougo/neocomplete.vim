@@ -153,8 +153,8 @@ function! neocomplete#init#_variables() "{{{
         \ 'g:neocomplete#keyword_patterns',
         \'filename',
         \ neocomplete#util#is_windows() ?
-        \'\%(\a\+:/\)\?\%([/[:alnum:]()$+_~.\x80-\xff-]\|[^[:print:]]\|\\.\)\+' :
-        \'\%([/\[\][:alnum:]()$+_~.-]\|[^[:print:]]\|\\.\)\+')
+        \'\%(\a\+:/\)\?\%([/[:alnum:]()$+_~.{}\x80-\xff-]\|[^[:print:]]\|\\.\)\+' :
+        \'\%([/\[\][:alnum:]()$+_~.{}-]\|[^[:print:]]\|\\.\)\+')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'lisp,scheme,clojure,int-gosh,int-clisp,int-clj',
