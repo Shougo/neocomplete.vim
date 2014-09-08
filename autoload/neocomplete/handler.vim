@@ -190,7 +190,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
     if neocomplete#helper#is_omni(cur_text)
           \ && neocomplete.old_cur_text !=# cur_text
-      call feedkeys("\<Plug>(neocomplete_start_omni_complete)")
+      call s:complete_key("\<Plug>(neocomplete_start_omni_complete)")
       return
     endif
 
@@ -237,32 +237,8 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     endif
   endif
 
-  call s:save_foldinfo()
-
-  set completeopt-=menu
-  set completeopt-=longest
-  set completeopt+=menuone
-
-  " Set options.
-  let neocomplete.completeopt = &completeopt
-
-  if neocomplete#util#is_complete_select()
-    if g:neocomplete#enable_auto_select
-      set completeopt-=noselect
-      set completeopt+=noinsert
-    else
-      set completeopt+=noinsert,noselect
-    endif
-  endif
-
-  " Do not display completion messages
-  " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
-  if has('patch-7.4.314')
-    set shortmess+=c
-  endif
-
   " Start auto complete.
-  call feedkeys("\<Plug>(neocomplete_start_auto_complete)")
+  call s:complete_key("\<Plug>(neocomplete_start_auto_complete)")
 endfunction"}}}
 
 function! s:save_foldinfo() "{{{
@@ -380,6 +356,35 @@ function! s:make_cache_current_line() "{{{
     " Caching current cache line.
     call neocomplete#sources#member#make_cache_current_line()
   endif
+endfunction"}}}
+
+function! s:complete_key(key) "{{{
+  call s:save_foldinfo()
+
+  set completeopt-=menu
+  set completeopt-=longest
+  set completeopt+=menuone
+
+  " Set options.
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let neocomplete.completeopt = &completeopt
+
+  if neocomplete#util#is_complete_select()
+    if g:neocomplete#enable_auto_select
+      set completeopt-=noselect
+      set completeopt+=noinsert
+    else
+      set completeopt+=noinsert,noselect
+    endif
+  endif
+
+  " Do not display completion messages
+  " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
+  if has('patch-7.4.314')
+    set shortmess+=c
+  endif
+
+  call feedkeys(a:key)
 endfunction"}}}
 
 let &cpo = s:save_cpo
