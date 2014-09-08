@@ -232,7 +232,14 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
           \ neocomplete#complete#_get_results(cur_text)
 
     if empty(neocomplete.complete_sources)
-      call neocomplete#print_debug('Skipped.')
+      if g:neocomplete#enable_omni_fallback
+            \ && &l:omnifunc != ''
+        " Fallback to omnifunc
+        call s:complete_key("\<Plug>(neocomplete_start_omni_complete)")
+      else
+        call neocomplete#print_debug('Skipped.')
+        return
+      endif
       return
     endif
   endif
