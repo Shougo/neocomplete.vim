@@ -97,18 +97,21 @@ function! neocomplete#handler#_on_complete_done() "{{{
       let neocomplete.completed_item = v:completed_item
     endif
   else
-    let complete_str =
-          \ neocomplete#helper#match_word(
-          \   matchstr(getline('.'), '^.*\%'.col('.').'c'))[1]
+    let cur_text = matchstr(getline('.'), '^.*\%'.col('.').'c')
+    let complete_str = neocomplete#helper#match_word(cur_text)[1]
     if complete_str == ''
-      return
+      " Use default keyword pattern.
+      let complete_str = matchstr(cur_text, '\h\w*\(()\?\)\?$')
+      if complete_str == ''
+        return
+      endif
     endif
 
     let candidates = filter(copy(neocomplete.candidates),
           \   "v:val.word ==# complete_str &&
-          \    (get(v:val, 'abbr', '') != '' &&
+          \    ((get(v:val, 'abbr', '') != '' &&
           \     v:val.word !=# v:val.abbr && v:val.abbr[-1] != '~') ||
-          \     get(v:val, 'info', '') != ''")
+          \     get(v:val, 'info', '') != '')")
     if !empty(candidates)
       let neocomplete.completed_item = candidates[0]
     endif
