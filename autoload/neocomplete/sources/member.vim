@@ -163,39 +163,37 @@ function! s:make_cache_lines(srcname, filetype, lines) "{{{
   endif
 
   let source = s:member_sources[a:srcname]
-  let keyword_pattern =
-        \ s:get_member_pattern(filetype) . '\m\%('
+  let member_pattern = s:get_member_pattern(filetype)
+  let prefix_pattern = member_pattern . '\m\%('
         \ . g:neocomplete#sources#member#prefix_patterns[filetype]
-        \ . '\m\)' . s:get_member_pattern(filetype)
-  let keyword_pattern2 = '^'.keyword_pattern
-  let member_pattern = s:get_member_pattern(filetype) . '$'
+        \ . '\m\)'
+  let keyword_pattern =
+        \ prefix_pattern . member_pattern
 
   " Cache member pattern.
   for line in a:lines
     let match = match(line, keyword_pattern)
 
     while match >= 0 "{{{
-      let match_str = matchstr(line, keyword_pattern2, match)
+      let match_str = matchstr(line, '^'.keyword_pattern, match)
 
       " Next match.
-      let match = matchend(line, keyword_pattern, match + len(match_str))
+      let match = matchend(line, prefix_pattern, match)
 
-      while match_str != ''
-        let member_name = matchstr(match_str, member_pattern)
-        if member_name == ''
-          break
-        endif
-        let var_name = match_str[ : -len(member_name)-1]
+      let member_name = matchstr(match_str, member_pattern . '$')
+      if member_name == ''
+        continue
+      endif
+      let var_name = match_str[ : -len(member_name)-1]
 
-        if !has_key(source.member_cache, var_name)
-          let source.member_cache[var_name] = {}
-        endif
-        if !has_key(source.member_cache[var_name], member_name)
-          let source.member_cache[var_name][member_name] = member_name
-        endif
+      if !has_key(source.member_cache, var_name)
+        let source.member_cache[var_name] = {}
+      endif
+      if !has_key(source.member_cache[var_name], member_name)
+        let source.member_cache[var_name][member_name] = 1
+      endif
 
-        let match_str = matchstr(var_name, keyword_pattern2)
-      endwhile
+      let match_str = matchstr(var_name, '^'.keyword_pattern)
     endwhile"}}}
   endfor
 endfunction"}}}
@@ -205,7 +203,7 @@ function! s:get_member_list(cur_text, var_name) "{{{
   for source in filter(s:get_sources_list(),
         \ 'has_key(v:val.member_cache, a:var_name)')
     let keyword_list +=
-          \ values(source.member_cache[a:var_name])
+          \ keys(source.member_cache[a:var_name])
   endfor
 
   return keyword_list
