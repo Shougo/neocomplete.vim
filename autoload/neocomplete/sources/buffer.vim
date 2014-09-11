@@ -302,23 +302,24 @@ do
   local b = vim.buffer()
   local min_length = vim.eval('g:neocomplete#min_keyword_length')
   for linenr = vim.eval('a:start'), vim.eval('a:end') do
-    local match = (string.find(b[linenr], '[^%s]'))
-    while match ~= nil and match >= 0 do
+    local match = 0
+    while 1 do
       match = vim.eval('match(getline(' .. linenr ..
-        '), keyword_pattern, ' .. match-1 .. ')')
-      if match >= 0 then
-        local match_end = vim.eval('matchend(getline('..linenr..
-          '), keyword_pattern, '..match..')')
-        local match_str = string.sub(b[linenr], match+1, match_end)
-        if dup[match_str] == nil
-              and string.len(match_str) >= min_length then
-          dup[match_str] = 1
-          words:add(match_str)
-        end
-
-        -- Next match.
-        match = match_end + 1
+        '), keyword_pattern, ' .. match .. ')')
+      if match < 0 then
+        break
       end
+
+      local match_str = vim.eval('matchstr(getline('..linenr..
+      '), keyword_pattern, ' .. match .. ')')
+      if dup[match_str] == nil
+        and string.len(match_str) >= min_length then
+        dup[match_str] = 1
+        words:add(match_str)
+      end
+
+      -- Next match.
+      match = match + ((match_str == '') and 1 or string.len(match_str))
     end
   end
 end
