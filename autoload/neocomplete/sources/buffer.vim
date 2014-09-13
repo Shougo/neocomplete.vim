@@ -159,7 +159,6 @@ function! s:initialize_source(srcname) "{{{
         \ 'name' : filename, 'filetype' : ft,
         \ 'keyword_pattern' : keyword_pattern,
         \ 'cached_time' : 0,
-        \ 'changedtick' : getbufvar(a:srcname, 'changedtick'),
         \ 'path' : path,
         \ 'cache_name' : neocomplete#cache#encode_name('buffer_cache', path),
         \}
@@ -184,7 +183,6 @@ function! s:make_cache_file(srcname) "{{{
         \ neocomplete#cache#async_load_from_file(
         \     'buffer_cache', source.path,
         \     source.keyword_pattern, 'B')
-  let source.changedtick = getbufvar(a:srcname, 'changedtick')
   let source.cached_time = localtime()
   let source.filetype = getbufvar(a:srcname, '&filetype')
   let s:async_dictionary_list[source.path] = [{
@@ -221,7 +219,6 @@ function! s:make_cache_buffer(srcname) "{{{
         \ neocomplete#cache#async_load_from_file(
         \     'buffer_cache', temp,
         \     source.keyword_pattern, 'B')
-  let source.changedtick = getbufvar(a:srcname, 'changedtick')
   let source.cached_time = localtime()
   let source.filetype = getbufvar(a:srcname, '&filetype')
   if source.filetype == ''
@@ -247,7 +244,6 @@ function! s:check_changed_buffer(bufnr) "{{{
   endif
 
   return source.name != filename || source.filetype != ft
-        \ || source.changedtick != getbufvar(a:bufnr, 'changedtick')
 endfunction"}}}
 
 function! s:check_source() "{{{
@@ -326,7 +322,6 @@ end
 EOF
 
   let source.words = neocomplete#util#uniq(source.words + words)
-  let source.changedtick = b:changedtick
 endfunction"}}}
 
 function! s:check_async_cache() "{{{
