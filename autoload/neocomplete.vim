@@ -230,7 +230,7 @@ endfunction"}}}
 function! neocomplete#is_prefetch() "{{{
   return !neocomplete#is_locked() && !g:neocomplete#enable_cursor_hold_i &&
         \ (g:neocomplete#enable_prefetch || &l:formatoptions =~# 'a'
-        \  || !empty(g:neocomplete#enable_omni_fallback))
+        \  || !empty(g:neocomplete#fallback_mappings))
 endfunction"}}}
 function! neocomplete#exists_echodoc() "{{{
   return exists('g:loaded_echodoc') && g:loaded_echodoc
