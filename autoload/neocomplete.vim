@@ -80,8 +80,8 @@ let g:neocomplete#skip_auto_completion_time =
       \ get(g:, 'neocomplete#skip_auto_completion_time', '0.3')
 let g:neocomplete#enable_auto_close_preview =
       \ get(g:, 'neocomplete#enable_auto_close_preview', 1)
-let g:neocomplete#enable_omni_fallback =
-      \ get(g:, 'neocomplete#enable_omni_fallback', 0)
+let g:neocomplete#fallback_mappings =
+      \ get(g:, 'neocomplete#fallback_mappings', [])
 let g:neocomplete#sources =
       \ get(g:, 'neocomplete#sources', {})
 let g:neocomplete#keyword_patterns =
@@ -230,7 +230,7 @@ endfunction"}}}
 function! neocomplete#is_prefetch() "{{{
   return !neocomplete#is_locked() && !g:neocomplete#enable_cursor_hold_i &&
         \ (g:neocomplete#enable_prefetch || &l:formatoptions =~# 'a'
-        \  || g:neocomplete#enable_omni_fallback)
+        \  || !empty(g:neocomplete#enable_omni_fallback))
 endfunction"}}}
 function! neocomplete#exists_echodoc() "{{{
   return exists('g:loaded_echodoc') && g:loaded_echodoc

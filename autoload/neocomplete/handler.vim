@@ -235,10 +235,15 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
           \ neocomplete#complete#_get_results(cur_text)
 
     if empty(neocomplete.complete_sources)
-      if g:neocomplete#enable_omni_fallback
-            \ && &l:omnifunc != ''
+      if !empty(g:neocomplete#fallback_mappings)
+        let key = ''
+        for i in range(0, len(g:neocomplete#fallback_mappings)-1)
+          let key .= '<C-r>=neocomplete#mappings#fallback(' . i . ')<CR>'
+        endfor
+        execute 'inoremap <silent> <Plug>(neocomplete_fallback)' key
+
         " Fallback to omnifunc
-        call s:complete_key("\<Plug>(neocomplete_start_omni_complete)")
+        call s:complete_key("\<Plug>(neocomplete_fallback)")
       else
         call neocomplete#print_debug('Skipped.')
         return
