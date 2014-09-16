@@ -189,10 +189,13 @@ function! neocomplete#is_enabled() "{{{
   return neocomplete#init#is_enabled()
 endfunction"}}}
 function! neocomplete#is_locked(...) "{{{
+  return neocomplete#is_cache_disabled() || &paste
+        \ || g:neocomplete#disable_auto_complete
+endfunction"}}}
+function! neocomplete#is_cache_disabled() "{{{
   let ignore_filetypes = ['fuf', 'ku']
   let bufnr = a:0 > 0 ? a:1 : bufnr('%')
-  return !neocomplete#is_enabled() || &paste
-        \ || g:neocomplete#disable_auto_complete
+  return !neocomplete#is_enabled()
         \ || index(ignore_filetypes, &filetype) >= 0
         \ || neocomplete#get_current_neocomplete().lock
         \ || (g:neocomplete#lock_buffer_name_pattern != '' &&
