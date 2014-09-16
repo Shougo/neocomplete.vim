@@ -86,6 +86,8 @@ function! neocomplete#init#_autocmds() "{{{
           \ call neocomplete#init#disable()
     autocmd InsertCharPre *
           \ call neocomplete#handler#_on_insert_char_pre()
+    autocmd TextChangedI *
+          \ call neocomplete#handler#_on_text_changed()
   augroup END
 
   if g:neocomplete#enable_insert_char_pre
