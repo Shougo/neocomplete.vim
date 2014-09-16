@@ -300,14 +300,11 @@ do
   for linenr = vim.eval('a:start'), vim.eval('a:end') do
     local match = 0
     while 1 do
-      match = vim.eval('match(getline(' .. linenr ..
-        '), keyword_pattern, ' .. match .. ')')
-      if match < 0 then
-        break
-      end
-
       local match_str = vim.eval('matchstr(getline('..linenr..
       '), keyword_pattern, ' .. match .. ')')
+      if match_str == '' then
+        break
+      end
       if dup[match_str] == nil
         and string.len(match_str) >= min_length then
         dup[match_str] = 1
@@ -315,7 +312,8 @@ do
       end
 
       -- Next match.
-      match = match + ((match_str == '') and 1 or string.len(match_str))
+      match = vim.eval('matchend(getline(' .. linenr ..
+        '), keyword_pattern, ' .. match .. ')')
     end
   end
 end
