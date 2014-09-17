@@ -186,7 +186,8 @@ function! neocomplete#mappings#start_manual_complete(...) "{{{
   let &l:completefunc = 'neocomplete#complete#sources_manual_complete'
 
   " Start complete.
-  return "\<C-x>\<C-u>\<C-r>=neocomplete#mappings#popup_post()\<CR>"
+  return neocomplete#util#is_complete_select() ?
+        \ "\<C-x>\<C-u>" : "\<C-x>\<C-u>\<C-p>"
 endfunction"}}}
 
 let &cpo = s:save_cpo
