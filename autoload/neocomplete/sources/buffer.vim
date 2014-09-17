@@ -68,6 +68,7 @@ function! s:source.hooks.on_init(context) "{{{
   let s:async_dictionary_list = {}
   "}}}
 
+  call s:make_cache_buffer(bufnr('%'))
   call s:check_source()
 endfunction
 "}}}
@@ -90,10 +91,6 @@ function! s:source.hooks.on_post_filter(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  if !s:exists_current_source()
-    call s:make_cache_current_buffer(1, 1000)
-  endif
-
   call s:check_async_cache()
 
   let keyword_list = []
@@ -207,7 +204,7 @@ function! s:make_cache_buffer(srcname) "{{{
 
     if a:srcname ==# bufnr('%')
       " Force sync cache
-      call s:make_cache_current_buffer(1, line('$'))
+      call s:make_cache_current_buffer(1, 1000)
       return
     endif
   endif
