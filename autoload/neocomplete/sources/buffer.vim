@@ -91,7 +91,7 @@ endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
   if !s:exists_current_source()
-    call s:make_cache_current_buffer(1, line('$'))
+    call s:make_cache_current_buffer(1, 1000)
   endif
 
   call s:check_async_cache()
