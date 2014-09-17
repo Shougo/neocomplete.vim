@@ -90,6 +90,10 @@ function! s:source.hooks.on_post_filter(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
+  if !s:exists_current_source()
+    call s:make_cache_current_buffer(1, line('$'))
+  endif
+
   call s:check_async_cache()
 
   let keyword_list = []
