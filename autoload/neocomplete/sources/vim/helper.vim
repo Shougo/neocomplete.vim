@@ -655,7 +655,7 @@ function! s:make_cache_commands() "{{{
   let start = match(lines, '^|:!|')
   let end = match(lines, '^|:\~|', start)
   for lnum in range(end, start, -1)
-    let desc = substitute(lines[lnum], '^\s\+\ze', '', 'g') . ' ' . desc
+    let desc = substitute(lines[lnum], '^\s\+\ze', '', 'g')
     let _ = matchlist(desc, '^|:\(.\{-}\)|\s\+\S\+')
     if !empty(_)
       call add(commands, {
