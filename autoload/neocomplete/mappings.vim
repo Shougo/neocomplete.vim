@@ -186,6 +186,8 @@ function! neocomplete#mappings#start_manual_complete(...) "{{{
         \ neocomplete#util#convert2list(sources))
   let neocomplete.sources_filetype = ''
 
+  call neocomplete#helper#complete_configure()
+
   " Set function.
   let &l:completefunc = 'neocomplete#complete#sources_manual_complete'
 

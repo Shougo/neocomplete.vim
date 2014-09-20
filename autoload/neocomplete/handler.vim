@@ -267,25 +267,6 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   call s:complete_key("\<Plug>(neocomplete_start_auto_complete)")
 endfunction"}}}
 
-function! s:save_foldinfo() "{{{
-  " Save foldinfo.
-  let winnrs = filter(range(1, winnr('$')),
-        \ "winbufnr(v:val) == bufnr('%')")
-
-  " Note: for foldmethod=expr or syntax.
-  call filter(winnrs, "
-        \  (getwinvar(v:val, '&foldmethod') ==# 'expr' ||
-        \   getwinvar(v:val, '&foldmethod') ==# 'syntax') &&
-        \  getwinvar(v:val, '&modifiable')")
-  for winnr in winnrs
-    call setwinvar(winnr, 'neocomplete_foldinfo', {
-          \ 'foldmethod' : getwinvar(winnr, '&foldmethod'),
-          \ 'foldexpr'   : getwinvar(winnr, '&foldexpr')
-          \ })
-    call setwinvar(winnr, '&foldmethod', 'manual')
-    call setwinvar(winnr, '&foldexpr', 0)
-  endfor
-endfunction"}}}
 function! s:check_in_do_auto_complete() "{{{
   if neocomplete#is_locked()
     return 1
@@ -385,31 +366,7 @@ function! s:make_cache_current_line() "{{{
 endfunction"}}}
 
 function! s:complete_key(key) "{{{
-  call s:save_foldinfo()
-
-  set completeopt-=menu
-  set completeopt-=longest
-  set completeopt+=menuone
-
-  " Set options.
-  let neocomplete = neocomplete#get_current_neocomplete()
-  let neocomplete.completeopt = &completeopt
-
-  if neocomplete#util#is_complete_select()
-    if g:neocomplete#enable_auto_select
-      set completeopt-=noselect
-      set completeopt+=noinsert
-    else
-      set completeopt+=noinsert,noselect
-    endif
-  endif
-
-  " Do not display completion messages
-  " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
-  if has('patch-7.4.314')
-    set shortmess+=c
-  endif
-
+  call neocomplete#helper#complete_configure()
   call feedkeys(a:key)
 endfunction"}}}
 
