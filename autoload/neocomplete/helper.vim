@@ -370,6 +370,8 @@ function! neocomplete#helper#indent_current_line() "{{{
 endfunction"}}}
 
 function! neocomplete#helper#complete_configure() "{{{
+  call s:save_foldinfo()
+
   set completeopt-=menu
   set completeopt-=longest
   set completeopt+=menuone
