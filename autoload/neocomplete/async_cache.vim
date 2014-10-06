@@ -78,6 +78,10 @@ function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencodi
         let dup_check[match_str] = 1
       endif
 
+      if match_str == ''
+        break
+      endif
+
       let match += len(match_str)
 
       let match = match(line, pattern, match)
