@@ -1750,6 +1750,7 @@ A: Please set |g:neocomplete#force_omni_input_patterns| as below.
 	let g:jedi#auto_vim_configuration = 0
 	let g:neocomplete#force_omni_input_patterns.python =
 	\ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+	" alternative pattern: '\h\w*\|[^. \t]\.\w*'
 <
 Q: Candidates are not found in heavy completion(neco-look, etc).
 
