@@ -45,6 +45,7 @@ function! neocomplete#handler#_on_insert_enter() "{{{
     call neocomplete#helper#clear_result()
   endif
   let neocomplete.linenr = line('.')
+  let neocomplete.indentkeys = &l:indentkeys
 
   if &l:foldmethod ==# 'expr' && foldlevel('.') != 0
     foldopen
@@ -60,6 +61,7 @@ function! neocomplete#handler#_on_insert_leave() "{{{
   let neocomplete.cur_text = ''
   let neocomplete.completed_item = {}
   let neocomplete.overlapped_items = {}
+  let &l:indentkeys = neocomplete.indentkeys
 endfunction"}}}
 function! neocomplete#handler#_on_write_post() "{{{
   " Restore foldinfo.
@@ -181,11 +183,13 @@ function! neocomplete#handler#_on_text_changed() "{{{
 endfunction"}}}
 
 function! neocomplete#handler#_do_auto_complete(event) "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let &l:indentkeys = neocomplete.indentkeys
+
   if s:check_in_do_auto_complete()
     return
   endif
 
-  let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skipped = 0
   let neocomplete.event = a:event
 
@@ -237,6 +241,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   let neocomplete.old_complete_pos = complete_pos
 
   let &l:completefunc = 'neocomplete#complete#auto_complete'
+  setlocal indentkeys=
 
   if neocomplete#is_prefetch()
     " Do prefetch.
