@@ -210,9 +210,11 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
       return
     endif
 
-    " Check multibyte input or eskk.
+    " Check multibyte input or eskk or spaces.
+    " Note: Spaces are skipped by performance problem.
     if neocomplete#is_eskk_enabled()
           \ || neocomplete#is_multibyte_input(cur_text)
+          \ || cur_text =~ '^\s*$\|\s\+$'
       call neocomplete#print_debug('Skipped.')
       return
     endif
@@ -314,8 +316,7 @@ endfunction"}}}
 function! s:is_skip_auto_complete(cur_text) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
 
-  if a:cur_text =~ '^\s*$\|\s\+$'
-        \ || (a:cur_text == neocomplete.old_cur_text
+  if (a:cur_text == neocomplete.old_cur_text
         \     && line('.') == neocomplete.old_linenr)
         \ || (g:neocomplete#lock_iminsert && &l:iminsert)
         \ || (&l:formatoptions =~# '[tca]' && &l:textwidth > 0
