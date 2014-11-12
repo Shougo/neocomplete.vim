@@ -621,7 +621,6 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'sources' : [],
         \ 'sources_filetype' : '',
         \ 'within_comment' : 0,
-        \ 'indentkeys' : &l:indentkeys,
         \}
 endfunction"}}}
 
