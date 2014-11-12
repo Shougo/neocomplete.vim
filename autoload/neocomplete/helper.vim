@@ -359,12 +359,14 @@ endfunction"}}}
 
 function! neocomplete#helper#indent_current_line() "{{{
   let pos = getpos('.')
+  let len = len(getline('.'))
   let equalprg = &l:equalprg
   try
     setlocal equalprg=
     silent normal! ==
   finally
     let &l:equalprg = equalprg
+    let pos[2] += len(getline('.')) - len
     call setpos('.', pos)
   endtry
 endfunction"}}}
