@@ -371,6 +371,10 @@ function! neocomplete#init#_variables() "{{{
         \'g:neocomplete#keyword_patterns',
         \'go',
         \'\h\w*')
+  call neocomplete#util#set_default_dictionary(
+        \'g:neocomplete#keyword_patterns',
+        \'toml',
+        \'\h[[:alnum:]_.-]*')
   "}}}
 
   " Initialize same file types. "{{{
