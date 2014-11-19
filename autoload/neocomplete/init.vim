@@ -131,13 +131,6 @@ function! neocomplete#init#_others() "{{{
           \ 'Detected set paste! Disabled neocomplete.')
   endif
 
-  " Set completefunc.
-  let completefunc_save = &l:completefunc
-  let &completefunc = 'neocomplete#complete#manual_complete'
-  if completefunc_save != ''
-    let &l:completefunc = completefunc_save
-  endif
-
   command! -nargs=0 -bar NeoCompleteDisable
         \ call neocomplete#init#disable()
 
