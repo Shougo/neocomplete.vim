@@ -80,7 +80,7 @@ When everything is prepared, execute these commands.
     cd /usr/src
     tar jxf vim-7.4.tar.bz2
     tar xvfz lua-5.1.5.tar.gz
-    cd /vim74/
+    cd vim74/
     ./configure --enable-luainterp --enable-gui=no \
     --without-x --enable-multibyte --prefix=/usr
     make && make install
