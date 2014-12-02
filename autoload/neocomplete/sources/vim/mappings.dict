@@ -7,6 +7,7 @@
 <SID> ; unique mapping for the script
 <unique> ; the command will fail if the mapping or abbreviation already exists
 <silent> ; define a mapping which will not be echoed on the command line
+<nowait> ; not wait for more characters to be typed
 <Nul> ; zero
 <Nop> ; no operation
 <BS> ; backspace
