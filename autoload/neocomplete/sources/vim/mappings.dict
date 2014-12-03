@@ -1,13 +1,13 @@
-<buffer> ; the mapping will be effective in the current buffer only
-<expr> ; the argument is an expression evaluated to obtain the {rhs} that is used
-<Leader> ; define a mapping which uses the "mapleader" variable
-<LocalLeader> ; just like <Leader>, except that it uses "maplocalleader" instead of "mapleader"
-<Plug> ; used for an internal mapping, which is not to be matched with any key sequence
-<script> ; the mapping will only remap characters in the {rhs} using mappings that were defined local to a script
-<SID> ; unique mapping for the script
-<unique> ; the command will fail if the mapping or abbreviation already exists
-<silent> ; define a mapping which will not be echoed on the command line
-<nowait> ; not wait for more characters to be typed
+<buffer> ; the current buffer only mapping
+<expr> ; expression evaluated mapping
+<Leader> ; uses the "mapleader" variable
+<LocalLeader> ; uses "maplocalleader" variable
+<Plug> ; plugin internal mapping
+<script> ; <SID> is only remapped
+<SID> ; local to a script
+<unique> ; not overwrite exists mappings
+<silent> ; not be echoed on the command line
+<nowait> ; not wait for exists mappings
 <Nul> ; zero
 <Nop> ; no operation
 <BS> ; backspace
@@ -25,7 +25,7 @@
 <Del> ; delete
 <CSI> ; command sequence intro  ALT-Esc
 <xCSI> ; CSI when typed in the GUI
-<EOL> ; end-of-line (can be <CR>, <LF> or <CR><LF>, depends on system and 'fileformat')
+<EOL> ; end-of-line
 <Up> ; cursor-up
 <Down> ; cursor-down
 <Left> ; cursor-left
