@@ -33,6 +33,10 @@ if !exists('s:internal_candidates_list')
   let s:local_candidates_list = {}
 endif
 
+let s:dictionary_path =
+      \ neocomplete#util#substitute_path_separator(
+      \   fnamemodify(expand('<sfile>'), ':h'))
+
 function! neocomplete#sources#vim#helper#on_filetype() "{{{
   let bufnumber = 1
 
@@ -199,7 +203,8 @@ function! neocomplete#sources#vim#helper#command_args(cur_text, complete_str) "{
   " Make cache.
   if !has_key(s:internal_candidates_list, 'command_args')
     let s:internal_candidates_list.command_args =
-          \ s:make_cache_from_dict('command_args', '')
+          \ s:make_completion_list(
+          \   readfile(s:dictionary_path . '/command_args.dict'))
     let s:internal_candidates_list.command_replaces =
           \ s:make_completion_list(
         \ ['<line1>', '<line2>', '<count>', '<bang>',
@@ -330,7 +335,9 @@ function! neocomplete#sources#vim#helper#mapping(cur_text, complete_str) "{{{
     let s:global_candidates_list.mappings = s:get_mappinglist()
   endif
   if !has_key(s:internal_candidates_list, 'mappings')
-    let s:internal_candidates_list.mappings = s:make_cache_from_dict('mappings', '')
+    let s:internal_candidates_list.mappings =
+          \ s:make_completion_list(
+          \   readfile(s:dictionary_path . '/mappings.dict'))
   endif
 
   let list = copy(s:internal_candidates_list.mappings) +
@@ -489,27 +496,6 @@ function! s:get_script_candidates(bufnumber) "{{{
         \ 'dictionary_variables' : dictionary_variable_dict }
 endfunction"}}}
 
-function! s:make_cache_from_dict(dict_name, kind) "{{{
-  let dict_files = split(globpath(&runtimepath,
-        \ 'autoload/neocomplete/sources/vim/'.a:dict_name.'.dict'), '\n')
-  if empty(dict_files)
-    return []
-  endif
-
-  let keyword_pattern =
-        \'^\%(-\h\w*\%(=\%(\h\w*\|[01*?+%]\)\?\)\?'.
-        \'\|<\h[[:alnum:]_-]*>\?\|\h[[:alnum:]_:#\[]*\%([!\]]\+\|()\?\)\?\)'
-  let keyword_list = []
-  for line in readfile(dict_files[0])
-    call add(keyword_list, {
-          \ 'word' : substitute(matchstr(
-          \       line, keyword_pattern), '[\[\]]', '', 'g'),
-          \ 'kind' : a:kind, 'abbr' : line
-          \})
-  endfor
-
-  return keyword_list
-endfunction"}}}
 function! s:make_cache_completion_from_dict(dict_name) "{{{
   let dict_files = split(globpath(&runtimepath,
         \ 'autoload/neocomplete/sources/vim/'.a:dict_name.'.dict'), '\n')

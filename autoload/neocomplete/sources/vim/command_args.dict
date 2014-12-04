@@ -1,43 +1,43 @@
--bang ; can take a ! modifier
--bar ; can take "|" and another command
--buffer ; buffer only command
--complete=augroup ; autocmd groups
--complete=behave ; :behave suboptions
--complete=buffer ; buffer names
--complete=color ; color schemes
--complete=command ; Ex command and arguments
--complete=compiler ; compilers
--complete=cscope ; :cscope suboptions
--complete=custom,{func} ; custom completion from {func}
--complete=customlist,{func} ; custom list completion from {func}
--complete=dir ; directory names
--complete=environment ; environment variable names
--complete=event ; autocmd events
--complete=expression ; Vim expression
--complete=file ; file and directory names
--complete=file_in_path ; file and directory names in 'path'
--complete=filetype ; filetype names
--complete=function ; function name
--complete=help ; help subjects
--complete=highlight ; highlight groups
--complete=history ; :history suboptions
--complete=locale ; locale names
--complete=mapping ; mapping name
--complete=menu ; menus
--complete=option ; options
--complete=shellcmd ; shell commands
--complete=sign ;  :sign suboptions
--complete=syntax ; syntax file names
--complete=tag ; tags
--complete=tag_listfiles ; tags and file names
--complete=var ; user variables
--count= ; count allowed
--nargs=* ; 0, 1, or many arguments
--nargs=+ ; 1, or many arguments
--nargs=0 ; no arguments
--nargs=1 ; one argument
--nargs=? ; 0 or 1 arguments
--range ; range allowed(default: current)
--range= ; range allowed(default: N)
--range=% ; range allowed(default: whole file)
--register ; register argument
+-bang
+-bar
+-buffer
+-complete=augroup
+-complete=behave
+-complete=buffer
+-complete=color
+-complete=command
+-complete=compiler
+-complete=cscope
+-complete=custom,{func}
+-complete=customlist,{func}
+-complete=dir
+-complete=environment
+-complete=event
+-complete=expression
+-complete=file
+-complete=file_in_path
+-complete=filetype
+-complete=function
+-complete=help
+-complete=highlight
+-complete=history
+-complete=locale
+-complete=mapping
+-complete=menu
+-complete=option
+-complete=shellcmd
+-complete=sign
+-complete=syntax
+-complete=tag
+-complete=tag_listfiles
+-complete=var
+-count=
+-nargs=*
+-nargs=+
+-nargs=0
+-nargs=1
+-nargs=?
+-range
+-range=
+-range=%
+-register

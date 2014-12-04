@@ -1,73 +1,73 @@
-<buffer> ; the current buffer only mapping
-<expr> ; expression evaluated mapping
-<Leader> ; uses the "mapleader" variable
-<LocalLeader> ; uses "maplocalleader" variable
-<Plug> ; plugin internal mapping
-<script> ; <SID> is only remapped
-<SID> ; local to a script
-<unique> ; not overwrite exists mappings
-<silent> ; not be echoed on the command line
-<nowait> ; not wait for exists mappings
-<Nul> ; zero
-<Nop> ; no operation
-<BS> ; backspace
-<Tab> ; tab
-<NL> ; linefeed
-<FF> ; formfeed
-<CR> ; carriage return
-<Return> ; same as <CR>
-<Enter> ; same as <CR>
-<Esc> ; escape
-<Space> ; space
-<lt> ; less-than <
-<Bslash> ; backslash \
-<Bar> ; vertical bar |
-<Del> ; delete
-<CSI> ; command sequence intro  ALT-Esc
-<xCSI> ; CSI when typed in the GUI
-<EOL> ; end-of-line
-<Up> ; cursor-up
-<Down> ; cursor-down
-<Left> ; cursor-left
-<Right> ; cursor-right
-<S-Up> ; shift-cursor-up
-<S-Down> ; shift-cursor-down
-<S-Left> ; shift-cursor-left
-<S-Right> ; shift-cursor-right
-<C-Left> ; control-cursor-left
-<C-Right> ; control-cursor-right
-<Help> ; help key
-<Undo> ; undo key
-<Insert> ; insert key
-<Home> ; home
-<End> ; end
-<PageUp> ; page-up
-<PageDown> ; page-down
-<kHome> ; keypad home (upper left)
-<kEnd> ; keypad end (lower left)
-<kPageUp> ; keypad page-up (upper right)
-<kPageDown> ; keypad page-down (lower right)
-<kPlus> ; keypad +
-<kMinus> ; keypad -
-<kMultiply> ; keypad *
-<kDivide> ; keypad /
-<kEnter> ; keypad Enter
-<kPoint> ; keypad Decimal point
-<LeftMouse>     ; Left mouse click
-<A-LeftMouse>   ; Left mouse click with Alt
-<C-LeftMouse>   ; Left mouse click with Ctrl
-<S-LeftMouse>   ; Left mouse click with Shift
-<2-LeftMouse>   ; Double left mouse click
-<3-LeftMouse>   ; Triple left mouse click
-<4-LeftMouse>   ; Quad left mouse click
-<LeftDrag>      ; Left mouse drag
-<LeftRelease>   ; Left mouse release
-<MiddleMouse>   ; Middle mouse click
-<MiddleDrag>    ; Middle mouse drag
-<MiddleRelease> ; Middle mouse drag
-<RightMouse>    ; Right mouse click
-<A-RightMouse>  ; Right mouse click with Alt
-<S-RightMouse>  ; Right mouse click with Shift
-<C-RightMouse>  ; Right mouse click with Ctrl
-<RightDrag>     ; Right mouse drag
-<RightRelease>  ; Right mouse release
+<buffer>
+<expr>
+<Leader>
+<LocalLeader>
+<Plug>
+<script>
+<SID>
+<unique>
+<silent>
+<nowait>
+<Nul>
+<Nop>
+<BS>
+<Tab>
+<NL>
+<FF>
+<CR>
+<Return>
+<Enter>
+<Esc>
+<Space>
+<lt>
+<Bslash>
+<Bar>
+<Del>
+<CSI>
+<xCSI>
+<EOL>
+<Up>
+<Down>
+<Left>
+<Right>
+<S-Up>
+<S-Down>
+<S-Left>
+<S-Right>
+<C-Left>
+<C-Right>
+<Help>
+<Undo>
+<Insert>
+<Home>
+<End>
+<PageUp>
+<PageDown>
+<kHome>
+<kEnd>
+<kPageUp>
+<kPageDown>
+<kPlus>
+<kMinus>
+<kMultiply>
+<kDivide>
+<kEnter>
+<kPoint>
+<LeftMouse>
+<A-LeftMouse>
+<C-LeftMouse>
+<S-LeftMouse>
+<2-LeftMouse>
+<3-LeftMouse>
+<4-LeftMouse>
+<LeftDrag>
+<LeftRelease>
+<MiddleMouse>
+<MiddleDrag>
+<MiddleRelease>
+<RightMouse>
+<A-RightMouse>
+<S-RightMouse>
+<C-RightMouse>
+<RightDrag>
+<RightRelease>
