@@ -130,13 +130,13 @@ function! neocomplete#sources#vim#helper#autocmd_args(cur_text, complete_str) "{
 
     let list += neocomplete#sources#vim#helper#command(
           \ args[3], a:complete_str)
-    let list += s:make_completion_list(['nested'], '')
+    let list += s:make_completion_list(['nested'])
   else
     let command = args[3] =~ '^*' ?
           \ join(args[4:]) : join(args[3:])
     let list += neocomplete#sources#vim#helper#command(
           \ command, a:complete_str)
-    let list += s:make_completion_list(['nested'], '')
+    let list += s:make_completion_list(['nested'])
   endif
 
   return list
@@ -155,7 +155,7 @@ endfunction"}}}
 function! neocomplete#sources#vim#helper#colorscheme_args(cur_text, complete_str) "{{{
   return s:make_completion_list(map(split(
         \ globpath(&runtimepath, 'colors/*.vim'), '\n'),
-        \ 'fnamemodify(v:val, ":t:r")'), '')
+        \ 'fnamemodify(v:val, ":t:r")'))
 endfunction"}}}
 function! neocomplete#sources#vim#helper#command(cur_text, complete_str) "{{{
   if a:cur_text == '' ||
@@ -203,7 +203,7 @@ function! neocomplete#sources#vim#helper#command_args(cur_text, complete_str) "{
     let s:internal_candidates_list.command_replaces =
           \ s:make_completion_list(
         \ ['<line1>', '<line2>', '<count>', '<bang>',
-        \  '<reg>', '<args>', '<lt>', '<q-args>', '<f-args>'], '')
+        \  '<reg>', '<args>', '<lt>', '<q-args>', '<f-args>'])
   endif
 
   return s:internal_candidates_list.command_args +
@@ -216,7 +216,7 @@ function! neocomplete#sources#vim#helper#custom(command_name, cur_text, complete
 
   return s:make_completion_list(split(
         \ call(g:neocomplete#sources#vim#complete_functions[a:command_name],
-        \ [a:complete_str, getline('.'), len(a:cur_text)]), '\n'), '')
+        \ [a:complete_str, getline('.'), len(a:cur_text)]), '\n'))
 endfunction"}}}
 function! neocomplete#sources#vim#helper#customlist(command_name, cur_text, complete_str) "{{{
   if !has_key(g:neocomplete#sources#vim#complete_functions, a:command_name)
@@ -225,7 +225,7 @@ function! neocomplete#sources#vim#helper#customlist(command_name, cur_text, comp
 
   return s:make_completion_list(
         \ call(g:neocomplete#sources#vim#complete_functions[a:command_name],
-        \ [a:complete_str, getline('.'), len(a:cur_text)]), '')
+        \ [a:complete_str, getline('.'), len(a:cur_text)]))
 endfunction"}}}
 function! neocomplete#sources#vim#helper#dir(cur_text, complete_str) "{{{
   " Todo.
@@ -254,7 +254,7 @@ endfunction"}}}
 function! neocomplete#sources#vim#helper#expand(cur_text, complete_str) "{{{
   return s:make_completion_list(
         \ ['<cfile>', '<afile>', '<abuf>', '<amatch>',
-        \  '<sfile>', '<cword>', '<cWORD>', '<client>'], '')
+        \  '<sfile>', '<cword>', '<cWORD>', '<client>'])
 endfunction"}}}
 function! neocomplete#sources#vim#helper#expression(cur_text, complete_str) "{{{
   return neocomplete#sources#vim#helper#function(a:cur_text, a:complete_str)
@@ -277,7 +277,7 @@ function! neocomplete#sources#vim#helper#filetype(cur_text, complete_str) "{{{
           \ split(globpath(&runtimepath, 'syntax/*.vim'), '\n') +
           \ split(globpath(&runtimepath, 'indent/*.vim'), '\n') +
           \ split(globpath(&runtimepath, 'ftplugin/*.vim'), '\n')
-          \ , "matchstr(fnamemodify(v:val, ':t:r'), '^[[:alnum:]-]*')"), '')
+          \ , "matchstr(fnamemodify(v:val, ':t:r'), '^[[:alnum:]-]*')"))
   endif
 
   return copy(s:internal_candidates_list.filetypes)
@@ -829,13 +829,8 @@ function! s:get_envlist() "{{{
   endfor
   return keyword_list
 endfunction"}}}
-function! s:make_completion_list(list, kind) "{{{
-  let list = []
-  for item in a:list
-    call add(list, { 'word' : item, 'kind' : a:kind })
-  endfor
-
-  return list
+function! s:make_completion_list(list) "{{{
+  return map(copy(a:list), "{ 'word' : v:val }")
 endfunction"}}}
 function! s:analyze_function_line(line, keyword_dict, prototype) "{{{
   " Get script function.
