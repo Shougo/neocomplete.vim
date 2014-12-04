@@ -1,9 +1,0 @@
-<line1> ; the starting line of the range
-<line2> ; the final line of the range
-<count> ; any count supplied
-<bang> ; expands to a !
-<reg> ; the optional register
-<args> ; the command arguments
-<lt> ; a single '<' character
-<q-args> ; the auoted arguments
-<f-args> ; the splitted arguments for functions

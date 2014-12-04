@@ -201,7 +201,9 @@ function! neocomplete#sources#vim#helper#command_args(cur_text, complete_str) "{
     let s:internal_candidates_list.command_args =
           \ s:make_cache_from_dict('command_args', '')
     let s:internal_candidates_list.command_replaces =
-          \ s:make_cache_from_dict('command_replaces', '')
+          \ s:make_completion_list(
+        \ ['<line1>', '<line2>', '<count>', '<bang>',
+        \  '<reg>', '<args>', '<lt>', '<q-args>', '<f-args>'], '')
   endif
 
   return s:internal_candidates_list.command_args +
@@ -248,6 +250,11 @@ function! neocomplete#sources#vim#helper#execute(cur_text, complete_str) "{{{
   endif
 
   return candidates
+endfunction"}}}
+function! neocomplete#sources#vim#helper#expand(cur_text, complete_str) "{{{
+  return s:make_completion_list(
+        \ ['<cfile>', '<afile>', '<abuf>', '<amatch>',
+        \  '<sfile>', '<cword>', '<cWORD>', '<client>'], '')
 endfunction"}}}
 function! neocomplete#sources#vim#helper#expression(cur_text, complete_str) "{{{
   return neocomplete#sources#vim#helper#function(a:cur_text, a:complete_str)
@@ -396,11 +403,6 @@ function! neocomplete#sources#vim#helper#var(cur_text, complete_str) "{{{
   endif
 
   return list
-endfunction"}}}
-function! neocomplete#sources#vim#helper#expand(cur_text, complete_str) "{{{
-  return s:make_completion_list(
-        \ ['<cfile>', '<afile>', '<abuf>', '<amatch>',
-        \  '<sfile>', '<cword>', '<cWORD>', '<client>'], '')
 endfunction"}}}
 
 function! s:get_local_variables() "{{{
