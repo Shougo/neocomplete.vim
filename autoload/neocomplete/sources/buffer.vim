@@ -57,6 +57,8 @@ function! s:source.hooks.on_init(context) "{{{
   augroup neocomplete "{{{
     autocmd BufEnter,BufRead,BufWinEnter,BufWritePost *
           \ call s:check_source()
+    autocmd InsertEnter,InsertLeave *
+          \ call neocomplete#sources#buffer#make_cache_current_line()
   augroup END"}}}
 
   " Create cache directory.
@@ -250,7 +252,7 @@ endfunction"}}}
 function! s:check_source() "{{{
   " Check new buffer.
   call map(filter(range(1, bufnr('$')), "
-        \ v:val != bufnr('%')
+        \ (v:val != bufnr('%') || neobundle#util#has_vimproc())
         \ && (!has_key(s:buffer_sources, v:val) && buflisted(v:val)
         \   || (has_key(s:buffer_sources, v:val) &&
         \     s:buffer_sources[v:val].cached_time
