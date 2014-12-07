@@ -305,7 +305,7 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)
       call neocomplete#print_error(
-            \ 'Error occured in source''s get_complete_position()!')
+            \ 'Error occurred in source''s get_complete_position()!')
       call neocomplete#print_error(
             \ 'Source name is ' . source.name)
       return complete_sources
@@ -371,7 +371,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
           call neocomplete#print_error(
                 \ 'Source name is ' . source.name)
           call neocomplete#print_error(
-                \ 'Error occured in source''s gather_candidates()!')
+                \ 'Error occurred in source''s gather_candidates()!')
 
           return
         finally

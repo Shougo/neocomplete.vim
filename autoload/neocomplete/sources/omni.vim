@@ -194,7 +194,7 @@ function! s:set_complete_results_pos(funcs, cur_text) "{{{
       let complete_pos = call(omnifunc, [1, ''])
     catch
       call neocomplete#print_error(
-            \ 'Error occured calling omnifunction: ' . omnifunc)
+            \ 'Error occurred calling omnifunction: ' . omnifunc)
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)
       let complete_pos = -1
@@ -236,7 +236,7 @@ function! s:set_complete_results_words(complete_results) "{{{
       let list = type(ret) == type([]) ? ret : ret.words
     catch
       call neocomplete#print_error(
-            \ 'Error occured calling omnifunction: ' . omnifunc)
+            \ 'Error occurred calling omnifunction: ' . omnifunc)
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)
       let list = []
