@@ -164,7 +164,7 @@ function! neocomplete#handler#_on_insert_char_pre() "{{{
   endif
 
   let neocomplete = neocomplete#get_current_neocomplete()
-  if neocomplete.old_char != ' ' && v:char == ' '
+  if neocomplete.old_char != ' ' && v:char == ' ' && v:count != 0
     call s:make_cache_current_line()
   endif
 
