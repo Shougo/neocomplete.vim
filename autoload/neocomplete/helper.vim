@@ -390,12 +390,6 @@ function! neocomplete#helper#complete_configure() "{{{
       set completeopt+=noinsert,noselect
     endif
   endif
-
-  " Do not display completion messages
-  " Patch: https://groups.google.com/forum/#!topic/vim_dev/WeBBjkXE8H8
-  if has('patch-7.4.314')
-    set shortmess+=c
-  endif
 endfunction"}}}
 
 function! s:save_foldinfo() "{{{
