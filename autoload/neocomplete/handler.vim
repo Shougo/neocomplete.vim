@@ -367,6 +367,7 @@ function! s:make_cache_current_line() "{{{
 endfunction"}}}
 
 function! s:complete_key(key) "{{{
+  set completeopt-=longest
   call neocomplete#helper#complete_configure()
   call feedkeys(a:key)
 endfunction"}}}
