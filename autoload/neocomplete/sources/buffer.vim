@@ -252,7 +252,7 @@ endfunction"}}}
 function! s:check_source() "{{{
   " Check new buffer.
   call map(filter(range(1, bufnr('$')), "
-        \ (v:val != bufnr('%') || neobundle#util#has_vimproc())
+        \ (v:val != bufnr('%') || neocomplete#has_vimproc())
         \ && (!has_key(s:buffer_sources, v:val) && buflisted(v:val)
         \   || (has_key(s:buffer_sources, v:val) &&
         \     s:buffer_sources[v:val].cached_time
