@@ -57,10 +57,6 @@ function! s:source.get_complete_position(context) "{{{
     return -1
   endif
 
-  if neocomplete#is_sources_complete() && complete_pos < 0
-    let complete_pos = len(a:context.input)
-  endif
-
   if complete_str =~ '/'
     let complete_pos += strridx(complete_str, '/') + 1
   endif

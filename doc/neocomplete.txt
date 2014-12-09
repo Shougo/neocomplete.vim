@@ -568,15 +568,6 @@ b:neocomplete_sources			*b:neocomplete_sources*
 		" In cmdwin, only use vim source.
 		autocmd CmdwinEnter * let b:neocomplete_sources = ['vim']
 <
-				*g:neocomplete#force_overwrite_completefunc*
-g:neocomplete#force_overwrite_completefunc
-		If this variable is 1, neocomplete forces to overwrite
-		'completefunc' option.  This variable is useful for other
-		plugin overwrite 'completefunc'.  But other plugin's
-		'completefunc' is disabled.
-
-		Default value is 0.
-
 					*g:neocomplete#release_cache_time*
 g:neocomplete#release_cache_time
 		This variable defines time of automatic released cache by a
@@ -1608,7 +1599,6 @@ A: Please try below settings.
 	if !exists('g:neocomplete#force_omni_input_patterns')
 	  let g:neocomplete#force_omni_input_patterns = {}
 	endif
-	let g:neocomplete#force_overwrite_completefunc = 1
 	let g:neocomplete#force_omni_input_patterns.c =
 	      \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
 	let g:neocomplete#force_omni_input_patterns.cpp =
@@ -1699,11 +1689,6 @@ You can disable it by following code.
 	endif
 	let g:neocomplete#text_mode_filetypes.gitcommit = 0
 <
-Q: Conflicts completefunc with other plugins in neocomplete.
-
-A: You can disable the error by |g:neocomplete#force_overwrite_completefunc|
-variable to 1.
-
 Q: I want to use Ruby omni completion.
 
 A: Please set |g:neocomplete#force_omni_input_patterns|.  But this completion
@@ -1896,17 +1881,6 @@ https://github.com/Shougo/neocomplcache.vim/issues/453
 A: It is feature. Because "longest" completeopt conflicts with auto
 completion.  To use "longest" option, you must disable auto completion.
 "longest" is good feature. But it is for manual completion only.
-
-Q: Auto completion does not work in ruby filetype with error messages.
-https://github.com/tpope/vim-rails/issues/283
-
-A: It is vim-rails problem. Not neocomplete.
-
-https://github.com/tpope/vim-rails/blob/master/autoload/rails.vim#L4468
-
-vim-rails overwrites completefunc. So neocomplete disabled.
-You can overwrite completefunc by
-|g:neocomplete#force_overwrite_completefunc|.
 
 Q: autoclose conflicts with neocomplete.
 https://github.com/Shougo/neocomplcache.vim/issues/350

@@ -137,9 +137,6 @@ function! s:source.get_complete_position(context) "{{{
   let complete_str = matchstr(a:context.input[match_end :], '\f\+')
 
   let complete_pos = len(a:context.input) - len(complete_str)
-  if neocomplete#is_sources_complete() && complete_pos < 0
-    let complete_pos = len(a:context.input)
-  endif
 
   let delimiter = get(g:neocomplete#sources#file_include#delimiters,
         \ &filetype, '.')

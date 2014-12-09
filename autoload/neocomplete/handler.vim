@@ -238,8 +238,6 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   let neocomplete.skip_next_complete = 0
   let neocomplete.old_complete_pos = complete_pos
 
-  let &l:completefunc = 'neocomplete#complete#auto_complete'
-
   try
     let neocomplete.is_auto_complete = 1
 
@@ -287,30 +285,9 @@ function! s:check_in_do_auto_complete() "{{{
     return 1
   endif
 
-  if &l:completefunc == ''
-    let &l:completefunc = 'neocomplete#complete#manual_complete'
-  endif
-
   " Detect completefunc.
-  if &l:completefunc !~# '^neocomplete#'
-    if &l:buftype =~ 'nofile'
-      return 1
-    endif
-
-    if g:neocomplete#force_overwrite_completefunc
-      " Set completefunc.
-      let &l:completefunc = 'neocomplete#complete#manual_complete'
-    else
-      " Warning.
-      redir => output
-      99verbose setl completefunc?
-      redir END
-      call neocomplete#print_error(output)
-      call neocomplete#print_error(
-            \ 'Another plugin set completefunc! Disabled neocomplete.')
-      NeoCompleteLock
-      return 1
-    endif
+  if &l:completefunc != '' && &l:buftype =~ 'nofile'
+    return 1
   endif
 
   " Detect AutoComplPop.

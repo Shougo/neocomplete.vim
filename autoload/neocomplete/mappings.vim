@@ -35,10 +35,10 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ <C-x><C-o><C-p>
   if neocomplete#util#is_complete_select()
     inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-r>=neocomplete#complete#complete_mapping()<CR><C-p><Down>
+          \ <C-r>=neocomplete#complete#auto_complete()<CR><C-p><Down>
   else
     inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-r>=neocomplete#complete#complete_mapping()<CR><C-p>
+          \ <C-r>=neocomplete#complete#auto_complete()<CR><C-p>
   endif
 endfunction"}}}
 
@@ -188,11 +188,8 @@ function! neocomplete#mappings#start_manual_complete(...) "{{{
 
   call neocomplete#helper#complete_configure()
 
-  " Set function.
-  let &l:completefunc = 'neocomplete#complete#sources_manual_complete'
-
   " Start complete.
-  return "\<C-x>\<C-u>"
+  return "\<C-r>=neocomplete#complete#manual_complete()\<CR>"
 endfunction"}}}
 
 let &cpo = s:save_cpo

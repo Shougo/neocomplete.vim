@@ -67,8 +67,6 @@ let g:neocomplete#lock_buffer_name_pattern =
       \ get(g:, 'neocomplete#lock_buffer_name_pattern', '')
 let g:neocomplete#ctags_command =
       \ get(g:, 'neocomplete#ctags_command', 'ctags')
-let g:neocomplete#force_overwrite_completefunc =
-      \ get(g:, 'neocomplete#force_overwrite_completefunc', 0)
 let g:neocomplete#lock_iminsert =
       \ get(g:, 'neocomplete#lock_iminsert', 0)
 let g:neocomplete#release_cache_time =
@@ -204,9 +202,6 @@ endfunction"}}}
 function! neocomplete#is_auto_complete() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   return neocomplete.is_auto_complete
-endfunction"}}}
-function! neocomplete#is_sources_complete() "{{{
-  return &l:completefunc == 'neocomplete#complete#sources_manual_complete'
 endfunction"}}}
 function! neocomplete#is_eskk_enabled() "{{{
   return exists('*eskk#is_enabled') && eskk#is_enabled()

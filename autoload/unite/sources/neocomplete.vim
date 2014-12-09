@@ -64,7 +64,6 @@ function! s:neocomplete_source.hooks.on_init(args, context) "{{{
     " Restore options.
     let g:neocomplete#max_list = max_list_save
     let g:neocomplete#max_keyword_width = max_keyword_width_save
-    let &l:completefunc = 'neocomplete#complete#auto_complete'
     let g:neocomplete#manual_completion_start_length = manual_start_length
   endtry
 endfunction"}}}
