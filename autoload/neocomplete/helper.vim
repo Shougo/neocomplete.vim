@@ -138,11 +138,11 @@ function! neocomplete#helper#complete_check() "{{{
   if g:neocomplete#enable_debug
     echomsg split(reltimestr(reltime(neocomplete.start_time)))[0]
   endif
-  let ret = (!neocomplete#is_prefetch() && complete_check())
-        \ || (neocomplete#is_auto_complete()
+  let ret =
+        \ neocomplete#is_auto_complete()
         \     && g:neocomplete#skip_auto_completion_time != ''
         \     && split(reltimestr(reltime(neocomplete.start_time)))[0] >
-        \          g:neocomplete#skip_auto_completion_time)
+        \          g:neocomplete#skip_auto_completion_time
   if ret
     let neocomplete = neocomplete#get_current_neocomplete()
     let neocomplete.skipped = 1

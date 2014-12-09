@@ -35,10 +35,10 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ <C-x><C-o><C-p>
   if neocomplete#util#is_complete_select()
     inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-x><C-u>
+          \ <C-r>=neocomplete#complete#complete_mapping()<CR><C-p><Down>
   else
     inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-x><C-u><C-r>=neocomplete#mappings#popup_post()<CR>
+          \ <C-r>=neocomplete#complete#complete_mapping()<CR><C-p>
   endif
 endfunction"}}}
 

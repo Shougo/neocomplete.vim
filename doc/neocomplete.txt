@@ -407,19 +407,6 @@ g:neocomplete#lock_buffer_name_pattern
 
 		Default value is ''.
 
-g:neocomplete#enable_prefetch		*g:neocomplete#enable_prefetch*
-		This variable controls whether neocomplete prefetches.  If
-		this variable is non-zero, neocomplete does not flick in
-		auto completion.
-
-		Note: This variable has a side effect.  Partial function (ex:
-		|complete_check()|) is disabled in completefunc.
-		Note: If this variable is 0, an input problem may occur in
-		using uim-skk or other IMEs on GVim.
-
-		Default value is 1 (|+xim| and GUI version.)
-		Default value is 0 (Others)
-
 g:neocomplete#lock_iminsert		*g:neocomplete#lock_iminsert*
 		If this variable is non-zero, neocomplete locks when
 		'iminsert' is non-zero.
@@ -1594,15 +1581,6 @@ But you can use |unite.vim| instead to use quick match.
 	imap <expr> -  pumvisible() ?
 	    \ "\<Plug>(neocomplete_start_unite_quick_match)" : '-'
 <
-
-Q: How can I change the order of candidates?:
-
-A: Todo.
-
-Q: An input problem occurred in using uim-skk or other IMEs:
-
-A: It may be fixed with setting |g:neocomplete#enable_prefetch| as 1.
-
 
 Q: neocomplete cannot create cache files in "sudo vim":
 

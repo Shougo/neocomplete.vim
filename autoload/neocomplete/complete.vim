@@ -138,6 +138,22 @@ function! neocomplete#complete#auto_complete(findstart, base) "{{{
   return neocomplete#complete#manual_complete(a:findstart, a:base)
 endfunction"}}}
 
+function! neocomplete#complete#complete_mapping() "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let cur_text = neocomplete#get_cur_text(1)
+  let complete_pos =
+        \ neocomplete#complete#_get_complete_pos(
+        \ neocomplete.complete_sources)
+  let base = cur_text[complete_pos :]
+
+  let neocomplete.candidates = neocomplete#complete#_get_words(
+        \ neocomplete.complete_sources, complete_pos, base)
+
+  " Start auto complete.
+  call complete(complete_pos+1, neocomplete.candidates)
+  return ''
+endfunction"}}}
+
 function! neocomplete#complete#_get_results(cur_text, ...) "{{{
   call neocomplete#print_debug('start get_complete_sources')
 

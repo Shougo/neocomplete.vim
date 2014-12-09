@@ -69,9 +69,6 @@ let g:neocomplete#ctags_command =
       \ get(g:, 'neocomplete#ctags_command', 'ctags')
 let g:neocomplete#force_overwrite_completefunc =
       \ get(g:, 'neocomplete#force_overwrite_completefunc', 0)
-let g:neocomplete#enable_prefetch =
-      \ get(g:, 'neocomplete#enable_prefetch',
-      \  has('gui_running') && has('xim'))
 let g:neocomplete#lock_iminsert =
       \ get(g:, 'neocomplete#lock_iminsert', 0)
 let g:neocomplete#release_cache_time =
@@ -205,7 +202,8 @@ function! neocomplete#is_auto_select() "{{{
   return g:neocomplete#enable_auto_select && !neocomplete#is_eskk_enabled()
 endfunction"}}}
 function! neocomplete#is_auto_complete() "{{{
-  return &l:completefunc == 'neocomplete#complete#auto_complete'
+  let neocomplete = neocomplete#get_current_neocomplete()
+  return neocomplete.is_auto_complete
 endfunction"}}}
 function! neocomplete#is_sources_complete() "{{{
   return &l:completefunc == 'neocomplete#complete#sources_manual_complete'
@@ -231,9 +229,7 @@ function! neocomplete#is_windows() "{{{
   return neocomplete#util#is_windows()
 endfunction"}}}
 function! neocomplete#is_prefetch() "{{{
-  return !neocomplete#is_locked() && !g:neocomplete#enable_cursor_hold_i &&
-        \ (g:neocomplete#enable_prefetch || &l:formatoptions =~# 'a'
-        \  || !empty(g:neocomplete#fallback_mappings))
+  return 1
 endfunction"}}}
 function! neocomplete#exists_echodoc() "{{{
   return exists('g:loaded_echodoc') && g:loaded_echodoc
