@@ -221,10 +221,10 @@ function! s:truncate(str, width) "{{{
   endif
 
   let ret = a:str
-  let width = s:wcswidth(a:str)
+  let width = strdisplaywidth(a:str)
   if width > a:width
     let ret = s:strwidthpart(ret, a:width)
-    let width = s:wcswidth(ret)
+    let width = strdisplaywidth(ret)
   endif
 
   if width < a:width
@@ -236,11 +236,11 @@ endfunction"}}}
 
 function! s:strwidthpart(str, width) "{{{
   let ret = a:str
-  let width = s:wcswidth(a:str)
+  let width = strdisplaywidth(a:str)
   while width > a:width
     let char = matchstr(ret, '.$')
     let ret = ret[: -1 - len(char)]
-    let width -= s:wcwidth(char)
+    let width -= strwidth(char)
   endwhile
 
   return ret
@@ -253,14 +253,6 @@ function! s:iconv(expr, from, to)
   let result = iconv(a:expr, a:from, a:to)
   return result != '' ? result : a:expr
 endfunction
-
-" Use builtin function.
-function! s:wcswidth(str) "{{{
-  return strdisplaywidth(a:str)
-endfunction"}}}
-function! s:wcwidth(str) "{{{
-  return strwidth(a:str)
-endfunction"}}}
 
 if argc() == 7 &&
       \ (argv(0) ==# 'load_from_file' || argv(0) ==# 'load_from_tags')
