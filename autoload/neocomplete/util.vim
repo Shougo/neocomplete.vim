@@ -67,8 +67,8 @@ endfunction"}}}
 function! neocomplete#util#strchars(...) "{{{
   return call(s:get_string().strchars, a:000)
 endfunction"}}}
-function! neocomplete#util#wcswidth(...) "{{{
-  return call(s:get_prelude().wcswidth, a:000)
+function! neocomplete#util#wcswidth(string) "{{{
+  return strwidth(a:string)
 endfunction"}}}
 function! neocomplete#util#strwidthpart(...) "{{{
   return call(s:get_prelude().strwidthpart, a:000)
