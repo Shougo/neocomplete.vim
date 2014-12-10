@@ -136,9 +136,10 @@ function! neocomplete#sources#dictionary#get_dictionaries(filetype) "{{{
           \ g:neocomplete#sources#dictionary#dictionaries['_']
   endif
 
-  if dictionaries == ''
-    if filetype == &filetype &&
-          \ &l:dictionary != '' && &l:dictionary !=# &g:dictionary
+  if dictionaries == '' && &l:dictionary != ''
+    if ((filetype ==# 'nothing' && &filetype == '')
+          \ || filetype ==# &filetype)
+          \ && &l:dictionary !=# &g:dictionary
       let dictionaries = &l:dictionary
     endif
   endif
