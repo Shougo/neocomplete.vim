@@ -26,43 +26,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#complete#auto_complete() "{{{
-  let neocomplete = neocomplete#get_current_neocomplete()
-  let cur_text = neocomplete#get_cur_text(1)
-  let complete_pos =
-        \ neocomplete#complete#_get_complete_pos(
-        \ neocomplete.complete_sources)
-  let base = cur_text[complete_pos :]
-
-  let neocomplete.candidates = neocomplete#complete#_get_words(
-        \ neocomplete.complete_sources, complete_pos, base)
-  let neocomplete.complete_str = base
-
-  " Start auto complete.
-  call complete(complete_pos+1, neocomplete.candidates)
-  return ''
-endfunction"}}}
-
-function! neocomplete#complete#manual_complete() "{{{
-  let neocomplete = neocomplete#get_current_neocomplete()
-  let cur_text = neocomplete#get_cur_text(1)
-  let complete_sources = neocomplete#complete#_get_results(
-        \ cur_text, neocomplete.manual_sources)
-  let complete_pos =
-        \ neocomplete#complete#_get_complete_pos(
-        \ complete_sources)
-  let base = cur_text[complete_pos :]
-
-  let neocomplete.complete_pos = complete_pos
-  let neocomplete.candidates = neocomplete#complete#_get_words(
-        \ complete_sources, complete_pos, base)
-  let neocomplete.complete_str = base
-
-  " Start auto complete.
-  call complete(complete_pos+1, neocomplete.candidates)
-  return ''
-endfunction"}}}
-
 function! neocomplete#complete#_get_results(cur_text, ...) "{{{
   call neocomplete#print_debug('start get_complete_sources')
 

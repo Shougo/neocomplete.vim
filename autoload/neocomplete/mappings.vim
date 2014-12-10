@@ -35,11 +35,48 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ <C-x><C-o><C-p>
   if neocomplete#util#is_complete_select()
     inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-r>=neocomplete#complete#auto_complete()<CR><C-p><Down>
+          \ <C-r>=neocomplete#mappings#auto_complete()<CR><C-p><Down>
   else
     inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-r>=neocomplete#complete#auto_complete()<CR><C-p>
+          \ <C-r>=neocomplete#mappings#auto_complete()<CR><C-p>
   endif
+endfunction"}}}
+
+function! neocomplete#mappings#auto_complete() "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let cur_text = neocomplete#get_cur_text(1)
+  let complete_pos =
+        \ neocomplete#complete#_get_complete_pos(
+        \ neocomplete.complete_sources)
+  let base = cur_text[complete_pos :]
+
+  let neocomplete.candidates = neocomplete#complete#_get_words(
+        \ neocomplete.complete_sources, complete_pos, base)
+  let neocomplete.complete_str = base
+
+  " Start auto complete.
+  call complete(complete_pos+1, neocomplete.candidates)
+  return ''
+endfunction"}}}
+
+function! neocomplete#mappings#manual_complete() "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let cur_text = neocomplete#get_cur_text(1)
+  let complete_sources = neocomplete#complete#_get_results(
+        \ cur_text, neocomplete.manual_sources)
+  let complete_pos =
+        \ neocomplete#complete#_get_complete_pos(
+        \ complete_sources)
+  let base = cur_text[complete_pos :]
+
+  let neocomplete.complete_pos = complete_pos
+  let neocomplete.candidates = neocomplete#complete#_get_words(
+        \ complete_sources, complete_pos, base)
+  let neocomplete.complete_str = base
+
+  " Start auto complete.
+  call complete(complete_pos+1, neocomplete.candidates)
+  return ''
 endfunction"}}}
 
 function! neocomplete#mappings#smart_close_popup() "{{{
@@ -189,7 +226,7 @@ function! neocomplete#mappings#start_manual_complete(...) "{{{
   call neocomplete#helper#complete_configure()
 
   " Start complete.
-  return "\<C-r>=neocomplete#complete#manual_complete()\<CR>"
+  return "\<C-r>=neocomplete#mappings#manual_complete()\<CR>"
 endfunction"}}}
 
 let &cpo = s:save_cpo
