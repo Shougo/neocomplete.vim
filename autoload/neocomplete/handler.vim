@@ -207,8 +207,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     endif
 
     " Check multibyte input or eskk or spaces.
-    " Note: Spaces are skipped by performance problem.
-    if cur_text =~ '^\s*$\|\s\+$'
+    if cur_text =~ '^\s*$'
           \ || neocomplete#is_eskk_enabled()
           \ || neocomplete#is_multibyte_input(cur_text)
       call neocomplete#print_debug('Skipped.')
