@@ -80,16 +80,12 @@ function! neocomplete#mappings#manual_complete() "{{{
 endfunction"}}}
 
 function! neocomplete#mappings#smart_close_popup() "{{{
-  let key = g:neocomplete#enable_auto_select ?
-        \ neocomplete#mappings#cancel_popup() :
-        \ neocomplete#mappings#close_popup()
-
   " Don't skip next complete.
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skip_next_complete = 0
   let neocomplete.old_linenr = 0
 
-  return key
+  return neocomplete#mappings#cancel_popup()
 endfunction
 "}}}
 function! neocomplete#mappings#close_popup() "{{{
