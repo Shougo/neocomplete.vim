@@ -51,8 +51,6 @@ let g:neocomplete#disable_auto_complete =
       \ get(g:, 'neocomplete#disable_auto_complete', 0)
 let g:neocomplete#enable_fuzzy_completion =
       \ get(g:, 'neocomplete#enable_fuzzy_completion', 1)
-let g:neocomplete#enable_refresh_always =
-      \ get(g:, 'neocomplete#enable_refresh_always', 0)
 let g:neocomplete#enable_insert_char_pre =
       \ get(g:, 'neocomplete#enable_insert_char_pre', 0)
 let g:neocomplete#enable_cursor_hold_i =

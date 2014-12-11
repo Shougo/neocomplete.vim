@@ -391,14 +391,6 @@ g:neocomplete#enable_fuzzy_completion
 
 		Default value is 1.
 
-				*g:neocomplete#enable_refresh_always*
-g:neocomplete#enable_refresh_always
-		If it is non-0, neocomplete always refresh candidates.
-		You can get real fuzzy candidates like |YouCompleteMe|.
-		Note: This feature is heavy.
-
-		Default value is 0.
-
 				*g:neocomplete#enable_multibyte_completion*
 g:neocomplete#enable_multibyte_completion
 		If it is non-0, neocomplete can complete multibyte characters.
@@ -1824,19 +1816,6 @@ https://github.com/Shougo/neocomplcache.vim/issues/424
 A:
 >
 	let g:neocomplete#enable_auto_close_preview = 0
-<
-Q: I want to refresh candidates like |YouCompleteMe|.
-A:
-Note: This feature is heavy.
->
-	let g:neocomplete#enable_refresh_always = 1
-<
-
-Q: neocomplete auto select feature is not worked. Why?
-A: You should enable refresh always feature.
->
-	let g:neocomplete#enable_auto_select = 1
-	let g:neocomplete#enable_refresh_always = 1
 <
 
 Q: I want to use PHP omni completion.
