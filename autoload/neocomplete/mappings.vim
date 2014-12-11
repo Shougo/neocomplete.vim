@@ -35,7 +35,7 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ <C-x><C-o><C-p>
   inoremap <silent> <Plug>(neocomplete_start_auto_complete)
         \ <C-r>=neocomplete#mappings#auto_complete()<CR><C-r>=
-        \ neocomplete#mappings#popup_post()<CR>
+        \neocomplete#mappings#popup_post()<CR>
 endfunction"}}}
 
 function! neocomplete#mappings#auto_complete() "{{{
@@ -187,8 +187,8 @@ endfunction"}}}
 
 function! neocomplete#mappings#fallback(i) "{{{
   let mapping = g:neocomplete#fallback_mappings[a:i]
-  return  pumvisible()
-        \ || (mapping ==? "\<C-x>\<C-o>" && &l:omnifunc == '') ? "" :
+  return  (pumvisible()
+        \ || (mapping ==? "\<C-x>\<C-o>" && &l:omnifunc == '')) ? "" :
         \   mapping . (g:neocomplete#enable_auto_select ?
         \            "\<C-p>\<Down>" : "\<C-p>")
 endfunction"}}}
