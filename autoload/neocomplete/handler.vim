@@ -247,15 +247,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     let neocomplete.is_auto_complete = 0
   endtry
 
-  let complete_pos =
-        \ neocomplete#complete#_get_complete_pos(
-        \ neocomplete.complete_sources)
-  let base = cur_text[complete_pos :]
-
-  let neocomplete.candidates = neocomplete#complete#_get_words(
-        \ neocomplete.complete_sources, complete_pos, base)
-
-  if empty(neocomplete.candidates)
+  if empty(neocomplete.complete_sources)
     if !empty(g:neocomplete#fallback_mappings)
           \ && len(matchstr(cur_text, '\h\w*$'))
           \   > g:neocomplete#auto_completion_start_length
@@ -273,6 +265,14 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     endif
     return
   endif
+
+  let complete_pos =
+        \ neocomplete#complete#_get_complete_pos(
+        \ neocomplete.complete_sources)
+  let base = cur_text[complete_pos :]
+
+  let neocomplete.candidates = neocomplete#complete#_get_words(
+        \ neocomplete.complete_sources, complete_pos, base)
 
   " Start auto complete.
   call s:complete_key(
