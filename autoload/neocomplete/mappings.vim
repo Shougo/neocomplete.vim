@@ -33,13 +33,9 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ unite#sources#neocomplete#start_quick_match()
   inoremap <silent> <Plug>(neocomplete_start_omni_complete)
         \ <C-x><C-o><C-p>
-  if neocomplete#util#is_complete_select()
-    inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-r>=neocomplete#mappings#auto_complete()<CR><C-p><Down>
-  else
-    inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-          \ <C-r>=neocomplete#mappings#auto_complete()<CR><C-p>
-  endif
+  inoremap <silent> <Plug>(neocomplete_start_auto_complete)
+        \ <C-r>=neocomplete#mappings#auto_complete()<CR><C-r>=
+        \ neocomplete#mappings#popup_post()<CR>
 endfunction"}}}
 
 function! neocomplete#mappings#auto_complete() "{{{
@@ -106,8 +102,7 @@ endfunction
 
 function! neocomplete#mappings#popup_post() "{{{
   return  !pumvisible() ? "" :
-        \ g:neocomplete#enable_auto_select ? "\<C-p>\<Down>" :
-        \ neocomplete#is_auto_complete() ? "\<C-p>" : ""
+        \ g:neocomplete#enable_auto_select ? "\<C-p>\<Down>" : "\<C-p>"
 endfunction"}}}
 
 function! neocomplete#mappings#undo_completion() "{{{
