@@ -399,6 +399,15 @@ g:neocomplete#enable_refresh_always
 
 		Default value is 0.
 
+				*g:neocomplete#enable_multibyte_completion*
+g:neocomplete#enable_multibyte_completion
+		If it is non-0, neocomplete can complete multibyte characters.
+		Note: This feature may conflict Input Method in Unix systems.
+		Note: To use multibyte completion, you must change
+		|g:neocomplete#keyword_patterns| variable.
+
+		Default value is 0.
+
 				*g:neocomplete#lock_buffer_name_pattern*
 g:neocomplete#lock_buffer_name_pattern
 		This variable sets a pattern of the buffer name.  If matched it,

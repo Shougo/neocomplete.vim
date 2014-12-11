@@ -37,7 +37,7 @@ let s:converter = {
 
 function! s:converter.filter(context) "{{{
   let next = matchstr(getline('.')[
-        \ len(neocomplete#helper#get_cur_text(1))+1 :], '^\S\+')
+        \ len(neocomplete#helper#get_cur_text()) :], '^\S\+')
   if next == ''
     return a:context.candidates
   endif

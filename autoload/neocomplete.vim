@@ -69,6 +69,8 @@ let g:neocomplete#ctags_command =
       \ get(g:, 'neocomplete#ctags_command', 'ctags')
 let g:neocomplete#lock_iminsert =
       \ get(g:, 'neocomplete#lock_iminsert', 0)
+let g:neocomplete#enable_multibyte_completion =
+      \ get(g:, 'neocomplete#enable_multibyte_completion', 0)
 let g:neocomplete#release_cache_time =
       \ get(g:, 'neocomplete#release_cache_time', 900)
 let g:neocomplete#skip_auto_completion_time =
@@ -213,7 +215,8 @@ function! neocomplete#is_eskk_convertion(cur_text) "{{{
 endfunction"}}}
 function! neocomplete#is_multibyte_input(cur_text) "{{{
   return (exists('b:skk_on') && b:skk_on)
-        \     || char2nr(split(a:cur_text, '\zs')[-1]) > 0x80
+        \   || (g:neocomplete#enable_multibyte_completion
+        \         && char2nr(split(a:cur_text, '\zs')[-1]) > 0x80)
 endfunction"}}}
 function! neocomplete#is_text_mode() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
