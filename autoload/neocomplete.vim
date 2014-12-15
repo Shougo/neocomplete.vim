@@ -213,7 +213,7 @@ function! neocomplete#is_eskk_convertion(cur_text) "{{{
 endfunction"}}}
 function! neocomplete#is_multibyte_input(cur_text) "{{{
   return (exists('b:skk_on') && b:skk_on)
-        \   || (g:neocomplete#enable_multibyte_completion
+        \   || (!g:neocomplete#enable_multibyte_completion
         \         && char2nr(split(a:cur_text, '\zs')[-1]) > 0x80)
 endfunction"}}}
 function! neocomplete#is_text_mode() "{{{
