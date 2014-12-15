@@ -189,8 +189,7 @@ function! neocomplete#mappings#fallback(i) "{{{
   let mapping = g:neocomplete#fallback_mappings[a:i]
   return  (pumvisible()
         \ || (mapping ==? "\<C-x>\<C-o>" && &l:omnifunc == '')) ? "" :
-        \   mapping . (g:neocomplete#enable_auto_select ?
-        \            "\<C-p>\<Down>" : "\<C-p>")
+        \   mapping . "\<C-p>"
 endfunction"}}}
 
 " Manual complete wrapper.
