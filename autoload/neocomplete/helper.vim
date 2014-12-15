@@ -60,6 +60,7 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
   if neocomplete#is_eskk_enabled()
         \ && exists('g:eskk#start_completion_length')
     if !neocomplete#is_eskk_convertion(a:cur_text)
+          \ || !neocomplete#is_multibyte_input(a:cur_text)
       return 0
     endif
 
