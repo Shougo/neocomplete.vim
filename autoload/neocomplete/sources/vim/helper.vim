@@ -395,6 +395,7 @@ function! neocomplete#sources#vim#helper#var(cur_text, complete_str) "{{{
   if !has_key(s:global_candidates_list, 'variables')
     let s:global_candidates_list.variables =
           \ s:get_variablelist(g:, 'g:') + s:get_variablelist(v:, 'v:')
+          \ + s:make_completion_list(['v:val'])
   endif
 
   if a:complete_str =~ '^[swtb]:'
