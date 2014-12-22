@@ -85,10 +85,12 @@ function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, 
 
   let cache_list = a:async_cache_dictionary[a:key]
 
+  if !has_key(a:keyword_cache, a:key)
+    let a:keyword_cache[a:key] = []
+  endif
   for cache in filter(copy(cache_list), 'filereadable(v:val.cachename)')
-    let a:keyword_cache[a:key] = neocomplete#cache#load_from_cache(
+    let a:keyword_cache[a:key] += neocomplete#cache#load_from_cache(
               \ a:cache_dir, cache.filename, a:is_string)
-    break
   endfor
 
   call filter(cache_list, '!filereadable(v:val.cachename)')
