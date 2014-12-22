@@ -259,7 +259,7 @@ function! neocomplete#sources#member#remake_cache(filetype) "{{{
   endif
 
   for dictionary in
-        \ filter(map(split(neocomplete#sources#dictionary#get_dictionaries(a:filetype), ','),
+        \ filter(map(neocomplete#sources#dictionary#get_dictionaries(a:filetype),
         \  "neocomplete#util#substitute_path_separator(
         \      fnamemodify(v:val, ':p'))"),
         \ "filereadable(v:val) && (!has_key(s:member_sources, v:val)
