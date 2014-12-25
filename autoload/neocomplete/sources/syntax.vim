@@ -206,7 +206,8 @@ function! s:substitute_candidate(candidate) "{{{
         \'\\\@<!\%(\\[<>{}]\|[$^]\|\\z\?\a\)', ' ', 'g')
 
   if candidate =~ '\\%\?('
-    let candidate = join(s:split_pattern(candidate))
+    let candidate = join(neocomplete#sources#syntax#_split_pattern(
+          \ candidate, ''))
   endif
 
   " \
@@ -216,7 +217,7 @@ function! s:substitute_candidate(candidate) "{{{
   return candidate
 endfunction"}}}
 
-function! s:split_pattern(keyword_pattern) "{{{
+function! neocomplete#sources#syntax#_split_pattern(keyword_pattern, prefix) "{{{
   let original_pattern = a:keyword_pattern
   let result_patterns = []
   let analyzing_patterns = [ '' ]
@@ -228,21 +229,19 @@ function! s:split_pattern(keyword_pattern) "{{{
       " Grouping.
       let end = s:match_pair(original_pattern, '\\%\?(', '\\)', i)
       if end < 0
-        "call neocomplete#print_error('Unmatched (.')
-        return [ a:keyword_pattern ]
+        break
       endif
 
-      let save_pattern = analyzing_patterns
+      let save_patterns = analyzing_patterns
       let analyzing_patterns = []
-      for keyword in split(
-            \ original_pattern[matchend(original_pattern,
-            \                 '^\\%\?(', i) : end-1], '\\|')
-        for prefix in save_pattern
-          call add(analyzing_patterns, prefix . keyword)
-        endfor
+      for pattern in save_patterns
+        let analyzing_patterns += neocomplete#sources#syntax#_split_pattern(
+              \ original_pattern[matchend(original_pattern,
+              \                 '^\\%\?(', i) : end-1],
+              \ pattern)
       endfor
 
-      let i = end + 1
+      let i = end + 2
     elseif match(original_pattern, '^\\|', i) >= 0
       " Select.
       let result_patterns += analyzing_patterns
@@ -252,27 +251,20 @@ function! s:split_pattern(keyword_pattern) "{{{
 
       let i = 0
     elseif original_pattern[i] == '\' && i+1 < max
-      let save_pattern = analyzing_patterns
-      let analyzing_patterns = []
-      for prefix in save_pattern
-        call add(analyzing_patterns, prefix . original_pattern[i] . original_pattern[i+1])
-      endfor
+      let escape = original_pattern[i] . original_pattern[i+1]
+      call map(analyzing_patterns, 'v:val . escape')
 
       " Escape.
       let i += 2
     else
-      let save_pattern = analyzing_patterns
-      let analyzing_patterns = []
-      for prefix in save_pattern
-        call add(analyzing_patterns, prefix . original_pattern[i])
-      endfor
+      call map(analyzing_patterns, 'v:val . original_pattern[i]')
 
       let i += 1
     endif
   endwhile
 
   let result_patterns += analyzing_patterns
-  return result_patterns
+  return map(result_patterns, 'a:prefix . v:val')
 endfunction"}}}
 
 function! s:match_pair(string, start_pattern, end_pattern, start_cnt) "{{{
