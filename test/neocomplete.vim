@@ -68,6 +68,9 @@ function! s:suite.syntax()
   call s:assert.equals(sort(neocomplete#sources#syntax#_split_pattern(
         \ '\(a\|b\)c\(d\|e\|f\)', '')),
         \ ['acd', 'ace', 'acf', 'bcd', 'bce', 'bcf'])
+  call s:assert.equals(sort(neocomplete#sources#syntax#_split_pattern(
+        \ '\\\%(dump\|end\|jobname\)', '')),
+        \ ['\dump', '\end', '\jobname'])
 endfunction
 
 " vim:foldmethod=marker:fen:

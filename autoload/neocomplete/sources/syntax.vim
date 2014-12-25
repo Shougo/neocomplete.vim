@@ -251,8 +251,7 @@ function! neocomplete#sources#syntax#_split_pattern(keyword_pattern, prefix) "{{
 
       let i = 0
     elseif original_pattern[i] == '\' && i+1 < max
-      let escape = original_pattern[i] . original_pattern[i+1]
-      call map(analyzing_patterns, 'v:val . escape')
+      call map(analyzing_patterns, 'v:val . original_pattern[i+1]')
 
       " Escape.
       let i += 2
