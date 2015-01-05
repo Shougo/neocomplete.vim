@@ -133,14 +133,6 @@ function! neocomplete#handler#_on_complete_done() "{{{
   else
     let frequencies[complete_str] += 20
   endif
-
-  " indent line matched by indentkeys
-  for word in filter(map(split(&l:indentkeys, ','),
-        \ "matchstr(v:val, '.*=\\zs.*')"), "v:val != ''")
-    if stridx(complete_str, word) == 0
-      call neocomplete#helper#indent_current_line()
-    endif
-  endfor
 endfunction"}}}
 " @vimlint(EVL102, 0, v:completed_item)
 function! neocomplete#handler#_change_update_time() "{{{
@@ -178,6 +170,15 @@ function! neocomplete#handler#_on_text_changed() "{{{
   if getline('.') == ''
     call s:make_cache_current_line()
   endif
+
+  let cur_text = matchstr(getline('.'), '^.*\%'.col('.').'c')
+  " indent line matched by indentkeys
+  for word in filter(map(split(&l:indentkeys, ','),
+        \ "matchstr(v:val, '.*=\\zs.*')"), "v:val != ''")
+    if stridx(cur_text, word, len(cur_text)-len(word)-1) >= 0
+      call neocomplete#helper#indent_current_line()
+    endif
+  endfor
 endfunction"}}}
 
 function! neocomplete#handler#_do_auto_complete(event) "{{{
