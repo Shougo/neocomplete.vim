@@ -177,6 +177,7 @@ function! neocomplete#handler#_on_text_changed() "{{{
         \ "matchstr(v:val, '.*=\\zs.*')"), "v:val != ''")
     if stridx(cur_text, word, len(cur_text)-len(word)-1) >= 0
       call neocomplete#helper#indent_current_line()
+      break
     endif
   endfor
 endfunction"}}}
