@@ -177,7 +177,6 @@ function! neocomplete#handler#_on_text_changed() "{{{
         \ "v:val =~ '^<.*>$' ? matchstr(v:val, '^<\\zs.*\\ze>$')
         \                  : matchstr(v:val, '.*=\\zs.*')"),
         \ "v:val != ''")
-    echomsg word
     if stridx(cur_text, word, len(cur_text)-len(word)-1) >= 0
       call neocomplete#helper#indent_current_line()
       break
