@@ -171,17 +171,21 @@ function! neocomplete#handler#_on_text_changed() "{{{
     call s:make_cache_current_line()
   endif
 
-  let cur_text = matchstr(getline('.'), '^.*\%'.col('.').'c')
   " indent line matched by indentkeys
-  for word in filter(map(split(&l:indentkeys, ','),
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let cur_text = matchstr(getline('.'), '^.*\%'.col('.').'c')
+  if get(neocomplete, 'indent_text', '') != matchstr(getline('.'), '\S.*$')
+    for word in filter(map(split(&l:indentkeys, ','),
         \ "v:val =~ '^<.*>$' ? matchstr(v:val, '^<\\zs.*\\ze>$')
         \                  : matchstr(v:val, '.*=\\zs.*')"),
         \ "v:val != ''")
-    if stridx(cur_text, word, len(cur_text)-len(word)-1) >= 0
-      call neocomplete#helper#indent_current_line()
-      break
-    endif
-  endfor
+      if stridx(cur_text, word, len(cur_text)-len(word)-1) >= 0
+        call neocomplete#helper#indent_current_line()
+        let neocomplete.indent_text = matchstr(getline('.'), '\S.*$')
+        break
+      endif
+    endfor
+  endif
 endfunction"}}}
 
 function! neocomplete#handler#_do_auto_complete(event) "{{{
