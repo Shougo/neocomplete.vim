@@ -234,7 +234,7 @@ function! neocomplete#sources#syntax#_split_pattern(keyword_pattern, prefix) "{{
 
       let save_patterns = analyzing_patterns
       let analyzing_patterns = []
-      for pattern in save_patterns
+      for pattern in filter(save_patterns, "v:val !~ '.*\\s\\+.*\\s'")
         let analyzing_patterns += neocomplete#sources#syntax#_split_pattern(
               \ original_pattern[matchend(original_pattern,
               \                 '^\\%\?(', i) : end-1],
