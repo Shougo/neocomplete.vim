@@ -211,6 +211,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
             \ && stridx(cur_text, neocomplete.old_cur_text) == 0
         " Same position.
       else
+        let neocomplete.old_complete_pos = complete_pos
         call s:complete_key("\<Plug>(neocomplete_start_omni_complete)")
       endif
 
