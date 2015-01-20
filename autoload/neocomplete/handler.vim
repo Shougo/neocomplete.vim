@@ -205,8 +205,14 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     endif
 
     if neocomplete#helper#is_omni(cur_text)
-          \ && neocomplete.old_cur_text !=# cur_text
-      call s:complete_key("\<Plug>(neocomplete_start_omni_complete)")
+      if neocomplete.skip_next_complete
+            \ && complete_pos == neocomplete.old_complete_pos
+            \ && stridx(cur_text, neocomplete.old_cur_text) == 0
+        " Same position.
+      else
+        call s:complete_key("\<Plug>(neocomplete_start_omni_complete)")
+      endif
+
       return
     endif
 

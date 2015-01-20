@@ -56,6 +56,8 @@ function! neocomplete#helper#get_cur_text(...) "{{{
 endfunction"}}}
 
 function! neocomplete#helper#is_omni(cur_text) "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+
   " Check eskk complete length.
   if neocomplete#is_eskk_enabled()
         \ && exists('g:eskk#start_completion_length')
@@ -65,6 +67,7 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
     endif
 
     let complete_pos = call(&l:omnifunc, [1, ''])
+    let neocomplete.old_complete_pos = complete_pos
     let complete_str = a:cur_text[complete_pos :]
     return neocomplete#util#mb_strlen(complete_str) >=
           \ g:eskk#start_completion_length
@@ -86,11 +89,12 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
     return 0
   endif
 
-  if a:cur_text !~# '\%(' . pattern . '\m\)$'
-    return 0
+  let complete_pos = a:cur_text !~# '\%(' . pattern . '\m\)$'
+  if complete_pos >= 0
+    let neocomplete.old_complete_pos = complete_pos
   endif
 
-  return 1
+  return complete_pos >= 0
 endfunction"}}}
 
 function! neocomplete#helper#is_enabled_source(source, filetype) "{{{
