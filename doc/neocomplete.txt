@@ -1939,15 +1939,6 @@ https://github.com/Shougo/neocomplete.vim/issues/305
 A: It is feature.
 You must use |neocomplete#start_manual_complete()| instead of <C-x><C-u>.
 
-Q: What's the "Please map <C-h> and <BS> to neocomplete#smart_close_popup()"
-message?
-
-A: neocomplete uses |complete()| instead of 'completefunc'.  But |complete()|
-is buggy feature.  To prevent the bug, you must map <C-h> and <BS> keys. >
-	" <C-h>, <BS>: close popup and delete backword char.
-	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
 Q: My <C-l> mapping never works.
 
 A: https://github.com/Shougo/neocomplete.vim/issues/334
