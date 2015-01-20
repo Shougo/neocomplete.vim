@@ -55,29 +55,26 @@ function! neocomplete#helper#get_cur_text(...) "{{{
   return neocomplete.cur_text
 endfunction"}}}
 
-function! neocomplete#helper#is_omni(cur_text) "{{{
-  let neocomplete = neocomplete#get_current_neocomplete()
-
+function! neocomplete#helper#get_force_omni_complete_pos(cur_text) "{{{
   " Check eskk complete length.
   if neocomplete#is_eskk_enabled()
         \ && exists('g:eskk#start_completion_length')
     if !neocomplete#is_eskk_convertion(a:cur_text)
           \ || !neocomplete#is_multibyte_input(a:cur_text)
-      return 0
+      return -1
     endif
 
     let complete_pos = call(&l:omnifunc, [1, ''])
-    let neocomplete.old_complete_pos = complete_pos
     let complete_str = a:cur_text[complete_pos :]
-    return neocomplete#util#mb_strlen(complete_str) >=
-          \ g:eskk#start_completion_length
+    return (neocomplete#util#mb_strlen(complete_str) >=
+          \ g:eskk#start_completion_length) ? complete_pos : -1
   endif
 
   let filetype = neocomplete#get_context_filetype()
   let omnifunc = &l:omnifunc
 
   if neocomplete#helper#check_invalid_omnifunc(omnifunc)
-    return 0
+    return -1
   endif
 
   if has_key(g:neocomplete#force_omni_input_patterns, omnifunc)
@@ -86,15 +83,10 @@ function! neocomplete#helper#is_omni(cur_text) "{{{
         \ get(g:neocomplete#force_omni_input_patterns, filetype, '') != ''
     let pattern = g:neocomplete#force_omni_input_patterns[filetype]
   else
-    return 0
+    return -1
   endif
 
-  let complete_pos = a:cur_text !~# '\%(' . pattern . '\m\)$'
-  if complete_pos >= 0
-    let neocomplete.old_complete_pos = complete_pos
-  endif
-
-  return complete_pos >= 0
+  return match(a:cur_text, '\%(' . pattern . '\m\)$')
 endfunction"}}}
 
 function! neocomplete#helper#is_enabled_source(source, filetype) "{{{

@@ -206,7 +206,8 @@ function! neocomplete#mappings#start_manual_complete(...) "{{{
     return ''
   endif
 
-  if neocomplete#helper#is_omni(neocomplete#get_cur_text(1))
+  if neocomplete#helper#get_force_omni_complete_pos(
+        \ neocomplete#get_cur_text(1)) >= 0
     return "\<C-x>\<C-o>"
   endif
 

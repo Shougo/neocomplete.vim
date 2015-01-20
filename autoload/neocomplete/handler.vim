@@ -204,7 +204,8 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
       return
     endif
 
-    if neocomplete#helper#is_omni(cur_text)
+    let complete_pos = neocomplete#helper#get_force_omni_complete_pos(cur_text)
+    if complete_pos >= 0
       if neocomplete.skip_next_complete
             \ && complete_pos == neocomplete.old_complete_pos
             \ && stridx(cur_text, neocomplete.old_cur_text) == 0
