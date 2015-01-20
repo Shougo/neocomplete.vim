@@ -126,7 +126,11 @@ function! neocomplete#helper#get_source_filetypes(filetype) "{{{
     call add(filetypes, 'text')
   endif
 
-  return neocomplete#util#uniq(filetypes)
+  if len(filetypes) > 1
+    let filetypes = neocomplete#util#uniq(filetypes)
+  endif
+
+  return filetypes
 endfunction"}}}
 
 function! neocomplete#helper#complete_check() "{{{
