@@ -362,7 +362,13 @@ endfunction"}}}
 function! s:complete_key(key) "{{{
   set completeopt-=longest
   call neocomplete#helper#complete_configure()
-  call feedkeys(a:key)
+
+  if !hasmapto("\<C-h>", 'i') || !hasmapto("\<BS>", 'i')
+    call neocomplete#print_error(
+          \ 'Please map <C-h> and <BS> to neocomplete#smart_close_popup()')
+  else
+    call feedkeys(a:key)
+  endif
 endfunction"}}}
 
 let &cpo = s:save_cpo
