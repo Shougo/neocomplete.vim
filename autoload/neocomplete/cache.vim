@@ -213,7 +213,7 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
   let cache_name =
         \ neocomplete#cache#encode_name(a:cache_dir, a:filename)
   let pattern_file_name =
-        \ neocomplete#cache#encode_name('tags_pattens', a:filename)
+        \ neocomplete#cache#encode_name('tags_patterns', a:filename)
 
   if a:is_create_tags
     if !executable(g:neocomplete#ctags_command)
@@ -250,7 +250,7 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
 
   let filter_pattern =
         \ get(g:neocomplete#tags_filter_patterns, a:filetype, '')
-  call neocomplete#cache#writefile('tags_pattens', a:filename,
+  call neocomplete#cache#writefile('tags_patterns', a:filename,
         \ [a:pattern, tags_file_name, filter_pattern, a:filetype])
 
   " args: funcname, outputname, filename
