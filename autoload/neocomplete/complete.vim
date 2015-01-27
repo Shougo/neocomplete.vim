@@ -144,10 +144,9 @@ EOF
   endif
 
   " Check dup and set icase.
-  let icase = !neocomplete#is_text_mode() && !neocomplete#within_comment() &&
-        \ g:neocomplete#enable_ignore_case &&
-        \!((g:neocomplete#enable_smart_case
-        \  || g:neocomplete#enable_camel_case) && a:complete_str =~ '\u')
+  let icase = g:neocomplete#enable_ignore_case &&
+        \ !((g:neocomplete#enable_smart_case
+        \    || g:neocomplete#enable_camel_case) && a:complete_str =~ '\u')
   if icase
     for candidate in candidates
       let candidate.icase = 1
