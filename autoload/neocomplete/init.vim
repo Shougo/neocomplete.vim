@@ -690,7 +690,6 @@ function! neocomplete#init#_source(source) "{{{
         \ 'converters' : [
         \      'converter_remove_overlap',
         \      'converter_delimiter',
-        \      'converter_case',
         \      'converter_abbr',
         \ ],
         \ 'keyword_patterns' : g:neocomplete#keyword_patterns,
