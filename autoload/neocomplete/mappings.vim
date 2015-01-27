@@ -38,10 +38,10 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \neocomplete#mappings#popup_post()<CR>
 
   " To prevent Vim's complete() bug.
-  if !hasmapto("\<C-h>", 'i')
+  if !hasmapto('<C-h>', 'i')
     inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
   endif
-  if !hasmapto("\<BS>", 'i')
+  if !hasmapto('<BS>', 'i')
     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
   endif
 endfunction"}}}
