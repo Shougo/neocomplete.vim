@@ -40,14 +40,14 @@ function! s:converter.filter(context) "{{{
     return a:context.candidates
   endif
 
-  if a:context.complete_str =~ '^\l\{2}$'
+  if a:context.complete_str =~ '^\l\{3}$'
     for candidate in s:get_convert_candidates(a:context.candidates)
       let candidate.word = tolower(candidate.word)
       if has_key(candidate, 'abbr')
         let candidate.abbr = tolower(candidate.abbr)
       endif
     endfor
-  elseif a:context.complete_str =~ '^\u\{2}$'
+  elseif a:context.complete_str =~ '^\u\{3}$'
     for candidate in s:get_convert_candidates(a:context.candidates)
       let candidate.word = toupper(candidate.word)
       if has_key(candidate, 'abbr')
