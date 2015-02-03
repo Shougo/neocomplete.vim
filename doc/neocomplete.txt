@@ -947,16 +947,6 @@ EXAMPLES					*neocomplete-examples*
 	" Close popup by <Space>.
 	"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
-	" For cursor moving in insert mode(Not recommended)
-	"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-	"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-	"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-	"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-	" Or set this.
-	"let g:neocomplete#enable_cursor_hold_i = 1
-	" Or set this.
-	"let g:neocomplete#enable_insert_char_pre = 1
-
 	" AutoComplPop like behavior.
 	"let g:neocomplete#enable_auto_select = 1
 
@@ -1535,13 +1525,6 @@ should disable omni source in python or ruby.
 	let g:neocomplete#sources#omni#input_patterns.ruby = ''
 <
 
-Q: I like moving cursor by cursor-keys.  But neocomplete popups menus...
-
-A: Please set this in your .vimrc.
->
-	let g:neocomplete#enable_insert_char_pre = 1
-<
-
 Q: Where are the snippets for neocomplete?
 
 A: https://github.com/Shougo/neosnippet or
@@ -1870,23 +1853,6 @@ https://github.com/Shougo/neocomplcache.vim/issues/350
 A: It is autoclose mappings problem. I cannot fix it. You should use
 auto-pairs plugin instead of it.
 https://github.com/jiangmiao/auto-pairs
-
-Q: I want to move to cursor by arrow key.
-https://github.com/Shougo/neocomplete.vim/issues/114
-
-A: First, I don't recommend to move cursor by arrow key. It is not Vim's
-theory. But if you want to move cursor forcely, you can config it by following
-settings. >
-
-	" For cursor moving in insert mode(Not recommended)
-	"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-	"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-	"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-	"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-	" Or set this.
-	"let g:neocomplete#enable_cursor_hold_i = 1
-	" Or set this.
-	"let g:neocomplete#enable_insert_char_pre = 1
 
 Q: I want to complete by Erlang omnifunc.
 https://github.com/vim-erlang/vim-erlang-omnicomplete
