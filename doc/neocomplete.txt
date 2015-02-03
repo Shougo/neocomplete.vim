@@ -357,11 +357,10 @@ g:neocomplete#cursor_hold_i_time
 g:neocomplete#enable_insert_char_pre
 		This variable controls whether neocomplete use
 		|InsertCharPre| event when complete candidates.
+		If it is enabled, the candidates will be updated after user
+		input.
 		Note: This option must be set before call
 		|:NeoCompleteEnable|.
-		Note: If the option is enabled, you cannot continue completion
-		by pressing Backspace. It is Vim's feature.
-		https://github.com/Shougo/neocomplete.vim/issues/106
 
 		Default value is 0.
 

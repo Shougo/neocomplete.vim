@@ -167,12 +167,18 @@ function! neocomplete#handler#_on_text_changed() "{{{
     return
   endif
 
+  let neocomplete = neocomplete#get_current_neocomplete()
+
+  if g:neocomplete#enable_insert_char_pre
+        \ && neocomplete.skip_next_complete
+    call neocomplete#handler#_do_auto_complete('InsertCharPre')
+  endif
+
   if getline('.') == ''
     call s:make_cache_current_line()
   endif
 
   " indent line matched by indentkeys
-  let neocomplete = neocomplete#get_current_neocomplete()
   let cur_text = matchstr(getline('.'), '^.*\%'.col('.').'c')
   if neocomplete.indent_text != matchstr(getline('.'), '\S.*$')
     for word in filter(map(split(&l:indentkeys, ','),
