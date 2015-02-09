@@ -88,8 +88,6 @@ function! neocomplete#init#_autocmds() "{{{
           \ call neocomplete#handler#_on_insert_char_pre()
     autocmd TextChangedI *
           \ call neocomplete#handler#_on_text_changed()
-    autocmd VimLeavePre *
-          \ call neocomplete#init#disable()
   augroup END
 
   if g:neocomplete#enable_insert_char_pre
