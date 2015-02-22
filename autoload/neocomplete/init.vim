@@ -51,7 +51,7 @@ endfunction"}}}
 
 function! neocomplete#init#disable() "{{{
   if !neocomplete#is_enabled()
-    call neocomplete#init#enable()
+    return
   endif
 
   let s:is_enabled = 0
