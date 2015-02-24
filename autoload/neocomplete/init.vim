@@ -92,10 +92,7 @@ function! neocomplete#init#_autocmds() "{{{
           \ call neocomplete#init#disable()
   augroup END
 
-  if g:neocomplete#enable_insert_char_pre
-    autocmd neocomplete InsertCharPre *
-          \ call neocomplete#handler#_do_auto_complete('InsertCharPre')
-  elseif g:neocomplete#enable_cursor_hold_i
+  if g:neocomplete#enable_cursor_hold_i
     augroup neocomplete
       autocmd CursorHoldI *
             \ call neocomplete#handler#_do_auto_complete('CursorHoldI')
@@ -105,8 +102,14 @@ function! neocomplete#init#_autocmds() "{{{
             \ call neocomplete#handler#_restore_update_time()
     augroup END
   else
-    autocmd neocomplete TextChangedI *
-          \ call neocomplete#handler#_do_auto_complete('TextChangedI')
+    " Note: Vim 7.4.143 fixed TextChangedI bug.
+    let event =
+          \ (g:neocomplete#enable_insert_char_pre) ?
+          \  'InsertCharPre' :
+          \ (v:version > 704 || v:version == 704 && has('patch143')) ?
+          \  'TextChangedI' : 'CursorMovedI'
+    execute 'autocmd neocomplete' event '*'
+          \ 'call neocomplete#handler#_do_auto_complete("'.event.'")'
   endif
 
   if !g:neocomplete#enable_cursor_hold_i
