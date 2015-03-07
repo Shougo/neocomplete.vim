@@ -40,12 +40,14 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ <C-r>=neocomplete#mappings#manual_complete()<CR><C-r>=
         \neocomplete#mappings#popup_post()<CR>
 
-  " To prevent Vim's complete() bug.
-  if mapcheck('<C-h>', 'i') ==# ''
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-  endif
-  if mapcheck('<BS>', 'i') ==# ''
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+  if !has('patch-7.4.653')
+    " To prevent Vim's complete() bug.
+    if mapcheck('<C-h>', 'i') ==# ''
+      inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    endif
+    if mapcheck('<BS>', 'i') ==# ''
+      inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    endif
   endif
 endfunction"}}}
 
