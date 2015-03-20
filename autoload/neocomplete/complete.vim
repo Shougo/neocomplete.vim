@@ -246,8 +246,6 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
 
       if !source.is_volatile
             \ && context.prev_complete_pos == context.complete_pos
-            \ && context.complete_str[len(context.prev_complete_str):]
-            \     =~ '^\h\w*$'
             \ && !empty(context.prev_candidates)
         " Use previous candidates.
         let context.candidates = context.prev_candidates
@@ -272,7 +270,6 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
 
       let context.prev_candidates = copy(context.candidates)
       let context.prev_complete_pos = context.complete_pos
-      let context.prev_complete_str = context.complete_str
 
       if !empty(context.candidates)
         let context.candidates = neocomplete#helper#call_filters(

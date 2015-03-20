@@ -103,7 +103,6 @@ function! s:process_delimiter(context, candidate, delimiter, delim_cnt)
   " Clear previous result.
   let a:context.prev_candidates = []
   let a:context.prev_complete_pos = -1
-  let a:context.prev_complete_str = ''
 endfunction
 
 let &cpo = s:save_cpo
