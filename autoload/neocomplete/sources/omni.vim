@@ -191,7 +191,7 @@ function! s:set_complete_results_pos(funcs, cur_text) "{{{
     let line = getline('.')
 
     try
-      silent! call setline('.', s:get_current_line())
+      call setline('.', s:get_current_line())
       let complete_pos = call(omnifunc, [1, ''])
     catch
       call neocomplete#print_error(
@@ -201,9 +201,9 @@ function! s:set_complete_results_pos(funcs, cur_text) "{{{
       let complete_pos = -1
     finally
       if getpos('.') != pos
-        silent! call setpos('.', pos)
+        call setpos('.', pos)
       endif
-      silent! call setline('.', line)
+      call setline('.', line)
     endtry
 
     if complete_pos < 0
@@ -234,8 +234,8 @@ function! s:set_complete_results_words(complete_results) "{{{
     let line = getline('.')
 
     try
-      silent! call cursor(0, result.complete_pos)
-      silent! call setline('.', s:get_current_line())
+      call cursor(0, result.complete_pos)
+      call setline('.', s:get_current_line())
       let ret = call(omnifunc, [0, result.complete_str])
       let list = type(ret) == type([]) ? ret : ret.words
     catch
@@ -246,9 +246,9 @@ function! s:set_complete_results_words(complete_results) "{{{
       let list = []
     finally
       if getpos('.') != pos
-        silent! call setpos('.', pos)
+        call setpos('.', pos)
       endif
-      silent! call setline('.', line)
+      call setline('.', line)
     endtry
 
     let list = s:get_omni_list(list)
