@@ -74,7 +74,7 @@ let g:neocomplete#release_cache_time =
 let g:neocomplete#skip_auto_completion_time =
       \ get(g:, 'neocomplete#skip_auto_completion_time', '0.3')
 let g:neocomplete#enable_auto_close_preview =
-      \ get(g:, 'neocomplete#enable_auto_close_preview', 1)
+      \ get(g:, 'neocomplete#enable_auto_close_preview', 0)
 let g:neocomplete#fallback_mappings =
       \ get(g:, 'neocomplete#fallback_mappings', [])
 let g:neocomplete#sources =

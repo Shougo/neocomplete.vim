@@ -625,7 +625,7 @@ g:neocomplete#enable_auto_close_preview
 		If it is non-zero, neocomplete will close preview window
 		automatically.
 
-		Default value is 1.
+		Default value is 0.
 
 					*g:neocomplete#fallback_mappings*
 g:neocomplete#fallback_mappings
