@@ -72,7 +72,15 @@ function! s:source.gather_candidates(context) "{{{
     return []
   endif
 
-  let files = s:get_glob_files(complete_str, '')
+  let cwd = getcwd()
+  try
+    " cd to buffer directory.
+    execute 'lcd' fnameescape(fnamemodify(bufname('%'), ':h'))
+
+    let files = s:get_glob_files(complete_str, '')
+  finally
+    execute 'lcd' fnameescape(cwd)
+  endtry
 
   return files
 endfunction"}}}

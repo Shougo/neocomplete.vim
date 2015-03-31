@@ -1033,6 +1033,7 @@ dictionary					*neocomplete-source-dictionary*
 
 file						*neocomplete-source-file*
 		This source collects filename candidates.
+		Note: It is relative path to current buffer directory.
 
 omni						*neocomplete-source-omni*
 		This source calls 'omnifunc' automatically when cursor
