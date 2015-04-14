@@ -31,7 +31,8 @@ function! neocomplete#helper#get_cur_text(...) "{{{
   let is_skip_char = get(a:000, 0, 0)
 
   let cur_text =
-        \ (mode() ==# 'i' ? (col('.')-1) : col('.')) >= len(getline('.')) ?
+        \ ((neocomplete.event ==# 'InsertEnter' || mode() ==# 'i') ?
+        \   (col('.')-1) : col('.')) >= len(getline('.')) ?
         \      getline('.') :
         \      matchstr(getline('.'),
         \         '^.*\%' . (mode() ==# 'i' && !is_skip_char ?
