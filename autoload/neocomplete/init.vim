@@ -139,6 +139,12 @@ function! neocomplete#init#_others() "{{{
           \ 'Detected set paste! Disabled neocomplete.')
   endif
 
+  " Detect poor color
+  if &t_Co != '' && &t_Co < 8
+    call neocomplete#print_error(
+          \ 'Your terminal color is very limited. Disabled neocomplete.')
+  endif
+
   command! -nargs=0 -bar NeoCompleteDisable
         \ call neocomplete#init#disable()
 

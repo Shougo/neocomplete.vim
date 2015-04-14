@@ -185,6 +185,7 @@ function! neocomplete#is_enabled() "{{{
 endfunction"}}}
 function! neocomplete#is_locked(...) "{{{
   return neocomplete#is_cache_disabled() || &paste
+        \ || (&t_Co != '' && &t_Co < 8)
         \ || g:neocomplete#disable_auto_complete
 endfunction"}}}
 function! neocomplete#is_cache_disabled() "{{{
