@@ -182,7 +182,8 @@ function! s:set_complete_results_pos(funcs, cur_text) "{{{
   let complete_results = {}
   for [omnifunc, pattern] in a:funcs
     if neocomplete#is_auto_complete()
-          \ && a:cur_text !~# '\%(' . pattern . '\m\)$'
+          \ && (pattern == ''
+          \     || a:cur_text !~# '\%(' . pattern . '\m\)$')
       continue
     endif
 

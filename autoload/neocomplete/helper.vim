@@ -78,12 +78,16 @@ function! neocomplete#helper#get_force_omni_complete_pos(cur_text) "{{{
     return -1
   endif
 
+  let pattern = ''
+
   if has_key(g:neocomplete#force_omni_input_patterns, omnifunc)
     let pattern = g:neocomplete#force_omni_input_patterns[omnifunc]
   elseif filetype != '' &&
         \ get(g:neocomplete#force_omni_input_patterns, filetype, '') != ''
     let pattern = g:neocomplete#force_omni_input_patterns[filetype]
-  else
+  endif
+
+  if pattern == ''
     return -1
   endif
 
