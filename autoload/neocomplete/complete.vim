@@ -38,6 +38,21 @@ function! neocomplete#complete#_get_results(cur_text, ...) "{{{
 
   let complete_sources = call(
         \ 'neocomplete#complete#_set_results_pos', [a:cur_text] + a:000)
+  if empty(complete_sources)
+    call neocomplete#print_debug('Skipped.')
+    return []
+  endif
+
+  if neocomplete#is_auto_complete()
+    " Check previous position
+    let complete_pos =
+          \ neocomplete#complete#_get_complete_pos(complete_sources)
+    if neocomplete#complete#_check_previous_position(a:cur_text, complete_pos)
+      " Same position.
+      return []
+    endif
+  endif
+
   call neocomplete#complete#_set_results_words(complete_sources)
 
   return filter(copy(complete_sources),
@@ -281,6 +296,21 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
   finally
     let &ignorecase = ignorecase_save
   endtry
+endfunction"}}}
+
+function! neocomplete#complete#_check_previous_position(cur_text, complete_pos) abort "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  return neocomplete.skip_next_complete
+        \ && a:complete_pos == neocomplete.old_complete_pos
+        \ && line('.') == neocomplete.old_linenr
+        \ && stridx(a:cur_text, neocomplete.old_cur_text) == 0
+endfunction"}}}
+function! neocomplete#complete#_set_previous_position(cur_text, complete_pos) abort "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let neocomplete.skip_next_complete = 0
+  let neocomplete.old_complete_pos = a:complete_pos
+  let neocomplete.old_linenr = line('.')
+  let neocomplete.old_cur_text = a:cur_text
 endfunction"}}}
 
 " Source rank order. "{{{
