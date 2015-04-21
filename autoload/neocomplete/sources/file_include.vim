@@ -103,7 +103,7 @@ endfunction"}}}
 
 function! s:source.get_complete_position(context) "{{{
   let filetype = neocomplete#get_context_filetype()
-  if filetype ==# 'java'
+  if filetype ==# 'java' || filetype ==# 'haskell'
     " Cannot complete include path.
     " You should use omnifunc plugins..
     return -1
