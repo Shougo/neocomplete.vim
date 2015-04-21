@@ -111,6 +111,10 @@ function! neocomplete#sources#buffer#get_frequencies() "{{{
 endfunction"}}}
 
 function! neocomplete#sources#buffer#make_cache_current_line() "{{{
+  if neocomplete#is_locked()
+    return
+  endif
+
   " let start = reltime()
   call s:make_cache_current_buffer(
         \ max([1, line('.')-10]),
