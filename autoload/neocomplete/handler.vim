@@ -246,6 +246,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     if !empty(g:neocomplete#fallback_mappings)
           \ && len(matchstr(cur_text, '\h\w*$'))
           \   >= g:neocomplete#auto_completion_start_length
+          \ && !neocomplete.skip_next_complete
       let key = ''
       for i in range(0, len(g:neocomplete#fallback_mappings)-1)
         let key .= '<C-r>=neocomplete#mappings#fallback(' . i . ')<CR>'
