@@ -57,11 +57,11 @@ function! s:get_process() "{{{
 endfunction"}}}
 
 function! neocomplete#util#truncate_smart(...) "{{{
-  return call(s:get_prelude().truncate_skipping, a:000)
+  return call(s:get_string().truncate_skipping, a:000)
 endfunction"}}}
 
 function! neocomplete#util#truncate(...) "{{{
-  return call(s:get_prelude().truncate, a:000)
+  return call(s:get_string().truncate, a:000)
 endfunction"}}}
 
 function! neocomplete#util#strchars(...) "{{{
@@ -71,10 +71,10 @@ function! neocomplete#util#wcswidth(string) "{{{
   return strwidth(a:string)
 endfunction"}}}
 function! neocomplete#util#strwidthpart(...) "{{{
-  return call(s:get_prelude().strwidthpart, a:000)
+  return call(s:get_string().strwidthpart, a:000)
 endfunction"}}}
 function! neocomplete#util#strwidthpart_reverse(...) "{{{
-  return call(s:get_prelude().strwidthpart_reverse, a:000)
+  return call(s:get_string().strwidthpart_reverse, a:000)
 endfunction"}}}
 
 function! neocomplete#util#substitute_path_separator(...) "{{{
