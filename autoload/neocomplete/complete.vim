@@ -51,6 +51,8 @@ function! neocomplete#complete#_get_results(cur_text, ...) "{{{
       " Same position.
       return []
     endif
+
+    call neocomplete#complete#_set_previous_position(a:cur_text, complete_pos)
   endif
 
   call neocomplete#complete#_set_results_words(complete_sources)

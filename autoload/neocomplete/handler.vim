@@ -255,10 +255,8 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
       " Fallback to omnifunc
       call s:complete_key("\<Plug>(neocomplete_fallback)")
-    else
-      call neocomplete#print_debug('Skipped.')
-      return
     endif
+
     return
   endif
 
