@@ -74,8 +74,11 @@ function! s:source.gather_candidates(context) "{{{
 
   let cwd = getcwd()
   try
-    " cd to buffer directory.
-    execute 'lcd' fnameescape(fnamemodify(bufname('%'), ':h'))
+    let buffer_dir = fnamemodify(bufname('%'), ':h')
+    if isdirectory(buffer_dir)
+      " cd to buffer directory.
+      execute 'lcd' fnameescape(buffer_dir)
+    endif
 
     let files = s:get_glob_files(complete_str, '')
   finally
