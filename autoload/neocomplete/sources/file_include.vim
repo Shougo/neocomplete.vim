@@ -167,10 +167,6 @@ function! s:get_include_files() "{{{
         \ filetype, [])
 
   let line = neocomplete#get_cur_text()
-  if line =~ '^\s*\<require_relative\>' && &filetype =~# 'ruby'
-    " For require_relative.
-    let path = '.'
-  endif
 
   let match_end = matchend(line, pattern)
   let complete_str = matchstr(line[match_end :], '\f\+')
@@ -181,6 +177,12 @@ function! s:get_include_files() "{{{
   endif
   let delimiter = get(g:neocomplete#sources#file_include#delimiters,
         \ &filetype, '.')
+
+  if (line =~ '^\s*\<require_relative\>' && &filetype =~# 'ruby')
+        \ || stridx(complete_str, '.') == 0
+    " For include relative.
+    let path = '.'
+  endif
 
   " Path search.
   let glob = (complete_str !~ '\*$')?
