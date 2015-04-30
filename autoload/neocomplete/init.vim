@@ -35,6 +35,12 @@ function! neocomplete#init#enable() "{{{
     return
   endif
 
+  if !(has('lua') && (v:version > 703 || v:version == 703 && has('patch885')))
+    echomsg 'neocomplete does not work with this version of Vim.'
+    echomsg 'It requires Vim 7.3.885 or later with Lua support ("+lua").'
+    return
+  endif
+
   if !exists('b:neocomplete')
     call neocomplete#init#_current_neocomplete()
   endif
