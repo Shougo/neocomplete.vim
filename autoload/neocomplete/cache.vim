@@ -290,6 +290,10 @@ function! s:async_load(argv, cache_dir, filename) "{{{
   return neocomplete#cache#encode_name(a:cache_dir, a:filename)
 endfunction"}}}
 function! s:search_vim_path() "{{{
+  if exists('s:vim_path')
+    return s:vim_path
+  endif
+
   let paths = vimproc#get_command_name(v:progname, $PATH, -1)
   if empty(paths)
     if has('gui_macvim')
@@ -302,7 +306,7 @@ function! s:search_vim_path() "{{{
         return ''
       endif
 
-      let vim_path = '/Applications/MacVim.app/Contents/MacOS/Vim'
+      let s:vim_path = '/Applications/MacVim.app/Contents/MacOS/Vim'
     else
       call neocomplete#print_error(
             \ printf('Vim path : "%s" is not found.'.
@@ -315,16 +319,16 @@ function! s:search_vim_path() "{{{
     let base_path = neocomplete#util#substitute_path_separator(
           \ fnamemodify(paths[0], ':p:h'))
 
-    let vim_path = base_path .
+    let s:vim_path = base_path .
           \ (neocomplete#util#is_windows() ? '/vim.exe' : '/vim')
 
-    if !executable(vim_path) && neocomplete#util#is_mac()
+    if !executable(s:vim_path) && neocomplete#util#is_mac()
       " Note: Search "Vim" instead of vim.
-      let vim_path = base_path. '/Vim'
+      let s:vim_path = base_path. '/Vim'
     endif
   endif
 
-  return vim_path
+  return s:vim_path
 endfunction"}}}
 
 let &cpo = s:save_cpo
