@@ -322,7 +322,7 @@ function! s:close_preview_window() "{{{
   if g:neocomplete#enable_auto_close_preview
         \ && bufname('%') !=# '[Command Line]'
         \ && winnr('$') != 1 && !&l:previewwindow
-        \ && !s:check_in_do_auto_complete()
+        \ && !neocomplete#is_cache_disabled()
     " Close preview window.
     pclose!
   endif
