@@ -282,14 +282,6 @@ function! s:check_in_do_auto_complete() "{{{
   if &l:completefunc != '' && &l:buftype =~ 'nofile'
     return 1
   endif
-
-  " Detect AutoComplPop.
-  if exists('g:acp_enableAtStartup') && g:acp_enableAtStartup
-    call neocomplete#print_error(
-          \ 'Detected enabled AutoComplPop! Disabled neocomplete.')
-    NeoCompleteLock
-    return 1
-  endif
 endfunction"}}}
 function! s:is_skip_auto_complete(cur_text) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
