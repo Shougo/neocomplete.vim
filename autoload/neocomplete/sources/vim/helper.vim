@@ -228,9 +228,15 @@ function! neocomplete#sources#vim#helper#customlist(command_name, cur_text, comp
     return []
   endif
 
-  return s:make_completion_list(
-        \ call(g:neocomplete#sources#vim#complete_functions[a:command_name],
-        \ [a:complete_str, getline('.'), len(a:cur_text)]))
+  " Ignore error
+  try
+    let result = call(g:neocomplete#sources#vim#complete_functions[a:command_name],
+          \ [a:complete_str, getline('.'), len(a:cur_text)])
+  catch
+    let result = []
+  endtry
+
+  return s:make_completion_list(result)
 endfunction"}}}
 function! neocomplete#sources#vim#helper#dir(cur_text, complete_str) "{{{
   " Todo.
