@@ -44,14 +44,8 @@ function! neocomplete#complete#_get_results(cur_text, ...) "{{{
   endif
 
   if neocomplete#is_auto_complete()
-    " Check previous position
     let complete_pos =
           \ neocomplete#complete#_get_complete_pos(complete_sources)
-    if neocomplete#complete#_check_previous_position(a:cur_text, complete_pos)
-      " Same position.
-      return []
-    endif
-
     call neocomplete#complete#_set_previous_position(a:cur_text, complete_pos)
   endif
 
@@ -309,7 +303,6 @@ function! neocomplete#complete#_check_previous_position(cur_text, complete_pos) 
 endfunction"}}}
 function! neocomplete#complete#_set_previous_position(cur_text, complete_pos) abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
-  let neocomplete.skip_next_complete = 0
   let neocomplete.old_complete_pos = a:complete_pos
   let neocomplete.old_linenr = line('.')
   let neocomplete.old_cur_text = a:cur_text

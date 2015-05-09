@@ -89,11 +89,7 @@ function! neocomplete#mappings#manual_complete() "{{{
 endfunction"}}}
 
 function! neocomplete#mappings#smart_close_popup() "{{{
-  " Don't skip next complete.
   let neocomplete = neocomplete#get_current_neocomplete()
-  let neocomplete.skip_next_complete = 0
-  let neocomplete.old_linenr = 0
-
   return neocomplete#mappings#cancel_popup()
 endfunction
 "}}}
@@ -107,6 +103,7 @@ endfunction
 "}}}
 function! neocomplete#mappings#cancel_popup() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
+  let neocomplete.complete_str = ''
   let neocomplete.skip_next_complete = 1
 
   return pumvisible() ? "\<C-e>" : ''

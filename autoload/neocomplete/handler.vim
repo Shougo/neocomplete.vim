@@ -213,6 +213,8 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     return
   endif
 
+  let neocomplete.old_cur_text = cur_text
+
   let complete_pos =
         \ neocomplete#helper#get_force_omni_complete_pos(cur_text)
   if complete_pos >= 0
@@ -253,7 +255,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
       endfor
       execute 'inoremap <silent> <Plug>(neocomplete_fallback)' key
 
-      " Fallback to omnifunc
+      " Fallback
       call s:complete_key("\<Plug>(neocomplete_fallback)")
     endif
 
@@ -286,16 +288,16 @@ endfunction"}}}
 function! s:is_skip_auto_complete(cur_text) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
 
-  if (a:cur_text == neocomplete.old_cur_text
-        \     && line('.') == neocomplete.old_linenr)
-        \ || (g:neocomplete#lock_iminsert && &l:iminsert)
+  if (g:neocomplete#lock_iminsert && &l:iminsert)
         \ || (&l:formatoptions =~# '[tca]' && &l:textwidth > 0
         \     && strwidth(a:cur_text) >= &l:textwidth)
     let neocomplete.skip_next_complete = 0
     return 1
   endif
 
-  if !neocomplete.skip_next_complete
+  let skip = neocomplete.skip_next_complete
+
+  if !skip
     return 0
   endif
 
@@ -312,11 +314,8 @@ function! s:is_skip_auto_complete(cur_text) "{{{
     endif
   endfor
 
-  if is_delimiter && neocomplete.skip_next_complete == 2
-    let neocomplete.skip_next_complete = 0
-  endif
-
-  return 0
+  let neocomplete.skip_next_complete = 0
+  return !(is_delimiter && skip == 2)
 endfunction"}}}
 function! s:close_preview_window() "{{{
   if g:neocomplete#enable_auto_close_preview
