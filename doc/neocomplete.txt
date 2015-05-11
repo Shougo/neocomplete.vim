@@ -1049,7 +1049,7 @@ suffix of complete candidates in popup menu declaration.
     file/include      -> [FI] {filename}
     dictionary        -> [D] {words}
     member            -> [M] member
-    buffer            -> [B] {buffername}
+    buffer            -> [B] {buffer}
     syntax            -> [S] {syntax-keyword}
     include           -> [I]
     neosnippet        -> [neosnip]
