@@ -89,7 +89,6 @@ function! neocomplete#mappings#manual_complete() "{{{
 endfunction"}}}
 
 function! neocomplete#mappings#smart_close_popup() "{{{
-  let neocomplete = neocomplete#get_current_neocomplete()
   return neocomplete#mappings#cancel_popup()
 endfunction
 "}}}
