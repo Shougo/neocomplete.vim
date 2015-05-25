@@ -269,6 +269,9 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
   let neocomplete.candidates = neocomplete#complete#_get_words(
         \ neocomplete.complete_sources, complete_pos, base)
+  if empty(neocomplete.candidates)
+    return
+  endif
 
   " Start auto complete.
   call s:complete_key(
