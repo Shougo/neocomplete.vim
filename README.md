@@ -1,15 +1,15 @@
 neocomplete
 ===========
-[![Stories in Ready](http://badge.waffle.io/Shougo/neocomplete.vim.png)](http://waffle.io/Shougo/neocomplete.vim)  
+[![Stories in Ready](http://badge.waffle.io/Shougo/neocomplete.vim.png)](http://waffle.io/Shougo/neocomplete.vim)
 
-neocomplete is the abbreviation of "neo-completion with cache". It
-provides keyword completion system by maintaining a cache of keywords in the
-current buffer. neocomplete can be customized easily and has many more
-features than Vim's built-in completion.
+neocomplete is the abbreviation of "neo-completion with cache". It provides
+keyword completion system by maintaining a cache of keywords in the current
+buffer. neocomplete can be customized easily and has many more features than
+Vim's built-in completion.
 
 ## Installation
 
-**Note:** neocomplete requires Vim 7.3.885+ with Lua enabled. 
+**Note:** neocomplete requires Vim 7.3.885+ with Lua enabled.
 See [requirements](#requirements) if you aren't sure whether you have this.
 
 1. Extract the files and put them in your Vim directory
@@ -29,7 +29,7 @@ If `:echo has("lua")` returns `1`, then you're done; otherwise, see below.
 * [Vim 32bit alternative](http://tuxproject.de/projects/vim/)
 * [Another alternative](http://wyw.dcweb.cn/#download)
 
-**Note:** the Vim build may not include the Lua DLL. In that case, 
+**Note:** the Vim build may not include the Lua DLL. In that case,
 [download Lua](http://lua-users.org/wiki/LuaBinaries) and put the `lua52.dll`
 file in the same directory as `gvim.exe`.
 
@@ -47,7 +47,7 @@ To install Vim (as opposed to MacVim) with homebrew:
 
 ### Vim for Linux:
 
-#### Debian (or Ubuntu) 
+#### Debian (or Ubuntu)
 
 Make sure you have any of these packages:
 * vim-nox
@@ -57,7 +57,7 @@ Make sure you have any of these packages:
 
 Which package depends on your graphical environment (except vim-nox which is for vim with no GUI).
 
-#### Fedora 
+#### Fedora
 
 The latest version of vim includes lua.
 As of 2014-04-16 you need to [download the rpm](http://koji.fedoraproject.org/koji/packageinfo?packageID=216).
@@ -89,10 +89,10 @@ To check if everything was successfull enter the following `vim --version`. You 
 
 ## Snippets
 
-The Snippets feature of neocomplete was split into a 
+The Snippets feature of neocomplete was split into a
 [separate plugin](https://github.com/Shougo/neosnippet).
 
-A migration guide for existing users of neocomplcache is available: 
+A migration guide for existing users of neocomplcache is available:
 [Migration guide](https://github.com/Shougo/neocomplete.vim/wiki/neocomplete-migration-guide)
 
 
