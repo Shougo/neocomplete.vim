@@ -319,8 +319,7 @@ function! s:search_vim_path() "{{{
     let base_path = neocomplete#util#substitute_path_separator(
           \ fnamemodify(paths[0], ':p:h'))
 
-    let s:vim_path = base_path .
-          \ (neocomplete#util#is_windows() ? '/vim.exe' : '/vim')
+    let s:vim_path = base_path . '/vim'
 
     if !executable(s:vim_path) && neocomplete#util#is_mac()
       " Note: Search "Vim" instead of vim.
