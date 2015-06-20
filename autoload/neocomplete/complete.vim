@@ -298,7 +298,7 @@ function! neocomplete#complete#_check_previous_position(cur_text, complete_pos) 
   let neocomplete = neocomplete#get_current_neocomplete()
   return a:complete_pos == neocomplete.old_complete_pos
         \ && line('.') == neocomplete.old_linenr
-        \ && stridx(a:cur_text, neocomplete.old_cur_text) == 0
+        \ && a:cur_text ==# neocomplete.old_cur_text
 endfunction"}}}
 function! neocomplete#complete#_set_previous_position(cur_text, complete_pos) abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
