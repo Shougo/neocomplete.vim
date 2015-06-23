@@ -204,82 +204,62 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   let neocomplete.event = a:event
 
   let cur_text = neocomplete#get_cur_text(1)
+  let complete_pos = -1
 
   call neocomplete#print_debug('cur_text = ' . cur_text)
 
-  " Prevent infinity loop.
-  if s:is_skip_auto_complete(cur_text)
-    call neocomplete#print_debug('Skipped.')
-    return
-  endif
-
-  let neocomplete.old_cur_text = cur_text
-
-  let complete_pos =
-        \ neocomplete#helper#get_force_omni_complete_pos(cur_text)
-  if complete_pos >= 0
-    if !neocomplete#complete#_check_previous_position(cur_text, complete_pos)
-      call neocomplete#complete#_set_previous_position(cur_text, complete_pos)
-      call s:complete_key("\<Plug>(neocomplete_start_omni_complete)")
-    endif
-
-    return
-  endif
-
-  " Check multibyte input or eskk or spaces.
-  if cur_text =~ '^\s*$'
-        \ || neocomplete#is_eskk_enabled()
-        \ || neocomplete#is_multibyte_input(cur_text)
-    call neocomplete#print_debug('Skipped.')
-    return
-  endif
-
   try
-    let neocomplete.is_auto_complete = 1
-
-    " Do prefetch.
-    let neocomplete.complete_sources =
-          \ neocomplete#complete#_get_results(cur_text)
-  finally
-    let neocomplete.is_auto_complete = 0
-  endtry
-
-  if empty(neocomplete.complete_sources)
-    let complete_pos = match(cur_text, '\h\w*$')
-    if !empty(g:neocomplete#fallback_mappings)
-          \ && len(matchstr(cur_text, '\h\w*$'))
-          \   >= g:neocomplete#auto_completion_start_length
-          \ && !neocomplete.skip_next_complete
-          \ && !neocomplete#complete#_check_previous_position(
-          \      cur_text, complete_pos)
-      let key = ''
-      for i in range(0, len(g:neocomplete#fallback_mappings)-1)
-        let key .= '<C-r>=neocomplete#mappings#fallback(' . i . ')<CR>'
-      endfor
-      execute 'inoremap <silent> <Plug>(neocomplete_fallback)' key
-
-      " Fallback
-      call neocomplete#complete#_set_previous_position(cur_text, complete_pos)
-      call s:complete_key("\<Plug>(neocomplete_fallback)")
+    " Prevent infinity loop.
+    if s:is_skip_auto_complete(cur_text)
+      call neocomplete#print_debug('Skipped.')
+      return
     endif
 
-    return
-  endif
+    let complete_pos = s:check_force_omni(cur_text)
+    if complete_pos >= 0
+      return
+    endif
 
-  let complete_pos =
-        \ neocomplete#complete#_get_complete_pos(
-        \ neocomplete.complete_sources)
-  let base = cur_text[complete_pos :]
+    " Check multibyte input or eskk or spaces.
+    if cur_text =~ '^\s*$'
+          \ || neocomplete#is_eskk_enabled()
+          \ || neocomplete#is_multibyte_input(cur_text)
+      call neocomplete#print_debug('Skipped.')
+      return
+    endif
 
-  let neocomplete.candidates = neocomplete#complete#_get_words(
-        \ neocomplete.complete_sources, complete_pos, base)
-  if empty(neocomplete.candidates)
-    return
-  endif
+    try
+      let neocomplete.is_auto_complete = 1
 
-  " Start auto complete.
-  call s:complete_key(
-        \ "\<Plug>(neocomplete_start_auto_complete)")
+      " Do prefetch.
+      let neocomplete.complete_sources =
+            \ neocomplete#complete#_get_results(cur_text)
+    finally
+      let neocomplete.is_auto_complete = 0
+    endtry
+
+    if empty(neocomplete.complete_sources)
+      let complete_pos = s:check_fallback(cur_text)
+      return
+    endif
+
+    let complete_pos =
+          \ neocomplete#complete#_get_complete_pos(
+          \ neocomplete.complete_sources)
+    let base = cur_text[complete_pos :]
+
+    let neocomplete.candidates = neocomplete#complete#_get_words(
+          \ neocomplete.complete_sources, complete_pos, base)
+    if empty(neocomplete.candidates)
+      return
+    endif
+
+    " Start auto complete.
+    call s:complete_key(
+          \ "\<Plug>(neocomplete_start_auto_complete)")
+  finally
+    call neocomplete#complete#_set_previous_position(cur_text, complete_pos)
+  endtry
 endfunction"}}}
 
 function! s:check_in_do_auto_complete() "{{{
@@ -345,6 +325,41 @@ function! s:make_cache_current_line() "{{{
     " Caching current cache line.
     call neocomplete#sources#member#make_cache_current_line()
   endif
+endfunction"}}}
+function! s:check_force_omni(cur_text) "{{{
+  let cur_text = a:cur_text
+  let complete_pos = neocomplete#helper#get_force_omni_complete_pos(cur_text)
+
+  if complete_pos >= 0
+        \ && !neocomplete#complete#_check_previous_position(
+        \       cur_text, complete_pos)
+    call s:complete_key("\<Plug>(neocomplete_start_omni_complete)")
+  endif
+
+  return complete_pos
+endfunction"}}}
+function! s:check_fallback(cur_text) "{{{
+  let cur_text = a:cur_text
+  let complete_pos = match(cur_text, '\h\w*$')
+  if empty(g:neocomplete#fallback_mappings)
+        \ && len(matchstr(cur_text, '\h\w*$'))
+        \   >= g:neocomplete#auto_completion_start_length
+        \ && !neocomplete.skip_next_complete
+        \ && !neocomplete#complete#_check_previous_position(
+        \      cur_text, complete_pos)
+    let key = ''
+    for i in range(0, len(g:neocomplete#fallback_mappings)-1)
+      let key .= '<C-r>=neocomplete#mappings#fallback(' . i . ')<CR>'
+    endfor
+    execute 'inoremap <silent> <Plug>(neocomplete_fallback)' key
+
+    " Fallback
+    call s:complete_key("\<Plug>(neocomplete_fallback)")
+
+    return complete_pos
+  endif
+
+  return -1
 endfunction"}}}
 
 function! s:complete_key(key) "{{{
