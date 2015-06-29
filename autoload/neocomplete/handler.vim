@@ -342,7 +342,7 @@ function! s:check_fallback(cur_text) "{{{
   let cur_text = a:cur_text
   let complete_pos = match(cur_text, '\h\w*$')
   let neocomplete = neocomplete#get_current_neocomplete()
-  if empty(g:neocomplete#fallback_mappings)
+  if !empty(g:neocomplete#fallback_mappings)
         \ && len(matchstr(cur_text, '\h\w*$'))
         \   >= g:neocomplete#auto_completion_start_length
         \ && !neocomplete.skip_next_complete
