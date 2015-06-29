@@ -333,7 +333,8 @@ g:neocomplete#enable_camel_case
 g:neocomplete#disable_auto_complete
 		This variable controls whether you invalidate automatic
 		completion.  If it is 1, automatic completion becomes
-		invalid, but can use the manual completion by <C-x><C-u>.
+		invalid, but can use the manual completion by
+		|neocomplete#start_manual_complete()|.
 
 		Default value is 0.
 
