@@ -1020,14 +1020,6 @@ syntax						*neocomplete-source-syntax*
 		add to candidate completion.  The plugin can recognize
 		candidates a lot more than autoload/syntaxcomplete.vim.
 
-vim						*neocomplete-source-vim*
-		This source analyzes context and start Omni completion of
-		Vim script.  This plugin does not work other than editing
-		time of Vim script.  I created it because neocomplete
-		cannot call |i_CTRL-X_CTRL-V|.  Local variable and a
-		script variable, a function and the analysis of the
-		command are implemented now.
-
 dictionary					*neocomplete-source-dictionary*
 		This source adds candidates from 'dictionary' or
 		|g:neocomplete#sources#dictionary#dictionaries|.
@@ -1078,6 +1070,14 @@ neco-ghc				*neocomplete-sources-neco-ghc*
 		eagletmt originally implemented and ujihisa added some new
 		features. It completes a source file written in Haskell.
 		It requires ghc-mod <http://www.mew.org/~kazu/proj/ghc-mod/>.
+
+neco-vim				*neocomplete-sources-neco-vim*
+		https://github.com/Shougo/neco-vim
+		It analyzes context and start Omni completion of Vim script.
+		It does not work other than editing time of Vim script.  I
+		created it because neocomplete cannot call |i_CTRL-X_CTRL-V|.
+		Local variable and a script variable, a function and the
+		analysis of the command are implemented now.
 
 ==============================================================================
 FILTERS						*neocomplete-filters*
