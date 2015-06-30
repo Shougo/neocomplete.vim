@@ -97,6 +97,10 @@ function! s:source.hooks.on_init(context) "{{{
         \'g:neocomplete#sources#omni#input_patterns',
         \'clojure',
         \'\%(([^)]\+\)\|\*[[:alnum:]_-]\+')
+  call neocomplete#util#set_default_dictionary(
+        \'g:neocomplete#sources#omni#input_patterns',
+        \'rust',
+        \'[^.[:digit:] *\t]\%(\.\|\::\)\%(\h\w*\)\?')
 
   " External language interface check.
   if has('ruby')
