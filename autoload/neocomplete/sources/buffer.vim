@@ -173,7 +173,7 @@ endfunction"}}}
 
 function! s:make_cache_file(srcname) "{{{
   " Initialize source.
-  if !s:exists_current_source()
+  if !has_key(s:buffer_sources, a:srcname)
     call s:initialize_source(a:srcname)
   endif
 
