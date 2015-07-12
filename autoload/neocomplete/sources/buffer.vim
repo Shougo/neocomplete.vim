@@ -173,7 +173,9 @@ endfunction"}}}
 
 function! s:make_cache_file(srcname) "{{{
   " Initialize source.
-  call s:initialize_source(a:srcname)
+  if !s:exists_current_source()
+    call s:initialize_source(a:srcname)
+  endif
 
   let source = s:buffer_sources[a:srcname]
 
