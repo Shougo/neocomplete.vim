@@ -364,7 +364,6 @@ function! s:check_fallback(cur_text) "{{{
 endfunction"}}}
 
 function! s:complete_key(key) "{{{
-  set completeopt-=longest
   call neocomplete#helper#complete_configure()
 
   call feedkeys(a:key)

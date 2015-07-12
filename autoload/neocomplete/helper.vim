@@ -388,6 +388,7 @@ function! neocomplete#helper#complete_configure() "{{{
   let neocomplete.completeopt = &completeopt
 
   if neocomplete#util#is_complete_select()
+        \ && &completeopt !~# 'noinsert\|noselect'
     if g:neocomplete#enable_auto_select
       set completeopt-=noselect
       set completeopt+=noinsert

@@ -103,7 +103,7 @@ function! neocomplete#util#is_mac(...) "{{{
   return call(s:get_prelude().is_mac, a:000)
 endfunction"}}}
 function! neocomplete#util#is_complete_select() "{{{
-  return get(g:, 'neocomplete#enable_complete_select', 0)
+  return has('patch-7.4.775')
 endfunction"}}}
 function! neocomplete#util#get_last_status(...) "{{{
   return call(s:get_process().get_last_status, a:000)

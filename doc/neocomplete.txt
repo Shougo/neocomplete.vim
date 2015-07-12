@@ -372,6 +372,10 @@ g:neocomplete#enable_auto_select
 		automatically.  If you enable this option, neocomplete's
 		completion behavior is like |AutoComplPop|.
 
+		Note: If you want to enable the feature in
+		|g:neocomplete#force_omni_input_patterns|, you need Vim
+		7.4.775 or above.
+
 		Default value is 0.
 
 				*g:neocomplete#enable_auto_delimiter*
@@ -448,8 +452,7 @@ g:neocomplete#force_omni_input_patterns
 		If this pattern is not defined or empty pattern, neocomplete
 		does not call 'omnifunc'.
 		Note: If it is a set, neocomplete will call 'omnifunc'
-		directly.  So almost neocomplete features are disabled(for
-		example: auto select first candidate).  But
+		directly.  So almost neocomplete features are disabled.  But
 		all Omni completion works instead of
 		|g:neocomplete#sources#omni#input_patterns|.
 >
@@ -1892,7 +1895,7 @@ Q: In ||g:neocomplete#force_omni_input_patterns|,
 |g:neocomplete#enable_auto_select| feature is not work.
 https://github.com/Shougo/neocomplete.vim/issues/139
 
-A: It is feature. See |g:neocomplete#force_omni_input_patterns| documentation.
+A: Please update your Vim to 7.4.775 or above.
 
 Q: I want to disable all sources by default.
 
