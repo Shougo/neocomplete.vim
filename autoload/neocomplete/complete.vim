@@ -283,8 +283,11 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
       let context.prev_complete_pos = context.complete_pos
 
       if !empty(context.candidates)
+        let matchers = empty(source.neocomplete__matchers) ?
+              \   neocomplete#get_current_neocomplete().default_matchers
+              \ : source.neocomplete__matchers
         let context.candidates = neocomplete#helper#call_filters(
-              \ source.neocomplete__matchers, source, {})
+              \ matchers, source, {})
       endif
 
       call neocomplete#print_debug(source.name)

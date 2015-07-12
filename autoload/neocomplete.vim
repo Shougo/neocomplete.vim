@@ -312,6 +312,15 @@ function! neocomplete#skip_next_complete() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skip_next_complete = 1
 endfunction"}}}
+function! neocomplete#get_default_matchers() "{{{
+  return map(copy(neocomplete#get_current_neocomplete().default_matchers),
+        \ 'v:val.name')
+endfunction"}}}
+function! neocomplete#set_default_matchers(matchers) "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let neocomplete.default_matchers = neocomplete#init#_filters(
+        \ neocomplete#util#convert2list(a:matchers))
+endfunction"}}}
 
 function! neocomplete#set_dictionary_helper(variable, keys, value) "{{{
   return neocomplete#util#set_dictionary_helper(

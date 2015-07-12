@@ -640,6 +640,10 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'within_comment' : 0,
         \ 'is_auto_complete' : 0,
         \ 'indent_text' : '',
+        \ 'default_matchers' : neocomplete#init#_filters(
+        \  (g:neocomplete#enable_fuzzy_completion ?
+        \   ['matcher_fuzzy'] : ['matcher_head'])
+        \  + ['matcher_length']),
         \}
 endfunction"}}}
 
@@ -700,10 +704,7 @@ function! neocomplete#init#_source(source) "{{{
         \ 'disabled_filetypes' : {},
         \ 'hooks' : {},
         \ 'mark' : '',
-        \ 'matchers' :
-        \        (g:neocomplete#enable_fuzzy_completion ?
-        \          ['matcher_fuzzy'] : ['matcher_head'])
-        \      + ['matcher_length'],
+        \ 'matchers' : [],
         \ 'sorters' : ['sorter_rank'],
         \ 'converters' : [
         \      'converter_remove_overlap',

@@ -831,6 +831,16 @@ neocomplete#disable_default_dictionary({variable-name})
 	call neocomplete#disable_default_dictionary(
 	      \ 'g:neocomplete#same_filetypes')
 <
+				*neocomplete#get_default_matchers()*
+neocomplete#get_default_matchers()
+		Get default matchers in current buffer.
+
+				*neocomplete#set_default_matchers()*
+neocomplete#set_default_matchers({names})
+		Chang default matchers in current buffer.
+>
+	call neocomplete#set_default_matchers('matcher_head')
+<
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neocomplete-key-mappings*
 
@@ -1115,6 +1125,8 @@ Default matchers:
 		['matcher_head', 'matcher_length']
 	Otherwise:
 		['matcher_fuzzy', 'matcher_length']
+	
+	You can change it by |neocomplete#set_default_matchers()|.
 
 					*neocomplete-filter-sorter_default*
 Default sorters: ['sorter_rank'].
