@@ -393,7 +393,8 @@ function! neocomplete#helper#complete_configure() "{{{
       set completeopt-=noselect
       set completeopt+=noinsert
     else
-      set completeopt+=noinsert,noselect
+      set completeopt-=noinsert
+      set completeopt+=noselect
     endif
   endif
 endfunction"}}}
