@@ -156,10 +156,6 @@ function! s:check_buffer(bufnumber, is_force) "{{{
           \ }
   endif
 
-  if !executable(g:neocomplete#ctags_command)
-    return
-  endif
-
   let include_info = s:include_info[bufnumber]
 
   if a:is_force || include_info.lines !=# getbufline(bufnumber, 1, 100)
@@ -186,6 +182,7 @@ function! s:check_buffer(bufnumber, is_force) "{{{
   endif
 
   if g:neocomplete#sources#include#max_processes <= 0
+        \ || !executable(g:neocomplete#ctags_command)
     return
   endif
 
@@ -257,8 +254,9 @@ function! s:get_buffer_include_files(bufnumber) "{{{
     if executable('python')
       call s:set_python_include_files('python')
     endif
-  elseif filetype ==# 'cpp' && isdirectory('/usr/include/c++')
+  elseif filetype ==# 'cpp'
         \ && !has_key(g:neocomplete#sources#include#paths, 'cpp')
+        \ && isdirectory('/usr/include/c++')
     call s:set_cpp_include_files(a:bufnumber)
   endif
 
