@@ -27,16 +27,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Global options definition. "{{{
-let g:neocomplete#sources#include#patterns =
-      \ get(g:, 'neocomplete#sources#include#patterns', {})
-let g:neocomplete#sources#include#exprs =
-      \ get(g:, 'neocomplete#sources#include#exprs', {})
-let g:neocomplete#sources#include#paths =
-      \ get(g:, 'neocomplete#sources#include#paths', {})
-let g:neocomplete#sources#include#suffixes =
-      \ get(g:, 'neocomplete#sources#include#suffixes', {})
-let g:neocomplete#sources#include#functions =
-      \ get(g:, 'neocomplete#sources#include#functions', {})
 let g:neocomplete#sources#include#max_processes =
       \ get(g:, 'neocomplete#sources#include#max_processes', 20)
 "}}}
@@ -140,10 +130,9 @@ function! s:check_buffer(bufnumber, is_force) "{{{
 
     " Check include files from function.
     let filetype = getbufvar(a:bufnumber, '&filetype')
-    let function = get(g:neocomplete#sources#include#functions, filetype, '')
+    let function = neoinclude#get_function(filetype)
     if function != '' && getbufvar(bufnumber, '&buftype') !~ 'nofile'
-      let path = get(g:neocomplete#sources#include#paths, filetype,
-            \ getbufvar(a:bufnumber, '&path'))
+      let path = neoinclude#get_path(a:bufnumber, filetype)
       let include_files += call(function,
             \ [getbufline(bufnumber, 1, (a:is_force ? '$' : 1000)), path])
     endif
@@ -181,38 +170,6 @@ function! s:check_buffer(bufnumber, is_force) "{{{
   endfor
 endfunction"}}}
 
-function! s:set_python_include_files(python_bin) "{{{
-  let python_sys_path_cmd = a:python_bin .
-        \ ' -c "import sys;sys.stdout.write(\",\".join(sys.path))"'
-  let path = neocomplete#system(python_sys_path_cmd)
-  let path = join(neocomplete#util#uniq(filter(
-        \ split(path, ',', 1), "v:val != ''")), ',')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#paths', a:python_bin, path)
-endfunction"}}}
-
-function! s:set_cpp_include_files(bufnumber) "{{{
-  if exists('*vimproc#readdir')
-    let files = vimproc#readdir('/usr/include/')
-          \ + vimproc#readdir('/usr/include/c++/')
-    for directory in filter(split(glob(
-          \ '/usr/include/*/c++'), '\n'), 'isdirectory(v:val)')
-      let files += vimproc#readdir(directory)
-    endfor
-  else
-    let files = split(glob('/usr/include/*'), '\n')
-          \ + split(glob('/usr/include/c++/*'), '\n')
-          \ + split(glob('/usr/include/*/c++/*'), '\n')
-  endif
-  call filter(files, 'isdirectory(v:val)')
-
-  " Add cpp path.
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#paths', 'cpp',
-        \ getbufvar(a:bufnumber, '&path') .
-        \ ','.join(files, ','))
-endfunction"}}}
-
 function! s:get_buffer_include_files(bufnumber) "{{{
   let filetype = getbufvar(a:bufnumber, '&filetype')
   if filetype == ''
@@ -244,9 +201,7 @@ function! s:get_buffer_include_files(bufnumber) "{{{
   endif
 
   " Restore option.
-  if has_key(g:neocomplete#sources#include#suffixes, filetype)
-    let &l:suffixesadd = suffixes
-  endif
+  let &l:suffixesadd = suffixes
 
   return neocomplete#util#uniq(include_files)
 endfunction"}}}
@@ -329,54 +284,6 @@ function! neocomplete#sources#include#make_cache(bufname) "{{{
   endif
 
   call s:check_buffer(bufnumber, 1)
-endfunction"}}}
-
-" Analyze include files functions.
-function! neocomplete#sources#include#analyze_vim_include_files(lines, path) "{{{
-  let include_files = []
-  let dup_check = {}
-  for line in a:lines
-    if line =~ '\<\h\w*#' && line !~ '\<function!\?\>'
-      let filename = 'autoload/' . substitute(matchstr(line, '\<\%(\h\w*#\)*\h\w*\ze#'),
-            \ '#', '/', 'g') . '.vim'
-      if filename == '' || has_key(dup_check, filename)
-        continue
-      endif
-      let dup_check[filename] = 1
-
-      let filename = fnamemodify(findfile(filename, &runtimepath), ':p')
-      if filereadable(filename)
-        call add(include_files, filename)
-      endif
-    endif
-  endfor
-
-  return include_files
-endfunction"}}}
-function! neocomplete#sources#include#analyze_ruby_include_files(lines, path) "{{{
-  let include_files = []
-  let dup_check = {}
-  for line in a:lines
-    if line =~ '\<autoload\>'
-      let args = split(line, ',')
-      if len(args) < 2
-        continue
-      endif
-      let filename = substitute(matchstr(args[1], '["'']\zs\f\+\ze["'']'),
-            \ '\.', '/', 'g') . '.rb'
-      if filename == '' || has_key(dup_check, filename)
-        continue
-      endif
-      let dup_check[filename] = 1
-
-      let filename = fnamemodify(findfile(filename, a:path), ':p')
-      if filereadable(filename)
-        call add(include_files, filename)
-      endif
-    endif
-  endfor
-
-  return include_files
 endfunction"}}}
 
 function! s:initialize_variables() "{{{

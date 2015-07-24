@@ -27,6 +27,23 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! neoinclude#initialize() abort "{{{
+  let g:neocomplete#sources#file_include#exprs =
+        \ get(g:, 'neocomplete#sources#file_include#exprs', {})
+  let g:neocomplete#sources#file_include#exts =
+        \ get(g:, 'neocomplete#sources#file_include#exts', {})
+  let g:neocomplete#sources#file_include#delimiters =
+        \ get(g:, 'neocomplete#sources#file_include#delimiters', {})
+  let g:neocomplete#sources#include#patterns =
+        \ get(g:, 'neocomplete#sources#include#patterns', {})
+  let g:neocomplete#sources#include#exprs =
+        \ get(g:, 'neocomplete#sources#include#exprs', {})
+  let g:neocomplete#sources#include#paths =
+        \ get(g:, 'neocomplete#sources#include#paths', {})
+  let g:neocomplete#sources#include#suffixes =
+        \ get(g:, 'neocomplete#sources#include#suffixes', {})
+  let g:neocomplete#sources#include#functions =
+        \ get(g:, 'neocomplete#sources#include#functions', {})
+
   " Initialize include pattern. "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#include#patterns',
@@ -49,10 +66,10 @@ function! neoinclude#initialize() abort "{{{
   " Initialize include functions. "{{{
   " call neocomplete#util#set_default_dictionary(
   "       \ 'g:neocomplete#sources#include#functions', 'vim',
-  "       \ 'neocomplete#sources#include#analyze_vim_include_files')
+  "       \ 'neoinclude#analyze_vim_include_files')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#include#functions', 'ruby',
-        \ 'neocomplete#sources#include#analyze_ruby_include_files')
+        \ 'neoinclude#analyze_ruby_include_files')
   "}}}
   " Initialize filename include expr. "{{{
   call neocomplete#util#set_default_dictionary(
@@ -136,6 +153,62 @@ endfunction"}}}
 function! neoinclude#get_exts(filetype) abort "{{{
   return get(g:neocomplete#sources#file_include#exts,
         \ a:filetype, [])
+endfunction"}}}
+function! neoinclude#get_function(filetype) abort "{{{
+  return get(g:neocomplete#sources#include#functions,
+        \ a:filetype, '')
+endfunction"}}}
+function! neoinclude#get_delimiters(filetype) abort "{{{
+  return get(g:neocomplete#sources#file_include#delimiters,
+        \ a:filetype, '.')
+endfunction"}}}
+
+" Analyze include files functions.
+function! neoinclude#analyze_vim_include_files(lines, path) "{{{
+  let include_files = []
+  let dup_check = {}
+  for line in a:lines
+    if line =~ '\<\h\w*#' && line !~ '\<function!\?\>'
+      let filename = 'autoload/' . substitute(matchstr(line, '\<\%(\h\w*#\)*\h\w*\ze#'),
+            \ '#', '/', 'g') . '.vim'
+      if filename == '' || has_key(dup_check, filename)
+        continue
+      endif
+      let dup_check[filename] = 1
+
+      let filename = fnamemodify(findfile(filename, &runtimepath), ':p')
+      if filereadable(filename)
+        call add(include_files, filename)
+      endif
+    endif
+  endfor
+
+  return include_files
+endfunction"}}}
+function! neoinclude#analyze_ruby_include_files(lines, path) "{{{
+  let include_files = []
+  let dup_check = {}
+  for line in a:lines
+    if line =~ '\<autoload\>'
+      let args = split(line, ',')
+      if len(args) < 2
+        continue
+      endif
+      let filename = substitute(matchstr(args[1], '["'']\zs\f\+\ze["'']'),
+            \ '\.', '/', 'g') . '.rb'
+      if filename == '' || has_key(dup_check, filename)
+        continue
+      endif
+      let dup_check[filename] = 1
+
+      let filename = fnamemodify(findfile(filename, a:path), ':p')
+      if filereadable(filename)
+        call add(include_files, filename)
+      endif
+    endif
+  endfor
+
+  return include_files
 endfunction"}}}
 
 function! s:set_python_paths(python_bin) "{{{

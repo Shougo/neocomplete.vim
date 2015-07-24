@@ -26,15 +26,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-" Global options definition. "{{{
-let g:neocomplete#sources#file_include#exprs =
-        \ get(g:, 'neocomplete#sources#file_include#exprs', {})
-let g:neocomplete#sources#file_include#exts =
-      \ get(g:, 'neocomplete#sources#file_include#exts', {})
-let g:neocomplete#sources#file_include#delimiters =
-      \ get(g:, 'neocomplete#sources#file_include#delimiters', {})
-"}}}
-
 let s:source = {
       \ 'name' : 'file/include',
       \ 'kind' : 'manual',
@@ -64,8 +55,7 @@ function! s:source.get_complete_position(context) "{{{
 
   " Not Filename pattern.
   if exists('g:neocomplete#sources#include#patterns')
-    let pattern = get(g:neocomplete#sources#include#patterns, filetype,
-        \      &l:include)
+    let pattern = neoinclude#get_pattern('%', filetype)
   else
     let pattern = ''
   endif
@@ -77,8 +67,7 @@ function! s:source.get_complete_position(context) "{{{
   endif
 
   " Check include pattern.
-  let pattern = get(g:neocomplete#sources#include#patterns,
-        \ filetype, &l:include)
+  let pattern = neoinclude#get_pattern('%', filetype)
   if pattern != ''
     let pattern .= '\m\s\+'
   endif
@@ -91,8 +80,7 @@ function! s:source.get_complete_position(context) "{{{
 
   let complete_pos = len(a:context.input) - len(complete_str)
 
-  let delimiter = get(g:neocomplete#sources#file_include#delimiters,
-        \ &filetype, '.')
+  let delimiter = neoinclude#get_delimiters(filetype)
   if strridx(complete_str, delimiter) >= 0
     let complete_pos += strridx(complete_str, delimiter) + 1
   endif
