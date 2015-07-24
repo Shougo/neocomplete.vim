@@ -112,10 +112,9 @@ function! s:get_include_files() "{{{
           \ substitute(eval(substitute(expr,
           \ 'v:fname', string(complete_str), 'g')), '\.\w*$', '', '')
   endif
-  let delimiter = get(g:neocomplete#sources#file_include#delimiters,
-        \ &filetype, '.')
+  let delimiter = neoinclude#get_delimiters(filetype)
 
-  if (line =~ '^\s*\<require_relative\>' && &filetype =~# 'ruby')
+  if (line =~ '^\s*\<require_relative\>' && filetype =~# 'ruby')
         \ || stridx(complete_str, '.') == 0
     " For include relative.
     let path = '.'
