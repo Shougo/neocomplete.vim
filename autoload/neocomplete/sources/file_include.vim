@@ -51,54 +51,7 @@ endfunction"}}}
 
 function! s:source.hooks.on_init(context) "{{{
   " Initialize.
-  call neocomplete#sources#include#initialize()
-
-  " Initialize filename include expr. "{{{
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exprs',
-        \ 'perl',
-        \ 'substitute(v:fname, "/", "::", "g")')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exprs',
-        \ 'java,d',
-        \ 'substitute(v:fname, "/", ".", "g")')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exprs',
-        \ 'ruby',
-        \ 'substitute(v:fname, "\.rb$", "", "")')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exprs',
-        \ 'python',
-        \ "substitute(substitute(v:fname,
-        \ '\\v.*egg%(-info|-link)?$', '', ''), '/', '.', 'g')")
-  "}}}
-
-  " Initialize filename include extensions. "{{{
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exts',
-        \ 'c', ['h'])
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exts',
-        \ 'cpp', ['', 'h', 'hpp', 'hxx'])
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exts',
-        \ 'perl', ['pm'])
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exts',
-        \ 'java', ['java'])
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exts',
-        \ 'ruby', ['rb'])
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#exts',
-        \ 'python', ['py', 'py3'])
-  "}}}
-
-  " Initialize filename include delimiter. "{{{
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#file_include#delimiters',
-        \ 'c,cpp,ruby', '/')
-  "}}}
+  call neoinclude#initialize()
 endfunction"}}}
 
 function! s:source.get_complete_position(context) "{{{
@@ -154,17 +107,13 @@ endfunction"}}}
 function! s:get_include_files() "{{{
   let filetype = neocomplete#get_context_filetype()
 
-  let path = neocomplete#util#substitute_path_separator(
-        \ get(g:neocomplete#sources#include#paths, filetype,
-        \   getbufvar('%', '&path')))
-  let pattern = get(g:neocomplete#sources#include#patterns,
-        \ filetype, getbufvar('%', '&include'))
-  let expr = get(g:neocomplete#sources#include#exprs,
-        \ filetype, getbufvar('%', '&includeexpr'))
-  let reverse_expr = get(g:neocomplete#sources#file_include#exprs,
-        \ filetype, '')
-  let exts = get(g:neocomplete#sources#file_include#exts,
-        \ filetype, [])
+  call neoinclude#set_filetype_paths('%', filetype)
+
+  let path = neoinclude#get_path('%', filetype)
+  let pattern = neoinclude#get_pattern('%', filetype)
+  let expr = neoinclude#get_expr('%', filetype)
+  let reverse_expr = neoinclude#get_reverse_expr(filetype)
+  let exts = neoinclude#get_exts(filetype)
 
   let line = neocomplete#get_cur_text()
 

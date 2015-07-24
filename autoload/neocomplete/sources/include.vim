@@ -55,7 +55,7 @@ endfunction"}}}
 
 function! s:source.hooks.on_init(context) "{{{
   call s:initialize_variables()
-  call neocomplete#sources#include#initialize()
+  call neoinclude#initialize()
 
   augroup neocomplete
     autocmd BufWritePost * call s:check_buffer('', 0)
@@ -97,33 +97,7 @@ function! s:source.gather_candidates(context) "{{{
 endfunction"}}}
 
 function! neocomplete#sources#include#initialize() "{{{
-  " Initialize include pattern. "{{{
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#patterns',
-        \ 'java,haskell', '^\s*\<import')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#patterns',
-        \ 'c,cpp', '^\s*#\s*include')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#patterns',
-        \ 'cs', '^\s*\<using')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#patterns',
-        \ 'ruby', '^\s*\<\%(load\|require\|require_relative\)\>')
-  "}}}
-  " Initialize include suffixes. "{{{
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#suffixes',
-        \ 'haskell', '.hs')
-  "}}}
-  " Initialize include functions. "{{{
-  " call neocomplete#util#set_default_dictionary(
-  "       \ 'g:neocomplete#sources#include#functions', 'vim',
-  "       \ 'neocomplete#sources#include#analyze_vim_include_files')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#include#functions', 'ruby',
-        \ 'neocomplete#sources#include#analyze_ruby_include_files')
-  "}}}
+  call neoinclude#initialize()
 endfunction"}}}
 
 function! neocomplete#sources#include#get_include_files(bufnumber) "{{{
@@ -245,30 +219,14 @@ function! s:get_buffer_include_files(bufnumber) "{{{
     return []
   endif
 
-  if (filetype ==# 'python' || filetype ==# 'python3')
-        \ && (executable('python') || executable('python3'))
-    " Initialize python path pattern.
-    if executable('python3')
-      call s:set_python_include_files('python3')
-    endif
-    if executable('python')
-      call s:set_python_include_files('python')
-    endif
-  elseif filetype ==# 'cpp'
-        \ && !has_key(g:neocomplete#sources#include#paths, 'cpp')
-        \ && isdirectory('/usr/include/c++')
-    call s:set_cpp_include_files(a:bufnumber)
-  endif
+  call neoinclude#set_filetype_paths(a:bufnumber, filetype)
 
-  let pattern = get(g:neocomplete#sources#include#patterns, filetype,
-        \ getbufvar(a:bufnumber, '&include'))
+  let pattern = neoinclude#get_pattern(a:bufnumber, filetype)
   if pattern == ''
     return []
   endif
-  let path = get(g:neocomplete#sources#include#paths, filetype,
-        \ getbufvar(a:bufnumber, '&path'))
-  let expr = get(g:neocomplete#sources#include#exprs, filetype,
-        \ getbufvar(a:bufnumber, '&includeexpr'))
+  let path = neoinclude#get_path(a:bufnumber, filetype)
+  let expr = neoinclude#get_expr(a:bufnumber, filetype)
   let suffixes = &l:suffixesadd
 
   " Change current directory.
