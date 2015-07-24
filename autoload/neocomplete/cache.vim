@@ -203,9 +203,8 @@ function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, m
         \ ]
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
-function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, pattern, mark, is_create_tags) "{{{
+function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, pattern, mark) "{{{
   if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
-        \ || !neocomplete#cache#check_old_cache('tags_output', a:filename)
         \ || neocomplete#util#is_sudo()
     return neocomplete#cache#encode_name(a:cache_dir, a:filename)
   endif
@@ -215,38 +214,7 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
   let pattern_file_name =
         \ neocomplete#cache#encode_name('tags_patterns', a:filename)
 
-  if a:is_create_tags
-    if !executable(g:neocomplete#ctags_command)
-      echoerr 'Create tags error! Please install '
-            \ . g:neocomplete#ctags_command . '.'
-      return neocomplete#cache#encode_name(a:cache_dir, a:filename)
-    endif
-
-    " Create tags file.
-    let tags_file_name =
-          \ neocomplete#cache#encode_name('tags_output', a:filename)
-
-    let default = get(g:neocomplete#ctags_arguments, '_', '')
-    let args = get(g:neocomplete#ctags_arguments, a:filetype, default)
-
-    if has('win32') || has('win64')
-      let filename =
-            \ neocomplete#util#substitute_path_separator(a:filename)
-      let command = printf('%s -f "%s" %s "%s" ',
-            \ g:neocomplete#ctags_command, tags_file_name, args, filename)
-    else
-      let command = printf('%s -f ''%s'' 2>/dev/null %s ''%s''',
-            \ g:neocomplete#ctags_command, tags_file_name, args, a:filename)
-    endif
-
-    if neocomplete#has_vimproc()
-      call vimproc#system_bg(command)
-    else
-      call system(command)
-    endif
-  else
-    let tags_file_name = '$dummy$'
-  endif
+  let tags_file_name = '$dummy$'
 
   let filter_pattern =
         \ get(g:neocomplete#tags_filter_patterns, a:filetype, '')

@@ -399,6 +399,17 @@ function! neocomplete#helper#complete_configure() "{{{
   endif
 endfunction"}}}
 
+function! neocomplete#helper#clean(directory) "{{{
+  let directory = neocomplete#get_data_directory() .'/'.a:directory
+  for file in split(glob(directory . '/*'), '\n')
+    let orig = substitute(substitute(fnamemodify(file, ':t'),
+        \             '=-', ':', 'g'), '=+', '/', 'g')
+    if !filereadable(orig)
+      call delete(file)
+    endif
+  endfor
+endfunction"}}}
+
 function! s:save_foldinfo() "{{{
   " Save foldinfo.
   let winnrs = filter(range(1, winnr('$')),

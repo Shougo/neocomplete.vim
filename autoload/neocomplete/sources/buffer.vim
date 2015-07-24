@@ -59,6 +59,7 @@ function! s:source.hooks.on_init(context) "{{{
           \ call s:check_source()
     autocmd InsertEnter,InsertLeave *
           \ call neocomplete#sources#buffer#make_cache_current_line()
+    autocmd VimLeavePre * call s:clean()
   augroup END"}}}
 
   " Create cache directory.
@@ -79,11 +80,6 @@ function! s:source.hooks.on_final(context) "{{{
   silent! delcommand NeoCompleteBufferMakeCache
 
   let s:buffer_sources = {}
-
-  " Remove temporary files
-  call map(glob(printf('%s/%d_*',
-        \ neocomplete#get_data_directory() . '/buffer_temp',
-        \ getpid()), 1, 1), 'delete(v:val)')
 endfunction"}}}
 
 function! s:source.hooks.on_post_filter(context) "{{{
@@ -348,6 +344,14 @@ function! s:check_async_cache() "{{{
       call remove(s:async_dictionary_list, source.path)
     endif
   endfor
+endfunction"}}}
+
+function! s:clean() abort "{{{
+  call neocomplete#helper#clean('buffer_cache')
+  " Remove temporary files
+  call map(glob(printf('%s/%d_*',
+        \ neocomplete#get_data_directory() . '/buffer_temp',
+        \ getpid()), 1, 1), 'delete(v:val)')
 endfunction"}}}
 
 " Command functions. "{{{

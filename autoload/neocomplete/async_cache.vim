@@ -132,7 +132,7 @@ function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencodi
           \ a:mark, a:minlen, a:fileencoding, 0)
   endif
 
-  for line in tags_list "{{{
+  for line in tags_list
     let tag = split(substitute(line, "\<CR>", '', 'g'), '\t', 1)
 
     " Add keywords.
