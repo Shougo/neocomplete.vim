@@ -94,7 +94,11 @@ function! neocomplete#sources#tag#make_cache(force) "{{{
   let bufnumber = bufnr('%')
 
   let s:async_tags_list[bufnumber] = []
-  for tags in map(filter(tagfiles(), 'getfsize(v:val) > 0'),
+  let tagfiles = tagfiles()
+  if get(g:, 'loaded_neoinclude')
+    let tagfiles += neoinclude#include#get_tag_files()
+  endif
+  for tags in map(filter(tagfiles, 'getfsize(v:val) > 0'),
         \ "neocomplete#util#substitute_path_separator(
         \    fnamemodify(v:val, ':p'))")
     if tags !~? '/doc/tags\%(-\w\+\)\?$' &&
