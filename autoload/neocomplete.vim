@@ -63,8 +63,6 @@ let g:neocomplete#enable_auto_delimiter =
       \ get(g:, 'neocomplete#enable_auto_delimiter', 0)
 let g:neocomplete#lock_buffer_name_pattern =
       \ get(g:, 'neocomplete#lock_buffer_name_pattern', '')
-let g:neocomplete#ctags_command =
-      \ get(g:, 'neocomplete#ctags_command', 'ctags')
 let g:neocomplete#lock_iminsert =
       \ get(g:, 'neocomplete#lock_iminsert', 0)
 let g:neocomplete#enable_multibyte_completion =
@@ -85,8 +83,6 @@ let g:neocomplete#same_filetypes =
       \ get(g:, 'neocomplete#same_filetypes', {})
 let g:neocomplete#delimiter_patterns =
       \ get(g:, 'neocomplete#delimiter_patterns', {})
-let g:neocomplete#ctags_arguments =
-      \ get(g:, 'neocomplete#ctags_arguments', {})
 let g:neocomplete#text_mode_filetypes =
       \ get(g:, 'neocomplete#text_mode_filetypes', {})
 let g:neocomplete#tags_filter_patterns =

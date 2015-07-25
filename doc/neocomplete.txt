@@ -514,25 +514,6 @@ g:neocomplete#text_mode_filetypes
 		neocomplete#init#_variables() in
 		autoload/neocomplete/init.vim for the initial value.
 
-g:neocomplete#ctags_command		*g:neocomplete#ctags_command*
-		It is the path to the ctags command.
-		Note: If this command is not installed, include source is
-		disabled.
-
-		Default value is "ctags".
-
-					*g:neocomplete#ctags_arguments*
-g:neocomplete#ctags_arguments
-		It is the dictionary of the character string to set a value
-		to give as an argument of the commands when buffer
-		and include use a ctags command.  The dictionary's
-		key is filetype.  If the key is "_", it will be used for
-		default.
-
-		Because it is complicated, refer to
-		neocomplete#init#_variables() in
-		autoload/neocomplete/init.vim for the initial value.
-
 					*g:neocomplete#delimiter_patterns*
 g:neocomplete#delimiter_patterns
 		This variable appoints a delimiter pattern to smart complete a
