@@ -173,8 +173,9 @@ https://github.com/Shougo/context_filetype.vim
 
 						*neocomplete-include*
 
-If you want to complete from include files or include files, you need to
-install the neoinclude plugin (https://github.com/Shougo/neoinclude.vim).
+If you want to complete the candidates from include files or include files
+candidates, you need to install the neoinclude plugin
+(https://github.com/Shougo/neoinclude.vim).
 
 ==============================================================================
 INTERFACE					*neocomplete-interface*
