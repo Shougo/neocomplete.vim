@@ -177,6 +177,11 @@ If you want to complete the candidates from include files or include files
 candidates, you need to install the neoinclude plugin
 (https://github.com/Shougo/neoinclude.vim).
 
+						*neocomplete-syntax*
+
+If you want to complete the candidates from syntax files, you need to install
+the neco-syntax plugin (https://github.com/Shougo/neco-syntax.vim).
+
 ==============================================================================
 INTERFACE					*neocomplete-interface*
 
@@ -235,13 +240,8 @@ SOURCES COMMANDS 				*neocomplete-sources-COMMANDS*
 		[bufname] automatically.
 		Note: It may take time considerably for the big buffer.
 
-:NeoCompleteSyntaxMakeCache [filetype]		*:NeoCompleteSyntaxMakeCache*
-		Make a cache from the syntax file with [filetype]
-		The current buffer's filetype is selected if [filetype]
-		is omitted
-
-:NeoCompleteDictionaryMakeCache [filetype]
 					*:NeoCompleteDictionaryMakeCache*
+:NeoCompleteDictionaryMakeCache [filetype]
 		Make a cache from a dictionary file with [filetype].
 		Selects the filetype of the current buffer if [filetype] is
 		omitted.
@@ -663,13 +663,6 @@ g:neocomplete#sources#dictionary#dictionaries
 
 		Default value is {}.
 
-			*g:neocomplete#sources#syntax#min_keyword_length*
-g:neocomplete#sources#syntax#min_keyword_length
-		In syntax files, this variable controls length of keyword
-		becoming the object of the completion at the minimum.
-
-		Default value is 4.
-
 				*g:neocomplete#sources#member#prefix_patterns*
 g:neocomplete#sources#member#prefix_patterns
 		This variable appoints a prefix pattern to complete a member
@@ -904,8 +897,6 @@ EXAMPLES					*neocomplete-examples*
 	let g:neocomplete#enable_at_startup = 1
 	" Use smartcase.
 	let g:neocomplete#enable_smart_case = 1
-	" Set minimum syntax keyword length.
-	let g:neocomplete#sources#syntax#min_keyword_length = 3
 	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 	" Define dictionary.
@@ -1008,12 +999,6 @@ tag						*neocomplete-source-tag*
 		|:NeoCompleteTagMakeCache| command.  Because tag is
 		too slow if tag read a big tags file.  You should use
 		more convenient include source completion now.
-
-syntax						*neocomplete-source-syntax*
-		This source analyzes a syntax file like
-		autoload/syntaxcomplete.vim offered by default, and to
-		add to candidate completion.  The plugin can recognize
-		candidates a lot more than autoload/syntaxcomplete.vim.
 
 dictionary					*neocomplete-source-dictionary*
 		This source adds candidates from 'dictionary' or
