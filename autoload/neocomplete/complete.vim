@@ -150,6 +150,8 @@ EOF
     endif
   endfor
 
+  call filter(candidates, 'v:val.word !=# a:complete_str')
+
   if g:neocomplete#max_list > 0
     let candidates = candidates[: g:neocomplete#max_list]
   endif
