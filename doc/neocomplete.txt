@@ -180,7 +180,7 @@ candidates, you need to install the neoinclude plugin
 						*neocomplete-syntax*
 
 If you want to complete the candidates from syntax files, you need to install
-the neco-syntax plugin (https://github.com/Shougo/neco-syntax.vim).
+the neco-syntax plugin (https://github.com/Shougo/neco-syntax).
 
 ==============================================================================
 INTERFACE					*neocomplete-interface*
