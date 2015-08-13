@@ -46,6 +46,7 @@ function! s:source.hooks.on_init(context) "{{{
   augroup neocomplete "{{{
     autocmd VimLeavePre * call neocomplete#helper#clean('tags_cache')
     autocmd VimLeavePre * call neocomplete#helper#clean('tags_patterns')
+    autocmd BufWritePost * call neocomplete#sources#tag#make_cache(0)
   augroup END"}}}
 
   " Create cache directory.
