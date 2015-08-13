@@ -43,7 +43,8 @@ do
   local list = {}
   for line in io.lines(vim.eval(
       'neocomplete#cache#encode_name(a:cache_dir, a:filename)')) do
-    list = loadstring('return ' .. line)()
+    list = (loadstring) and loadstring('return ' .. line)()
+                        or  load('return ' .. line)()
   end
 
   for i = 1, #list do
