@@ -77,49 +77,30 @@ function! neocomplete#handler#_on_write_post() "{{{
 endfunction"}}}
 " @vimlint(EVL102, 1, v:completed_item)
 function! neocomplete#handler#_on_complete_done() "{{{
+  if !exists('v:completed_item')
+    return
+  endif
+
   let neocomplete = neocomplete#get_current_neocomplete()
 
-  " Get cursor word.
-  if exists('v:completed_item')
-    " Use v:completed_item feature.
-    if empty(v:completed_item)
-      return
-    endif
+  " Use v:completed_item feature.
+  if empty(v:completed_item)
+    return
+  endif
 
-    let complete_str = v:completed_item.word
-    if complete_str == ''
-      return
-    endif
+  let complete_str = v:completed_item.word
+  if complete_str == ''
+    return
+  endif
 
-    if (v:completed_item.abbr != ''
-          \ && len(v:completed_item.word) < len(v:completed_item.abbr))
-          \ || v:completed_item.info != ''
-      let neocomplete.completed_item = v:completed_item
-    endif
-  else
-    let cur_text = matchstr(getline('.'), '^.*\%'.col('.').'c')
-    let complete_str = neocomplete#helper#match_word(cur_text)[1]
-    if complete_str == ''
-      " Use default keyword pattern.
-      let complete_str = matchstr(cur_text, '\h\w*\(()\?\)\?$')
-      if complete_str == ''
-        return
-      endif
-    endif
-
-    let candidates = filter(copy(neocomplete.candidates),
-          \   "v:val.word ==# complete_str &&
-          \    ((get(v:val, 'abbr', '') != '' &&
-          \     v:val.word !=# v:val.abbr && v:val.abbr[-1] != '~') ||
-          \     get(v:val, 'info', '') != '')")
-    if !empty(candidates)
-      let neocomplete.completed_item = candidates[0]
-    endif
+  if (v:completed_item.abbr != ''
+        \ && len(v:completed_item.word) < len(v:completed_item.abbr))
+        \ || v:completed_item.info != ''
+    let neocomplete.completed_item = v:completed_item
   endif
 
   " Restore overlapped item
-  if exists('v:completed_item') &&
-        \ has_key(neocomplete.overlapped_items, complete_str)
+  if has_key(neocomplete.overlapped_items, complete_str)
     " Move cursor
     call cursor(0, col('.') - len(complete_str) +
           \ len(neocomplete.overlapped_items[complete_str]))
