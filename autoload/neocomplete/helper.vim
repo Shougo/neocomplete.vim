@@ -314,9 +314,9 @@ function! neocomplete#helper#call_hook(sources, hook_name, context) "{{{
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)
       call neocomplete#print_error(
-            \ '[unite.vim] Error occurred in calling hook "' . a:hook_name . '"!')
+            \ 'Error occurred in calling hook "' . a:hook_name . '"!')
       call neocomplete#print_error(
-            \ '[unite.vim] Source name is ' . source.name)
+            \ 'Source name is ' . source.name)
     endtry
   endfor
 endfunction"}}}
@@ -330,10 +330,10 @@ function! neocomplete#helper#call_filters(filters, source, context) "{{{
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)
       call neocomplete#print_error(
-            \ '[unite.vim] Error occurred in calling filter '
+            \ 'Error occurred in calling filter '
             \   . filter.name . '!')
       call neocomplete#print_error(
-            \ '[unite.vim] Source name is ' . a:source.name)
+            \ 'Source name is ' . a:source.name)
     endtry
   endfor
 
