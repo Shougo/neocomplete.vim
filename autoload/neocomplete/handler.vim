@@ -161,18 +161,25 @@ function! neocomplete#handler#_on_text_changed() "{{{
 
   " indent line matched by indentkeys
   let cur_text = matchstr(getline('.'), '^.*\%'.col('.').'c')
-  if neocomplete.indent_text != matchstr(getline('.'), '\S.*$')
-    for word in filter(map(split(&l:indentkeys, ','),
-        \ "v:val =~ '^<.*>$' ? matchstr(v:val, '^<\\zs.*\\ze>$')
-        \                  : matchstr(v:val, '.*=\\zs.*')"),
-        \ "v:val != ''")
-      if stridx(cur_text, word, len(cur_text)-len(word)-1) >= 0
-        call neocomplete#helper#indent_current_line()
-        let neocomplete.indent_text = matchstr(getline('.'), '\S.*$')
-        break
-      endif
-    endfor
+  if neocomplete.indent_text == matchstr(getline('.'), '\S.*$')
+    return
   endif
+
+  for word in filter(map(split(&l:indentkeys, ','),
+        \ "v:val =~ '^<.*>$' ? matchstr(v:val, '^<\\zs.*\\ze>$')
+        \                  : matchstr(v:val, 'e\\|=\\zs.*')"),
+        \ "v:val != ''")
+
+    if word ==# 'e'
+      let word = 'else'
+    endif
+
+    if stridx(cur_text, word, len(cur_text)-len(word)-1) >= 0
+      call neocomplete#helper#indent_current_line()
+      let neocomplete.indent_text = matchstr(getline('.'), '\S.*$')
+      break
+    endif
+  endfor
 endfunction"}}}
 
 function! neocomplete#handler#_do_auto_complete(event) "{{{
