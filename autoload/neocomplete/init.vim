@@ -123,8 +123,10 @@ function! neocomplete#init#_autocmds() "{{{
           \ call neocomplete#handler#_do_auto_complete('InsertEnter')
   endif
 
-  autocmd neocomplete CompleteDone *
-        \ call neocomplete#handler#_on_complete_done()
+  if exists('v:completed_item')
+    autocmd neocomplete CompleteDone *
+          \ call neocomplete#handler#_on_complete_done()
+  endif
 endfunction"}}}
 
 function! neocomplete#init#_others() "{{{
@@ -603,7 +605,6 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'start_time' : reltime(),
         \ 'linenr' : 0,
         \ 'completeopt' : &completeopt,
-        \ 'completed_item' : {},
         \ 'overlapped_items' : {},
         \ 'sources' : [],
         \ 'sources_filetype' : '',

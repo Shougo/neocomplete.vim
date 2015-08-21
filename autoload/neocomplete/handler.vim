@@ -58,7 +58,6 @@ function! neocomplete#handler#_on_insert_leave() "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.cur_text = ''
-  let neocomplete.completed_item = {}
   let neocomplete.overlapped_items = {}
 endfunction"}}}
 function! neocomplete#handler#_on_write_post() "{{{
@@ -75,14 +74,7 @@ function! neocomplete#handler#_on_write_post() "{{{
           \ 'neocomplete_foldinfo', {})
   endfor
 endfunction"}}}
-" @vimlint(EVL102, 1, v:completed_item)
 function! neocomplete#handler#_on_complete_done() "{{{
-  if !exists('v:completed_item')
-    return
-  endif
-
-  let neocomplete = neocomplete#get_current_neocomplete()
-
   " Use v:completed_item feature.
   if empty(v:completed_item)
     return
@@ -93,11 +85,7 @@ function! neocomplete#handler#_on_complete_done() "{{{
     return
   endif
 
-  if (v:completed_item.abbr != ''
-        \ && len(v:completed_item.word) < len(v:completed_item.abbr))
-        \ || v:completed_item.info != ''
-    let neocomplete.completed_item = v:completed_item
-  endif
+  let neocomplete = neocomplete#get_current_neocomplete()
 
   " Restore overlapped item
   if has_key(neocomplete.overlapped_items, complete_str)
@@ -115,7 +103,6 @@ function! neocomplete#handler#_on_complete_done() "{{{
     let frequencies[complete_str] += 20
   endif
 endfunction"}}}
-" @vimlint(EVL102, 0, v:completed_item)
 function! neocomplete#handler#_change_update_time() "{{{
   if &updatetime > g:neocomplete#cursor_hold_i_time
     " Change updatetime.

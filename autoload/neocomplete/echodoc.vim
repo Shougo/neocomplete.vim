@@ -31,12 +31,13 @@ let s:doc_dict = {
       \ 'name' : 'neocomplete',
       \ 'rank' : 10,
       \ }
+" @vimlint(EVL102, 1, v:completed_item)
 function! s:doc_dict.search(cur_text) "{{{
-  let item = neocomplete#get_current_neocomplete().completed_item
-
-  if empty(item)
+  if !exists('v:completed_item') || empty(v:completed_item)
     return []
   endif
+
+  let item = v:completed_item
 
   let abbr = (item.abbr != '') ? item.abbr : item.word
   if len(item.menu) > 5
@@ -65,6 +66,7 @@ function! s:doc_dict.search(cur_text) "{{{
 
   return ret
 endfunction"}}}
+" @vimlint(EVL102, 0, v:completed_item)
 "}}}
 
 function! neocomplete#echodoc#init() "{{{
