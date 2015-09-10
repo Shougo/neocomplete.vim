@@ -1786,7 +1786,7 @@ A:
 Note: You should use this omni completion for PHP.
 https://github.com/shawncplus/phpcomplete.vim
 >
-	let g:neocomplete#sources#omni#input_patterns.php =
+	let g:neocomplete#force_omni_input_patterns.php =
 	\ '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 <
 
