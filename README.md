@@ -39,7 +39,8 @@ file in the same directory as `gvim.exe`.
 
 Or, you can install MacVim with homebrew:
 
-    brew install macvim --with-cscope --with-lua --HEAD
+    brew install macvim --with-cscope --with-lua
+    brew linkapps macvim
 
 To install Vim (as opposed to MacVim) with homebrew:
 
