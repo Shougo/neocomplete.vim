@@ -110,8 +110,6 @@ function! neocomplete#init#_autocmds() "{{{
   else
     " Note: Vim 7.4.143 fixed TextChangedI bug.
     let event =
-          \ (g:neocomplete#enable_insert_char_pre) ?
-          \  'InsertCharPre' :
           \ (v:version > 704 || v:version == 704 && has('patch143')) ?
           \  'TextChangedI' : 'CursorMovedI'
     execute 'autocmd neocomplete' event '*'

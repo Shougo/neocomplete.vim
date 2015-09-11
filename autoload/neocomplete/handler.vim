@@ -137,11 +137,6 @@ function! neocomplete#handler#_on_text_changed() "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
 
-  if g:neocomplete#enable_insert_char_pre
-        \ && neocomplete.skip_next_complete
-    call neocomplete#handler#_do_auto_complete('InsertCharPre')
-  endif
-
   if getline('.') == ''
     call s:make_cache_current_line()
   endif

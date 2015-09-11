@@ -174,8 +174,6 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
 " Or set this.
 "let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
 
 " AutoComplPop like behavior.
 "let g:neocomplete#enable_auto_select = 1

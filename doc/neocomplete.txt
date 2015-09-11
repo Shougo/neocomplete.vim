@@ -355,17 +355,6 @@ g:neocomplete#cursor_hold_i_time
 
 		Default value is 300.
 
-					*g:neocomplete#enable_insert_char_pre*
-g:neocomplete#enable_insert_char_pre
-		This variable controls whether neocomplete use
-		|InsertCharPre| event when complete candidates.
-		If it is enabled, the candidates will be updated after user
-		input.
-		Note: This option must be set before call
-		|:NeoCompleteEnable|.
-
-		Default value is 0.
-
 					*g:neocomplete#enable_auto_select*
 g:neocomplete#enable_auto_select
 		When neocomplete displays candidates, this option controls
@@ -1786,7 +1775,7 @@ A:
 Note: You should use this omni completion for PHP.
 https://github.com/shawncplus/phpcomplete.vim
 >
-	let g:neocomplete#force_omni_input_patterns.php =
+	let g:neocomplete#sources#omni#input_patterns.php =
 	\ '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 <
 
