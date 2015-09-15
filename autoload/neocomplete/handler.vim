@@ -75,6 +75,8 @@ function! neocomplete#handler#_on_write_post() "{{{
   endfor
 endfunction"}}}
 function! neocomplete#handler#_on_complete_done() "{{{
+  call neocomplete#mappings#close_popup()
+
   " Use v:completed_item feature.
   if empty(v:completed_item)
     return
