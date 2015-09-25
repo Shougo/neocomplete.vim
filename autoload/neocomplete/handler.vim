@@ -78,7 +78,7 @@ function! neocomplete#handler#_on_complete_done() "{{{
   call neocomplete#mappings#close_popup()
 
   " Use v:completed_item feature.
-  if empty(v:completed_item)
+  if !exists('v:completed_item') || empty(v:completed_item)
     return
   endif
 
