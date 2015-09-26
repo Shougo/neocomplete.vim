@@ -102,6 +102,8 @@ function! neocomplete#init#_autocmds() "{{{
     augroup neocomplete
       autocmd CursorHoldI *
             \ call neocomplete#handler#_do_auto_complete('CursorHoldI')
+      autocmd CursorMovedI *
+            \ call neocomplete#handler#_do_auto_complete('CursorMovedI')
       autocmd InsertEnter *
             \ call neocomplete#handler#_change_update_time()
       autocmd InsertLeave *

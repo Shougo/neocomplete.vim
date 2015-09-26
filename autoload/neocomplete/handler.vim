@@ -167,13 +167,18 @@ function! neocomplete#handler#_on_text_changed() "{{{
 endfunction"}}}
 
 function! neocomplete#handler#_do_auto_complete(event) "{{{
-  if s:check_in_do_auto_complete()
+  let neocomplete = neocomplete#get_current_neocomplete()
+
+  if (g:neocomplete#enable_cursor_hold_i
+        \ && empty(neocomplete.candidates)
+        \ && a:event ==# 'CursorMovedI')
+        \ || s:check_in_do_auto_complete()
     return
   endif
 
-  let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skipped = 0
   let neocomplete.event = a:event
+  call neocomplete#helper#clear_result()
 
   let cur_text = neocomplete#get_cur_text(1)
   let complete_pos = -1
