@@ -91,15 +91,6 @@ function! neocomplete#handler#_on_complete_done() "{{{
     return
   endif
 
-  " Restore overlapped item
-  if has_key(neocomplete.overlapped_items, complete_str)
-    " Move cursor
-    call cursor(0, col('.') - len(complete_str) +
-          \ len(neocomplete.overlapped_items[complete_str]))
-
-    let complete_str = neocomplete.overlapped_items[complete_str]
-  endif
-
   let frequencies = neocomplete#variables#get_frequencies()
   if !has_key(frequencies, complete_str)
     let frequencies[complete_str] = 20
@@ -219,17 +210,6 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
 
     if empty(neocomplete.complete_sources)
       let complete_pos = s:check_fallback(cur_text)
-      return
-    endif
-
-    let complete_pos =
-          \ neocomplete#complete#_get_complete_pos(
-          \ neocomplete.complete_sources)
-    let base = cur_text[complete_pos :]
-
-    let neocomplete.candidates = neocomplete#complete#_get_words(
-          \ neocomplete.complete_sources, complete_pos, base)
-    if empty(neocomplete.candidates)
       return
     endif
 

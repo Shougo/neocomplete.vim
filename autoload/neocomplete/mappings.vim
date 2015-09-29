@@ -74,6 +74,9 @@ function! neocomplete#mappings#auto_complete() "{{{
   let neocomplete.candidates = neocomplete#complete#_get_words(
         \ neocomplete.complete_sources, complete_pos, base)
   let neocomplete.complete_str = base
+  if empty(neocomplete.candidates)
+    return ''
+  endif
 
   " Start auto complete.
   call complete(complete_pos+1, neocomplete.candidates)
@@ -94,6 +97,9 @@ function! neocomplete#mappings#manual_complete() "{{{
   let neocomplete.candidates = neocomplete#complete#_get_words(
         \ complete_sources, complete_pos, base)
   let neocomplete.complete_str = base
+  if empty(neocomplete.candidates)
+    return ''
+  endif
 
   " Start auto complete.
   call complete(complete_pos+1, neocomplete.candidates)
