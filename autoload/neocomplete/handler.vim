@@ -75,7 +75,11 @@ function! neocomplete#handler#_on_write_post() "{{{
   endfor
 endfunction"}}}
 function! neocomplete#handler#_on_complete_done() "{{{
-  call neocomplete#mappings#close_popup()
+  let neocomplete = neocomplete#get_current_neocomplete()
+
+  if neocomplete.event !=# 'mapping'
+    call neocomplete#mappings#close_popup()
+  endif
 
   " Use v:completed_item feature.
   if !exists('v:completed_item') || empty(v:completed_item)
@@ -86,8 +90,6 @@ function! neocomplete#handler#_on_complete_done() "{{{
   if complete_str == ''
     return
   endif
-
-  let neocomplete = neocomplete#get_current_neocomplete()
 
   " Restore overlapped item
   if has_key(neocomplete.overlapped_items, complete_str)

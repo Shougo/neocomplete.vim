@@ -154,7 +154,6 @@ function! neocomplete#mappings#complete_common_string() "{{{
   let neocomplete.event = 'mapping'
   let complete_str =
         \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))[1]
-  let neocomplete.event = ''
 
   if complete_str == ''
     return ''
