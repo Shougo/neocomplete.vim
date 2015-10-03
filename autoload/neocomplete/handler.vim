@@ -243,25 +243,12 @@ function! s:is_skip_auto_complete(cur_text) "{{{
 
   let skip = neocomplete.skip_next_complete
 
-  if !skip
+  if !skip || a:cur_text !=# neocomplete.old_cur_text
     return 0
   endif
 
-  " Check delimiter pattern.
-  let is_delimiter = 0
-  let filetype = neocomplete#get_context_filetype()
-
-  for delimiter in ['/', '.'] +
-        \ get(g:neocomplete#delimiter_patterns, filetype, [])
-    if stridx(a:cur_text, delimiter,
-          \ len(a:cur_text) - len(delimiter)) >= 0
-      let is_delimiter = 1
-      break
-    endif
-  endfor
-
   let neocomplete.skip_next_complete = 0
-  return !(is_delimiter && skip == 2)
+  return skip
 endfunction"}}}
 function! s:close_preview_window() "{{{
   if g:neocomplete#enable_auto_close_preview
