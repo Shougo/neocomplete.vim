@@ -669,7 +669,6 @@ function! neocomplete#init#_source(source) "{{{
         \ 'disabled' : 0,
         \ 'disabled_filetypes' : {},
         \ 'hooks' : {},
-        \ 'mark' : '',
         \ 'matchers' : [],
         \ 'sorters' : ['sorter_rank'],
         \ 'converters' : [
@@ -703,6 +702,11 @@ function! neocomplete#init#_source(source) "{{{
     " Set default rank.
     let source.rank = (source.kind ==# 'keyword') ? 5 :
           \ empty(source.filetypes) ? 10 : 100
+  endif
+
+  if !has_key(source, 'mark')
+    " Set default mark.
+    let source.mark = '[' . source.name . ']'
   endif
 
   if !has_key(source.keyword_patterns, '_')

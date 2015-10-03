@@ -187,7 +187,7 @@ function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencodi
     let abbr = substitute(abbr, '"\s*{{{', '', '')
 
     let keyword = {
-          \ 'word' : tag[0], 'abbr' : abbr, 'menu' : a:mark,
+          \ 'word' : tag[0], 'abbr' : abbr, 'menu' : '',
           \ 'kind' : option['kind'],
           \ }
     if has_key(option, 'struct')
