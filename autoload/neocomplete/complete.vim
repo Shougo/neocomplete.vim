@@ -127,7 +127,8 @@ EOF
       local candidates = vim.eval('words')
       local mark = vim.eval('mark') .. ' '
       for i = 0, #candidates-1 do
-        candidates[i].menu = mark .. candidates[i].menu
+        candidates[i].menu = mark .. (candidates[i].menu ~= nil and
+                             candidates[i].menu or '')
       end
     end
 EOF
