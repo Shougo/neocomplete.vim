@@ -78,7 +78,6 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
   for source in sort(filter(deepcopy(a:sources),
         \ '!empty(v:val.neocomplete__context.candidates)'),
         \  's:compare_source_rank')
-    let mark = source.mark
     let context = source.neocomplete__context
     let words =
           \ type(context.candidates[0]) == type('') ?
@@ -125,7 +124,7 @@ EOF
     lua << EOF
     do
       local candidates = vim.eval('words')
-      local mark = vim.eval('mark') .. ' '
+      local mark = vim.eval('source.mark') .. ' '
       for i = 0, #candidates-1 do
         candidates[i].menu = mark .. (candidates[i].menu ~= nil and
                              candidates[i].menu or '')
