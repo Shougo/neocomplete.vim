@@ -121,16 +121,9 @@ EOF
     endif
 
     " Set default menu.
-    lua << EOF
-    do
-      local candidates = vim.eval('words')
-      local mark = vim.eval('source.mark') .. ' '
-      for i = 0, #candidates-1 do
-        candidates[i].menu = mark .. (candidates[i].menu ~= nil and
-                             candidates[i].menu or '')
-      end
-    end
-EOF
+    if !has_key(words[0], 'menu') || words[0].menu !~ '^\[.*\]'
+      call s:set_default_menu(words, source)
+    endif
 
     let words = neocomplete#helper#call_filters(
           \ source.neocomplete__converters, source, {})
@@ -313,6 +306,19 @@ endfunction"}}}
 " Source rank order. "{{{
 function! s:compare_source_rank(i1, i2)
   return a:i2.rank - a:i1.rank
+endfunction"}}}
+
+function! s:set_default_menu(words, source) abort "{{{
+  lua << EOF
+  do
+    local candidates = vim.eval('a:words')
+    local mark = vim.eval('a:source.mark') .. ' '
+    for i = 0, #candidates-1 do
+      candidates[i].menu = mark .. (candidates[i].menu ~= nil and
+                           candidates[i].menu or '')
+    end
+  end
+EOF
 endfunction"}}}
 
 let &cpo = s:save_cpo
