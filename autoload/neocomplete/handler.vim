@@ -225,7 +225,7 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
     endtry
 
     if empty(neocomplete.complete_sources)
-      let complete_pos = s:check_fallback(cur_text)
+      call s:check_fallback(cur_text)
       return
     endif
 
@@ -304,25 +304,23 @@ function! s:check_fallback(cur_text) "{{{
   let cur_text = a:cur_text
   let complete_pos = match(cur_text, '\h\w*$')
   let neocomplete = neocomplete#get_current_neocomplete()
-  if !empty(g:neocomplete#fallback_mappings)
-        \ && len(matchstr(cur_text, '\h\w*$'))
-        \   >= g:neocomplete#auto_completion_start_length
-        \ && !neocomplete.skip_next_complete
-        \ && !neocomplete#complete#_check_previous_position(
+  if empty(g:neocomplete#fallback_mappings)
+        \ || len(matchstr(cur_text, '\h\w*$'))
+        \   < g:neocomplete#auto_completion_start_length
+        \ || neocomplete.skip_next_complete
+        \ || neocomplete#complete#_check_previous_position(
         \      cur_text, complete_pos)
-    let key = ''
-    for i in range(0, len(g:neocomplete#fallback_mappings)-1)
-      let key .= '<C-r>=neocomplete#mappings#fallback(' . i . ')<CR>'
-    endfor
-    execute 'inoremap <silent> <Plug>(neocomplete_fallback)' key
-
-    " Fallback
-    call s:complete_key("\<Plug>(neocomplete_fallback)")
-
-    return complete_pos
+    return
   endif
 
-  return -1
+  let key = ''
+  for i in range(0, len(g:neocomplete#fallback_mappings)-1)
+    let key .= '<C-r>=neocomplete#mappings#fallback(' . i . ')<CR>'
+  endfor
+  execute 'inoremap <silent> <Plug>(neocomplete_fallback)' key
+
+  " Fallback
+  call s:complete_key("\<Plug>(neocomplete_fallback)")
 endfunction"}}}
 
 function! s:complete_key(key) "{{{
