@@ -149,6 +149,8 @@ function! neocomplete#handler#_on_text_changed() "{{{
   if getline('.') == ''
     call s:make_cache_current_line()
   endif
+
+  call s:indent_current_line()
 endfunction"}}}
 
 function! neocomplete#handler#_do_auto_complete(event) "{{{
@@ -160,8 +162,6 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
         \ || s:check_in_do_auto_complete()
     return
   endif
-
-  call s:indent_current_line()
 
   let neocomplete.skipped = 0
   let neocomplete.event = a:event
