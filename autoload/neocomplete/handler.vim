@@ -325,7 +325,8 @@ function! s:indent_current_line() abort "{{{
       let word = 'else'
     endif
 
-    if stridx(cur_text, word, len(cur_text)-len(word)-1) >= 0
+    let lastpos = len(cur_text)-len(word)
+    if lastpos >= 0 && strridx(cur_text, word) == lastpos
       call neocomplete#helper#indent_current_line()
       let neocomplete.indent_text = matchstr(getline('.'), '\S.*$')
       break
