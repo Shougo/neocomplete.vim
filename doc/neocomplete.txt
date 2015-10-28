@@ -371,7 +371,7 @@ g:neocomplete#enable_auto_select
 				*g:neocomplete#enable_auto_delimiter*
 g:neocomplete#enable_auto_delimiter
 		This option controls whether neocomplete insert delimiter
-		automatically.  For example, /(filename) or #(Vim script).
+		automatically.  For example, / (filenames) or # (Vim scripts.)
 
 		Default value is 0.
 
