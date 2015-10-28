@@ -688,7 +688,7 @@ g:neocomplete#sources#vim#complete_functions
 <
 					 *g:neocomplete#ignore_source_files*
 g:neocomplete#ignore_source_files
-		Ignore source filenames(not full path). You can optimize
+		Ignore source filenames (not full path.) You can optimize
 		source initialization.
 
 		Note: You cannot use the sources in ignored source files.
@@ -825,8 +825,8 @@ neocomplete#complete_common_string()
 ==============================================================================
 EXAMPLES					*neocomplete-examples*
 >
-	" Note: This option must set it in .vimrc(_vimrc).
-	" NOT IN .gvimrc(_gvimrc)!
+	" Note: This option must set it in .vimrc (_vimrc).
+	" NOT IN .gvimrc (_gvimrc)!
 	" Disable AutoComplPop.
 	let g:acp_enableAtStartup = 0
 	" Use neocomplete.
