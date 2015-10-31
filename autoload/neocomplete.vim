@@ -77,8 +77,6 @@ let g:neocomplete#sources =
       \ get(g:, 'neocomplete#sources', {})
 let g:neocomplete#keyword_patterns =
       \ get(g:, 'neocomplete#keyword_patterns', {})
-let g:neocomplete#same_filetypes =
-      \ get(g:, 'neocomplete#same_filetypes', {})
 let g:neocomplete#delimiter_patterns =
       \ get(g:, 'neocomplete#delimiter_patterns', {})
 let g:neocomplete#text_mode_filetypes =
@@ -87,8 +85,6 @@ let g:neocomplete#tags_filter_patterns =
       \ get(g:, 'neocomplete#tags_filter_patterns', {})
 let g:neocomplete#force_omni_input_patterns =
       \ get(g:, 'neocomplete#force_omni_input_patterns', {})
-let g:neocomplete#ignore_composite_filetypes =
-      \ get(g:, 'neocomplete#ignore_composite_filetypes', {})
 let g:neocomplete#ignore_source_files =
       \ get(g:, 'neocomplete#ignore_source_files', [])
 "}}}

@@ -456,36 +456,6 @@ g:neocomplete#force_omni_input_patterns
 		neocomplete#init#_variables() in
 		autoload/neocomplete/init.vim for the initial value.
 
-					*g:neocomplete#same_filetypes*
-g:neocomplete#same_filetypes
-		It is a dictionary to connect file type mutually.  It is
-		effective at time to let you refer to c and cpp mutually.
-		The value are comma-separated filetypes.
-		If the value contains "_", neocomplete completes from all
-		buffers.  If the key is "_", the value will be used for default
-		same filetypes.
-		Note: neocomplete completes from same filetype buffers in
-		default.
->
-		if !exists('g:neocomplete#same_filetypes')
-		  let g:neocomplete#same_filetypes = {}
-		endif
-		" In c buffers, completes from cpp and d buffers.
-		let g:neocomplete#same_filetypes.c = 'cpp,d'
-		" In cpp buffers, completes from c buffers.
-		let g:neocomplete#same_filetypes.cpp = 'c'
-		" In gitconfig buffers, completes from all buffers.
-		let g:neocomplete#same_filetypes.gitconfig = '_'
-		" In default, completes from all buffers.
-		let g:neocomplete#same_filetypes._ = '_'
-<
-		Because it is complicated, refer to
-		neocomplete#init#_variables() in
-		autoload/neocomplete/init.vim for the initial value.
-		Note: To disable neocomplete initialization, you must use
-		|neocomplete#disable_default_dictionary()|.
-
-
 					*g:neocomplete#text_mode_filetypes*
 g:neocomplete#text_mode_filetypes
 		It is a dictionary to define text mode filetypes.  The
@@ -566,24 +536,6 @@ g:neocomplete#use_vimproc			*g:neocomplete#use_vimproc*
 		asynchronously.
 
 		Default value is vimproc auto detection result.
-
-				*g:neocomplete#ignore_composite_filetypes*
-g:neocomplete#ignore_composite_filetypes
-		It is a dictionary to ignore composite file type.
-		The dictionary's key is composite filetype and value is
-		filetype.
->
-		" Examples:
-		let g:neocomplete#ignore_composite_filetypes = {
-			\ 'ruby.spec' : 'ruby'
-			\ }
-<
-		If you open filetype like "ruby.spec", completion is
-		intended for "ruby" and "spec".
-		But if you only want to complete "ruby" filetype,
-		you can set this variable to ignore "spec".
-
-		Default value is {}.
 
 				*g:neocomplete#skip_auto_completion_time*
 g:neocomplete#skip_auto_completion_time
@@ -794,10 +746,7 @@ neocomplete#get_context_filetype()
 neocomplete#disable_default_dictionary({variable-name})
 		Disable default {variable-name} dictionary initialization.
 		Note: It must be called in .vimrc.
->
-	call neocomplete#disable_default_dictionary(
-	      \ 'g:neocomplete#same_filetypes')
-<
+
 				*neocomplete#get_default_matchers()*
 neocomplete#get_default_matchers()
 		Get default matchers in current buffer.
@@ -1612,20 +1561,6 @@ A: Please try below settings.
 	  "return pumvisible() ? "\<C-y>" : "\<CR>"
 	endfunction
 >
-Q: No completion offered from "vim" buffers in "non-vim" buffers.
-
-A: It is feature. neocomplete completes from same filetype buffers in
-default.  But you can completes from other filetype buffers using
-|g:neocomplete#same_filetypes|.
-
-Q: I want to complete from all buffers.
-
-A: |g:neocomplete#same_filetypes|
->
-	let g:neocomplete#same_filetypes = {}
-	let g:neocomplete#same_filetypes._ = '_'
-<
-
 Q: Suggestions are case insensitive in "gitcommit" buffers, but not
 "javascript".
 

@@ -108,34 +108,9 @@ function! neocomplete#helper#is_enabled_source(source, filetype) "{{{
 endfunction"}}}
 
 function! neocomplete#helper#get_source_filetypes(filetype) "{{{
-  let filetype = (a:filetype == '') ? 'nothing' : a:filetype
-
-  let filetypes = [filetype]
-  if filetype =~ '\.'
-    if exists('g:neocomplete#ignore_composite_filetypes')
-          \ && has_key(g:neocomplete#ignore_composite_filetypes, filetype)
-      let filetypes = [g:neocomplete#ignore_composite_filetypes[filetype]]
-    else
-      " Set composite filetype.
-      let filetypes += split(filetype, '\.')
-    endif
-  endif
-
-  if exists('g:neocomplete#same_filetypes')
-    for ft in copy(filetypes)
-      let filetypes += split(get(g:neocomplete#same_filetypes, ft,
-            \ get(g:neocomplete#same_filetypes, '_', '')), ',')
-    endfor
-  endif
-  if neocomplete#is_text_mode()
-    call add(filetypes, 'text')
-  endif
-
-  if len(filetypes) > 1
-    let filetypes = neocomplete#util#uniq(filetypes)
-  endif
-
-  return filetypes
+  return exists('*context_filetype#get_filetypes') ?
+        \ context_filetype#get_filetypes(a:filetype) :
+        \ [(a:filetype == '') ? 'nothing' : a:filetype]
 endfunction"}}}
 
 function! neocomplete#helper#complete_check() "{{{
@@ -200,7 +175,6 @@ do
   local patterns = vim.eval('keyword_patterns')
   local filetypes = vim.eval("split(a:filetype, '\\.')")
   local pattern_var = vim.eval('a:pattern_var')
-  local same_filetypes = vim.eval('get(g:, "neocomplete#same_filetypes", {})')
 
   local dup_check = {}
   for i = 0, #filetypes-1 do
@@ -210,16 +184,6 @@ do
     if pattern_var[ft] ~= nil and dup_check[ft] == nil then
       dup_check[ft] = 1
       patterns:add(pattern_var[ft])
-    end
-
-    -- Same filetype.
-    if same_filetypes[ft] ~= nil then
-      for ft in string.gmatch(same_filetypes[ft], '[^,]+') do
-        if pattern_var[ft] ~= nil and dup_check[ft] == nil then
-          dup_check[ft] = 1
-          patterns:add(pattern_var[ft])
-        end
-      end
     end
   end
 
