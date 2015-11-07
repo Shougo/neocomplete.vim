@@ -79,8 +79,7 @@ function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "
         \ '!empty(v:val.neocomplete__context.candidates)'),
         \  's:compare_source_rank')
     let context = source.neocomplete__context
-    let words =
-          \ type(context.candidates[0]) == type('') ?
+    let words = type(context.candidates[0]) == type('') ?
           \ map(copy(context.candidates), "{'word': v:val}") :
           \ deepcopy(context.candidates)
     let context.candidates = words
@@ -115,6 +114,9 @@ EOF
 
     let words = neocomplete#helper#call_filters(
           \ source.neocomplete__sorters, source, {})
+    if empty(words)
+      continue
+    endif
 
     if source.max_candidates > 0
       let words = words[: len(source.max_candidates)-1]
