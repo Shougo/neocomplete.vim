@@ -150,9 +150,6 @@ function! neocomplete#init#_others() "{{{
 
   command! -nargs=0 -bar NeoCompleteDisable
         \ call neocomplete#init#disable()
-
-  " Set for echodoc.
-  call neocomplete#echodoc#init()
 endfunction"}}}
 
 function! neocomplete#init#_variables() "{{{

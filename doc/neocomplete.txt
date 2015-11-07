@@ -1776,8 +1776,6 @@ https://github.com/Shougo/neocomplete.vim/issues/120
 
 A: You can do it by |echodoc|.
 http://github.com/Shougo/echodoc.vim
-Note: This feature is available from neocomplete candidates only.
-You cannot get it from |g:neocomplete#force_omni_input_patterns|.
 
 Q: In ||g:neocomplete#force_omni_input_patterns|,
 |g:neocomplete#enable_auto_select| feature is not work.
