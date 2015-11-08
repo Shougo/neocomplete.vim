@@ -371,7 +371,7 @@ g:neocomplete#enable_auto_select
 				*g:neocomplete#enable_auto_delimiter*
 g:neocomplete#enable_auto_delimiter
 		This option controls whether neocomplete insert delimiter
-		automatically.  For example, /(filename) or #(Vim script).
+		automatically.  For example, / (filenames) or # (Vim scripts.)
 
 		Default value is 0.
 
@@ -646,8 +646,8 @@ g:neocomplete#sources#omni#input_patterns
 		'omnifunc'.
 		Note: ruby and php omnifunc are disabled, because they are too
 		slow.
-		Note: Partial omnifunc has problem when neocomplete call(Ex:
-		rubycomplete, jedi.vim, cocoa.vim and clang_complete).  You
+		Note: Partial omnifunc has problem when neocomplete call (Ex:
+		rubycomplete, jedi.vim, cocoa.vim, and clang_complete.)  You
 		should |g:neocomplete#force_omni_input_patterns| instead.
 
 		Because it is complicated, refer to s:source.initialize()
@@ -688,7 +688,7 @@ g:neocomplete#sources#vim#complete_functions
 <
 					 *g:neocomplete#ignore_source_files*
 g:neocomplete#ignore_source_files
-		Ignore source filenames(not full path). You can optimize
+		Ignore source filenames (not full path.) You can optimize
 		source initialization.
 
 		Note: You cannot use the sources in ignored source files.
@@ -825,8 +825,8 @@ neocomplete#complete_common_string()
 ==============================================================================
 EXAMPLES					*neocomplete-examples*
 >
-	" Note: This option must set it in .vimrc(_vimrc).
-	" NOT IN .gvimrc(_gvimrc)!
+	" Note: This option must set it in .vimrc (_vimrc).
+	" NOT IN .gvimrc (_gvimrc)!
 	" Disable AutoComplPop.
 	let g:acp_enableAtStartup = 0
 	" Use neocomplete.
@@ -871,7 +871,7 @@ EXAMPLES					*neocomplete-examples*
 	" AutoComplPop like behavior.
 	"let g:neocomplete#enable_auto_select = 1
 
-	" Shell like behavior(not recommended).
+	" Shell like behavior (not recommended.)
 	"set completeopt+=longest
 	"let g:neocomplete#enable_auto_select = 1
 	"let g:neocomplete#disable_auto_complete = 1
@@ -1000,7 +1000,7 @@ To custom candidates, neocomplete uses the filters. There are three kinds of
 filters are available. "matcher" is to filter candidates by user input.
 "sorter" is to sort candidates. "converter" is to candidates conversion.
 
-Default sources are below. But you can create original filters(cf:
+Default sources are below. But you can create original filters (cf:
 |neocomplete-create-filter|) and set them by
 |neocomplete#custom#source()|.
 >
@@ -1599,7 +1599,7 @@ A: Please set |g:neocomplete#force_omni_input_patterns| as below.
 	\ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 	" alternative pattern: '\h\w*\|[^. \t]\.\w*'
 <
-Q: Candidates are not found in heavy completion(neco-look, etc).
+Q: Candidates are not found in heavy completion (neco-look, etc.)
 
 A: It may be caused by skip completion.
 
@@ -1627,7 +1627,7 @@ Q: Freeze for a while and close opened folding when I begin to insert.
 https://github.com/Shougo/neocomplcache.vim/issues/368
 
 A: I think you use 'foldmethod' is "expr" or "syntax". It is too heavy to use
-neocomplete(or other auto completion). You should change 'foldmethod'
+neocomplete (or other auto completion.) You should change 'foldmethod'
 option.
 Note: In current version, neocomplete does not restore 'foldmethod'. Because
 it is too heavy.
@@ -1746,7 +1746,7 @@ https://github.com/Shougo/neocomplete.vim/issues/69
 
 A: You can use |g:neocomplete#sources#buffer#max_keyword_width|.
 
-Q: neocomplete will change external completeopt value(longest).
+Q: neocomplete will change external completeopt value (longest.)
 https://github.com/Shougo/neocomplcache.vim/issues/453
 
 A: It is feature. Because "longest" completeopt conflicts with auto
@@ -1809,7 +1809,7 @@ Note: It is fixed in Vim 7.4.653.
 
 Q: When I press enter, Vim inserts new line instead of selected item.
 
-A: It is Vim's default behavior(feature).  If you want to select the item, you
+A: It is Vim's default behavior (feature.)  If you want to select the item, you
 should map <CR>. >
 
 	inoremap <expr><CR> pumvisible()? "\<C-y>" : "\<CR>"
