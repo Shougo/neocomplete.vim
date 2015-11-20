@@ -150,7 +150,9 @@ function! neocomplete#handler#_on_text_changed() "{{{
     call s:make_cache_current_line()
   endif
 
-  call s:indent_current_line()
+  if !neocomplete#util#is_text_changed()
+    call s:indent_current_line()
+  endif
 endfunction"}}}
 
 function! neocomplete#handler#_do_auto_complete(event) "{{{

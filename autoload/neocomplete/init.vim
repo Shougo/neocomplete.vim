@@ -110,9 +110,7 @@ function! neocomplete#init#_autocmds() "{{{
             \ call neocomplete#handler#_restore_update_time()
     augroup END
   else
-    " Note: Vim 7.4.143 fixed TextChangedI bug.
-    let event =
-          \ (v:version > 704 || v:version == 704 && has('patch143')) ?
+    let event = neocomplete#util#is_text_changed() ?
           \  'TextChangedI' : 'CursorMovedI'
     execute 'autocmd neocomplete' event '*'
           \ 'call neocomplete#handler#_do_auto_complete("'.event.'")'

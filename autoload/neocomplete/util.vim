@@ -253,6 +253,11 @@ function! neocomplete#util#convert2list(expr) "{{{
   return type(a:expr) ==# type([]) ? a:expr : [a:expr]
 endfunction"}}}
 
+function! neocomplete#util#is_text_changed() "{{{
+  " Note: Vim 7.4.143 fixed TextChangedI bug.
+  return v:version > 704 || v:version == 704 && has('patch143')
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
