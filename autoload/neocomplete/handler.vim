@@ -107,6 +107,16 @@ function! neocomplete#handler#_on_complete_done() "{{{
     return
   endif
 
+  if g:neocomplete#enable_auto_pairs
+        \ && v:completed_item.word =~ '[\[<({]$'
+    " Auto close pairs
+    let pairs = { '[': ']', '<': '>', '(': ')', '{': '}' }
+    let cur_text = neocomplete#helper#get_cur_text()
+    call setline('.', cur_text
+          \ . pairs[ v:completed_item.word[-1:]]
+          \ . getline('.')[len(cur_text):])
+  endif
+
   let frequencies = neocomplete#variables#get_frequencies()
   if !has_key(frequencies, complete_str)
     let frequencies[complete_str] = 20

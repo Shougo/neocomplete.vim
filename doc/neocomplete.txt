@@ -408,6 +408,10 @@ g:neocomplete#lock_iminsert		*g:neocomplete#lock_iminsert*
 
 		Default value is 0.
 
+					*g:neocomplete#enable_auto_pairs*
+g:neocomplete#enable_auto_pairs
+		If it is enabled, close the parenthesis automatically.
+
 g:neocomplete#data_directory		*g:neocomplete#data_directory*
 		This variable appoints the directory that neocomplete
 		begins to write a file at one time.  When there is not the
