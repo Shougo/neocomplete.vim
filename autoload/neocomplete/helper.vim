@@ -111,7 +111,7 @@ function! neocomplete#helper#get_source_filetypes(filetype) "{{{
   return exists('*context_filetype#get_filetypes') ?
         \                      context_filetype#get_filetypes(a:filetype) :
         \ (a:filetype == '') ? ['nothing'] :
-        \                      [a:filetype] + split(a:filetype, ',')
+        \                      [a:filetype] + split(a:filetype, '\.')
 endfunction"}}}
 
 function! neocomplete#helper#complete_check() "{{{
