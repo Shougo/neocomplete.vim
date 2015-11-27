@@ -479,7 +479,6 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'start_time' : reltime(),
         \ 'linenr' : 0,
         \ 'completeopt' : &completeopt,
-        \ 'overlapped_items' : {},
         \ 'sources' : [],
         \ 'sources_filetype' : '',
         \ 'within_comment' : 0,

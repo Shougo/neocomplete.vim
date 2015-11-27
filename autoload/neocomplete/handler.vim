@@ -58,7 +58,6 @@ function! neocomplete#handler#_on_insert_leave() "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.cur_text = ''
-  let neocomplete.overlapped_items = {}
 endfunction"}}}
 function! neocomplete#handler#_on_write_post() "{{{
   " Restore foldinfo.
