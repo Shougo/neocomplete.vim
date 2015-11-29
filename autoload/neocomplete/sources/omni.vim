@@ -48,7 +48,7 @@ function! s:source.hooks.on_init(context) "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'html,xhtml,xml,markdown,mkd',
-        \'<[^>]*')
+        \'<\|\s[[:alnum:]-]*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'css,scss,sass',
