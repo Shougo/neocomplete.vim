@@ -60,6 +60,9 @@ function! s:source.hooks.on_init(context) "{{{
   " Initialize member prefix patterns. "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#member#prefix_patterns',
+        \ '_', '\.')
+  call neocomplete#util#set_default_dictionary(
+        \ 'g:neocomplete#sources#member#prefix_patterns',
         \ 'c,objc', '\.\|->')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#member#prefix_patterns',
@@ -67,9 +70,6 @@ function! s:source.hooks.on_init(context) "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#member#prefix_patterns',
         \ 'perl,php', '->')
-  call neocomplete#util#set_default_dictionary(
-        \ 'g:neocomplete#sources#member#prefix_patterns',
-        \ 'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb', '\.')
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#member#prefix_patterns',
         \ 'ruby', '\.\|::')
