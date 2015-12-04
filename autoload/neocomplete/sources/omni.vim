@@ -235,7 +235,6 @@ function! s:set_complete_results_words(complete_results) "{{{
     let pos = getpos('.')
 
     try
-      call cursor(0, result.complete_pos)
       let ret = call(omnifunc, [0, result.complete_str])
       let list = type(ret) == type([]) ? ret : ret.words
     catch

@@ -259,12 +259,6 @@ function! neocomplete#helper#clear_result() "{{{
     " Restore completeopt.
     let &completeopt = neocomplete.completeopt
   endif
-
-  " Clear context.
-  for source in values(neocomplete#variables#get_sources())
-    let source.neocomplete__context = neocomplete#init#_context(
-          \ source.neocomplete__context)
-  endfor
 endfunction"}}}
 
 function! neocomplete#helper#call_hook(sources, hook_name, context) "{{{

@@ -949,9 +949,11 @@ file						*neocomplete-source-file*
 
 omni						*neocomplete-source-omni*
 		This source calls 'omnifunc' automatically when cursor
-		text is matched with |g:neocomplete#sources#omni#input_patterns|.  If
-		|g:neocomplete_omni_function_list|is defined,
-		neocomplete will give priority it.
+		text is matched with
+		|g:neocomplete#sources#omni#input_patterns|.  If
+		|g:neocomplete_omni_function_list| is defined, neocomplete
+		will give priority it.
+		Note: It supports the fuzzy match using the previous result.
 
 
 suffix of complete candidates in popup menu declaration.

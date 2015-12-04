@@ -667,6 +667,7 @@ function! neocomplete#init#_context(context) "{{{
         \ 'input' : '',
         \ 'prev_complete_pos' : -1,
         \ 'prev_candidates' : [],
+        \ 'prev_line' : '',
         \ 'complete_pos' : -1,
         \ 'complete_str' : '',
         \ 'candidates' : []
