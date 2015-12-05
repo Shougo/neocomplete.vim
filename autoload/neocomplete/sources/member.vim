@@ -93,12 +93,13 @@ endfunction
 function! s:source.get_complete_position(context) "{{{
   " Check member prefix pattern.
   let filetype = neocomplete#get_context_filetype()
-  if get(g:neocomplete#sources#member#prefix_patterns, filetype, '') == ''
+  let prefix = get(g:neocomplete#sources#member#prefix_patterns, filetype,
+        \ get(g:neocomplete#sources#member#prefix_patterns, '_', ''))
+  if prefix == ''
     return -1
   endif
 
   let member = s:get_member_pattern(filetype)
-  let prefix = g:neocomplete#sources#member#prefix_patterns[filetype]
   let complete_pos = matchend(a:context.input,
         \ member . '\m\%(' . prefix . '\m\)\ze\w*$')
   return complete_pos
@@ -107,7 +108,9 @@ endfunction"}}}
 function! s:source.gather_candidates(context) "{{{
   " Check member prefix pattern.
   let filetype = neocomplete#get_context_filetype()
-  if get(g:neocomplete#sources#member#prefix_patterns, filetype, '') == ''
+  let prefix = get(g:neocomplete#sources#member#prefix_patterns, filetype,
+        \ get(g:neocomplete#sources#member#prefix_patterns, '_', ''))
+  if prefix == ''
     return []
   endif
 
@@ -115,7 +118,7 @@ function! s:source.gather_candidates(context) "{{{
 
   let var_name = matchstr(a:context.input,
         \ s:get_member_pattern(filetype) . '\m\%(' .
-        \ g:neocomplete#sources#member#prefix_patterns[filetype] . '\m\)\ze\w*$')
+        \ prefix . '\m\)\ze\w*$')
   if var_name == ''
     return []
   endif
@@ -154,19 +157,18 @@ function! s:make_cache_current_buffer(start, end) "{{{
 endfunction"}}}
 function! s:make_cache_lines(srcname, filetype, lines) "{{{
   let filetype = a:filetype
-  if get(g:neocomplete#sources#member#prefix_patterns, filetype, '') == ''
-    return
-  endif
-
   if !has_key(s:member_sources, a:srcname)
     call s:initialize_source(a:srcname, filetype)
   endif
 
+  let prefix = get(g:neocomplete#sources#member#prefix_patterns, filetype,
+        \ get(g:neocomplete#sources#member#prefix_patterns, '_', ''))
+  if prefix == ''
+    return
+  endif
   let source = s:member_sources[a:srcname]
   let member_pattern = s:get_member_pattern(filetype)
-  let prefix_pattern = member_pattern . '\m\%('
-        \ . g:neocomplete#sources#member#prefix_patterns[filetype]
-        \ . '\m\)'
+  let prefix_pattern = member_pattern . '\m\%(' . prefix . '\m\)'
   let keyword_pattern =
         \ prefix_pattern . member_pattern
 
