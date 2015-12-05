@@ -257,7 +257,7 @@ function! neocomplete#complete#_set_results_words(sources) "{{{
             \ && stridx(context.input, context.prev_line) == 0
             \ && !empty(context.prev_candidates)
         " Use previous candidates.
-        let context.candidates = context.prev_candidates
+        let context.candidates = deepcopy(context.prev_candidates)
       else
         try
           let context.candidates = source.gather_candidates(context)
