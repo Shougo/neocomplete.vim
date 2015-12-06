@@ -60,7 +60,10 @@ function! s:converter.filter(context) "{{{
       local candidates = vim.eval('a:context.candidates')
       local pattern = vim.eval('neocomplete#filters#escape(delimiter)')..'.'
       for i = 0, #candidates-1 do
-        if string.find(candidates[i].word, pattern, 1) ~= nil then
+        if (not candidates[i].abbr or
+            string.gsub(candidates[i].word, '%([^)]*%)?', '()')
+              == string.gsub(candidates[i].abbr, '%([^)]*%)?', '()')) and (
+            string.find(candidates[i].word, pattern, 1) ~= nil) then
           vim.command('call s:process_delimiter(a:context, '..
             'a:context.candidates['.. i ..
             '], delimiter_vim, delim_cnt)')
