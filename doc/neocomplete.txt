@@ -1635,7 +1635,10 @@ https://github.com/Shougo/neocomplcache.vim/issues/368
 
 A: I think you use 'foldmethod' is "expr" or "syntax". It is too heavy to use
 neocomplete (or other auto completion.) You should change 'foldmethod'
-option.
+option or install FastFold plugin.
+
+https://github.com/Konfekt/FastFold
+
 Note: In current version, neocomplete does not restore 'foldmethod'. Because
 it is too heavy.
 

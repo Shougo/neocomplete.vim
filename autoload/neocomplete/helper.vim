@@ -336,8 +336,6 @@ function! neocomplete#helper#indent_current_line() "{{{
 endfunction"}}}
 
 function! neocomplete#helper#complete_configure() "{{{
-  call s:save_foldinfo()
-
   set completeopt-=menu
   set completeopt-=longest
   set completeopt+=menuone
@@ -366,26 +364,6 @@ function! neocomplete#helper#clean(directory) "{{{
     if !filereadable(orig)
       call delete(file)
     endif
-  endfor
-endfunction"}}}
-
-function! s:save_foldinfo() "{{{
-  " Save foldinfo.
-  let winnrs = filter(range(1, winnr('$')),
-        \ "winbufnr(v:val) == bufnr('%')")
-
-  " Note: for foldmethod=expr or syntax.
-  call filter(winnrs, "
-        \  (getwinvar(v:val, '&foldmethod') ==# 'expr' ||
-        \   getwinvar(v:val, '&foldmethod') ==# 'syntax') &&
-        \  getwinvar(v:val, '&modifiable')")
-  for winnr in winnrs
-    call setwinvar(winnr, 'neocomplete_foldinfo', {
-          \ 'foldmethod' : getwinvar(winnr, '&foldmethod'),
-          \ 'foldexpr'   : getwinvar(winnr, '&foldexpr')
-          \ })
-    call setwinvar(winnr, '&foldmethod', 'manual')
-    call setwinvar(winnr, '&foldexpr', 0)
   endfor
 endfunction"}}}
 
