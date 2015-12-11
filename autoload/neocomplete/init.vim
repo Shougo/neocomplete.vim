@@ -457,8 +457,7 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \ 'skip_next_complete' : 0,
         \ 'filetype' : '',
         \ 'context_filetype' : '',
-        \ 'context_filetype_range' :
-        \    [[1, 1], [line('$'), len(getline('$'))+1]],
+        \ 'context_filetypes' : [],
         \ 'completion_length' : -1,
         \ 'update_time_save' : &updatetime,
         \ 'foldinfo' : [],
@@ -671,7 +670,7 @@ function! neocomplete#init#_context(context) "{{{
         \ 'complete_str' : '',
         \ 'candidates' : [],
         \ 'filetype' : filetype,
-        \ 'filetypes' : neocomplete#helper#get_source_filetypes(filetype),
+        \ 'filetypes' : neocomplete#context_filetype#filetypes(),
         \ })
 endfunction"}}}
 
