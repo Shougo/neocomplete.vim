@@ -81,7 +81,7 @@ function! s:source.hooks.on_init(context) "{{{
   " Initialize member patterns. "{{{
   call neocomplete#util#set_default_dictionary(
         \ 'g:neocomplete#sources#member#input_patterns',
-        \ '_', '\h\w*\%(()\|\[\h\w*\]\)\?')
+        \ '_', '\h\w*\%(()\?\|\[\h\w*\]\)\?')
   "}}}
 
   " Initialize script variables. "{{{
