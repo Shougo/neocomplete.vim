@@ -661,6 +661,7 @@ function! neocomplete#init#_filter(filter) "{{{
 endfunction"}}}
 
 function! neocomplete#init#_context(context) "{{{
+  let filetype = neocomplete#get_context_filetype()
   return extend(a:context, {
         \ 'input' : '',
         \ 'prev_complete_pos' : -1,
@@ -668,7 +669,9 @@ function! neocomplete#init#_context(context) "{{{
         \ 'prev_line' : '',
         \ 'complete_pos' : -1,
         \ 'complete_str' : '',
-        \ 'candidates' : []
+        \ 'candidates' : [],
+        \ 'filetype' : filetype,
+        \ 'filetypes' : neocomplete#helper#get_source_filetypes(filetype),
         \ })
 endfunction"}}}
 

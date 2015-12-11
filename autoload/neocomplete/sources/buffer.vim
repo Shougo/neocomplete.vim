@@ -89,10 +89,10 @@ function! s:source.hooks.on_post_filter(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  call s:check_async_cache()
+  call s:check_async_cache(a:context)
 
   let keyword_list = []
-  for source in s:get_sources_list()
+  for source in s:get_sources_list(a:context)
     let keyword_list += source.words
   endfor
   return keyword_list
@@ -127,10 +127,9 @@ function! s:should_create_cache(bufnr) " {{{
         \  || filepath !~# g:neocomplete#sources#buffer#disabled_pattern)
 endfunction"}}}
 
-function! s:get_sources_list() "{{{
+function! s:get_sources_list(context) "{{{
   let filetypes_dict = {}
-  for filetype in neocomplete#get_source_filetypes(
-        \ neocomplete#get_context_filetype())
+  for filetype in a:context.filetypes
     let filetypes_dict[filetype] = 1
   endfor
 
@@ -264,8 +263,6 @@ function! s:check_source() "{{{
         \ && s:should_create_cache(v:val)
         \ "), 's:make_cache_file(v:val)')
 
-  call s:check_async_cache()
-
   " Remove unlisted buffers.
   call filter(s:buffer_sources,
         \ "v:key == bufnr('%') || buflisted(str2nr(v:key))")
@@ -327,8 +324,8 @@ EOF
   let source.words = neocomplete#util#uniq(source.words + words)
 endfunction"}}}
 
-function! s:check_async_cache() "{{{
-  for source in s:get_sources_list()
+function! s:check_async_cache(context) "{{{
+  for source in s:get_sources_list(a:context)
     if !has_key(s:async_dictionary_list, source.path)
       continue
     endif

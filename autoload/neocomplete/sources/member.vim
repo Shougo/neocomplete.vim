@@ -123,7 +123,7 @@ function! s:source.gather_candidates(context) "{{{
     return []
   endif
 
-  return s:get_member_list(a:context.input, var_name)
+  return s:get_member_list(a:context, a:context.input, var_name)
 endfunction"}}}
 
 function! neocomplete#sources#member#define() "{{{
@@ -200,9 +200,9 @@ function! s:make_cache_lines(srcname, filetype, lines) "{{{
   endfor
 endfunction"}}}
 
-function! s:get_member_list(cur_text, var_name) "{{{
+function! s:get_member_list(context, cur_text, var_name) "{{{
   let keyword_list = []
-  for source in filter(s:get_sources_list(),
+  for source in filter(s:get_sources_list(a:context),
         \ 'has_key(v:val.member_cache, a:var_name)')
     let keyword_list +=
           \ keys(source.member_cache[a:var_name])
@@ -211,10 +211,9 @@ function! s:get_member_list(cur_text, var_name) "{{{
   return keyword_list
 endfunction"}}}
 
-function! s:get_sources_list() "{{{
+function! s:get_sources_list(context) "{{{
   let filetypes_dict = {}
-  for filetype in neocomplete#get_source_filetypes(
-        \ neocomplete#get_context_filetype())
+  for filetype in a:context.filetypes
     let filetypes_dict[filetype] = 1
   endfor
 
