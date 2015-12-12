@@ -92,7 +92,7 @@ endfunction
 
 function! s:source.get_complete_position(context) "{{{
   " Check member prefix pattern.
-  let filetype = neocomplete#get_context_filetype()
+  let filetype = a:context.filetype
   let prefix = get(g:neocomplete#sources#member#prefix_patterns, filetype,
         \ get(g:neocomplete#sources#member#prefix_patterns, '_', ''))
   if prefix == ''
@@ -107,7 +107,7 @@ endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
   " Check member prefix pattern.
-  let filetype = neocomplete#get_context_filetype()
+  let filetype = a:context.filetype
   let prefix = get(g:neocomplete#sources#member#prefix_patterns, filetype,
         \ get(g:neocomplete#sources#member#prefix_patterns, '_', ''))
   if prefix == ''
