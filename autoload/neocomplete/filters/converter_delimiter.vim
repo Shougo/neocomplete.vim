@@ -42,9 +42,8 @@ function! s:converter.filter(context) "{{{
   endif
 
   " Delimiter check.
-  let filetype = neocomplete#get_context_filetype()
-
-  for delimiter in get(g:neocomplete#delimiter_patterns, filetype, [])
+  for delimiter in get(g:neocomplete#delimiter_patterns,
+        \ a:context.filetype, [])
     " Count match.
     let delim_cnt = 0
     let delimiter_vim = neocomplete#util#escape_pattern(delimiter)

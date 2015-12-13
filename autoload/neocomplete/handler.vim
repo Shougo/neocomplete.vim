@@ -154,6 +154,9 @@ function! neocomplete#handler#_do_auto_complete(event) "{{{
   let neocomplete.event = a:event
   call neocomplete#helper#clear_result()
 
+  " Set context filetype.
+  call neocomplete#context_filetype#set()
+
   let cur_text = neocomplete#get_cur_text(1)
   let complete_pos = -1
 

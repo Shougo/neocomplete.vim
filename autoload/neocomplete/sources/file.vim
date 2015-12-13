@@ -37,7 +37,7 @@ let s:source = {
       \}
 
 function! s:source.get_complete_position(context) "{{{
-  let filetype = neocomplete#get_context_filetype()
+  let filetype = a:context.filetype
   if filetype ==# 'vimshell' || filetype ==# 'unite' || filetype ==# 'int-ssh'
     return -1
   endif

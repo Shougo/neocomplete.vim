@@ -69,8 +69,7 @@ endfunction"}}}
 function! s:source.gather_candidates(context) "{{{
   let list = []
 
-  for ft in neocomplete#get_source_filetypes(
-        \ neocomplete#get_context_filetype())
+  for ft in a:context.filetypes
     if !has_key(s:dictionary_cache, ft)
       call s:make_cache(ft)
     endif

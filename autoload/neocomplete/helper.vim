@@ -108,10 +108,7 @@ function! neocomplete#helper#is_enabled_source(source, filetype) "{{{
 endfunction"}}}
 
 function! neocomplete#helper#get_source_filetypes(filetype) "{{{
-  return exists('*context_filetype#get_filetypes') ?
-        \                      context_filetype#get_filetypes(a:filetype) :
-        \ (a:filetype == '') ? ['nothing'] :
-        \                      [a:filetype] + split(a:filetype, '\.')
+  return neocomplete#context_filetype#filetypes()
 endfunction"}}}
 
 function! neocomplete#helper#complete_check() "{{{
@@ -204,7 +201,7 @@ EOF
 endfunction"}}}
 
 function! neocomplete#helper#ftdictionary2list(dictionary, filetype) "{{{
-  return map(filter(neocomplete#get_source_filetypes(a:filetype),
+  return map(filter(neocomplete#context_filetype#filetypes(),
         \ 'has_key(a:dictionary, v:val)'), 'a:dictionary[v:val]')
 endfunction"}}}
 
