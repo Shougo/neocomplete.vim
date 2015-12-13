@@ -187,6 +187,8 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
 
     let context = source.neocomplete__context
     let context.input = a:cur_text
+    let context.filetype = filetype
+    let context.filetypes = neocomplete#context_filetype#filetypes()
 
     try
       let complete_pos = s:use_previous_result(source, context) ?
