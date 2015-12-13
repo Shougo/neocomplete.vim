@@ -39,7 +39,6 @@ function! s:converter.filter(context) "{{{
   for candidate in filter(copy(a:context.candidates), "
         \ v:val.word !~ '()\\?$' &&
         \   (get(v:val, 'abbr', '') =~ '(.*)'
-        \ || get(v:val, 'menu', '') =~ '(.*)'
         \ || get(v:val, 'info', '') =~ '(.*)')
         \ ")
     let candidate.word .= '('
