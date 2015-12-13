@@ -100,11 +100,9 @@ function! neocomplete#helper#is_enabled_source(source, filetype) "{{{
         \ : a:source
 
   return !empty(source) && (empty(source.filetypes) ||
-        \     !empty(neocomplete#helper#ftdictionary2list(
-        \      source.filetypes, a:filetype)))
+        \     neocomplete#helper#check_filetype(source.filetypes))
         \  && (!get(source.disabled_filetypes, '_', 0) &&
-        \      empty(neocomplete#helper#ftdictionary2list(
-        \      source.disabled_filetypes, a:filetype)))
+        \      !neocomplete#helper#check_filetype(source.disabled_filetypes))
 endfunction"}}}
 
 function! neocomplete#helper#get_source_filetypes(filetype) "{{{
@@ -200,9 +198,9 @@ EOF
   return join(keyword_patterns, '\m\|')
 endfunction"}}}
 
-function! neocomplete#helper#ftdictionary2list(dictionary, filetype) "{{{
-  return map(filter(neocomplete#context_filetype#filetypes(),
-        \ 'has_key(a:dictionary, v:val)'), 'a:dictionary[v:val]')
+function! neocomplete#helper#check_filetype(dictionary) "{{{
+  return !empty(filter(neocomplete#context_filetype#filetypes(),
+        \ 'get(a:dictionary, v:val, 0)'))
 endfunction"}}}
 
 function! neocomplete#helper#get_sources_list(...) "{{{
@@ -235,8 +233,8 @@ function! neocomplete#helper#get_sources_list(...) "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.sources = filter(sources, "
-        \   (empty(v:val.filetypes) ||
-        \    get(v:val.filetypes, neocomplete.context_filetype, 0))")
+        \   empty(v:val.filetypes) ||
+        \   neocomplete#helper#check_filetype(v:val.filetypes)")
   let neocomplete.sources_filetype = neocomplete.context_filetype
 
   return neocomplete.sources

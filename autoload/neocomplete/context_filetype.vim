@@ -62,7 +62,7 @@ function! neocomplete#context_filetype#get(filetype) "{{{
   return context_filetype
 endfunction"}}}
 function! neocomplete#context_filetype#filetypes() "{{{
-  return neocomplete#get_current_neocomplete().context_filetypes
+  return copy(neocomplete#get_current_neocomplete().context_filetypes)
 endfunction"}}}
 
 let &cpo = s:save_cpo
