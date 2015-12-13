@@ -236,8 +236,7 @@ function! neocomplete#helper#get_sources_list(...) "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.sources = filter(sources, "
         \   (empty(v:val.filetypes) ||
-        \    !empty(neocomplete#helper#ftdictionary2list(
-        \      v:val.filetypes, neocomplete.context_filetype)))")
+        \    get(v:val.filetypes, neocomplete.context_filetype, 0))")
   let neocomplete.sources_filetype = neocomplete.context_filetype
 
   return neocomplete.sources
