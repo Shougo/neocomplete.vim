@@ -1092,6 +1092,12 @@ converter_remove_last_paren
 		candidate's word. It is useful if you use auto closing
 		parentheses plugins.
 
+			*neocomplete-filter-converter_add_paren*
+converter_add_paren
+		The converter which adds parentheses in a candidate's word. It
+		is useful if you use |neopairs.vim| or |neosnippet.vim|
+		plugins.
+
 ==============================================================================
 CREATE SOURCE					*neocomplete-create-source*
 
