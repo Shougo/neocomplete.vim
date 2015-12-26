@@ -143,13 +143,16 @@ function! neocomplete#mappings#undo_completion() "{{{
 
   " Get cursor word.
   let complete_str =
-        \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))[1]
+        \ (!exists('v:completed_item') || empty(v:completed_item)) ?
+        \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))[1] :
+        \ v:completed_item.word
+
   let old_keyword_str = neocomplete.complete_str
   let neocomplete.complete_str = complete_str
 
   return (!pumvisible() ? '' :
         \ complete_str ==# old_keyword_str ? "\<C-e>" : "\<C-y>")
-        \. repeat("\<BS>", len(complete_str)) . old_keyword_str
+        \. repeat("\<BS>", strchars(complete_str)) . old_keyword_str
 endfunction"}}}
 
 function! neocomplete#mappings#complete_common_string() "{{{
@@ -186,7 +189,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
 
     if empty(candidates)
       let &ignorecase = ignorecase_save
-      return ''
+      return "a\<BS>"
     endif
 
     let common_str = candidates[0].word
@@ -206,7 +209,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
   if common_str == ''
         \ || complete_str ==? common_str
         \ || len(common_str) == len(candidates[0].word)
-    return ''
+    return "a\<BS>"
   endif
 
   return (pumvisible() ? "\<C-e>" : '')
