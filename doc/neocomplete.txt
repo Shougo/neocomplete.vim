@@ -778,12 +778,14 @@ neocomplete#start_manual_complete([{sources}])
 				*neocomplete#close_popup()*
 neocomplete#close_popup()
 		Insert candidate and close popup menu for neocomplete.
-		Note: It is deprecated function.
+		Note: It is deprecated function.  You should use "\<C-y>"
+		character instead.
 
 				*neocomplete#cancel_popup()*
 neocomplete#cancel_popup()
 		Cancel completion menu for neocomplete.
-		Note: It is deprecated function.
+		Note: It is deprecated function.  You should use "\<C-e>"
+		character instead.
 
 				*neocomplete#smart_close_popup()*
 neocomplete#smart_close_popup()
