@@ -188,7 +188,6 @@ function! neocomplete#mappings#complete_common_string() "{{{
           \   'complete_str' : complete_str})
 
     if empty(candidates)
-      let &ignorecase = ignorecase_save
       return "a\<BS>"
     endif
 
@@ -213,7 +212,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
   endif
 
   return (pumvisible() ? "\<C-e>" : '')
-        \ . repeat("\<BS>", len(complete_str)) . common_str
+        \ . repeat("\<BS>", strchars(complete_str)) . common_str
 endfunction"}}}
 
 function! neocomplete#mappings#fallback(i) "{{{
