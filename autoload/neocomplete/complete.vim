@@ -327,11 +327,13 @@ EOF
 endfunction"}}}
 
 function! s:use_previous_result(source, context) abort "{{{
+  let neocomplete = neocomplete#get_current_neocomplete()
   return !a:source.is_volatile
         \ && substitute(a:context.input, '\w\+$', '', '')
         \    ==# substitute(a:context.prev_line, '\w\+$', '', '')
         \ && stridx(a:context.input, a:context.prev_line) == 0
         \ && !empty(a:context.prev_candidates)
+        \ && line('.') == neocomplete.old_linenr
 endfunction"}}}
 
 let &cpo = s:save_cpo
