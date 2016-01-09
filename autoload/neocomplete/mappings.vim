@@ -123,6 +123,11 @@ function! neocomplete#mappings#cancel_popup() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.complete_str = ''
   let neocomplete.old_cur_text = neocomplete#get_cur_text(1)
+  let neocomplete.old_complete_pos = col('.')
+  if mode() !=# 'i'
+    let neocomplete.old_complete_pos += 1
+  endif
+  let neocomplete.old_linenr = line('.')
   let neocomplete.skip_next_complete = 1
 
   return pumvisible() ? "\<C-e>" : ''
