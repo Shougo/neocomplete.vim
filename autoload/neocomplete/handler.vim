@@ -231,7 +231,7 @@ function! s:is_skip_auto_complete(cur_text) "{{{
 
   let skip = neocomplete.skip_next_complete
 
-  if !skip || a:cur_text !=# neocomplete.old_cur_text
+  if !skip
     return 0
   endif
 
