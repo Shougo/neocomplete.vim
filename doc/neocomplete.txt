@@ -1518,8 +1518,10 @@ A: Please try below settings.
 	      \ '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)'
 	let g:neocomplete#force_omni_input_patterns.objcpp =
 	      \ '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)\|\h\w*::\w*'
+	let g:clang_complete_auto = 0
 	let g:clang_auto_select = 0
 	let g:clang_omnicppcomplete_compliance = 0
+	let g:clang_make_default_keymappings = 0
 	"let g:clang_use_library = 1
 <
 
