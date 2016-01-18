@@ -390,6 +390,14 @@ g:neocomplete#enable_fuzzy_completion
 
 		Default value is 1.
 
+				*g:neocomplete#enable_refresh_always*
+g:neocomplete#enable_refresh_always
+		Neocomplete refreshes the candidates automatically if this
+		value is 1.
+		Note: It increases the screen flicker.
+
+		Default value is 0.
+
 				*g:neocomplete#enable_multibyte_completion*
 g:neocomplete#enable_multibyte_completion
 		If it is non-0, neocomplete can complete multibyte characters.
