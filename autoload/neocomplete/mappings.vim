@@ -196,7 +196,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
           \   'complete_str' : complete_str})
 
     if empty(candidates)
-      return "a\<BS>"
+      return ''
     endif
 
     let common_str = candidates[0].word
@@ -215,8 +215,7 @@ function! neocomplete#mappings#complete_common_string() "{{{
 
   if common_str == ''
         \ || complete_str ==? common_str
-        \ || len(common_str) == len(candidates[0].word)
-    return "a\<BS>"
+    return ''
   endif
 
   return (pumvisible() ? "\<C-e>" : '')
