@@ -219,6 +219,8 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
 
     let complete_str = context.input[complete_pos :]
     if neocomplete#is_auto_complete() &&
+          \ (source.input_pattern == '' ||
+          \  context.input !~# '\%(' . source.input_pattern.'\m\)$') &&
           \ len(complete_str) < source.min_pattern_length
       " Skip.
       let context.complete_pos = -1

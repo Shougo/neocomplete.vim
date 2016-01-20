@@ -1194,10 +1194,17 @@ min_pattern_length
 			Number				(Optional)
 			Required pattern length for completion.
 
-			If you omit it, it is set below value.
-			If kind attribute is "keyword":
-			    |g:neocomplete#auto_completion_start_length|
-			Otherwise: 0
+			If you omit it, it is set to
+			|g:neocomplete#auto_completion_start_length|
+
+			*neocomplete-source-attribute-input_pattern*
+input_pattern
+			String				(Optional)
+			If it is matched, neocomplete ignores
+			|neocomplete-source-attribute-min_pattern_length|.
+			It is useful for omni function sources.
+
+			If you omit it, it is set to "".
 
 			*neocomplete-source-attribute-max_candidates*
 max_candidates

@@ -552,6 +552,8 @@ function! neocomplete#init#_source(source) "{{{
         \      'converter_abbr',
         \ ],
         \ 'keyword_patterns' : g:neocomplete#keyword_patterns,
+        \ 'min_pattern_length' : g:neocomplete#auto_completion_start_length,
+        \ 'input_pattern' : '',
         \ 'neocomplete__context' : neocomplete#init#_context({}),
         \ }
 
@@ -588,12 +590,6 @@ function! neocomplete#init#_source(source) "{{{
     " Set default keyword pattern.
     let source.keyword_patterns['_'] =
           \ get(g:neocomplete#keyword_patterns, '_', '\h\w*')
-  endif
-
-  if !has_key(source, 'min_pattern_length')
-    " Set min_pattern_length.
-    let source.min_pattern_length = (source.kind ==# 'keyword') ?
-          \ g:neocomplete#auto_completion_start_length : 0
   endif
 
   let source.neocomplete__matchers = neocomplete#init#_filters(
