@@ -1124,65 +1124,62 @@ can use |neocomplete#define_source()|.
 SOURCE ATTRIBUTES			*neocomplete-source-attributes*
 
 					*neocomplete-source-attribute-name*
-name			String				(Required)
-			The name of a source.  Allowed characters are:
-			- a-z
-			- 0-9
-			- _
-			- /
-			- - (Not head)
+name		 String				(Required)
+		 The name of a source.  Allowed characters are:
+		 - a-z
+		 - 0-9
+		 - _
+		 - /
+		 - - (Not head)
 
 					*neocomplete-source-attribute-kind*
-kind			String				(Optional)
-			The kind of the source.  It decides the behaviour of
-			the complete position.  The following values are
-			available:
+kind		String				(Optional)
+		The kind of the source.  It decides the behaviour of the
+		complete position.  The following values are available:
 
-			"manual": The source decides the complete position
-				manually with the "get_complete_position"
-				attribute.  See also:
-				|neocomplete-source-attribute-get_complete_position|
+		"manual": The source decides the complete position manually
+			with the "get_complete_position" attribute.
+			See also:
+			|neocomplete-source-attribute-get_complete_position|
 
-			"keyword": The source decides the complete position
-				with |g:neocomplete#keyword_patterns|.  This
-				pattern is also used to filter the candidates.
+		"keyword": The source decides the complete position with
+			|g:neocomplete#keyword_patterns|.  This pattern is
+			also used to filter the candidates.
 
-			Note that "plugin", "complfunc" and "ftplugin" are old
-			values that are no longer accepted.
+		Note that "plugin", "complfunc" and "ftplugin" are old values
+		that are no longer accepted.
 
 
 				*neocomplete-source-attribute-filetypes*
-filetypes		Dictionary			(Optional)
-			Available filetype dictionary.
+filetypes	Dictionary			(Optional)
+		Available filetype dictionary.
 
-			For example:
+		For example:
 >
-			let source = {
-			      \ 'name' : 'test',
-			      \ 'kind' : 'manual',
-			      \ 'filetypes' : { 'vim' : 1, 'html' : 1 },
-			      \}
+		let source = {
+		      \ 'name' : 'test',
+		      \ 'kind' : 'manual',
+		      \ 'filetypes' : { 'vim' : 1, 'html' : 1 },
+		      \}
 <
-			The source is available in vim and html filetypes.
+		The source is available in vim and html filetypes.
 
-			If you omit it, this source available in all
-			filetypes.
+		If you omit it, this source available in all filetypes.
 
 			*neocomplete-source-attribute-disabled_filetypes*
 disabled_filetypes		Dictionary		(Optional)
-			Not available filetype dictionary.
-			If the key is "_", the source is disabled in all
-			sources.
+		Not available filetype dictionary.
+		If the key is "_", the source is disabled in all sources.
 
 					*neocomplete-source-attribute-rank*
-rank			Number				(Optional)
-			Source priority.  Higher values imply higher priority.
-			If you omit it, it is set below value.
-			Note: It is high priority than match position.
+rank		Number				(Optional)
+		Source priority.  Higher values imply higher priority.
+		If you omit it, it is set below value.
+		Note: It is high priority than match position.
 
-			If kind attribute is "keyword": 5
-			If filetype attribute is empty: 10
-			Otherwise: 100
+		If kind attribute is "keyword": 5
+		If filetype attribute is empty: 10
+		Otherwise: 100
 
       Example:
 >
@@ -1191,162 +1188,154 @@ rank			Number				(Optional)
 <
 			*neocomplete-source-attribute-min_pattern_length*
 min_pattern_length
-			Number				(Optional)
-			Required pattern length for completion.
+		Number				(Optional)
+		Required pattern length for completion.
 
-			If you omit it, it is set to
-			|g:neocomplete#auto_completion_start_length|
+		If you omit it, it is set to
+		|g:neocomplete#auto_completion_start_length|
 
 			*neocomplete-source-attribute-input_pattern*
 input_pattern
-			String				(Optional)
-			If it is matched, neocomplete ignores
-			|neocomplete-source-attribute-min_pattern_length|.
-			It is useful for omni function sources.
+		String				(Optional)
+		If it is matched, neocomplete ignores
+		|neocomplete-source-attribute-min_pattern_length|.
+		It is useful for omni function sources.
 
-			If you omit it, it is set to "".
+		If you omit it, it is set to "".
 
 			*neocomplete-source-attribute-max_candidates*
 max_candidates
-			Number		(Optional)
-			The maximum number of candidates.
+		Number		(Optional)
+		The maximum number of candidates.
 
-			This attribute is optional; if it is not given,
-			0 is used as the default value.  This means
-			maximum number is infinity.
+		This attribute is optional; if it is not given, 0 is used as
+		the default value.  This means maximum number is infinity.
 
 			*neocomplete-source-attribute-keyword_patterns*
 keyword_patterns
-			Dictionary	(Optional)
-			This dictionary changes keyword patterns to
-			completion for specific types.
+		Dictionary	(Optional)
+		This dictionary changes keyword patterns to completion for
+		specific types.
 >
 	let keyword_patterns = {}
 	let keyword_patterns.tex = '\\\?\h\w*'
 	call neocomplete#custom#source('dictionary',
 	\ 'keyword_patterns', keyword_patterns)
 <
-			This attribute is optional; if it is not given,
-			|g:neocomplete#keyword_patterns| is used as the
-			default value.
+		This attribute is optional; if it is not given,
+		|g:neocomplete#keyword_patterns| is used as the default value.
 
 				*neocomplete-source-attribute-is_volatile*
-is_volatile		Number		(Optional)
-			Whether the source recalculates the candidates
-			everytime the input is changed.
-			This attribute is optional.
-			If it's not given, 0 is set as the default value.  In
-			this case, candidates are cached.
+is_volatile	Number		(Optional)
+		Whether the source recalculates the candidates everytime the
+		input is changed.
+		This attribute is optional.
+		If it's not given, 0 is set as the default value.  In this
+		case, candidates are cached.
 
 				*neocomplete-source-attribute-disabled*
-disabled		Number		(Optional)
-			This attribute is optional.
-			If it's not given, 0 is set as the default value.
-			Otherwise, the source is disabled.
+disabled	Number		(Optional)
+		This attribute is optional.
+		If it's not given, 0 is set as the default value.
+		Otherwise, the source is disabled.
 
 					*neocomplete-source-attribute-hooks*
-hooks			Dictionary		(Optional)
-			You may put hook functions in this dictionary in which
-			the key is the position to hook and the value is the
-			reference to the function to be called.  The following
-			hook functions are defined:
+hooks		Dictionary		(Optional)
+		You may put hook functions in this dictionary in which the key
+		is the position to hook and the value is the reference to the
+		function to be called.  The following hook functions are
+		defined:
 
-				*neocomplete-source-attribute-hooks-on_init*
-			on_init
-			Called when initializing the source.
-			This function takes {context} as its parameters.
+			*neocomplete-source-attribute-hooks-on_init*
+		on_init
+		Called when initializing the source.
+		This function takes {context} as its parameters.
 
-				*neocomplete-source-attribute-hooks-on_final*
-			on_final
-			Called after executing |:NeoCompleteDisable|.
-			This function takes {context} as its parameters.
+			*neocomplete-source-attribute-hooks-on_final*
+		on_final
+		Called after executing |:NeoCompleteDisable|.
+		This function takes {context} as its parameters.
 
-			*neocomplete-source-attribute-hooks-on_post_filter*
-			on_post_filter
-			Called after the filters to narrow down the
-			candidates.  This is used to set attributes. This
-			filters is to avoid adversely affecting the
-			performance.
-			This function takes {context} as its parameters.
+		*neocomplete-source-attribute-hooks-on_post_filter*
+		on_post_filter
+		Called after the filters to narrow down the
+		candidates.  This is used to set attributes. This
+		filters is to avoid adversely affecting the
+		performance.
+		This function takes {context} as its parameters.
 
 			*neocomplete-source-attribute-get_complete_position*
 get_complete_position	Function	(Optional)
-			This function takes {context} as its
-			parameter and returns complete position in current
-			line.
-			Here, {context} is the context information when the
-			source is called(|neocomplete-notation-{context}|).
-			If you omit it, neocomplete will use the position
-			using |g:neocomplete#keyword_patterns|.
-			Note: If the source returns candidates which are not
-			matched |g:neocomplete#keyword_patterns|, you must
-			define
-			|neocomplete-source-attribute-get_complete_position|.
+		This function takes {context} as its parameter and returns
+		complete position in current line.
+		Here, {context} is the context information when the source is
+		called(|neocomplete-notation-{context}|).
+		If you omit it, neocomplete will use the position using
+		|g:neocomplete#keyword_patterns|.
+		Note: If the source returns candidates which are not matched
+		|g:neocomplete#keyword_patterns|, you must define
+		|neocomplete-source-attribute-get_complete_position|.
 
 			*neocomplete-source-attribute-gather_candidates*
 gather_candidates	Function	(Required)
-			This function is called in gathering candidates.  If
-			you enabled fuzzy completion by
-			|g:neocomplete#enable_fuzzy_completion| , this
-			function is called whenever the input string is
-			changed.  This function takes {context} as its
-			parameter and returns a list of {candidate}.
-			Here, {context} is the context information when the
-			source is called(|neocomplete-notation-{context}|).
+		This function is called in gathering candidates.  If you
+		enabled fuzzy completion by
+		|g:neocomplete#enable_fuzzy_completion| , this function is
+		called whenever the input string is changed.  This function
+		takes {context} as its parameter and returns a list of
+		{candidate}.  Here, {context} is the context information when
+		the source is called(|neocomplete-notation-{context}|).
 
 {context}				*neocomplete-notation-{context}*
-			A dictionary to give context information.
-			The followings are the primary information.
-			The global context information can be acquired
-			by |neocomplete#get_context()|.
+		A dictionary to give context information.
+		The followings are the primary information.
+		The global context information can be acquired by
+		|neocomplete#get_context()|.
 
-			input			(String)
-				The input string of current line.
+		input			(String)
+			The input string of current line.
 
-			complete_pos		(Number)
-				The complete position of current source.
+		complete_pos		(Number)
+			The complete position of current source.
 
-			complete_str		(String)
-				The complete string of current source.
+		complete_str		(String)
+			The complete string of current source.
 
-			source__{name}		(Unknown)	(Optional)
-				Additional source information.
-				Note: Recommend sources save
-				variables instead of s: variables.
+		source__{name}		(Unknown)	(Optional)
+			Additional source information.
+			Note: Recommend sources save
+			variables instead of s: variables.
 
 ------------------------------------------------------------------------------
 CANDIDATE ATTRIBUTES			*neocomplete-candidate-attributes*
 
 				*neocomplete-candidate-attribute-name*
-word			String		(Required)
-			The completion word of a candidate. It is used for
-			matching inputs.
+word		String		(Required)
+		The completion word of a candidate. It is used for matching
+		inputs.
 
 				*neocomplete-candidate-attribute-abbr*
-abbr			String		(Optional)
-			The abbreviation of a candidate. It is displayed in
-			popup window. It is omitted by
-			|g:neocomplete#max_keyword_width|.
+abbr		String		(Optional)
+		The abbreviation of a candidate. It is displayed in popup
+		window. It is omitted by |g:neocomplete#max_keyword_width|.
 
 				*neocomplete-candidate-attribute-kind*
-kind			String		(Optional)
-			The kind of a candidate. It is displayed in popup
-			window.
+kind		String		(Optional)
+		The kind of a candidate. It is displayed in popup window.
 
 				*neocomplete-candidate-attribute-menu*
-menu			String		(Optional)
-			The menu information of a candidate. It is displayed
-			in popup window.
+menu		String		(Optional)
+		The menu information of a candidate. It is displayed in popup
+		window.
 
 				*neocomplete-candidate-attribute-info*
-info			String		(Optional)
-			The preview information of a candidate. If
-			'completeopt' contains "preview", it will be displayed
-			in |preview-window|.
+info		String		(Optional)
+		The preview information of a candidate. If 'completeopt'
+		contains "preview", it will be displayed in |preview-window|.
 
 				*neocomplete-candidate-attribute-rank*
-rank			Number		(Optional)
-			The completion priority.
+rank		Number		(Optional)
+		The completion priority.
 
 CONTEXT						*neocomplete-context*
 
@@ -1364,20 +1353,19 @@ FILTER ATTRIBUTES			*neocomplete-filter-attributes*
 
 
 					*neocomplete-filter-attribute-name*
-name			String		(Required)
-			The filter name.
+name		String		(Required)
+		The filter name.
 
 					*neocomplete-filter-attribute-filter*
-filter			Function		(Required)
-			The filter function.  This function takes {context} as
-			its parameter and returns a list of {candidate}.
-			The specification of the parameters and the returned
-			value is same as
-			|neocomplete-source-attribute-gather_candidates|.
+filter		Function		(Required)
+		The filter function.  This function takes {context} as its
+		parameter and returns a list of {candidate}.
+		The specification of the parameters and the returned value is
+		same as |neocomplete-source-attribute-gather_candidates|.
 
-					*neocomplete-filter-attribute-description*
-description		String		(Optional)
-			The filter description string.
+				*neocomplete-filter-attribute-description*
+description	String		(Optional)
+		The filter description string.
 
 ==============================================================================
 UNITE SOURCES					*neocomplete-unite-sources*
