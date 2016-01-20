@@ -61,10 +61,14 @@ function! neocomplete#commands#_clean() "{{{
   let data_directory = neocomplete#get_data_directory()
   for directory in filter(neocomplete#util#glob(
         \ data_directory.'/*'), 'isdirectory(v:val)')
-    for filename in filter(neocomplete#util#glob(directory.'/*'),
-          \ '!isdirectory(v:val)')
-      call delete(filename)
-    endfor
+    if has('patch-7.4.1120')
+      call delete(data_directory, 'rf')
+    else
+      for filename in filter(neocomplete#util#glob(directory.'/*'),
+            \ '!isdirectory(v:val)')
+        call delete(filename)
+      endfor
+    endif
   endfor
 
   echo 'Cleaned cache files in: ' . data_directory
