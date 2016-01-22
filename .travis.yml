@@ -1,7 +1,7 @@
 sudo: false
 
 before_script:
-    - git clone https://github.com/Shougo/vim-vimlint /tmp/vim-vimlint
+    - git clone -b builtin https://github.com/Shougo/vim-vimlint /tmp/vim-vimlint
     - git clone https://github.com/ynkdir/vim-vimlparser /tmp/vim-vimlparser
 
 script:
