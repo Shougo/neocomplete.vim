@@ -232,28 +232,17 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
 function! s:async_load(argv, cache_dir, filename) "{{{
-  " if 0
-  if neocomplete#has_vimproc()
-    let vim_path = s:search_vim_path()
+  let vim_path = s:search_vim_path()
 
-    if vim_path == ''
-      " Error
-      return
-    elseif !executable(vim_path)
-      call neocomplete#print_error(
-            \ printf('Vim path : "%s" is not executable.', vim_path))
-      let g:neocomplete#use_vimproc = 0
-      return
-    endif
-
+  if vim_path == '' || !executable(vim_path)
+    call neocomplete#async_cache#main(a:argv)
+  else
     let args = [vim_path, '-u', 'NONE', '-i', 'NONE', '-n',
           \       '-N', '-S', s:sdir.'/async_cache.vim']
           \ + a:argv
     call vimproc#system_bg(args)
     " call vimproc#system(args)
     " call system(join(args))
-  else
-    call neocomplete#async_cache#main(a:argv)
   endif
 
   return neocomplete#cache#encode_name(a:cache_dir, a:filename)
@@ -261,6 +250,10 @@ endfunction"}}}
 function! s:search_vim_path() "{{{
   if exists('s:vim_path')
     return s:vim_path
+  endif
+
+  if !neocomplete#has_vimproc()
+    return ''
   endif
 
   let paths = vimproc#get_command_name(v:progname, $PATH, -1)
