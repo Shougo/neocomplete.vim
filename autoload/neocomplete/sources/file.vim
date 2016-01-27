@@ -34,6 +34,7 @@ let s:source = {
       \ 'sorters' : 'sorter_filename',
       \ 'converters' : ['converter_remove_overlap', 'converter_abbr'],
       \ 'is_volatile' : 1,
+      \ 'input_pattern': '/',
       \}
 
 function! s:source.get_complete_position(context) "{{{
