@@ -48,12 +48,10 @@ function! s:source.get_complete_position(context) "{{{
   let [complete_pos, complete_str] =
         \ neocomplete#helper#match_word(a:context.input, pattern)
 
-  if (complete_str =~ '//' || complete_str == '/' ||
+  if complete_str =~ '//' || complete_str == '/' ||
         \ (neocomplete#is_auto_complete() &&
-        \    (complete_str !~ '/' || len(complete_str) <
-        \          g:neocomplete#auto_completion_start_length ||
         \     complete_str =~#
-        \          '\\[^ ;*?[]"={}'']\|\.\.\+$\|/c\%[ygdrive/]$')))
+        \          '\\[^ ;*?[]"={}'']\|\.\.\+$\|/c\%[ygdrive/]$')
     " Not filename pattern.
     return -1
   endif
