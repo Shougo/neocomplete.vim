@@ -52,7 +52,7 @@ function! s:source.hooks.on_init(context) "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'css,scss,sass',
-        \'^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]')
+        \'\w\+\|\w\+[):;]\?\s\+\w*\|[@!]')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'javascript',
