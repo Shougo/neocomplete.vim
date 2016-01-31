@@ -63,11 +63,8 @@ function! neocomplete#handler#_on_complete_done() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
 
   if neocomplete.event !=# 'mapping'
-        \ && exists('v:completed_item')
-        \ && get(v:completed_item, 'word', '') == ''
-    if !s:is_delimiter() && !get(neocomplete, 'refresh', 0)
-      call neocomplete#mappings#close_popup()
-    endif
+        \ && !s:is_delimiter() && !get(neocomplete, 'refresh', 0)
+    call neocomplete#mappings#close_popup()
   endif
 
   " Use v:completed_item feature.
