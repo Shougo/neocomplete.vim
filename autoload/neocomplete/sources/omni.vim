@@ -38,6 +38,7 @@ let s:source = {
       \ 'kind' : 'manual',
       \ 'mark' : '[O]',
       \ 'rank' : 50,
+      \ 'min_pattern_length' : 0,
       \ 'hooks' : {},
       \}
 
