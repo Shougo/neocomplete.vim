@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_disable_abbr#define() "{{{
+function! neocomplete#filters#converter_disable_abbr#define() abort "{{{
   return s:converter
 endfunction"}}}
 
@@ -35,7 +35,7 @@ let s:converter = {
       \ 'description' : 'disable abbr converter',
       \}
 
-function! s:converter.filter(context) "{{{
+function! s:converter.filter(context) abort "{{{
   for candidate in a:context.candidates
     let candidate.abbr = candidate.word
   endfor

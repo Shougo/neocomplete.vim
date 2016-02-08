@@ -91,23 +91,23 @@ let g:neocomplete#ignore_source_files =
       \ get(g:, 'neocomplete#ignore_source_files', [])
 "}}}
 
-function! neocomplete#initialize() "{{{
+function! neocomplete#initialize() abort "{{{
   return neocomplete#init#enable()
 endfunction"}}}
 
-function! neocomplete#get_current_neocomplete() "{{{
+function! neocomplete#get_current_neocomplete() abort "{{{
   if !exists('b:neocomplete')
     call neocomplete#init#_current_neocomplete()
   endif
 
   return b:neocomplete
 endfunction"}}}
-function! neocomplete#get_context() "{{{
+function! neocomplete#get_context() abort "{{{
   return neocomplete#get_current_neocomplete().context
 endfunction"}}}
 
 " Source helper. "{{{
-function! neocomplete#define_source(source) "{{{
+function! neocomplete#define_source(source) abort "{{{
   let sources = neocomplete#variables#get_sources()
   for source in neocomplete#util#convert2list(a:source)
     let source = neocomplete#init#_source(source)
@@ -116,38 +116,38 @@ function! neocomplete#define_source(source) "{{{
     endif
   endfor
 endfunction"}}}
-function! neocomplete#define_filter(filter) "{{{
+function! neocomplete#define_filter(filter) abort "{{{
   let filters = neocomplete#variables#get_filters()
   for filter in neocomplete#util#convert2list(a:filter)
     let filters[filter.name] = neocomplete#init#_filter(filter)
   endfor
 endfunction"}}}
-function! neocomplete#available_sources() "{{{
+function! neocomplete#available_sources() abort "{{{
   return copy(neocomplete#variables#get_sources())
 endfunction"}}}
-function! neocomplete#custom_source(source_name, option_name, value) "{{{
+function! neocomplete#custom_source(source_name, option_name, value) abort "{{{
   return neocomplete#custom#source(a:source_name, a:option_name, a:value)
 endfunction"}}}
 
-function! neocomplete#dup_filter(list) "{{{
+function! neocomplete#dup_filter(list) abort "{{{
   return neocomplete#util#dup_filter(a:list)
 endfunction"}}}
 
-function! neocomplete#system(...) "{{{
+function! neocomplete#system(...) abort "{{{
   return call('neocomplete#util#system', a:000)
 endfunction"}}}
-function! neocomplete#has_vimproc() "{{{
+function! neocomplete#has_vimproc() abort "{{{
   return neocomplete#util#has_vimproc()
 endfunction"}}}
 
-function! neocomplete#get_cur_text(...) "{{{
+function! neocomplete#get_cur_text(...) abort "{{{
   " Return cached text.
   let neocomplete = neocomplete#get_current_neocomplete()
   return (a:0 == 0 && mode() ==# 'i' &&
         \  neocomplete.cur_text != '') ?
         \ neocomplete.cur_text : neocomplete#helper#get_cur_text()
 endfunction"}}}
-function! neocomplete#get_keyword_pattern(...) "{{{
+function! neocomplete#get_keyword_pattern(...) abort "{{{
   let filetype = a:0 != 0? a:1 : neocomplete#get_context_filetype()
   if a:0 < 2
     return neocomplete#helper#unite_patterns(
@@ -166,21 +166,21 @@ function! neocomplete#get_keyword_pattern(...) "{{{
 
   return source.neocomplete__keyword_patterns[filetype]
 endfunction"}}}
-function! neocomplete#get_keyword_pattern_end(...) "{{{
+function! neocomplete#get_keyword_pattern_end(...) abort "{{{
   return '\%('.call('neocomplete#get_keyword_pattern', a:000).'\m\)$'
 endfunction"}}}
-function! neocomplete#match_word(...) "{{{
+function! neocomplete#match_word(...) abort "{{{
   return call('neocomplete#helper#match_word', a:000)
 endfunction"}}}
-function! neocomplete#is_enabled() "{{{
+function! neocomplete#is_enabled() abort "{{{
   return neocomplete#init#is_enabled()
 endfunction"}}}
-function! neocomplete#is_locked(...) "{{{
+function! neocomplete#is_locked(...) abort "{{{
   return neocomplete#is_cache_disabled() || &paste
         \ || (&t_Co != '' && &t_Co < 8)
         \ || g:neocomplete#disable_auto_complete
 endfunction"}}}
-function! neocomplete#is_cache_disabled() "{{{
+function! neocomplete#is_cache_disabled() abort "{{{
   let ignore_filetypes = ['fuf', 'ku']
   let bufnr = a:0 > 0 ? a:1 : bufnr('%')
   return !neocomplete#is_enabled()
@@ -189,63 +189,63 @@ function! neocomplete#is_cache_disabled() "{{{
         \ || (g:neocomplete#lock_buffer_name_pattern != '' &&
         \   bufname(bufnr) =~ g:neocomplete#lock_buffer_name_pattern)
 endfunction"}}}
-function! neocomplete#is_auto_select() "{{{
+function! neocomplete#is_auto_select() abort "{{{
   return g:neocomplete#enable_auto_select && !neocomplete#is_eskk_enabled()
 endfunction"}}}
-function! neocomplete#is_auto_complete() "{{{
+function! neocomplete#is_auto_complete() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   return neocomplete.is_auto_complete
 endfunction"}}}
-function! neocomplete#is_eskk_enabled() "{{{
+function! neocomplete#is_eskk_enabled() abort "{{{
   return exists('*eskk#is_enabled') && eskk#is_enabled()
 endfunction"}}}
-function! neocomplete#is_eskk_convertion(cur_text) "{{{
+function! neocomplete#is_eskk_convertion(cur_text) abort "{{{
   return neocomplete#is_eskk_enabled()
         \   && eskk#get_preedit().get_henkan_phase() !=#
         \             g:eskk#preedit#PHASE_NORMAL
 endfunction"}}}
-function! neocomplete#is_multibyte_input(cur_text) "{{{
+function! neocomplete#is_multibyte_input(cur_text) abort "{{{
   return (exists('b:skk_on') && b:skk_on)
         \   || (!g:neocomplete#enable_multibyte_completion
         \         && char2nr(split(a:cur_text, '\zs')[-1]) > 0x80)
 endfunction"}}}
-function! neocomplete#is_text_mode() "{{{
+function! neocomplete#is_text_mode() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   return get(g:neocomplete#text_mode_filetypes,
         \ neocomplete.context_filetype, 0)
 endfunction"}}}
-function! neocomplete#is_windows() "{{{
+function! neocomplete#is_windows() abort "{{{
   return neocomplete#util#is_windows()
 endfunction"}}}
-function! neocomplete#is_prefetch() "{{{
+function! neocomplete#is_prefetch() abort "{{{
   return 1
 endfunction"}}}
-function! neocomplete#exists_echodoc() "{{{
+function! neocomplete#exists_echodoc() abort "{{{
   return exists('g:loaded_echodoc') && g:loaded_echodoc
 endfunction"}}}
-function! neocomplete#within_comment() "{{{
+function! neocomplete#within_comment() abort "{{{
   return neocomplete#get_current_neocomplete().within_comment
 endfunction"}}}
-function! neocomplete#print_error(string) "{{{
+function! neocomplete#print_error(string) abort "{{{
   echohl Error | echomsg '[neocomplete] ' . a:string | echohl None
 endfunction"}}}
-function! neocomplete#print_warning(string) "{{{
+function! neocomplete#print_warning(string) abort "{{{
   echohl WarningMsg | echomsg '[neocomplete] ' . a:string | echohl None
 endfunction"}}}
-function! neocomplete#head_match(checkstr, headstr) "{{{
+function! neocomplete#head_match(checkstr, headstr) abort "{{{
   let checkstr = &ignorecase ?
         \ tolower(a:checkstr) : a:checkstr
   let headstr = &ignorecase ?
         \ tolower(a:headstr) : a:headstr
   return stridx(checkstr, headstr) == 0
 endfunction"}}}
-function! neocomplete#get_source_filetypes(filetype) "{{{
+function! neocomplete#get_source_filetypes(filetype) abort "{{{
   return neocomplete#helper#get_source_filetypes(a:filetype)
 endfunction"}}}
-function! neocomplete#escape_match(str) "{{{
+function! neocomplete#escape_match(str) abort "{{{
   return escape(a:str, '~"*\.^$[]')
 endfunction"}}}
-function! neocomplete#get_context_filetype(...) "{{{
+function! neocomplete#get_context_filetype(...) abort "{{{
   let neocomplete = exists('b:neocomplete') ?
         \ b:neocomplete : neocomplete#get_current_neocomplete()
 
@@ -256,12 +256,12 @@ function! neocomplete#get_context_filetype(...) "{{{
 
   return neocomplete.context_filetype
 endfunction"}}}
-function! neocomplete#print_debug(expr) "{{{
+function! neocomplete#print_debug(expr) abort "{{{
   if g:neocomplete#enable_debug
     echomsg string(a:expr)
   endif
 endfunction"}}}
-function! neocomplete#get_data_directory() "{{{
+function! neocomplete#get_data_directory() abort "{{{
   let g:neocomplete#data_directory =
         \ get(g:, 'neocomplete#data_directory',
         \  ($XDG_CACHE_HOME != '' ?
@@ -279,52 +279,52 @@ function! neocomplete#get_data_directory() "{{{
 
   return directory
 endfunction"}}}
-function! neocomplete#complete_check() "{{{
+function! neocomplete#complete_check() abort "{{{
   return neocomplete#helper#complete_check()
 endfunction"}}}
-function! neocomplete#skip_next_complete() "{{{
+function! neocomplete#skip_next_complete() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skip_next_complete = 1
 endfunction"}}}
-function! neocomplete#get_default_matchers() "{{{
+function! neocomplete#get_default_matchers() abort "{{{
   return map(copy(neocomplete#get_current_neocomplete().default_matchers),
         \ 'v:val.name')
 endfunction"}}}
-function! neocomplete#set_default_matchers(matchers) "{{{
+function! neocomplete#set_default_matchers(matchers) abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.default_matchers = neocomplete#init#_filters(
         \ neocomplete#util#convert2list(a:matchers))
 endfunction"}}}
 
-function! neocomplete#set_dictionary_helper(variable, keys, value) "{{{
+function! neocomplete#set_dictionary_helper(variable, keys, value) abort "{{{
   return neocomplete#util#set_dictionary_helper(
         \ a:variable, a:keys, a:value)
 endfunction"}}}
-function! neocomplete#disable_default_dictionary(variable) "{{{
+function! neocomplete#disable_default_dictionary(variable) abort "{{{
   return neocomplete#util#disable_default_dictionary(a:variable)
 endfunction"}}}
-function! neocomplete#filetype_complete(arglead, cmdline, cursorpos) "{{{
+function! neocomplete#filetype_complete(arglead, cmdline, cursorpos) abort "{{{
   return neocomplete#helper#filetype_complete(a:arglead, a:cmdline, a:cursorpos)
 endfunction"}}}
 "}}}
 
 " Key mapping functions. "{{{
-function! neocomplete#smart_close_popup()
+function! neocomplete#smart_close_popup() abort
   return neocomplete#mappings#smart_close_popup()
 endfunction
-function! neocomplete#close_popup()
+function! neocomplete#close_popup() abort
   return neocomplete#mappings#close_popup()
 endfunction
-function! neocomplete#cancel_popup()
+function! neocomplete#cancel_popup() abort
   return neocomplete#mappings#cancel_popup()
 endfunction
-function! neocomplete#undo_completion()
+function! neocomplete#undo_completion() abort
   return neocomplete#mappings#undo_completion()
 endfunction
-function! neocomplete#complete_common_string()
+function! neocomplete#complete_common_string() abort
   return neocomplete#mappings#complete_common_string()
 endfunction
-function! neocomplete#start_manual_complete(...)
+function! neocomplete#start_manual_complete(...) abort
   return call('neocomplete#mappings#start_manual_complete', a:000)
 endfunction
 "}}}

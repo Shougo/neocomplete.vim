@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#sorter_word#define() "{{{
+function! neocomplete#filters#sorter_word#define() abort "{{{
   return s:sorter
 endfunction"}}}
 
@@ -35,11 +35,11 @@ let s:sorter = {
       \ 'description' : 'sort by word order',
       \}
 
-function! s:sorter.filter(context) "{{{
+function! s:sorter.filter(context) abort "{{{
   return sort(a:context.candidates, 's:compare')
 endfunction"}}}
 
-function! s:compare(i1, i2)
+function! s:compare(i1, i2) abort
   return a:i1.word ># a:i2.word
 endfunction
 

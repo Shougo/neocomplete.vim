@@ -2,7 +2,7 @@
 let s:suite = themis#suite('parser')
 let s:assert = themis#helper('assert')
 
-function! s:suite.escape()
+function! s:suite.escape() abort
   call s:assert.equals(
         \ neocomplete#filters#fuzzy_escape('abc'), 'a.*b.*c.*')
   call s:assert.equals(
@@ -13,12 +13,12 @@ function! s:suite.escape()
         \ neocomplete#filters#fuzzy_escape('.abc'), '%.a.*b.*c.*')
 endfunction
 
-function! s:suite.sort()
+function! s:suite.sort() abort
   let candidates = []
   for i in range(1, 1000)
     call add(candidates, { 'word' : i, 'rank' : i })
   endfor
-  function! CompareRank(i1, i2)
+  function! CompareRank(i1, i2) abort
     let diff = (get(a:i2, 'rank', 0) - get(a:i1, 'rank', 0))
     return (diff != 0) ? diff : (len(a:i1.word) < len(a:i2.word)) ? 1 : -1
   endfunction"
@@ -37,12 +37,12 @@ function! s:suite.sort()
         \   {'candidates' : copy(candidates), 'input' : '' }))
 endfunction
 
-function! s:suite.fuzzy()
+function! s:suite.fuzzy() abort
   call s:assert.equals(neocomplete#filters#matcher_fuzzy#define().filter(
         \ {'complete_str' : 'ae', 'candidates' : ['~/~']}), [])
 endfunction
 
-function! s:suite.overlap()
+function! s:suite.overlap() abort
   call s:assert.equals(neocomplete#filters#converter_remove_overlap#
         \length('foo bar', 'bar baz'), 3)
   call s:assert.equals(neocomplete#filters#converter_remove_overlap#

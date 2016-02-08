@@ -27,7 +27,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#file_include#define()
+function! unite#sources#file_include#define() abort
   return s:source
 endfunction
 
@@ -36,14 +36,14 @@ let s:source = {
       \ 'description' : 'candidates from include files',
       \ 'hooks' : {},
       \}
-function! s:source.hooks.on_init(args, context) "{{{
+function! s:source.hooks.on_init(args, context) abort "{{{
   " From neocomplete include files.
   let a:context.source__include_files =
         \ neocomplete#sources#include#get_include_files(bufnr('%'))
   let a:context.source__path = &path
 endfunction"}}}
 
-function! s:source.gather_candidates(args, context) "{{{
+function! s:source.gather_candidates(args, context) abort "{{{
   let files = map(copy(a:context.source__include_files), '{
         \ "word" : neocomplete#util#substitute_path_separator(v:val),
         \ "abbr" : neocomplete#util#substitute_path_separator(v:val),

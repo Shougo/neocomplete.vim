@@ -28,62 +28,62 @@ set cpo&vim
 
 let s:V = vital#of('neocomplete')
 
-function! neocomplete#util#get_vital() "{{{
+function! neocomplete#util#get_vital() abort "{{{
   return s:V
 endfunction"}}}
-function! s:get_prelude() "{{{
+function! s:get_prelude() abort "{{{
   if !exists('s:Prelude')
     let s:Prelude = neocomplete#util#get_vital().import('Prelude')
   endif
   return s:Prelude
 endfunction"}}}
-function! s:get_list() "{{{
+function! s:get_list() abort "{{{
   if !exists('s:List')
     let s:List = neocomplete#util#get_vital().import('Data.List')
   endif
   return s:List
 endfunction"}}}
-function! s:get_string() "{{{
+function! s:get_string() abort "{{{
   if !exists('s:String')
     let s:String = neocomplete#util#get_vital().import('Data.String')
   endif
   return s:String
 endfunction"}}}
-function! s:get_process() "{{{
+function! s:get_process() abort "{{{
   if !exists('s:Process')
     let s:Process = neocomplete#util#get_vital().import('Process')
   endif
   return s:Process
 endfunction"}}}
 
-function! neocomplete#util#truncate_smart(...) "{{{
+function! neocomplete#util#truncate_smart(...) abort "{{{
   return call(s:get_string().truncate_skipping, a:000)
 endfunction"}}}
 
-function! neocomplete#util#truncate(...) "{{{
+function! neocomplete#util#truncate(...) abort "{{{
   return call(s:get_string().truncate, a:000)
 endfunction"}}}
 
-function! neocomplete#util#strchars(...) "{{{
+function! neocomplete#util#strchars(...) abort "{{{
   return call(s:get_string().strchars, a:000)
 endfunction"}}}
-function! neocomplete#util#wcswidth(string) "{{{
+function! neocomplete#util#wcswidth(string) abort "{{{
   return strwidth(a:string)
 endfunction"}}}
-function! neocomplete#util#strwidthpart(...) "{{{
+function! neocomplete#util#strwidthpart(...) abort "{{{
   return call(s:get_string().strwidthpart, a:000)
 endfunction"}}}
-function! neocomplete#util#strwidthpart_reverse(...) "{{{
+function! neocomplete#util#strwidthpart_reverse(...) abort "{{{
   return call(s:get_string().strwidthpart_reverse, a:000)
 endfunction"}}}
 
-function! neocomplete#util#substitute_path_separator(...) "{{{
+function! neocomplete#util#substitute_path_separator(...) abort "{{{
   return call(s:get_prelude().substitute_path_separator, a:000)
 endfunction"}}}
-function! neocomplete#util#mb_strlen(...) "{{{
+function! neocomplete#util#mb_strlen(...) abort "{{{
   return call(s:get_string().strchars, a:000)
 endfunction"}}}
-function! neocomplete#util#uniq(list) "{{{
+function! neocomplete#util#uniq(list) abort "{{{
   let dict = {}
   for item in a:list
     if !has_key(dict, item)
@@ -93,42 +93,42 @@ function! neocomplete#util#uniq(list) "{{{
 
   return values(dict)
 endfunction"}}}
-function! neocomplete#util#system(...) "{{{
+function! neocomplete#util#system(...) abort "{{{
   return call(s:get_process().system, a:000)
 endfunction"}}}
-function! neocomplete#util#is_windows(...) "{{{
+function! neocomplete#util#is_windows(...) abort "{{{
   return call(s:get_prelude().is_windows, a:000)
 endfunction"}}}
-function! neocomplete#util#is_mac(...) "{{{
+function! neocomplete#util#is_mac(...) abort "{{{
   return call(s:get_prelude().is_mac, a:000)
 endfunction"}}}
-function! neocomplete#util#is_complete_select() "{{{
+function! neocomplete#util#is_complete_select() abort "{{{
   return has('patch-7.4.775')
 endfunction"}}}
-function! neocomplete#util#get_last_status(...) "{{{
+function! neocomplete#util#get_last_status(...) abort "{{{
   return call(s:get_process().get_last_status, a:000)
 endfunction"}}}
-function! neocomplete#util#escape_pattern(...) "{{{
+function! neocomplete#util#escape_pattern(...) abort "{{{
   return call(s:get_prelude().escape_pattern, a:000)
 endfunction"}}}
-function! neocomplete#util#iconv(...) "{{{
+function! neocomplete#util#iconv(...) abort "{{{
   return call(s:get_process().iconv, a:000)
 endfunction"}}}
-function! neocomplete#util#uniq(...) "{{{
+function! neocomplete#util#uniq(...) abort "{{{
   return call(s:get_list().uniq, a:000)
 endfunction"}}}
-function! neocomplete#util#sort_by(...) "{{{
+function! neocomplete#util#sort_by(...) abort "{{{
   return call(s:get_list().sort_by, a:000)
 endfunction"}}}
 
 " Sudo check.
-function! neocomplete#util#is_sudo() "{{{
+function! neocomplete#util#is_sudo() abort "{{{
   return $SUDO_USER != '' && $USER !=# $SUDO_USER
       \ && $HOME !=# expand('~'.$USER)
       \ && $HOME ==# expand('~'.$SUDO_USER)
 endfunction"}}}
 
-function! neocomplete#util#glob(pattern, ...) "{{{
+function! neocomplete#util#glob(pattern, ...) abort "{{{
   if a:pattern =~ "'"
     " Use glob('*').
     let cwd = getcwd()
@@ -161,11 +161,11 @@ function! neocomplete#util#glob(pattern, ...) "{{{
     return split(neocomplete#util#substitute_path_separator(glob(glob)), '\n')
   endif
 endfunction"}}}
-function! neocomplete#util#expand(path) "{{{
+function! neocomplete#util#expand(path) abort "{{{
   return expand(escape(a:path, '*?[]"={}'), 1)
 endfunction"}}}
 
-function! neocomplete#util#set_default(var, val, ...)  "{{{
+function! neocomplete#util#set_default(var, val, ...) abort  "{{{
   if !exists(a:var) || type({a:var}) != type(a:val)
     let alternate_var = get(a:000, 0, '')
 
@@ -173,7 +173,7 @@ function! neocomplete#util#set_default(var, val, ...)  "{{{
           \ {alternate_var} : a:val
   endif
 endfunction"}}}
-function! neocomplete#util#set_dictionary_helper(variable, keys, pattern) "{{{
+function! neocomplete#util#set_dictionary_helper(variable, keys, pattern) abort "{{{
   for key in split(a:keys, '\s*,\s*')
     if !has_key(a:variable, key)
       let a:variable[key] = a:pattern
@@ -181,7 +181,7 @@ function! neocomplete#util#set_dictionary_helper(variable, keys, pattern) "{{{
   endfor
 endfunction"}}}
 
-function! neocomplete#util#set_default_dictionary(variable, keys, value) "{{{
+function! neocomplete#util#set_default_dictionary(variable, keys, value) abort "{{{
   if !exists('s:disable_dictionaries')
     let s:disable_dictionaries = {}
   endif
@@ -192,7 +192,7 @@ function! neocomplete#util#set_default_dictionary(variable, keys, value) "{{{
 
   call neocomplete#util#set_dictionary_helper({a:variable}, a:keys, a:value)
 endfunction"}}}
-function! neocomplete#util#disable_default_dictionary(variable) "{{{
+function! neocomplete#util#disable_default_dictionary(variable) abort "{{{
   if !exists('s:disable_dictionaries')
     let s:disable_dictionaries = {}
   endif
@@ -200,7 +200,7 @@ function! neocomplete#util#disable_default_dictionary(variable) "{{{
   let s:disable_dictionaries[a:variable] = 1
 endfunction"}}}
 
-function! neocomplete#util#split_rtp(...) "{{{
+function! neocomplete#util#split_rtp(...) abort "{{{
   let rtp = a:0 ? a:1 : &runtimepath
   if type(rtp) == type([])
     return rtp
@@ -213,15 +213,15 @@ function! neocomplete#util#split_rtp(...) "{{{
   let split = split(rtp, '\\\@<!\%(\\\\\)*\zs,')
   return map(split,'substitute(v:val, ''\\\([\\,]\)'', "\\1", "g")')
 endfunction"}}}
-function! neocomplete#util#join_rtp(list) "{{{
+function! neocomplete#util#join_rtp(list) abort "{{{
   return join(map(copy(a:list), 's:escape(v:val)'), ',')
 endfunction"}}}
 " Escape a path for runtimepath.
-function! s:escape(path)"{{{
+function! s:escape(path) abort"{{{
   return substitute(a:path, ',\|\\,\@=', '\\\0', 'g')
 endfunction"}}}
 
-function! neocomplete#util#has_vimproc() "{{{
+function! neocomplete#util#has_vimproc() abort "{{{
   " Initialize.
   if !exists('g:neocomplete#use_vimproc')
     " Check vimproc.
@@ -238,7 +238,7 @@ function! neocomplete#util#has_vimproc() "{{{
   return g:neocomplete#use_vimproc
 endfunction"}}}
 
-function! neocomplete#util#dup_filter(list) "{{{
+function! neocomplete#util#dup_filter(list) abort "{{{
   let dict = {}
   for keyword in a:list
     if !has_key(dict, keyword.word)
@@ -249,11 +249,11 @@ function! neocomplete#util#dup_filter(list) "{{{
   return values(dict)
 endfunction"}}}
 
-function! neocomplete#util#convert2list(expr) "{{{
+function! neocomplete#util#convert2list(expr) abort "{{{
   return type(a:expr) ==# type([]) ? a:expr : [a:expr]
 endfunction"}}}
 
-function! neocomplete#util#is_text_changed() "{{{
+function! neocomplete#util#is_text_changed() abort "{{{
   " Note: Vim 7.4.143 fixed TextChangedI bug.
   return v:version > 704 || v:version == 704 && has('patch143')
 endfunction"}}}

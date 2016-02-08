@@ -37,7 +37,7 @@ let s:source = {
       \ 'input_pattern': '/',
       \}
 
-function! s:source.get_complete_position(context) "{{{
+function! s:source.get_complete_position(context) abort "{{{
   let filetype = a:context.filetype
   if filetype ==# 'vimshell' || filetype ==# 'unite' || filetype ==# 'int-ssh'
     return -1
@@ -64,7 +64,7 @@ function! s:source.get_complete_position(context) "{{{
   return complete_pos
 endfunction"}}}
 
-function! s:source.gather_candidates(context) "{{{
+function! s:source.gather_candidates(context) abort "{{{
   let pattern = neocomplete#get_keyword_pattern_end('filename', self.name)
   let complete_str =
         \ neocomplete#helper#match_word(a:context.input, pattern)[1]
@@ -90,7 +90,7 @@ endfunction"}}}
 
 let s:cached_files = {}
 
-function! s:get_glob_files(complete_str, path) "{{{
+function! s:get_glob_files(complete_str, path) abort "{{{
   let path = ',,' . substitute(a:path, '\.\%(,\|$\)\|,,', '', 'g')
 
   let complete_str = neocomplete#util#substitute_path_separator(
@@ -149,7 +149,7 @@ function! s:get_glob_files(complete_str, path) "{{{
   return candidates
 endfunction"}}}
 
-function! neocomplete#sources#file#define() "{{{
+function! neocomplete#sources#file#define() abort "{{{
   return s:source
 endfunction"}}}
 

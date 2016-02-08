@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_abbr#define() "{{{
+function! neocomplete#filters#converter_abbr#define() abort "{{{
   return s:converter
 endfunction"}}}
 
@@ -35,7 +35,7 @@ let s:converter = {
       \ 'description' : 'abbreviate abbr converter',
       \}
 
-function! s:converter.filter(context) "{{{
+function! s:converter.filter(context) abort "{{{
   if g:neocomplete#max_keyword_width < 0
     return a:context.candidates
   endif

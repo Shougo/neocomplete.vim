@@ -30,7 +30,7 @@ if !exists('s:is_enabled')
   let s:is_enabled = 0
 endif
 
-function! neocomplete#init#enable() "{{{
+function! neocomplete#init#enable() abort "{{{
   if neocomplete#is_enabled()
     return
   endif
@@ -55,7 +55,7 @@ function! neocomplete#init#enable() "{{{
   doautocmd <nomodeline> neocomplete InsertEnter
 endfunction"}}}
 
-function! neocomplete#init#disable() "{{{
+function! neocomplete#init#disable() abort "{{{
   if !neocomplete#is_enabled()
     return
   endif
@@ -73,11 +73,11 @@ function! neocomplete#init#disable() "{{{
         \ 'on_final', {})
 endfunction"}}}
 
-function! neocomplete#init#is_enabled() "{{{
+function! neocomplete#init#is_enabled() abort "{{{
   return s:is_enabled
 endfunction"}}}
 
-function! neocomplete#init#_autocmds() "{{{
+function! neocomplete#init#_autocmds() abort "{{{
   augroup neocomplete
     autocmd!
     autocmd InsertEnter *
@@ -120,7 +120,7 @@ function! neocomplete#init#_autocmds() "{{{
   endif
 endfunction"}}}
 
-function! neocomplete#init#_others() "{{{
+function! neocomplete#init#_others() abort "{{{
   call neocomplete#init#_variables()
 
   call neocomplete#commands#_initialize()
@@ -148,7 +148,7 @@ function! neocomplete#init#_others() "{{{
         \ call neocomplete#init#disable()
 endfunction"}}}
 
-function! neocomplete#init#_variables() "{{{
+function! neocomplete#init#_variables() abort "{{{
   " Initialize keyword patterns. "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
@@ -445,7 +445,7 @@ function! neocomplete#init#_variables() "{{{
   endif
 endfunction"}}}
 
-function! neocomplete#init#_current_neocomplete() "{{{
+function! neocomplete#init#_current_neocomplete() abort "{{{
   let b:neocomplete = {
         \ 'context' : {
         \      'input' : '',
@@ -488,7 +488,7 @@ function! neocomplete#init#_current_neocomplete() "{{{
         \}
 endfunction"}}}
 
-function! neocomplete#init#_sources(names) "{{{
+function! neocomplete#init#_sources(names) abort "{{{
   if !exists('s:loaded_source_files')
     " Initialize.
     let s:loaded_source_files = {}
@@ -536,7 +536,7 @@ function! neocomplete#init#_sources(names) "{{{
   endfor
 endfunction"}}}
 
-function! neocomplete#init#_source(source) "{{{
+function! neocomplete#init#_source(source) abort "{{{
   let default = {
         \ 'is_volatile' : 0,
         \ 'max_candidates' : 0,
@@ -604,7 +604,7 @@ function! neocomplete#init#_source(source) "{{{
   return source
 endfunction"}}}
 
-function! neocomplete#init#_filters(names) "{{{
+function! neocomplete#init#_filters(names) abort "{{{
   let _ = []
   let filters = neocomplete#variables#get_filters()
 
@@ -641,7 +641,7 @@ function! neocomplete#init#_filters(names) "{{{
   return _
 endfunction"}}}
 
-function! neocomplete#init#_filter(filter) "{{{
+function! neocomplete#init#_filter(filter) abort "{{{
   let default = {
         \ }
 
@@ -655,7 +655,7 @@ function! neocomplete#init#_filter(filter) "{{{
   return filter
 endfunction"}}}
 
-function! neocomplete#init#_context(context) "{{{
+function! neocomplete#init#_context(context) abort "{{{
   let filetype = neocomplete#get_context_filetype()
   return extend(a:context, {
         \ 'input' : '',

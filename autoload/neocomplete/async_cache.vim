@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! s:main(argv) "{{{
+function! s:main(argv) abort "{{{
   " args: funcname, outputname filename pattern_file_name mark minlen fileencoding
   let [funcname, outputname, filename, pattern_file_name, mark, minlen, fileencoding]
         \ = a:argv
@@ -51,7 +51,7 @@ function! s:main(argv) "{{{
   call writefile([string], outputname)
 endfunction"}}}
 
-function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencoding, is_string) "{{{
+function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencoding, is_string) abort "{{{
   if !filereadable(a:filename)
     " File not found.
     return []
@@ -95,7 +95,7 @@ function! s:load_from_file(filename, pattern_file_name, mark, minlen, fileencodi
   return keyword_list
 endfunction"}}}
 
-function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencoding) "{{{
+function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencoding) abort "{{{
   let keyword_lists = []
   let dup_check = {}
 
@@ -211,7 +211,7 @@ function! s:load_from_tags(filename, pattern_file_name, mark, minlen, fileencodi
   return keyword_lists
 endfunction"}}}
 
-function! s:truncate(str, width) "{{{
+function! s:truncate(str, width) abort "{{{
   " Original function is from mattn.
   " http://github.com/mattn/googlereader-vim/tree/master
 
@@ -234,7 +234,7 @@ function! s:truncate(str, width) "{{{
   return ret
 endfunction"}}}
 
-function! s:strwidthpart(str, width) "{{{
+function! s:strwidthpart(str, width) abort "{{{
   let ret = a:str
   let width = strdisplaywidth(a:str)
   while width > a:width
@@ -246,7 +246,7 @@ function! s:strwidthpart(str, width) "{{{
   return ret
 endfunction"}}}
 
-function! s:iconv(expr, from, to)
+function! s:iconv(expr, from, to) abort
   if a:from == '' || a:to == '' || a:from ==? a:to
     return a:expr
   endif
@@ -265,7 +265,7 @@ if argc() == 7 &&
 
   qall!
 else
-  function! neocomplete#async_cache#main(argv) "{{{
+  function! neocomplete#async_cache#main(argv) abort "{{{
     call s:main(a:argv)
   endfunction"}}}
 endif

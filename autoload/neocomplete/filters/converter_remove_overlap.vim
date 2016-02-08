@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_remove_overlap#define() "{{{
+function! neocomplete#filters#converter_remove_overlap#define() abort "{{{
   return s:converter
 endfunction"}}}
 
@@ -35,7 +35,7 @@ let s:converter = {
       \ 'description' : 'remove overlapped characters',
       \}
 
-function! s:converter.filter(context) "{{{
+function! s:converter.filter(context) abort "{{{
   let next = matchstr(getline('.')[
         \ len(neocomplete#helper#get_cur_text()) :], '^\S\+')
   if next == ''
@@ -69,7 +69,7 @@ function! s:converter.filter(context) "{{{
   return candidates
 endfunction"}}}
 
-function! neocomplete#filters#converter_remove_overlap#length(left, right) "{{{
+function! neocomplete#filters#converter_remove_overlap#length(left, right) abort "{{{
   if a:left == '' || a:right == ''
     return 0
   endif

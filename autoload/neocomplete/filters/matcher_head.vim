@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#matcher_head#define() "{{{
+function! neocomplete#filters#matcher_head#define() abort "{{{
   return s:matcher
 endfunction"}}}
 
@@ -35,7 +35,7 @@ let s:matcher = {
       \ 'description' : 'head matcher',
       \}
 
-function! s:matcher.filter(context) "{{{
+function! s:matcher.filter(context) abort "{{{
   lua << EOF
 do
   local pattern = vim.eval(

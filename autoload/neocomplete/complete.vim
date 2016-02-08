@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#complete#_get_results(cur_text, ...) "{{{
+function! neocomplete#complete#_get_results(cur_text, ...) abort "{{{
   call neocomplete#print_debug('start get_complete_sources')
 
   let neocomplete = neocomplete#get_current_neocomplete()
@@ -55,7 +55,7 @@ function! neocomplete#complete#_get_results(cur_text, ...) "{{{
         \ '!empty(v:val.neocomplete__context.candidates)')
 endfunction"}}}
 
-function! neocomplete#complete#_get_complete_pos(sources) "{{{
+function! neocomplete#complete#_get_complete_pos(sources) abort "{{{
   if empty(a:sources)
     return -1
   endif
@@ -64,7 +64,7 @@ function! neocomplete#complete#_get_complete_pos(sources) "{{{
         \ 'v:val.neocomplete__context.complete_pos'))
 endfunction"}}}
 
-function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) "{{{
+function! neocomplete#complete#_get_words(sources, complete_pos, complete_str) abort "{{{
   let frequencies = neocomplete#variables#get_frequencies()
   if exists('*neocomplete#sources#buffer#get_frequencies')
     let frequencies = extend(copy(
@@ -165,7 +165,7 @@ EOF
 
   return candidates
 endfunction"}}}
-function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
+function! neocomplete#complete#_set_results_pos(cur_text, ...) abort "{{{
   " Initialize sources.
   let neocomplete = neocomplete#get_current_neocomplete()
 
@@ -236,7 +236,7 @@ function! neocomplete#complete#_set_results_pos(cur_text, ...) "{{{
 
   return complete_sources
 endfunction"}}}
-function! neocomplete#complete#_set_results_words(sources) "{{{
+function! neocomplete#complete#_set_results_words(sources) abort "{{{
   " Try source completion.
 
   " Save options.
@@ -311,7 +311,7 @@ function! neocomplete#complete#_set_previous_position(cur_text, complete_pos) ab
 endfunction"}}}
 
 " Source rank order. "{{{
-function! s:compare_source_rank(i1, i2)
+function! s:compare_source_rank(i1, i2) abort
   return a:i2.rank - a:i1.rank
 endfunction"}}}
 

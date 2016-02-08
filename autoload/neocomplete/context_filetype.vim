@@ -36,7 +36,7 @@ if !exists('s:exists_context_filetype')
   endtry
 endif
 
-function! neocomplete#context_filetype#set() "{{{
+function! neocomplete#context_filetype#set() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let context_filetype =
         \ s:exists_context_filetype ?
@@ -51,7 +51,7 @@ function! neocomplete#context_filetype#set() "{{{
 
   return neocomplete.context_filetype
 endfunction"}}}
-function! neocomplete#context_filetype#get(filetype) "{{{
+function! neocomplete#context_filetype#get(filetype) abort "{{{
   let context_filetype =
         \ s:exists_context_filetype ?
         \ context_filetype#get_filetype(a:filetype) : a:filetype
@@ -61,7 +61,7 @@ function! neocomplete#context_filetype#get(filetype) "{{{
 
   return context_filetype
 endfunction"}}}
-function! neocomplete#context_filetype#filetypes() "{{{
+function! neocomplete#context_filetype#filetypes() abort "{{{
   return copy(neocomplete#get_current_neocomplete().context_filetypes)
 endfunction"}}}
 

@@ -26,12 +26,12 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#commands#_initialize() "{{{
+function! neocomplete#commands#_initialize() abort "{{{
   command! -nargs=1 NeoCompleteAutoCompletionLength
         \ call s:set_auto_completion_length(<args>)
 endfunction"}}}
 
-function! neocomplete#commands#_toggle_lock() "{{{
+function! neocomplete#commands#_toggle_lock() abort "{{{
   if !neocomplete#is_enabled()
     call neocomplete#init#enable()
     return
@@ -46,17 +46,17 @@ function! neocomplete#commands#_toggle_lock() "{{{
   endif
 endfunction"}}}
 
-function! neocomplete#commands#_lock() "{{{
+function! neocomplete#commands#_lock() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.lock = 1
 endfunction"}}}
 
-function! neocomplete#commands#_unlock() "{{{
+function! neocomplete#commands#_unlock() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.lock = 0
 endfunction"}}}
 
-function! neocomplete#commands#_clean() "{{{
+function! neocomplete#commands#_clean() abort "{{{
   " Delete cache files.
   let data_directory = neocomplete#get_data_directory()
   for directory in filter(neocomplete#util#glob(
@@ -74,12 +74,12 @@ function! neocomplete#commands#_clean() "{{{
   echo 'Cleaned cache files in: ' . data_directory
 endfunction"}}}
 
-function! neocomplete#commands#_set_file_type(filetype) "{{{
+function! neocomplete#commands#_set_file_type(filetype) abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.context_filetype = a:filetype
 endfunction"}}}
 
-function! s:rand(max) "{{{
+function! s:rand(max) abort "{{{
   if !has('reltime')
     " Same value.
     return 0
@@ -89,7 +89,7 @@ function! s:rand(max) "{{{
   return (time < 0 ? -time : time)% (a:max + 1)
 endfunction"}}}
 
-function! s:set_auto_completion_length(len) "{{{
+function! s:set_auto_completion_length(len) abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.completion_length = a:len
 endfunction"}}}

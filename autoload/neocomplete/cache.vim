@@ -29,7 +29,7 @@ set cpo&vim
 let s:Cache = neocomplete#util#get_vital().import('System.Cache')
 
 " Cache loader.
-function! neocomplete#cache#load_from_cache(cache_dir, filename, ...) "{{{
+function! neocomplete#cache#load_from_cache(cache_dir, filename, ...) abort "{{{
   let is_string = get(a:000, 0, 0)
 
   try
@@ -79,7 +79,7 @@ EOF
 endfunction"}}}
 
 " New cache loader.
-function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, keyword_cache, is_string) "{{{
+function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, keyword_cache, is_string) abort "{{{
   if !has_key(a:async_cache_dictionary, a:key)
     return
   endif
@@ -104,7 +104,7 @@ function! neocomplete#cache#check_cache(cache_dir, key, async_cache_dictionary, 
 endfunction"}}}
 
 " For buffer source cache loader.
-function! neocomplete#cache#get_cache_list(cache_dir, async_cache_list) "{{{
+function! neocomplete#cache#get_cache_list(cache_dir, async_cache_list) abort "{{{
   let cache_list = a:async_cache_list
 
   let loaded_keywords = []
@@ -120,7 +120,7 @@ function! neocomplete#cache#get_cache_list(cache_dir, async_cache_list) "{{{
   return [loaded, loaded_keywords]
 endfunction"}}}
 
-function! neocomplete#cache#save_cache(cache_dir, filename, keyword_list) "{{{
+function! neocomplete#cache#save_cache(cache_dir, filename, keyword_list) abort "{{{
   if neocomplete#util#is_sudo()
     return
   endif
@@ -134,19 +134,19 @@ function! neocomplete#cache#save_cache(cache_dir, filename, keyword_list) "{{{
 endfunction"}}}
 
 " Cache helper.
-function! neocomplete#cache#getfilename(cache_dir, filename) "{{{
+function! neocomplete#cache#getfilename(cache_dir, filename) abort "{{{
   let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.getfilename(cache_dir, a:filename)
 endfunction"}}}
-function! neocomplete#cache#filereadable(cache_dir, filename) "{{{
+function! neocomplete#cache#filereadable(cache_dir, filename) abort "{{{
   let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.filereadable(cache_dir, a:filename)
 endfunction"}}}
-function! neocomplete#cache#readfile(cache_dir, filename) "{{{
+function! neocomplete#cache#readfile(cache_dir, filename) abort "{{{
   let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.readfile(cache_dir, a:filename)
 endfunction"}}}
-function! neocomplete#cache#writefile(cache_dir, filename, list) "{{{
+function! neocomplete#cache#writefile(cache_dir, filename, list) abort "{{{
   if neocomplete#util#is_sudo()
     return
   endif
@@ -154,16 +154,16 @@ function! neocomplete#cache#writefile(cache_dir, filename, list) "{{{
   let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.writefile(cache_dir, a:filename, a:list)
 endfunction"}}}
-function! neocomplete#cache#encode_name(cache_dir, filename)
+function! neocomplete#cache#encode_name(cache_dir, filename) abort
   " Check cache directory.
   let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return s:Cache.getfilename(cache_dir, a:filename)
 endfunction
-function! neocomplete#cache#check_old_cache(cache_dir, filename) "{{{
+function! neocomplete#cache#check_old_cache(cache_dir, filename) abort "{{{
   let cache_dir = neocomplete#get_data_directory() . '/' . a:cache_dir
   return  s:Cache.check_old_cache(cache_dir, a:filename)
 endfunction"}}}
-function! neocomplete#cache#make_directory(directory) "{{{
+function! neocomplete#cache#make_directory(directory) abort "{{{
   let directory =
         \ neocomplete#get_data_directory() .'/'.a:directory
   if !isdirectory(directory)
@@ -179,7 +179,7 @@ endfunction"}}}
 let s:sdir = neocomplete#util#substitute_path_separator(
       \ fnamemodify(expand('<sfile>'), ':p:h'))
 
-function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, mark) "{{{
+function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, mark) abort "{{{
   if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
         \ || neocomplete#util#is_sudo()
     return neocomplete#cache#encode_name(a:cache_dir, a:filename)
@@ -204,7 +204,7 @@ function! neocomplete#cache#async_load_from_file(cache_dir, filename, pattern, m
         \ ]
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
-function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, pattern, mark) "{{{
+function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, pattern, mark) abort "{{{
   if !neocomplete#cache#check_old_cache(a:cache_dir, a:filename)
         \ || neocomplete#util#is_sudo()
     return neocomplete#cache#encode_name(a:cache_dir, a:filename)
@@ -231,7 +231,7 @@ function! neocomplete#cache#async_load_from_tags(cache_dir, filename, filetype, 
         \ ]
   return s:async_load(argv, a:cache_dir, a:filename)
 endfunction"}}}
-function! s:async_load(argv, cache_dir, filename) "{{{
+function! s:async_load(argv, cache_dir, filename) abort "{{{
   let vim_path = s:search_vim_path()
 
   if vim_path == '' || !executable(vim_path)
@@ -247,7 +247,7 @@ function! s:async_load(argv, cache_dir, filename) "{{{
 
   return neocomplete#cache#encode_name(a:cache_dir, a:filename)
 endfunction"}}}
-function! s:search_vim_path() "{{{
+function! s:search_vim_path() abort "{{{
   if exists('s:vim_path')
     return s:vim_path
   endif

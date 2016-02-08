@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_add_paren#define() "{{{
+function! neocomplete#filters#converter_add_paren#define() abort "{{{
   return s:converter
 endfunction"}}}
 
@@ -35,7 +35,7 @@ let s:converter = {
       \ 'description' : 'add parenthesis if needed',
       \}
 
-function! s:converter.filter(context) "{{{
+function! s:converter.filter(context) abort "{{{
   for candidate in filter(copy(a:context.candidates), "
         \ v:val.word !~ '()\\?$' &&
         \   (get(v:val, 'abbr', '') =~ '(.*)'

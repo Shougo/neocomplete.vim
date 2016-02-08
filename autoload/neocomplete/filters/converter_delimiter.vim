@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#converter_delimiter#define() "{{{
+function! neocomplete#filters#converter_delimiter#define() abort "{{{
   return s:converter
 endfunction"}}}
 
@@ -36,7 +36,7 @@ let s:converter = {
       \}
 
 " @vimlint(EVL102, 1, l:delim_cnt)
-function! s:converter.filter(context) "{{{
+function! s:converter.filter(context) abort "{{{
   if g:neocomplete#max_keyword_width < 0
     return a:context.candidates
   endif
@@ -76,7 +76,7 @@ EOF
 endfunction"}}}
 " @vimlint(EVL102, 0, l:delim_cnt)
 
-function! s:process_delimiter(context, candidate, delimiter, delim_cnt)
+function! s:process_delimiter(context, candidate, delimiter, delim_cnt) abort
   let candidate = a:candidate
 
   let split_list = split(candidate.word, a:delimiter.'\ze.', 1)

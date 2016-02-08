@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neocomplete#filters#matcher_fuzzy#define() "{{{
+function! neocomplete#filters#matcher_fuzzy#define() abort "{{{
   return s:matcher
 endfunction"}}}
 
@@ -35,7 +35,7 @@ let s:matcher = {
       \ 'description' : 'fuzzy matcher',
       \}
 
-function! s:matcher.filter(context) "{{{
+function! s:matcher.filter(context) abort "{{{
   if len(a:context.complete_str) > 10
     " Mix fuzzy mode.
     let len = len(a:context.complete_str)
