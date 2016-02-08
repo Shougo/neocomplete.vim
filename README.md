@@ -1,11 +1,13 @@
 neocomplete
 ===========
-[![Stories in Ready](http://badge.waffle.io/Shougo/neocomplete.vim.png)](http://waffle.io/Shougo/neocomplete.vim)
 
 neocomplete is the abbreviation of "neo-completion with cache". It provides
 keyword completion system by maintaining a cache of keywords in the current
 buffer. neocomplete can be customized easily and has many more features than
 Vim's built-in completion.
+
+Note: If you use neovim, you should use deoplete instead.
+https://github.com/Shougo/deoplete.nvim
 
 ## Installation
 
