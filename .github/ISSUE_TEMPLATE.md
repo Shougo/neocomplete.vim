@@ -28,4 +28,4 @@ let g:neocomplete#enable_at_startup = 1
 ## Screen shot (if possible)
 
 
-## Upload the log messages by `:redir message`
+## Upload the log messages by `:redir` and `:message`
