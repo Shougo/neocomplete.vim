@@ -122,13 +122,13 @@ EOF
       let words = words[: len(source.max_candidates)-1]
     endif
 
-    " Set default menu.
-    if !has_key(words[0], 'menu') || words[0].menu !~ '^\[.*\]'
-      call s:set_default_menu(words, source)
-    endif
-
     let words = neocomplete#helper#call_filters(
           \ source.neocomplete__converters, source, {})
+
+    " Set default menu.
+    if get(words[0], 'menu', '') !~ '^\[.*\'
+      call s:set_default_menu(words, source)
+    endif
 
     let candidates += words
     let len_words += len(words)
