@@ -125,6 +125,10 @@ EOF
     let words = neocomplete#helper#call_filters(
           \ source.neocomplete__converters, source, {})
 
+    if empty(words)
+      continue
+    endif
+
     " Set default menu.
     if get(words[0], 'menu', '') !~ '^\[.*\'
       call s:set_default_menu(words, source)
