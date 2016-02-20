@@ -214,7 +214,7 @@ function! s:is_skip_auto_complete(cur_text) abort "{{{
 
   if (g:neocomplete#lock_iminsert && &l:iminsert)
         \ || (&l:formatoptions =~# '[tca]' && &l:textwidth > 0
-        \     && strwidth(a:cur_text) >= &l:textwidth)
+        \     && strdisplaywidth(a:cur_text) >= &l:textwidth)
     let neocomplete.skip_next_complete = 0
     return 1
   endif
