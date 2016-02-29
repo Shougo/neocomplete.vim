@@ -205,10 +205,6 @@ function! neocomplete#mappings#complete_common_string() abort "{{{
         let common_str = common_str[: -2]
       endwhile
     endfor
-
-    if &ignorecase
-      let common_str = tolower(common_str)
-    endif
   finally
     let &ignorecase = ignorecase_save
   endtry
