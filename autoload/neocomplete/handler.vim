@@ -210,11 +210,11 @@ function! s:check_in_do_auto_complete() abort "{{{
   endif
 
   " Detect foldmethod.
-  if (&l:foldmethod ==# 'expr' || &l:foldmethod ==# 'syntax')
-    call neocomplete#print_error(printf('foldmethod = "%s" is detected.',
-          \ &foldmethod))
+  if &l:foldmethod ==# 'expr' || &l:foldmethod ==# 'syntax'
+    call neocomplete#print_error(
+          \ printf('foldmethod = "%s" is detected.', &foldmethod))
     redir => foldmethod
-      verbose set foldmethod?
+      verbose setlocal foldmethod?
     redir END
     for msg in split(foldmethod, "\n")
       call neocomplete#print_error(msg)
