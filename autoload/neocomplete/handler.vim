@@ -209,8 +209,11 @@ function! s:check_in_do_auto_complete() abort "{{{
     return 1
   endif
 
+  let neocomplete = neocomplete#get_current_neocomplete()
   " Detect foldmethod.
-  if &l:foldmethod ==# 'expr' || &l:foldmethod ==# 'syntax'
+  if (&l:foldmethod ==# 'expr' || &l:foldmethod ==# 'syntax')
+        \ && !neocomplete.detected_foldmethod
+    let neocomplete.detected_foldmethod = 1
     call neocomplete#print_error(
           \ printf('foldmethod = "%s" is detected.', &foldmethod))
     redir => foldmethod

@@ -481,6 +481,7 @@ function! neocomplete#init#_current_neocomplete() abort "{{{
         \ 'within_comment' : 0,
         \ 'is_auto_complete' : 0,
         \ 'indent_text' : '',
+        \ 'detected_foldmethod' : 0,
         \ 'default_matchers' : neocomplete#init#_filters(
         \  (g:neocomplete#enable_fuzzy_completion ?
         \   ['matcher_fuzzy'] : ['matcher_head'])
