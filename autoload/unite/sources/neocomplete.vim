@@ -47,6 +47,8 @@ function! s:neocomplete_source.hooks.on_init(args, context) abort "{{{
   let max_list_save = g:neocomplete#max_list
   let max_keyword_width_save = g:neocomplete#max_keyword_width
   let manual_start_length = g:neocomplete#manual_completion_start_length
+  let neocomplete = neocomplete#get_current_neocomplete()
+  let sources_save = get(neocomplete, 'sources', {})
 
   try
     let g:neocomplete#max_list = -1
@@ -54,7 +56,12 @@ function! s:neocomplete_source.hooks.on_init(args, context) abort "{{{
     let g:neocomplete#manual_completion_start_length = 0
 
     let cur_text = neocomplete#get_cur_text(1)
-    let complete_sources = neocomplete#complete#_get_results(cur_text)
+    let sources = get(a:context, 'source__sources', [])
+    let args = [cur_text]
+    if !empty(sources)
+      call add(args, neocomplete#helper#get_sources_list(sources))
+    endif
+    let complete_sources = call('neocomplete#complete#_get_results', args)
     let a:context.source__complete_pos =
           \ neocomplete#complete#_get_complete_pos(complete_sources)
     let a:context.source__candidates = neocomplete#complete#_get_words(
@@ -65,6 +72,8 @@ function! s:neocomplete_source.hooks.on_init(args, context) abort "{{{
     let g:neocomplete#max_list = max_list_save
     let g:neocomplete#max_keyword_width = max_keyword_width_save
     let g:neocomplete#manual_completion_start_length = manual_start_length
+    let neocomplete.sources = empty(sources_save) ?
+          \ neocomplete#helper#get_sources_list() : sources_save
   endtry
 endfunction"}}}
 
