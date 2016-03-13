@@ -297,7 +297,6 @@ function! s:make_cache_current_buffer(start, end) abort "{{{
 do
   local words = vim.eval('words')
   local dup = {}
-  local b = vim.buffer()
   local min_length = vim.eval('g:neocomplete#min_keyword_length')
   for linenr = vim.eval('a:start'), vim.eval('a:end') do
     local match = 0
