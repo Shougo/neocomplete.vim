@@ -190,7 +190,7 @@ function! neocomplete#is_cache_disabled() abort "{{{
         \   bufname(bufnr) =~ g:neocomplete#lock_buffer_name_pattern)
 endfunction"}}}
 function! neocomplete#is_auto_select() abort "{{{
-  return g:neocomplete#enable_auto_select && !neocomplete#is_eskk_enabled()
+  return g:neocomplete#enable_auto_select
 endfunction"}}}
 function! neocomplete#is_auto_complete() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
@@ -198,11 +198,6 @@ function! neocomplete#is_auto_complete() abort "{{{
 endfunction"}}}
 function! neocomplete#is_eskk_enabled() abort "{{{
   return exists('*eskk#is_enabled') && eskk#is_enabled()
-endfunction"}}}
-function! neocomplete#is_eskk_convertion(cur_text) abort "{{{
-  return neocomplete#is_eskk_enabled()
-        \   && eskk#get_preedit().get_henkan_phase() !=#
-        \             g:eskk#preedit#PHASE_NORMAL
 endfunction"}}}
 function! neocomplete#is_multibyte_input(cur_text) abort "{{{
   return (exists('b:skk_on') && b:skk_on)

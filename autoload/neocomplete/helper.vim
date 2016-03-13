@@ -57,20 +57,6 @@ function! neocomplete#helper#get_cur_text(...) abort "{{{
 endfunction"}}}
 
 function! neocomplete#helper#get_force_omni_complete_pos(cur_text) abort "{{{
-  " Check eskk complete length.
-  if neocomplete#is_eskk_enabled()
-        \ && exists('g:eskk#start_completion_length')
-    if !neocomplete#is_eskk_convertion(a:cur_text)
-          \ || !neocomplete#is_multibyte_input(a:cur_text)
-      return -1
-    endif
-
-    let complete_pos = call(&l:omnifunc, [1, ''])
-    let complete_str = a:cur_text[complete_pos :]
-    return (neocomplete#util#mb_strlen(complete_str) >=
-          \ g:eskk#start_completion_length) ? complete_pos : -1
-  endif
-
   let filetype = neocomplete#get_context_filetype()
   let omnifunc = &l:omnifunc
 

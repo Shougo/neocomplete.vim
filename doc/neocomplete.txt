@@ -1066,6 +1066,9 @@ matcher_fuzzy	Fuzzy matching matcher.
 matcher_length	Input keyword length matcher. It removes candidates which is
 		less than input keyword length.
 
+					*neocomplete-filter-matcher_nothing*
+matcher_nothing	Nothing matcher. It disables the matcher filtering.
+
 					*neocomplete-filter-sorter_rank*
 sorter_rank	Matched rank order sorter.  The higher the matched word is
 		already selected or in current buffer
