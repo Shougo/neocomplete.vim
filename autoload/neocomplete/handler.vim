@@ -138,7 +138,7 @@ function! neocomplete#handler#_do_auto_complete(event) abort "{{{
   if (g:neocomplete#enable_cursor_hold_i
         \ && empty(neocomplete.candidates)
         \ && a:event ==# 'CursorMovedI')
-        \ || s:check_in_do_auto_complete()
+        \ || s:check_in_do_auto_complete(a:event)
         \ || (a:event ==# 'InsertEnter'
         \     && neocomplete.old_cur_text != '')
     return
@@ -199,7 +199,7 @@ function! neocomplete#handler#_do_auto_complete(event) abort "{{{
   endtry
 endfunction"}}}
 
-function! s:check_in_do_auto_complete() abort "{{{
+function! s:check_in_do_auto_complete(event) abort "{{{
   if neocomplete#is_locked()
     return 1
   endif
@@ -213,6 +213,7 @@ function! s:check_in_do_auto_complete() abort "{{{
   " Detect foldmethod.
   if (&l:foldmethod ==# 'expr' || &l:foldmethod ==# 'syntax')
         \ && !neocomplete.detected_foldmethod
+        \ && a:event !=# 'InsertEnter'
     let neocomplete.detected_foldmethod = 1
     call neocomplete#print_error(
           \ printf('foldmethod = "%s" is detected.', &foldmethod))
