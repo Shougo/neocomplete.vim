@@ -26,9 +26,11 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:V = vital#of('neocomplete')
 
 function! neocomplete#util#get_vital() abort "{{{
+  if !exists('s:V')
+    let s:V = vital#neocomplete#of()
+  endif
   return s:V
 endfunction"}}}
 function! s:get_prelude() abort "{{{
