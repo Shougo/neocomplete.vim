@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:Cache = neocomplete#util#get_vital().import('System.Cache')
+let s:Cache = neocomplete#util#get_vital().import('System.Cache.Deprecated')
 
 " Cache loader.
 function! neocomplete#cache#load_from_cache(cache_dir, filename, ...) abort "{{{
