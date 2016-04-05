@@ -254,6 +254,9 @@ SOURCES COMMANDS 				*neocomplete-sources-COMMANDS*
 :NeoCompleteTagMakeCache		*:NeoCompleteTagMakeCache*
 		Make a cache from a tags file in current buffer.
 
+:NeoCompleteMemberMakeCache 			*:NeoCompleteMemberMakeCache*
+		Make a member cache based in current buffer.
+
 ------------------------------------------------------------------------------
 VARIABLES 					*neocomplete-variables*
 
