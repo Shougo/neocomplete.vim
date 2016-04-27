@@ -44,8 +44,6 @@ function! s:source.hooks.on_init(context) abort "{{{
         \ get(g:, 'neocomplete#sources#tags#cache_limit_size', 500000)
 
   augroup neocomplete "{{{
-    autocmd VimLeavePre * call neocomplete#helper#clean('tags_cache')
-    autocmd VimLeavePre * call neocomplete#helper#clean('tags_patterns')
     autocmd BufWritePost * call neocomplete#sources#tag#make_cache(0)
   augroup END"}}}
 

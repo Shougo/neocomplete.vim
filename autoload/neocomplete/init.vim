@@ -86,8 +86,6 @@ function! neocomplete#init#_autocmds() abort "{{{
           \ call neocomplete#handler#_on_insert_leave()
     autocmd CursorMovedI *
           \ call neocomplete#handler#_on_moved_i()
-    autocmd VimLeavePre *
-          \ call neocomplete#init#disable()
     autocmd InsertCharPre *
           \ call neocomplete#handler#_on_insert_char_pre()
     autocmd TextChangedI *

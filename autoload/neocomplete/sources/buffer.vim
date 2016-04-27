@@ -343,7 +343,6 @@ function! s:check_async_cache(context) abort "{{{
 endfunction"}}}
 
 function! s:clean() abort "{{{
-  call neocomplete#helper#clean('buffer_cache')
   " Remove temporary files
   call map(glob(printf('%s/%d_*',
         \ neocomplete#get_data_directory() . '/buffer_temp',

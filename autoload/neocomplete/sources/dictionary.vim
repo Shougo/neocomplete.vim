@@ -52,7 +52,6 @@ let s:source = {
 function! s:source.hooks.on_init(context) abort "{{{
   augroup neocomplete "{{{
     autocmd FileType * call s:make_cache(&l:filetype)
-    autocmd VimLeavePre * call neocomplete#helper#clean('dictionary_cache')
   augroup END"}}}
 
   " Create cache directory.
