@@ -344,9 +344,17 @@ endfunction"}}}
 
 function! s:clean() abort "{{{
   " Remove temporary files
-  call map(glob(printf('%s/%d_*',
+  for file in glob(printf('%s/%d_*',
         \ neocomplete#get_data_directory() . '/buffer_temp',
-        \ getpid()), 1, 1), 'delete(v:val)')
+        \ getpid()), 1, 1)
+    call delete(file)
+
+    let cachefile = neocomplete#get_data_directory() . '/buffer_cache/'
+          \ . substitute(substitute(file, ':', '=-', 'g'), '[/\\]', '=+', 'g')
+    if filereadable(cachefile)
+      call delete(cachefile)
+    endif
+  endfor
 endfunction"}}}
 
 " Command functions. "{{{
