@@ -77,6 +77,7 @@ function! neocomplete#mappings#auto_complete() abort "{{{
   let neocomplete.candidates = neocomplete#complete#_get_words(
         \ neocomplete.complete_sources, complete_pos, base)
   let neocomplete.complete_str = base
+  let neocomplete.refresh = 0
   if empty(neocomplete.candidates)
     return ''
   endif
