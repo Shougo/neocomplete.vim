@@ -29,15 +29,19 @@ set cpo&vim
 function! neocomplete#helper#get_cur_text(...) abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let is_skip_char = get(a:000, 0, 0)
+  let mode = mode()
+  if neocomplete.event ==# 'InsertEnter'
+    let mode = 'i'
+  endif
 
   let cur_text =
-        \ ((neocomplete.event ==# 'InsertEnter' || mode() ==# 'i') ?
+        \ (mode ==# 'i' ?
         \   (col('.')-1) : col('.')) >= len(getline('.')) ?
         \      getline('.') :
         \      matchstr(getline('.'),
-        \         '^.*\%' . (mode() ==# 'i' && !is_skip_char ?
+        \         '^.*\%' . (mode ==# 'i' && !is_skip_char ?
         \                    col('.') : col('.') - 1)
-        \         . 'c' . (mode() ==# 'i' ? '' : '.'))
+        \         . 'c' . (mode ==# 'i' ? '' : '.'))
 
   if cur_text =~ '^.\{-}\ze\S\+$'
     let complete_str = matchstr(cur_text, '\S\+$')

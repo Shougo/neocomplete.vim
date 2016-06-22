@@ -139,8 +139,6 @@ function! neocomplete#handler#_do_auto_complete(event) abort "{{{
         \ && empty(neocomplete.candidates)
         \ && a:event ==# 'CursorMovedI')
         \ || s:check_in_do_auto_complete(a:event)
-        \ || (a:event ==# 'InsertEnter'
-        \     && neocomplete.old_cur_text != '')
     return
   endif
 
