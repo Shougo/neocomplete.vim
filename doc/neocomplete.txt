@@ -478,6 +478,8 @@ g:neocomplete#text_mode_filetypes
 		dictionary's key is filetype and value is number.  If the
 		value is non-zero, this filetype is text mode.  In text mode,
 		neocomplete supports word conversion to write English.
+		If the key is "_" and the value is non-zero, all filetypes are
+		text mode.
 
 		For example, if you input "Fo", neocomplete will convert
 		candidate "foo" to "Foo".  If you input "foo", neocomplete

@@ -206,8 +206,9 @@ function! neocomplete#is_multibyte_input(cur_text) abort "{{{
 endfunction"}}}
 function! neocomplete#is_text_mode() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
-  return get(g:neocomplete#text_mode_filetypes,
-        \ neocomplete.context_filetype, 0)
+  let filetypes = g:neocomplete#text_mode_filetypes
+  return get(filetypes, neocomplete.context_filetype, 0)
+        \ || get(filetypes, '_', 0)
 endfunction"}}}
 function! neocomplete#is_windows() abort "{{{
   return neocomplete#util#is_windows()
