@@ -45,6 +45,7 @@ let s:source = {
       \ 'rank' : 5,
       \ 'min_pattern_length' : 0,
       \ 'hooks' : {},
+      \ 'is_volatile' : 1,
       \}
 
 function! s:source.hooks.on_init(context) abort "{{{

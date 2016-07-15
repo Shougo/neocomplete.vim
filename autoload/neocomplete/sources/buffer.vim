@@ -49,6 +49,7 @@ let s:source = {
       \ 'min_pattern_length' :
       \     g:neocomplete#auto_completion_start_length,
       \ 'hooks' : {},
+      \ 'is_volatile' : 1,
       \}
 
 function! s:source.hooks.on_init(context) abort "{{{
