@@ -51,10 +51,8 @@ let g:neocomplete#disable_auto_complete =
       \ get(g:, 'neocomplete#disable_auto_complete', 0)
 let g:neocomplete#enable_fuzzy_completion =
       \ get(g:, 'neocomplete#enable_fuzzy_completion', 1)
-let g:neocomplete#enable_cursor_hold_i =
-      \ get(g:, 'neocomplete#enable_cursor_hold_i', 0)
-let g:neocomplete#cursor_hold_i_time =
-      \ get(g:, 'neocomplete#cursor_hold_i_time', 300)
+let g:neocomplete#auto_complete_delay =
+      \ get(g:, 'neocomplete#auto_complete_delay', 50)
 let g:neocomplete#enable_auto_select =
       \ get(g:, 'neocomplete#enable_auto_select', 0)
 let g:neocomplete#enable_auto_delimiter =

@@ -94,28 +94,13 @@ function! neocomplete#init#_autocmds() abort "{{{
           \ call neocomplete#handler#_on_complete_done()
   augroup END
 
-  if g:neocomplete#enable_cursor_hold_i
-    augroup neocomplete
-      autocmd CursorHoldI *
-            \ call neocomplete#handler#_do_auto_complete('CursorHoldI')
-      autocmd CursorMovedI *
-            \ call neocomplete#handler#_do_auto_complete('CursorMovedI')
-      autocmd InsertEnter *
-            \ call neocomplete#handler#_change_update_time()
-      autocmd InsertLeave *
-            \ call neocomplete#handler#_restore_update_time()
-    augroup END
-  else
-    let event = neocomplete#util#is_text_changed() ?
-          \  'TextChangedI' : 'CursorMovedI'
-    execute 'autocmd neocomplete' event '*'
-          \ 'call neocomplete#handler#_do_auto_complete("'.event.'")'
-  endif
+  let event = neocomplete#util#is_text_changed() ?
+        \  'TextChangedI' : 'CursorMovedI'
+  execute 'autocmd neocomplete' event '*'
+        \ 'call neocomplete#handler#_do_auto_complete("'.event.'")'
 
-  if !g:neocomplete#enable_cursor_hold_i
-    autocmd neocomplete InsertEnter *
-          \ call neocomplete#handler#_do_auto_complete('InsertEnter')
-  endif
+  autocmd neocomplete InsertEnter *
+        \ call neocomplete#handler#_do_auto_complete('InsertEnter')
 endfunction"}}}
 
 function! neocomplete#init#_others() abort "{{{
@@ -457,7 +442,6 @@ function! neocomplete#init#_current_neocomplete() abort "{{{
         \ 'context_filetype' : '',
         \ 'context_filetypes' : [],
         \ 'completion_length' : -1,
-        \ 'update_time_save' : &updatetime,
         \ 'foldinfo' : [],
         \ 'skipped' : 0,
         \ 'event' : '',

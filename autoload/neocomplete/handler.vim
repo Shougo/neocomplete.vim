@@ -84,21 +84,6 @@ function! neocomplete#handler#_on_complete_done() abort "{{{
     let frequencies[complete_str] += 20
   endif
 endfunction"}}}
-function! neocomplete#handler#_change_update_time() abort "{{{
-  if &updatetime > g:neocomplete#cursor_hold_i_time
-    " Change updatetime.
-    let neocomplete = neocomplete#get_current_neocomplete()
-    let neocomplete.update_time_save = &updatetime
-    let &updatetime = g:neocomplete#cursor_hold_i_time
-  endif
-endfunction"}}}
-function! neocomplete#handler#_restore_update_time() abort "{{{
-  let neocomplete = neocomplete#get_current_neocomplete()
-  if &updatetime < neocomplete.update_time_save
-    " Restore updatetime.
-    let &updatetime = neocomplete.update_time_save
-  endif
-endfunction"}}}
 function! neocomplete#handler#_on_insert_char_pre() abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.skip_next_complete = 0
@@ -132,13 +117,37 @@ function! neocomplete#handler#_on_text_changed() abort "{{{
   endif
 endfunction"}}}
 
+function! s:complete_delay(timer) abort "{{{
+  let event = s:timer.event
+  unlet! s:timer
+  return s:do_auto_complete(event)
+endfunction"}}}
+
 function! neocomplete#handler#_do_auto_complete(event) abort "{{{
+  if s:check_in_do_auto_complete(a:event)
+    return
+  endif
+
+  if g:neocomplete#auto_complete_delay > 0 && has('timers')
+    if exists('s:timer')
+      call timer_stop(s:timer.id)
+    endif
+    if a:event !=# 'Manual'
+      let s:timer = { 'event': a:event }
+      let s:timer.id = timer_start(
+            \ g:neocomplete#auto_complete_delay,
+            \ function('s:complete_delay'))
+      return
+    endif
+  endif
+
+  return s:do_auto_complete(a:event)
+endfunction"}}}
+
+function! s:do_auto_complete(event) abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
 
-  if (g:neocomplete#enable_cursor_hold_i
-        \ && empty(neocomplete.candidates)
-        \ && a:event ==# 'CursorMovedI')
-        \ || s:check_in_do_auto_complete(a:event)
+  if s:check_in_do_auto_complete(a:event)
     return
   endif
 

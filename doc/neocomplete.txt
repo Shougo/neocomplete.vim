@@ -347,21 +347,13 @@ g:neocomplete#disable_auto_complete
 
 		Default value is 0.
 
-					*g:neocomplete#enable_cursor_hold_i*
-g:neocomplete#enable_cursor_hold_i
-		This variable controls whether neocomplete use |CursorHoldI|
-		event when complete candidates.
-		Note: This option must be set before call
-		|:NeoCompleteEnable|.
+					*g:neocomplete#auto_complete_delay*
+g:neocomplete#auto_complete_delay
+		It is the auto completion delay time after your input.
+		The unit is ms.
+		Note: It requires |+timers| feature.
 
-		Default value is 0.
-
-					*g:neocomplete#cursor_hold_i_time*
-g:neocomplete#cursor_hold_i_time
-		If g:neocomplete#enable_cursor_hold_i is non-zero and in
-		insert mode, this value changes 'updatetime' option.
-
-		Default value is 300.
+		Default value is 50.
 
 					*g:neocomplete#enable_auto_select*
 g:neocomplete#enable_auto_select
