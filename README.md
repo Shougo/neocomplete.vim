@@ -74,7 +74,7 @@ Remember to specify `--with-lua` (or `--with-features=huge`).
 
 ### Vim for Cygwin:
 
-In a cygwin environment, Lua interface is supported by default.
+In a cygwin environment, the Lua interface is supported by default.
 
 If you want to make manually, you also need gcc and make.
 
@@ -123,7 +123,7 @@ A migration guide for existing users of neocomplcache is available:
 ## Configuration Examples
 
 ```vim
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.

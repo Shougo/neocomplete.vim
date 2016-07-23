@@ -134,8 +134,8 @@ Manual:
 Package manager:
 
 For instructions on how to set up a Vim package manager see the documentation
-of the package manager of your choice. For example after the set up of
-neobundle you can install the neocomplete plugin by following steps:
+of the package manager of your choice. For example after installing
+neobundle you can install the neocomplete plugin with the following steps:
 
 1. Let the plugin manger know about the package (.vimrc) >
 	NeoBundle 'Shougo/neocomplete.vim'
@@ -161,13 +161,13 @@ further information in the vimproc documentation.
 
 						*neocomplete-snippets*
 
-If you like to use the snippet feature with neocomplete, you need to install
-the neosnippet plugin (https://github.com/Shougo/neosnippet.vim) or UltiSnips
-(https://github.com/SirVer/ultisnips).
+If you would like to use the snippet feature with neocomplete, you need to
+install the neosnippet plugin (https://github.com/Shougo/neosnippet.vim) or
+UltiSnips (https://github.com/SirVer/ultisnips).
 
 						*neocomplete-context-filetype*
 
-If you like to use the context filetype feature, you need to install the
+If you would like to use the context filetype feature, you need to install the
 context_filetype.vim plugin which you can find under the following repository:
 https://github.com/Shougo/context_filetype.vim
 
