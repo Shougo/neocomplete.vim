@@ -52,7 +52,7 @@ function! s:source.get_complete_position(context) abort "{{{
         \ (neocomplete#is_auto_complete() &&
         \     complete_str !~ '/' ||
         \     complete_str =~#
-        \          '\\[^ ;*?[]"={}'']\|\.\.\+$\|/c\%[ygdrive/]$')
+        \          '\\[^ ;*?[]"={}'']\|\.\.\+$\|/c\%[ygdrive/]$\|\${')
     " Not filename pattern.
     return -1
   endif
