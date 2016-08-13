@@ -28,12 +28,8 @@ set cpo&vim
 
 " context_filetype.vim installation check.
 if !exists('s:exists_context_filetype')
-  try
-    call context_filetype#version()
-    let s:exists_context_filetype = 1
-  catch
-    let s:exists_context_filetype = 0
-  endtry
+  silent! call context_filetype#version()
+  let s:exists_context_filetype = exists('*context_filetype#version')
 endif
 
 function! neocomplete#context_filetype#set() abort "{{{
