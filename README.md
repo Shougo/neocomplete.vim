@@ -114,7 +114,7 @@ A migration guide for existing users of neocomplcache is available:
 
 ![Completion with vimshell(http://github.com/Shougo/vimshell).](https://f.cloud.github.com/assets/41495/622458/01dbc660-cf43-11e2-85f1-326e7432b0a1.png)
 
-### Vim completion
+### Vim completion (provided by [neco-vim](https://github.com/Shougo/neco-vim))
 
 ![Vim completion.](https://f.cloud.github.com/assets/41495/622457/fe90ad5e-cf42-11e2-8e03-8f189b5e26e5.png)
 ![Vim completion with animation.](https://f.cloud.github.com/assets/214488/623496/94ed19a2-cf68-11e2-8d33-3aad8a39d7c1.gif)
