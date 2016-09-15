@@ -26,6 +26,7 @@ If `:echo has("lua")` returns `1`, then you're done; otherwise, see below.
 
 ### Vim builds for Windows
 
+  [github release](https://github.com/vim/vim-win32-installer/releases)
 * [Vim 32bit](http://files.kaoriya.net/goto/vim73w32)
 * [Vim 64bit](http://files.kaoriya.net/goto/vim73w64)
 * [Vim 32bit alternative](http://tuxproject.de/projects/vim/)
