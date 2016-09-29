@@ -83,7 +83,6 @@ function! neocomplete#mappings#auto_complete() abort "{{{
   endif
 
   " Start auto complete.
-  undojoin
   call complete(complete_pos+1, neocomplete.candidates)
   return ''
 endfunction"}}}
@@ -107,7 +106,6 @@ function! neocomplete#mappings#manual_complete() abort "{{{
   endif
 
   " Start auto complete.
-  undojoin
   call complete(complete_pos+1, neocomplete.candidates)
   return ''
 endfunction"}}}
