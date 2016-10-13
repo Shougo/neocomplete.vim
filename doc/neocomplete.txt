@@ -640,9 +640,9 @@ g:neocomplete#sources#member#input_patterns
 				*g:neocomplete#sources#omni#functions*
 g:neocomplete#sources#omni#functions
 		This dictionary which appoints omni source call functions.
-		The key is |&filetype|.  The value is omnifunc name String or
+		The key is 'filetype'.  The value is omnifunc name String or
 		List of omnifunc name String.
-		If |g:neocomplete#sources#omni#functions| [|&filetype|] is
+		If |g:neocomplete#sources#omni#functions| [&filetype] is
 		undefined, omni source calls 'omnifunc'.
 		If the key is "_", used for all filetypes.
 
