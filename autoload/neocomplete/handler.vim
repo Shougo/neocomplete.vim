@@ -207,7 +207,8 @@ function! s:do_auto_complete(event) abort "{{{
 endfunction"}}}
 
 function! s:check_in_do_auto_complete(event) abort "{{{
-  if neocomplete#is_locked() || mode() !=# 'i'
+  if neocomplete#is_locked()
+        \ || (a:event !=# 'InsertEnter' && mode() !=# 'i')
     return 1
   endif
 
