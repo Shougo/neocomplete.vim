@@ -353,6 +353,7 @@ g:neocomplete#auto_complete_delay
 		It is the auto completion delay time after your input.
 		The unit is ms.
 		Note: It requires |+timers| feature.
+		Note: It is disabled in MacVim.
 
 		Default value is 50.
 
