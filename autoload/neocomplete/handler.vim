@@ -224,6 +224,7 @@ function! s:check_in_do_auto_complete(event) abort "{{{
   if (&l:foldmethod ==# 'expr' || &l:foldmethod ==# 'syntax')
         \ && !neocomplete.detected_foldmethod
         \ && a:event !=# 'InsertEnter'
+        \ && line('.') > 1000
     let neocomplete.detected_foldmethod = 1
     call neocomplete#print_error(
           \ printf('foldmethod = "%s" is detected.', &foldmethod))
