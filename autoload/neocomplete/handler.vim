@@ -129,8 +129,7 @@ function! neocomplete#handler#_do_auto_complete(event) abort "{{{
   endif
 
   if g:neocomplete#auto_complete_delay > 0 && has('timers')
-        \ && !has('gui_macvim')
-    " Disable the feature in MacVim.
+        \ && (!has('gui_macvim') || has('patch-8.0.95'))
     if exists('s:timer')
       call timer_stop(s:timer.id)
     endif
