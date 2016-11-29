@@ -847,7 +847,6 @@ EXAMPLES					*neocomplete-examples*
 	let g:neocomplete#enable_at_startup = 1
 	" Use smartcase.
 	let g:neocomplete#enable_smart_case = 1
-	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 	" Define dictionary.
 	let g:neocomplete#sources#dictionary#dictionaries = {
