@@ -351,7 +351,7 @@ function! s:is_delimiter() abort "{{{
   let filetype = neocomplete#get_context_filetype()
   let cur_text = neocomplete#get_cur_text(1)
 
-  for delimiter in ['/', '.'] +
+  for delimiter in ['/'] +
         \ get(g:neocomplete#delimiter_patterns, filetype, [])
     if stridx(cur_text, delimiter,
           \ len(cur_text) - len(delimiter)) >= 0
