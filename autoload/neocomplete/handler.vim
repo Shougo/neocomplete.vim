@@ -348,7 +348,6 @@ endfunction"}}}
 function! s:is_delimiter() abort "{{{
   " Check delimiter pattern.
   let is_delimiter = 0
-  let filetype = neocomplete#get_context_filetype()
   let cur_text = neocomplete#get_cur_text(1)
 
   for delimiter in ['/']
