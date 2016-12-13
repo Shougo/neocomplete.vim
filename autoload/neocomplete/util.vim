@@ -29,7 +29,7 @@ set cpo&vim
 
 function! neocomplete#util#get_vital() abort "{{{
   if !exists('s:V')
-    let s:V = vital#neocomplete#of()
+    let s:V = vital#neocomplete#new()
   endif
   return s:V
 endfunction"}}}
