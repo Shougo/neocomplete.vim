@@ -1596,8 +1596,8 @@ Q: I want to use Ruby omni completion.
 
 A: Please set |g:neocomplete#force_omni_input_patterns|.  But this completion
 is heavy, so disabled by default.
-Note: But you should use |neocomplete-rsense| instead of rubycomplete.
-https://github.com/Shougo/neocomplete-rsense
+Note: But you should use |vim-monster| instead of rubycomplete.
+https://github.com/osyo-manga/vim-monster
 >
 	autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 	if !exists('g:neocomplete#force_omni_input_patterns')
