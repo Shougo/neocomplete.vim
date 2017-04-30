@@ -1043,7 +1043,7 @@ Default sources are below. But you can create original filters (cf:
 	" Change default converter.
 	call neocomplete#custom#source('_', 'converters',
 	\ ['converter_remove_overlap', 'converter_remove_last_paren',
-        \  'converter_delimiter', 'converter_abbr'])
+        \  'converter_abbr'])
 <
 					*neocomplete-filter-matcher_default*
 Default matchers:
@@ -1058,8 +1058,7 @@ Default matchers:
 Default sorters: ['sorter_rank'].
 
 					*neocomplete-filter-converter_default*
-Default converters: ['converter_remove_overlap',
-        \      'converter_delimiter', 'converter_abbr'].
+Default converters: ['converter_remove_overlap', 'converter_abbr'].
 
 					*neocomplete-filter-matcher_head*
 matcher_head	Head matching matcher.
@@ -1823,7 +1822,7 @@ https://github.com/Shougo/neocomplete.vim/issues/158
 A: >
 	call neocomplete#custom#source('tags', 'converters',
 	\ ['converter_remove_overlap', 'converter_remove_last_paren',
-	\  'converter_delimiter', 'converter_disable_abbr', 'converter_abbr'])
+	\  'converter_disable_abbr', 'converter_abbr'])
 
 Q: <C-x><C-u> does not work.
 https://github.com/Shougo/neocomplete.vim/issues/305

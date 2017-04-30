@@ -531,7 +531,6 @@ function! neocomplete#init#_source(source) abort "{{{
         \ 'sorters' : ['sorter_rank'],
         \ 'converters' : [
         \      'converter_remove_overlap',
-        \      'converter_delimiter',
         \      'converter_abbr',
         \ ],
         \ 'keyword_patterns' : g:neocomplete#keyword_patterns,
