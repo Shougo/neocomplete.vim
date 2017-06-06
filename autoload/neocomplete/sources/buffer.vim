@@ -30,7 +30,7 @@ set cpo&vim
 let g:neocomplete#sources#buffer#cache_limit_size =
       \ get(g:, 'neocomplete#sources#buffer#cache_limit_size', 500000)
 let g:neocomplete#sources#buffer#disabled_pattern =
-      \ get(g:, 'neocomplete#sources#buffer#disabled_pattern', '')
+      \ get(g:, 'neocomplete#sources#buffer#disabled_pattern', '"')
 let g:neocomplete#sources#buffer#max_keyword_width =
       \ get(g:, 'neocomplete#sources#buffer#max_keyword_width', 80)
 "}}}
