@@ -40,7 +40,7 @@ file in the same directory as `gvim.exe`.
 
 [MacVim with `if\_lua`](https://github.com/zhaocai/macvim)
 
-Or, you can install MacVim with homebrew:
+Or, you can install MacVim with homebrew: (Make sure you have Xcode fully installed)
 
     brew cask install macvim --with-cscope --with-lua
 
