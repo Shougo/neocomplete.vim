@@ -97,10 +97,6 @@ function! neocomplete#handler#_on_insert_char_pre() abort "{{{
     return
   endif
 
-  if neocomplete.old_char != ' ' && v:char == ' ' && v:count == 0
-    call s:make_cache_current_line()
-  endif
-
   let neocomplete.old_char = v:char
 endfunction"}}}
 function! neocomplete#handler#_on_text_changed() abort "{{{
