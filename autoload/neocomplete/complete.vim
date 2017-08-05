@@ -265,7 +265,11 @@ function! neocomplete#complete#_set_results_words(sources) abort "{{{
         let context.candidates = deepcopy(context.prev_candidates)
       else
         try
-          let context.candidates = source.gather_candidates(context)
+          let winwidth = winwidth(0)
+          let type_string = type('')
+          let context.candidates = filter(source.gather_candidates(context),
+                \ 'len((type(v:val) == type_string) ?
+                \      v:val : v:val.word) < winwidth')
         catch
           call neocomplete#print_error(v:throwpoint)
           call neocomplete#print_error(v:exception)
