@@ -118,15 +118,15 @@ EOF
       continue
     endif
 
-    if source.max_candidates > 0
-      let words = words[: len(source.max_candidates)-1]
-    endif
-
     let words = neocomplete#helper#call_filters(
           \ source.neocomplete__converters, source, {})
 
     if empty(words)
       continue
+    endif
+
+    if source.max_candidates > 0
+      let words = words[: source.max_candidates -1]
     endif
 
     " Set default menu.
