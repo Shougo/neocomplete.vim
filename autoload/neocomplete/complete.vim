@@ -130,7 +130,7 @@ EOF
     endif
 
     " Set default menu.
-    if get(words[0], 'menu', '') !~ '^\[.*\'
+    if get(words[0], 'menu', '') !~ '^\[.*\]'
       call s:set_default_menu(words, source)
     endif
 
