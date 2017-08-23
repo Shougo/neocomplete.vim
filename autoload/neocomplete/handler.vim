@@ -312,7 +312,11 @@ endfunction"}}}
 function! s:complete_key(key) abort "{{{
   call neocomplete#helper#complete_configure()
 
-  call feedkeys(a:key)
+  if has('patch-7.4.601')
+    call feedkeys(a:key, 'i')
+  else
+    call feedkeys(a:key)
+  endif
 endfunction"}}}
 
 function! s:indent_current_line() abort "{{{
