@@ -1,6 +1,12 @@
 neocomplete
 ===========
 
+
+**Note**: Active development on neocomplete.vim has stopped. The only future
+changes will be bug fixes.
+
+Please see [Deoplete.nvim](https://github.com/Shougo/deoplete.nvim).
+
 neocomplete is the abbreviation of "neo-completion with cache". It provides
 keyword completion system by maintaining a cache of keywords in the current
 buffer. neocomplete can be customized easily and has many more features than
@@ -16,8 +22,9 @@ See [requirements](#requirements) if you aren't sure whether you have this.
 
 1. Extract the files and put them in your Vim directory
    (usually `~/.vim/` or `Program Files/Vim/vimfiles` on Windows).
-2. Execute the `:NeoCompleteEnable` command or set `let g:neocomplete#enable_at_startup = 1`
-   in your `.vimrc` (**not** in `.gvimrc` or `_gvimrc`!)
+2. Execute the `:NeoCompleteEnable` command or set `let
+   g:neocomplete#enable_at_startup = 1` in your `.vimrc` (**not** in `.gvimrc`
+   or `_gvimrc`!)
 
 ## Requirements
 
