@@ -12,7 +12,7 @@ keyword completion system by maintaining a cache of keywords in the current
 buffer. neocomplete can be customized easily and has many more features than
 Vim's built-in completion.
 
-Note: If you use neovim, you should use deoplete instead.
+Note: If you use neovim or Vim8+, you should use deoplete instead.
 https://github.com/Shougo/deoplete.nvim
 
 ## Installation
@@ -28,8 +28,9 @@ See [requirements](#requirements) if you aren't sure whether you have this.
 
 ## Requirements
 
-neocomplete requires Vim 7.3.885+ compiled with [if\_lua](http://vimdoc.sourceforge.net/htmldoc/if_lua.html).
-If `:echo has("lua")` returns `1`, then you're done; otherwise, see below.
+neocomplete requires Vim 7.3.885+ compiled with
+[if\_lua](http://vimdoc.sourceforge.net/htmldoc/if_lua.html).  If `:echo
+has("lua")` returns `1`, then you're done; otherwise, see below.
 
 ### Vim builds for Windows
 
@@ -47,7 +48,8 @@ file in the same directory as `gvim.exe`.
 
 [MacVim with `if\_lua`](https://github.com/zhaocai/macvim)
 
-Or, you can install MacVim with homebrew: (Make sure you have Xcode fully installed)
+Or, you can install MacVim with homebrew: (Make sure you have Xcode fully
+installed)
 
     brew cask install macvim --with-cscope --with-lua
 
@@ -65,19 +67,21 @@ Make sure you have any of these packages:
 * vim-gnome
 * vim-athena
 
-Which package depends on your graphical environment (except vim-nox which is for vim with no GUI).
+Which package depends on your graphical environment (except vim-nox which is
+for vim with no GUI).
 
 #### Fedora
 
 The latest version of vim includes lua.
-As of 2014-04-16 you need to [download the rpm](http://koji.fedoraproject.org/koji/packageinfo?packageID=216).
+As of 2014-04-16 you need to [download the
+rpm](http://koji.fedoraproject.org/koji/packageinfo?packageID=216).
 
 #### Misc
 
 Be aware, your distribution's package manager may have a fairly outdated
 Vim build (for example, Ubuntu 12.04 ships Vim 7.3.429).
-However, [building Vim](http://vim.wikia.com/wiki/Building_Vim) on Linux is not difficult.
-Remember to specify `--with-lua` (or `--with-features=huge`).
+However, [building Vim](http://vim.wikia.com/wiki/Building_Vim) on Linux is not
+difficult.  Remember to specify `--with-lua` (or `--with-features=huge`).
 
 ### Vim for Cygwin:
 
@@ -95,7 +99,8 @@ When everything is prepared, execute these commands.
     --without-x --enable-multibyte --prefix=/usr
     make && make install
 
-To check if everything was successfull enter the following `vim --version`. You should see ` +lua` in the list of features.
+To check if everything was successfull enter the following `vim --version`. You
+should see ` +lua` in the list of features.
 
 ## Snippets
 
