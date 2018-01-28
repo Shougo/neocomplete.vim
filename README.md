@@ -55,7 +55,7 @@ installed)
 
 To install Vim (as opposed to MacVim) with homebrew:
 
-    brew install vim --with-lua
+    brew install vim --with-luajit
 
 ### Vim for Linux:
 
