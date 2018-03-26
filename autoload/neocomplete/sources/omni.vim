@@ -53,7 +53,7 @@ function! s:source.hooks.on_init(context) abort "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'css,scss,sass',
-        \'\w\+\|\w\+[):;]\?\s\+\w*\|[@!]')
+        \'\w\{' . g:neocomplete#min_keyword_length . '\}\|\w\+[):;]\s*\w*\|[@!]')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'javascript',
