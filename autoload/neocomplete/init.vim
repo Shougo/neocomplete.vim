@@ -262,7 +262,7 @@ function! neocomplete#init#_variables() abort "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'css,stylus,scss,less',
-        \'[@#.]\?[[:alpha:]_:-][[:alnum:]_:-]*')
+        \'[@#.]\?[[:alpha:]_-][[:alnum:]_-]*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#keyword_patterns',
         \'tags',
