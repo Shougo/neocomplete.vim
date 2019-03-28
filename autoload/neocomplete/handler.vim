@@ -216,25 +216,6 @@ function! s:check_in_do_auto_complete(event) abort "{{{
   if &l:completefunc != '' && &l:buftype =~ 'nofile'
     return 1
   endif
-
-  let neocomplete = neocomplete#get_current_neocomplete()
-  " Detect foldmethod.
-  if (&l:foldmethod ==# 'expr' || &l:foldmethod ==# 'syntax')
-        \ && !neocomplete.detected_foldmethod
-        \ && a:event !=# 'InsertEnter'
-        \ && line('.') > 1000
-    let neocomplete.detected_foldmethod = 1
-    call neocomplete#print_error(
-          \ printf('foldmethod = "%s" is detected.', &foldmethod))
-    redir => foldmethod
-      verbose setlocal foldmethod?
-    redir END
-    for msg in split(substitute(foldmethod, '\t', '', 'g'), "\n")
-      call neocomplete#print_error(msg)
-    endfor
-    call neocomplete#print_error(
-          \ 'You should disable it or install FastFold plugin.')
-  endif
 endfunction"}}}
 function! s:is_skip_auto_complete(cur_text) abort "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
