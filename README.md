@@ -63,9 +63,7 @@ To install Vim (as opposed to MacVim) with homebrew:
 
 Make sure you have any of these packages:
 * vim-nox
-* vim-gtk
-* vim-gnome
-* vim-athena
+* vim-gtk3
 
 Which package depends on your graphical environment (except vim-nox which is
 for vim with no GUI).
