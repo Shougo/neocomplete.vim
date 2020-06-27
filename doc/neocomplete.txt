@@ -47,6 +47,9 @@ FAQ			|neocomplete-faq|
 ==============================================================================
 INTRODUCTION					*neocomplete-introduction*
 
+Note: This plugin is not compatible with above Vim 8.2.1066!
+https://github.com/vim/vim/commit/bd84617d1a6766efd59c94aabebb044bef805b99
+
 *neocomplete* is the next generation auto completion framework and a superior
 successor of the |neocomplcache| plugin. It provides a keyword completion
 system by maintaining a keyword cache of the current buffer. The neocomplete

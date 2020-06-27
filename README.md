@@ -1,6 +1,8 @@
 neocomplete
 ===========
 
+Note: This plugin is not compatible with above Vim 8.2.1066!
+https://github.com/vim/vim/commit/bd84617d1a6766efd59c94aabebb044bef805b99
 
 **Note**: Active development on neocomplete.vim has stopped. The only future
 changes will be bug fixes.
