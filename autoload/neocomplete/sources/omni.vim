@@ -236,8 +236,8 @@ function! s:set_complete_results_words(complete_results) abort "{{{
 
     try
       let ret = call(omnifunc, [0, result.complete_str])
-      let list = type(ret) == type(0) ? [] :
-            \ type(ret) == type([]) ? ret : ret.words
+      let list = type(ret) == type({}) ? ret.words :
+            \ type(ret) == type([]) ? ret : []
     catch
       call neocomplete#print_error(
             \ 'Error occurred calling omnifunction: ' . omnifunc)
