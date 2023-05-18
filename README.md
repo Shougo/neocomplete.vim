@@ -4,10 +4,10 @@ neocomplete
 Note: This plugin is not compatible with above Vim 8.2.1066!
 https://github.com/vim/vim/commit/bd84617d1a6766efd59c94aabebb044bef805b99
 
-**Note**: Active development on neocomplete.vim has stopped. The only future
-changes will be bug fixes.
-
-Please see [Deoplete.nvim](https://github.com/Shougo/deoplete.nvim).
+**Note**: The development of this plugin is finished. Accepts minor patches and
+issues but no new features.
+[ddc.vim](https://github.com/Shougo/ddc.vim) is the next generation auto
+completion plugin. Consider migrating to it.
 
 neocomplete is the abbreviation of "neo-completion with cache". It provides
 keyword completion system by maintaining a cache of keywords in the current
